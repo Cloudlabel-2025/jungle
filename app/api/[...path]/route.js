@@ -8,6 +8,10 @@ import {
 } from "@/lib/auth.js";
 import { models, connect, transaction } from "@/lib/db.js";
 import { snapshot } from "@/lib/snapshot.js";
+import { supportAction, supportSnapshot } from "@/lib/support.js";
+import { checkPassword } from "@/lib/password.js";
+import { challengeAction, taskAudit } from "@/lib/challenges.js";
+import { teamRoles, playerRole } from "@/lib/team-roles.js";
 import { award, deduct, id } from "@/lib/engine.js";
 import { DAILY_XP_CAP } from "@/lib/rewards.js";
 import { modules, personas, perks, rules, teams } from "@/lib/catalog.js";
@@ -64,6 +68,48 @@ async function handle(request, { params }) {
         demo: demoEnabled(),
       });
     if (route === "auth/login" && request.method === "POST") {
+      if (body.password !== undefined) {
+        const email = text(body.email, "Email", 3, 120);
+        const user = await models.User.findOne({ email }).lean();
+        const credential =
+          user &&
+          user.active !== false &&
+          (await models.Credential.findById(user._id));
+        if (!credential || credential.lockedUntil > new Date())
+          fail("Invalid credentials or account temporarily locked.", 401);
+        const attempt = await models.Credential.findOneAndUpdate(
+          {
+            _id: user._id,
+            $or: [{ lockedUntil: null }, { lockedUntil: { $lte: new Date() } }],
+          },
+          { $inc: { failures: 1 } },
+          { new: true },
+        );
+        if (!attempt)
+          fail("Invalid credentials or account temporarily locked.", 401);
+        if (
+          attempt.failures > 5 ||
+          !(await checkPassword(body.password, credential.passwordHash))
+        ) {
+          if (attempt.failures >= 5)
+            await models.Credential.updateOne(
+              { _id: user._id },
+              {
+                $set: {
+                  lockedUntil: new Date(Date.now() + 15 * 60000),
+                  failures: 0,
+                },
+              },
+            );
+          fail("Invalid credentials or account temporarily locked.", 401);
+        }
+        await models.Credential.updateOne(
+          { _id: user._id },
+          { $set: { failures: 0, lockedUntil: null } },
+        );
+        await setSession(user._id);
+        return NextResponse.json({ success: true, user });
+      }
       if (!demoEnabled())
         fail(
           "Persona login is disabled. Enable DEMO_MODE only for a private simulation.",
@@ -76,7 +122,8 @@ async function handle(request, { params }) {
         fail("Invalid arena access code.", 401);
       const email = text(body.email, "Email", 3, 120);
       const user = await models.User.findOne({ email }).lean();
-      if (!user) fail("Unknown persona.", 404);
+      if (!user || user.active === false)
+        fail("Unknown or inactive persona.", 404);
       await setSession(user._id);
       return NextResponse.json({ success: true, user });
     }
@@ -92,6 +139,45 @@ async function handle(request, { params }) {
         serverTime: new Date().toISOString(),
       });
     assertRole(user, all);
+    if (route === "challenges" && request.method === "GET") {
+      const state = await snapshot(user);
+      return NextResponse.json(
+        {
+          challenges: state.challenges,
+          tasks: state.tasks,
+          taskEvents: state.taskEvents,
+        },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
+    if (
+      path[0] === "challenges" &&
+      path.length === 2 &&
+      request.method === "POST"
+    ) {
+      return NextResponse.json({
+        success: true,
+        ...(await challengeAction(user, path[1], body)),
+      });
+    }
+    if (route === "support/export" && request.method === "GET") {
+      assertRole(user, ["CENTRE_COMMAND"]);
+      return NextResponse.json(await supportSnapshot(user), {
+        headers: {
+          "Cache-Control": "no-store",
+          "Content-Disposition":
+            'attachment; filename="codewild-support-evidence.json"',
+        },
+      });
+    }
+    if (route === "support" && request.method === "GET")
+      return NextResponse.json(await supportSnapshot(user), {
+        headers: { "Cache-Control": "no-store" },
+      });
+    if (route.startsWith("support/") && request.method === "POST") {
+      await supportAction(user, path[1], body);
+      return NextResponse.json({ success: true });
+    }
     if (request.method === "GET") {
       if (route === "state") return NextResponse.json(await snapshot(user));
       if (route === "gamer/lab") {
@@ -250,6 +336,7 @@ async function handle(request, { params }) {
           task.reportedAt = now;
         }
         if (body.status) {
+          const before = task.status;
           if (!allowedStates.includes(body.status))
             fail("Invalid quest state.");
           if (task.status === "Done") fail("Approved quests are sealed.");
@@ -262,11 +349,58 @@ async function handle(request, { params }) {
           }
           if (body.status === "Done")
             fail("Submit for Review; your Commander seals completed quests.");
+          if (task.challengeId && task.status === "Review")
+            fail("Your submission is awaiting Commander review.", 409);
+          if (task.challengeId && body.status === "Review") {
+            if (
+              !Array.isArray(body.evidenceReferences) ||
+              !body.evidenceReferences.length ||
+              body.evidenceReferences.length > 10
+            )
+              fail("Supply 1–10 completion evidence references.");
+            task.submissionSummary = text(
+              body.submissionSummary,
+              "Completion summary",
+              10,
+            );
+            task.evidenceReferences = body.evidenceReferences.map((value) =>
+              text(value, "Evidence reference", 3, 1000),
+            );
+            task.submittedAt = now;
+            task.submissionVersion += 1;
+            task.reviewFeedback = "";
+            await taskAudit(
+              task,
+              user,
+              "SUBMITTED",
+              {
+                summary: task.submissionSummary,
+                evidenceReferences: task.evidenceReferences,
+                version: task.submissionVersion,
+              },
+              session,
+            );
+          }
           task.status = body.status;
+          await taskAudit(
+            task,
+            user,
+            "STATE_CHANGED",
+            { before, after: task.status },
+            session,
+          );
         }
         await task.save({ session });
       } else if (route === "gamer/journal") {
         assertRole(user, ["GAMER"]);
+        if (
+          body.supportTicketId &&
+          !(await models.HelpTicket.exists({
+            _id: body.supportTicketId,
+            createdBy: user._id,
+          }).session(session))
+        )
+          fail("Link only your own support ticket.", 403);
         if (
           await models.Journal.exists({ userId: user._id, day }).session(
             session,
@@ -287,6 +421,9 @@ async function handle(request, { params }) {
                   ? body.blockers.slice(0, 4000)
                   : "",
               tomorrowPlan: text(body.tomorrowPlan, "Tomorrow’s plan", 10),
+              supportTicketIds: body.supportTicketId
+                ? [body.supportTicketId]
+                : [],
               submittedAt: now,
             },
           ],
@@ -371,8 +508,24 @@ async function handle(request, { params }) {
         if (body.action === "approve") {
           if (task.status !== "Review")
             fail("Only quests in Review can be approved.");
+          if (
+            task.challengeId &&
+            (!task.submittedAt ||
+              !task.submissionSummary ||
+              !task.evidenceReferences.length)
+          )
+            fail(
+              "Challenge tasks need a completion summary and evidence before approval.",
+            );
           task.status = "Done";
           task.approvedAt = now;
+          await taskAudit(
+            task,
+            user,
+            "APPROVED",
+            { submissionVersion: task.submissionVersion },
+            session,
+          );
           await award(
             task.assigneeId,
             task.xp,
@@ -384,12 +537,44 @@ async function handle(request, { params }) {
           if (task.status !== "Review")
             fail("Only quests in Review can be returned.");
           task.status = "In Progress";
+          if (task.challengeId) {
+            task.reviewFeedback = text(body.feedback, "Review feedback", 10);
+            await taskAudit(
+              task,
+              user,
+              "RETURNED",
+              {
+                feedback: task.reviewFeedback,
+                submissionVersion: task.submissionVersion,
+              },
+              session,
+            );
+          }
         } else if (body.action === "reassign") {
           if (task.status === "Done") fail("Approved quests are sealed.");
           const next = await gamer(body.userId, session);
+          if (next.active === false) fail("Select an active player.");
           if (next.teamId !== task.teamId)
             fail("Reassign within the quest’s squad.");
+          if (task.challengeId && playerRole(next) !== task.targetRole)
+            fail(
+              "Challenge tasks must be reassigned to a player with the target team role.",
+            );
+          const previous = task.assigneeId;
           task.assigneeId = next._id;
+          await taskAudit(
+            task,
+            user,
+            "REASSIGNED",
+            {
+              previous,
+              next: next._id,
+              reason: task.challengeId
+                ? text(body.reason, "Reassignment reason", 10)
+                : undefined,
+            },
+            session,
+          );
         } else fail("Unknown quest action.");
         await task.save({ session });
       } else if (route === "commander/blocker") {
@@ -592,12 +777,36 @@ async function handle(request, { params }) {
       } else if (route === "centre-command/roster") {
         assertRole(user, ["CENTRE_COMMAND"]);
         const operative = await gamer(body.userId, session);
-        if (!teams.some((t) => t._id === body.teamId)) fail("Unknown squad.");
-        operative.teamId = body.teamId;
+        const nextTeamId = body.teamId || operative.teamId;
+        if (!teams.some((t) => t._id === nextTeamId)) fail("Unknown squad.");
+        if (
+          nextTeamId !== operative.teamId &&
+          (await models.Task.exists({
+            assigneeId: operative._id,
+            challengeId: { $type: "string" },
+            status: { $ne: "Done" },
+          }).session(session))
+        )
+          fail(
+            "This player has open challenge tasks. Reassign those within the original team or complete them before changing teams.",
+            409,
+          );
+        await models.Cohort.updateOne(
+          { _id: "alpha" },
+          { $inc: { rosterVersion: 1 } },
+          { session },
+        );
+        if (body.teamRoleCode) {
+          const selected = teamRoles.find((r) => r.code === body.teamRoleCode);
+          if (!selected) fail("Unknown team role.");
+          operative.teamRoleCode = selected.code;
+          operative.assignment = selected.label;
+        }
+        operative.teamId = nextTeamId;
         await operative.save({ session });
         await models.Task.updateMany(
           { assigneeId: operative._id, status: { $ne: "Done" } },
-          { $set: { teamId: body.teamId } },
+          { $set: { teamId: nextTeamId } },
           { session },
         );
       } else if (route === "centre-command/rules") {

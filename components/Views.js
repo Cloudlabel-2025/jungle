@@ -31,6 +31,12 @@ import { Panel, Badge, HP, Avatar, Modal, Empty, Form, Receipt } from "./ui";
 import { EncounterGrid } from "./Expedition";
 import JungleGame from "./JungleGame";
 import ExpeditionHeading from "./ExpeditionHeading";
+import SupportConsole from "./SupportConsole";
+import ChallengeManager, {
+  ChallengeProgress,
+  ChallengeTaskDetails,
+} from "./Challenges";
+import { teamRoles, playerRole } from "@/lib/team-roles.js";
 import { ist, league } from "@/lib/rules.js";
 const fmt = (date) =>
   new Date(date).toLocaleString("en-IN", {
@@ -88,7 +94,9 @@ function QuestCard({ task, data, onClick, now }) {
     <button className="quest-card" onClick={onClick}>
       <div className="quest-card-top">
         <span className="mono muted">
-          {task._id.replace("quest_", "Q-").replace("_", "0")}
+          {task.challengeId
+            ? `CH-${task._id.slice(0, 8)}`
+            : task._id.replace("quest_", "Q-").replace("_", "0")}
         </span>
         <Badge
           tone={
@@ -103,6 +111,13 @@ function QuestCard({ task, data, onClick, now }) {
         </Badge>
       </div>
       <h3>{task.title}</h3>
+      {task.challengeId && (
+        <p className="challenge-card-label">
+          {task.challengeName} ·{" "}
+          {teamRoles.find((r) => r.code === task.targetRole)?.label}
+          {task.assigneeId === data.user._id ? " · Assigned to you" : ""}
+        </p>
+      )}
       <p>{task.description}</p>
       {dep && dep.status !== "Done" && (
         <div className="dependency">
@@ -142,6 +157,7 @@ function QuestDetail({ task, data, close, act, staff = false }) {
     >
       <Badge tone="lime">{fresh.status}</Badge>
       <p className="detail-copy">{fresh.description}</p>
+      <ChallengeTaskDetails task={fresh} data={data} act={act} staff={staff} />
       <div className="detail-grid">
         <span>
           EXPLORER<strong>{getName(data, fresh.assigneeId)}</strong>
@@ -182,17 +198,19 @@ function QuestDetail({ task, data, close, act, staff = false }) {
                 >
                   Approve quest <Check size={16} />
                 </button>
-                <button
-                  className="btn"
-                  onClick={() =>
-                    act("commander/task", {
-                      taskId: fresh._id,
-                      action: "return",
-                    })
-                  }
-                >
-                  Return to progress
-                </button>
+                {!fresh.challengeId && (
+                  <button
+                    className="btn"
+                    onClick={() =>
+                      act("commander/task", {
+                        taskId: fresh._id,
+                        action: "return",
+                      })
+                    }
+                  >
+                    Return to progress
+                  </button>
+                )}
               </>
             )}
           </div>
@@ -205,10 +223,24 @@ function QuestDetail({ task, data, close, act, staff = false }) {
                   options: playerOptions({
                     ...data,
                     roster: data.roster.filter(
-                      (u) => u.teamId === fresh.teamId,
+                      (u) =>
+                        u.teamId === fresh.teamId &&
+                        u.active !== false &&
+                        (!fresh.challengeId ||
+                          playerRole(u) === fresh.targetRole),
                     ),
                   }),
                 },
+                ...(fresh.challengeId
+                  ? [
+                      {
+                        name: "reason",
+                        label: "Reason for reassignment",
+                        type: "textarea",
+                        min: 10,
+                      },
+                    ]
+                  : []),
               ]}
               submit="Reassign quest"
               onSubmit={(values) =>
@@ -249,23 +281,24 @@ function QuestDetail({ task, data, close, act, staff = false }) {
               )
             }
           />
-          <Form
-            fields={[
-              {
-                name: "status",
-                label: "Move quest",
-                options: ["Backlog", "In Progress", "Review"].map((value) => ({
-                  value,
-                  label: value,
-                })),
-              },
-            ]}
-            initial={{ status: fresh.status }}
-            submit="Update quest"
-            onSubmit={(v) =>
-              act("gamer/task-status", { ...v, taskId: fresh._id })
-            }
-          />
+          {!fresh.challengeId && (
+            <Form
+              fields={[
+                {
+                  name: "status",
+                  label: "Move quest",
+                  options: ["Backlog", "In Progress", "Review"].map(
+                    (value) => ({ value, label: value }),
+                  ),
+                },
+              ]}
+              initial={{ status: fresh.status }}
+              submit="Update quest"
+              onSubmit={(v) =>
+                act("gamer/task-status", { ...v, taskId: fresh._id })
+              }
+            />
+          )}
         </>
       ) : (
         <p className="muted">
@@ -279,10 +312,20 @@ function QuestDetail({ task, data, close, act, staff = false }) {
 }
 function Board({ data, now, act, staff = false }) {
   const [selected, setSelected] = useState(null),
-    [team, setTeam] = useState("all");
-  const tasks = data.tasks.filter((t) => team === "all" || t.teamId === team);
+    [team, setTeam] = useState("all"),
+    [challenge, setChallenge] = useState("all");
+  const tasks = data.tasks.filter(
+    (t) =>
+      (team === "all" || t.teamId === team) &&
+      (challenge === "all" || t.challengeId === challenge),
+  );
   return (
     <>
+      <ChallengeProgress
+        data={data}
+        selected={challenge}
+        onSelect={setChallenge}
+      />
       {staff && (
         <div className="filter-row">
           <label>
@@ -466,7 +509,15 @@ function PunchIn({ data, now, act }) {
     </Panel>
   );
 }
-export function GamerView({ screen, data, act, now }) {
+export function GamerView(props) {
+  return (
+    <>
+      <GamerCore {...props} />
+      {props.screen !== "dashboard" && <SupportConsole {...props} />}
+    </>
+  );
+}
+function GamerCore({ screen, data, act, now }) {
   const [selected, setSelected] = useState(null);
   if (screen === "dashboard")
     return (
@@ -477,6 +528,9 @@ export function GamerView({ screen, data, act, now }) {
           camp={<PunchIn data={data} now={now} act={act} />}
           party={<SquadRoster data={data} />}
           onQuest={setSelected}
+          support={
+            <SupportConsole screen={screen} data={data} act={act} now={now} />
+          }
         />
         {selected && (
           <QuestDetail
@@ -668,6 +722,12 @@ function Journal({ data, act, now }) {
                 Received {fmt(today.submittedAt)} IST · Receipt{" "}
                 {today._id.slice(0, 8)}
               </Receipt>
+              <p className="muted">
+                Evidence {today._id}
+                {today.supportTicketIds?.length
+                  ? ` · Support ${today.supportTicketIds.join(", ")}`
+                  : ""}
+              </p>
               {[
                 ["Completed work", today.workDone],
                 ["Technical learnings", today.learnings],
@@ -714,6 +774,17 @@ function Journal({ data, act, now }) {
                   min: 10,
                   placeholder: "Specific commitments for your next shift…",
                 },
+                {
+                  name: "supportTicketId",
+                  label: "Related private support ticket (optional)",
+                  options: [
+                    { value: "", label: "No linked ticket" },
+                    ...(data.support?.tickets || []).map((t) => ({
+                      value: t._id,
+                      label: t.description.slice(0, 80),
+                    })),
+                  ],
+                },
               ]}
               submit="Seal today’s field log"
               onSubmit={(v) =>
@@ -735,7 +806,12 @@ function Journal({ data, act, now }) {
                   <span className="eyebrow">{j.day}</span>
                   <h3>{j.workDone}</h3>
                   <p>{j.learnings}</p>
-                  <small className="muted">{fmt(j.submittedAt)} IST</small>
+                  <small className="muted">
+                    {fmt(j.submittedAt)} IST · Evidence {j._id}
+                    {j.supportTicketIds?.length
+                      ? ` · Support ${j.supportTicketIds.join(", ")}`
+                      : ""}
+                  </small>
                 </article>
               ))
           ) : (
@@ -784,6 +860,9 @@ function Rewards({ data }) {
       </div>
       <div className="two-columns">
         <Panel title="Trophy leaderboard" kicker="TROPHIES ONLY / LIVE">
+          {data.rankingPaused && (
+            <p>Week 1 discovery is descriptive. Student rankings are paused.</p>
+          )}
           <div className="leaderboard">
             {ranked.map((u, i) => (
               <div
@@ -809,7 +888,7 @@ function Rewards({ data }) {
         <div>
           <Panel
             title="Trophy ledger"
-            kicker="APPEND-ONLY / DAILY CAP 100 TROPHIES"
+            kicker="APPEND-ONLY / DAILY CAP 50 TROPHIES"
           >
             {data.trophies.length ? (
               data.trophies.map((t) => (
@@ -1077,7 +1156,15 @@ function Telemetry({ data, now, act, executive = false }) {
     </>
   );
 }
-export function StaffView({ screen, data, act, now }) {
+export function StaffView(props) {
+  return (
+    <>
+      <StaffCore {...props} />
+      <SupportConsole {...props} />
+    </>
+  );
+}
+function StaffCore({ screen, data, act, now }) {
   const isCentre = data.user.role === "CENTRE_COMMAND";
   if (screen === "dashboard")
     return <Telemetry data={data} now={now} act={act} executive={isCentre} />;
@@ -1094,7 +1181,13 @@ export function StaffView({ screen, data, act, now }) {
     );
   if (screen === "coaching") return <Coaching data={data} act={act} />;
   if (screen === "awards") return <Proposals data={data} act={act} />;
-  if (screen === "setup") return <Setup data={data} act={act} />;
+  if (screen === "setup")
+    return (
+      <>
+        <Setup data={data} act={act} />
+        <ChallengeManager data={data} act={act} />
+      </>
+    );
   if (screen === "rules-approvals") return <Approvals data={data} act={act} />;
   if (screen === "client-control") return <Chaos data={data} act={act} />;
   if (screen === "reports") return <Reports data={data} act={act} />;
@@ -1430,7 +1523,14 @@ function Setup({ data, act }) {
         code="CC01"
         title="Expedition setup"
         subtitle="Set the conditions for meaningful work."
-        action={<Badge>CONFIG REV {data.cohort.version}</Badge>}
+        action={
+          <div className="button-row">
+            <a className="btn primary" href="#role-challenges">
+              Manage challenges
+            </a>
+            <Badge>CONFIG REV {data.cohort.version}</Badge>
+          </div>
+        }
       />
       <div className="two-columns">
         <Panel
@@ -1468,7 +1568,12 @@ function Setup({ data, act }) {
           />
           <div className="detail-grid">
             <span>
-              SHIFT<strong>09:00–18:00 IST</strong>
+              SUPPORT WORKDAY
+              <strong>
+                {data.support?.calendar
+                  ? `${String(Math.floor(data.support.calendar.startMinute / 60)).padStart(2, "0")}:${String(data.support.calendar.startMinute % 60).padStart(2, "0")}–${String(Math.floor((data.support.calendar.startMinute + 480) / 60)).padStart(2, "0")}:${String(data.support.calendar.startMinute % 60).padStart(2, "0")} ${data.support.calendar.timeZone}`
+                  : "Configure working calendar below"}
+              </strong>
             </span>
             <span>
               START DATE<strong>{data.cohort.startDate}</strong>
@@ -1496,6 +1601,14 @@ function Setup({ data, act }) {
                   value: t._id,
                   label: t.name,
                 })),
+              },
+              {
+                name: "teamRoleCode",
+                label: "Team role",
+                options: [
+                  { value: "", label: "Keep current role" },
+                  ...teamRoles.map((r) => ({ value: r.code, label: r.label })),
+                ],
               },
             ]}
             submit="Update allocation"

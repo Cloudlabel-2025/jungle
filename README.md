@@ -1,5 +1,19 @@
 # CODEWILD
 
+## Role-based challenges across all teams
+
+Centre Command → **Expedition setup → Manage challenges** creates a draft with one or more named tasks, target team roles, instructions, acceptance criteria and deadlines. **Preview recipients** lists the matching player in each of the five teams; **Publish to all teams** releases independent task assignments together. Missing or duplicate active role holders block publication. Draft edits and roster changes require a fresh preview; repeated publication never creates duplicate work.
+
+Players receive assignments in **Objectives** and the map's **Objectives** panel through the existing six-second visible-page refresh. New assignments also produce an in-app toast while signed in. Players submit a completion summary and evidence references; the Mission Commander reviews them in **Trail objectives**, approves or returns with feedback. Challenge filters and per-team progress are available to command. Each team's completion is independent. Existing reward processing and caps apply.
+
+The additive migration `node --env-file-if-exists=.env.local scripts/migrate-challenges.mjs` adds stable team-role codes and integrity indexes without resetting accounts, passwords or existing tasks. See [the challenge workflow guide](artifacts/role-challenges.md) for permissions, endpoints and validation evidence.
+
+## 26 October campus handover V2
+
+The existing workspaces now include a private Help Desk, configurable working-hour SLA, all six human support routes, descriptive discovery baselines, a reviewed success/failure case library, and MC-proposed / CC-validated growth reports with the 40/20/25/15 rubric. Individual password sign-in is available for provisioned accounts. New trophy awards cap at **50/day**; gamer data is team scoped and Week-1 rankings are paused.
+
+Read [the implementation and gap register](artifacts/campus-v2-handover.md) for the 15-screen mapping, operational setup, additive migration, credential provisioning, backup/restore verification, acceptance evidence and remaining pilot gates. Centre Command must configure the college's support calendar and discovery prompt; neither is invented from the brief. Production account provisioning and staging remain operator work.
+
 ## Escape the Wild: jungle experience
 
 The player workspace is now an original cinematic jungle expedition. Each existing squad is a party of five explorers; the Commander is their Expedition Guide and Centre Command is the Expedition Council. Existing accounts, permissions, records, rewards, and approval rules are preserved.
@@ -46,7 +60,7 @@ If your environment uses Windows-managed certificate authorities, start npm with
 ## Working flows
 
 - Punch-in uses the server clock in Asia/Kolkata. On-time means at or before 09:00:00 IST; after 09:15:00, a reason is mandatory. A late arrival records one HP infraction. Attendance is unique per operative per IST day.
-- Read a foundation and answer its check to complete it. The correct answer stays on the server. Ten foundations each award 15 XP and 10 trophies. XP tracks personal experience (100 XP per level); only trophies determine leaderboard ranks. Daily caps are 150 XP and 100 trophies.
+- Read a foundation and answer its check to complete it. The correct answer stays on the server. Ten foundations each award 15 XP and 10 trophies, subject to daily caps. XP tracks personal experience (100 XP per level); trophies determine team-scoped ranks after Week 1. Daily caps are 150 XP and 50 trophies.
 - Open an assigned quest to report Complete, On Track, At Risk, or Delayed before its deadline. Move work to Review; a Commander approves it and awards its XP. Dependency locks are enforced on the server. Finishing work does not waive the pre-deadline communication rule.
 - Submit a flight log once per day. Its timestamp and content are immutable through application APIs. Squad messages and blocker broadcasts are persisted in MongoDB. A Commander can resolve blockers.
 - Commander coaching notes are private to command roles. Infractions always deduct exactly one HP and create an energy audit event. Three consecutive drops alert the operative’s squad and command. Zero HP opens a rescue case.
@@ -104,7 +118,6 @@ npm start
 
 Set `MONGODB_URI`, `SESSION_SECRET`, and `APP_ORIGIN` to the deployment’s exact HTTPS origin. HTTPS is required for production session cookies. Sessions are HttpOnly, signed, SameSite=Lax, and expire after eight hours. Every API action independently checks the current database role and scope. MongoDB unique keys and transactions prevent duplicate game rewards.
 
-The requested persona launcher is **simulation access**, not identity verification. In production, persona login is disabled unless `DEMO_MODE=true`. For a private hosted simulation, also set a strong `DEMO_ACCESS_CODE` and restrict deployment access. Do not expose the persona launcher as public authentication. A public rollout still needs your chosen identity provider, per-person account provisioning, operational rate limiting, monitoring, backups, and scheduled reconciliation. No deployment has been performed.
+The persona launcher is **simulation access**. In production it is disabled unless `DEMO_MODE=true`. For a private hosted simulation, also set a strong `DEMO_ACCESS_CODE` and restrict deployment access. Individual password authentication is available through the sign-in form after secure account provisioning (see the V2 handover). A public rollout still requires account provisioning, operational rate limiting, monitoring, scheduled backups/reconciliation and institutional access validation. No deployment has been performed.
 
 Schemas live in `lib/db.js`, immutable foundation/perk/rule definitions in `lib/catalog.js`, and the transaction-based authority engine in `lib/engine.js`. The isolated runtime is rebuilt by `npm run prepare` and `npm run build`.
-

@@ -196,13 +196,13 @@
   left: 21px;
   z-index: 5;
   display: grid;
-  gap: 10px;
+  gap: 7px;
 }
 .game-action-rail > button,
 .game-action-rail > a,
 .game-action-rail .game-camp-trigger {
   width: 60px;
-  min-height: 57px;
+  min-height: 47px;
   display: flex;
   flex-direction: column;
   justify-content: center;

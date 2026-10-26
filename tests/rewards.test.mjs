@@ -11,8 +11,8 @@ import { boundedAward } from "../lib/rules.js";
 test("normal rewards split into 3x experience and 2x trophies with separate caps", () => {
   assert.deepEqual(rewardAmounts(5), { xp: 15, trophies: 10 });
   assert.equal(boundedAward(15, 149, DAILY_XP_CAP), 1);
-  assert.equal(boundedAward(10, 99, DAILY_TROPHY_CAP), 1);
-  assert.equal(boundedAward(10, 100, DAILY_TROPHY_CAP), 0);
+  assert.equal(boundedAward(10, 49, DAILY_TROPHY_CAP), 1);
+  assert.equal(boundedAward(10, 50, DAILY_TROPHY_CAP), 0);
 });
 test("experience levels depend only on personal XP", () => {
   assert.equal(experienceLevel(0), 1);

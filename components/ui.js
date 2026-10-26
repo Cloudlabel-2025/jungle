@@ -138,7 +138,10 @@ export function Form({
         const data = Object.fromEntries(new FormData(form));
         for (const field of fields)
           if (field.type === "number")
-            data[field.name] = Number(data[field.name]);
+            data[field.name] =
+              data[field.name] === "" && field.optional
+                ? ""
+                : Number(data[field.name]);
         try {
           if ((await onSubmit(data)) !== false) form.reset();
         } finally {

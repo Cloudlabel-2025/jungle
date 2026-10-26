@@ -4663,3 +4663,180 @@ td {
     scroll-behavior: auto !important;
   }
 }
+/* Existing workspace panels host the handover workflows without extra routes. */
+.support-console {
+  width: 100%;
+  max-width: 1440px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+.challenge-console {
+  scroll-margin-top: 90px;
+  margin: 28px 0;
+  display: grid;
+  gap: 20px;
+}
+.challenge-intro,
+.challenge-message,
+.challenge-record,
+.challenge-preview,
+.challenge-filter {
+  margin: 18px 24px;
+}
+.challenge-record {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  overflow-wrap: anywhere;
+}
+.challenge-record p,
+.challenge-task-detail p {
+  white-space: pre-wrap;
+}
+.challenge-definition {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-width: 0;
+}
+.challenge-definition legend {
+  padding: 0 8px;
+  color: var(--lime);
+}
+.challenge-filter {
+  display: grid;
+  gap: 8px;
+  max-width: 480px;
+}
+.challenge-filter select {
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+}
+.challenge-card-label {
+  color: var(--lime);
+  font-size: 12px;
+}
+.challenge-table-wrap {
+  overflow-x: auto;
+  margin-block: 16px;
+}
+.challenge-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+.challenge-table th,
+.challenge-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.challenge-table small {
+  display: block;
+  color: var(--muted);
+}
+.challenge-task-detail {
+  margin-block: 16px;
+}
+.challenge-preview {
+  padding: 16px;
+  border: 1px solid var(--lime);
+  border-radius: 8px;
+}
+.challenge-message {
+  color: var(--amber);
+}
+@media (max-width: 600px) {
+  .challenge-intro,
+  .challenge-message,
+  .challenge-record,
+  .challenge-preview,
+  .challenge-filter {
+    margin-inline: 14px;
+  }
+  .challenge-definition {
+    padding: 14px;
+  }
+}
+.support-console > .panel > :not(.panel-heading):not(.tabs) {
+  margin-inline: 20px;
+}
+.support-console .tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.support-action {
+  border-top: 1px solid #344239;
+  padding: 14px 0;
+}
+.support-action summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 6px 0;
+}
+.support-action .field-form {
+  margin-top: 16px;
+}
+.support-ticket-list {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+.support-ticket {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  padding: 16px;
+  text-align: left;
+  border: 1px solid #344239;
+  border-radius: 8px;
+  color: inherit;
+  background: #142019;
+}
+.support-ticket.selected {
+  border-color: #b5e875;
+}
+.support-ticket strong,
+.support-record,
+.support-copy {
+  overflow-wrap: anywhere;
+}
+.support-record {
+  padding: 18px 0;
+  border-top: 1px solid #344239;
+}
+.support-copy {
+  white-space: pre-wrap;
+}
+.support-copy small {
+  display: block;
+  margin-top: 8px;
+}
+.support-search {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+}
+.support-search input {
+  padding: 12px;
+  color: inherit;
+  background: #142019;
+  border: 1px solid #52694e;
+  border-radius: 6px;
+}
+.support-history {
+  padding-left: 20px;
+}
+.support-history pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}

@@ -7,6 +7,8 @@ import { models } from "../lib/db.js";
 import { modules, personas, navigation, prefix } from "../lib/catalog.js";
 import { initialFiles } from "../lib/lab-project.js";
 import { stopNext } from "./dev-runtime.mjs";
+import { supportAcceptance } from "./support-acceptance.mjs";
+import { challengeAcceptance } from "./challenge-acceptance.mjs";
 
 if (!process.env.TEST_MONGODB_URI)
   throw new Error("Set TEST_MONGODB_URI to a running replica set.");
@@ -113,6 +115,9 @@ try {
     assert.equal(data.user.teamId, persona.teamId);
     if (persona.role === "GAMER") {
       assert.ok(data.tasks.every((t) => t.teamId === persona.teamId));
+      assert.ok(data.roster.every((p) => p.teamId === persona.teamId));
+      assert.deepEqual(data.leaderboard, []);
+      assert.equal(data.rankingPaused, true);
       assert.equal(data.coaching.length, 0);
       assert.ok(data.journals.every((j) => j.userId === persona._id));
     }
@@ -122,7 +127,7 @@ try {
   );
   for (const who of [gamer, commander, lead1]) {
     const data = await request(who, "state");
-    assert.equal(data.roster.length, 25);
+    assert.equal(data.roster.length, who === gamer ? 5 : 25);
     assert.equal(data.teams.length, 5);
     assert.equal(data.modules.length, 10);
     assert.equal(data.perks.length, 13);
@@ -137,6 +142,7 @@ try {
   console.log(
     "PASS production routes, origin checks, arena access code and role sessions",
   );
+  await supportAcceptance(request, personas);
   await request(commander, "commander/coaching", {
     userId: gamer,
     standupRating: 4,
@@ -194,7 +200,7 @@ try {
   let state = await request(gamer, "state");
   assert.equal(state.user.xp, 150);
   assert.equal(state.progress.length, 10);
-  assert.equal(state.user.trophies, 100);
+  assert.equal(state.user.trophies, 50);
   assert.ok(state.leaderboard.every((p) => !("xp" in p)));
   for (const task of state.tasks.filter((t) => t.assigneeId === gamer)) {
     await request(gamer, "gamer/task-status", {
@@ -241,8 +247,14 @@ try {
     learnings: "Verified atomic transaction handling.",
     blockers: "",
     tomorrowPlan: "Deliver the reviewed ledger endpoint.",
+    supportTicketId: (await request(gamer, "support")).tickets[0]._id,
   };
+  await request("usr_g02", "gamer/journal", journal, 403);
   await request(gamer, "gamer/journal", journal);
+  assert.deepEqual(
+    (await request(gamer, "state")).journals[0].supportTicketIds,
+    [journal.supportTicketId],
+  );
   await request(gamer, "gamer/journal", journal, 409);
   await request(gamer, "gamer/messages", {
     message: "Need a review of ledger invariants.",
@@ -372,6 +384,7 @@ try {
   });
   const csv = await request(lead1, "centre-command/reports?format=csv");
   assert.match(csv, /Emergency|communication infraction/);
+  await challengeAcceptance(request);
   await request(gamer, "auth/logout", {});
   await request(gamer, "state", null, 401);
   console.log(

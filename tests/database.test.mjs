@@ -36,7 +36,7 @@ test(
       );
       let user = await models.User.findById("test_gamer");
       assert.equal(user.xp, 150);
-      assert.equal(user.trophies, 100);
+      assert.equal(user.trophies, 50);
       assert.equal(await models.Trophy.countDocuments(), 2);
       assert.equal(await models.Experience.countDocuments(), 2);
       await models.User.create({

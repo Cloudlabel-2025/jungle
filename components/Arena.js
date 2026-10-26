@@ -32,7 +32,7 @@ import {
 import { navigation, prefix, personas } from "@/lib/catalog.js";
 import { roleNames } from "@/lib/expedition";
 import { league } from "@/lib/rules.js";
-import { Avatar, Modal, HP, Busy, Badge } from "./ui";
+import { Avatar, Modal, HP, Busy, Badge, Form } from "./ui";
 import { GamerView, StaffView } from "./Views";
 import CodeLab from "./CodeLab";
 import PlayerStatus from "./PlayerStatus";
@@ -78,12 +78,31 @@ export default function Arena({
   const lastBroadcast = useRef(null),
     broadcastInitialized = useRef(false),
     audio = useRef(null);
+  const challengeInbox = useRef({ userId: null, ids: new Set() });
   const role = user?.role || "GAMER";
   const nav = navigation[role];
   const current = nav.find((n) => n[1] === screen) || nav[0];
   const notify = useCallback((message, type = "success") => {
     setToast({ message, type });
   }, []);
+  useEffect(() => {
+    if (!data || data.user.role !== "GAMER") return;
+    const own = data.tasks.filter(
+      (t) => t.challengeId && t.assigneeId === data.user._id,
+    );
+    const previous = challengeInbox.current;
+    if (previous.userId === data.user._id) {
+      const added = own.filter((t) => !previous.ids.has(t._id));
+      if (added.length)
+        notify(
+          `${added.length} new challenge ${added.length === 1 ? "task" : "tasks"} assigned to you. Open Objectives to start.`,
+        );
+    }
+    challengeInbox.current = {
+      userId: data.user._id,
+      ids: new Set(own.map((t) => t._id)),
+    };
+  }, [data?.tasks, data?.user._id, notify]);
   useEffect(() => {
     if (!data) return;
     const event = data?.events[0];
@@ -367,14 +386,38 @@ export default function Arena({
             <span className="status-dot" />
             THE EXPEDITION AWAITS
           </Badge>
-          <h2>Choose your explorer.</h2>
+          <h2>Enter your expedition.</h2>
+          <Form
+            fields={[
+              { name: "email", label: "Email", type: "email" },
+              { name: "password", label: "Password", type: "password" },
+            ]}
+            submit="Sign in"
+            onSubmit={async (values) => {
+              try {
+                const response = await fetch("/api/auth/login", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(values),
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error);
+                window.location.assign(
+                  `/${prefix(result.user.role)}/dashboard`,
+                );
+                return true;
+              } catch (error) {
+                notify(error.message, "error");
+                return false;
+              }
+            }}
+          />
           {demo ? (
             launcherContent
           ) : (
             <p>
-              Persona login is disabled. This deployment needs an identity
-              provider before users can sign in. For a private simulation,
-              configure DEMO_MODE and an access code.
+              Use your individually provisioned account. Contact Centre Command
+              if your account needs provisioning or password recovery.
             </p>
           )}
         </div>

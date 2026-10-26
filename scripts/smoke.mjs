@@ -26,7 +26,7 @@ for (const role of Object.keys(navigation)) {
   const stateResponse = await req("/api/state");
   assert.equal(stateResponse.status, 200);
   const data = await stateResponse.json();
-  assert.equal(data.roster.length, 25);
+  assert.equal(data.roster.length, role === "GAMER" ? 5 : 25);
   assert.equal(data.teams.length, 5);
   assert.equal(data.modules.length, 10);
   assert.equal(data.perks.length, 13);

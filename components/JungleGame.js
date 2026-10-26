@@ -11,6 +11,7 @@ import {
   SquareTerminal,
   ListChecks,
   Trophy,
+  LifeBuoy,
   X,
 } from "lucide-react";
 import { encounters } from "@/lib/expedition";
@@ -23,7 +24,14 @@ const stops = encounters.map((encounter, index) => ({
   y: [68, 28, 72, 32, 68, 25, 72, 30, 68, 37][index],
 }));
 
-export default function JungleGame({ data, act, camp, party, onQuest }) {
+export default function JungleGame({
+  data,
+  act,
+  camp,
+  party,
+  onQuest,
+  support,
+}) {
   const [panel, setPanel] = useState(null),
     [selected, setSelected] = useState(null);
   const viewport = useRef(null),
@@ -120,6 +128,7 @@ export default function JungleGame({ data, act, camp, party, onQuest }) {
     extraction: "Expedition clearance",
     encounters: "Choose an encounter",
     leaderboard: "Trophy leaderboard",
+    support: "Help Desk & growth",
   };
   return (
     <section className="jungle-game" aria-label="Expedition game map">
@@ -269,6 +278,7 @@ export default function JungleGame({ data, act, camp, party, onQuest }) {
           ["leaderboard", Trophy, "Ranks"],
           ["objectives", ListChecks, "Objectives"],
           ["extraction", Flag, "Clearance"],
+          ["support", LifeBuoy, "Help Desk"],
         ].map(([key, Icon, label]) => (
           <button
             key={key}
@@ -319,11 +329,13 @@ export default function JungleGame({ data, act, camp, party, onQuest }) {
           close={() => setPanel(null)}
         >
           {panel === "party" && party}
+          {panel === "support" && support}
           {panel === "leaderboard" && (
             <div className="game-objective-list">
               <p className="muted">
-                Ranked by earned trophies. XP tracks your personal experience
-                level.
+                {data.rankingPaused
+                  ? "Week 1 discovery is descriptive. Student rankings are paused."
+                  : "Ranked by earned trophies within your team. XP tracks your personal experience level."}
               </p>
               <ol className="trophy-rankings">
                 {data.leaderboard.map((person) => (
