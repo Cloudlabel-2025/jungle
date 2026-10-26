@@ -1,0 +1,272 @@
+{
+  "verifiedAt": "2026-10-24T13:22:20.859Z",
+  "browser": {
+    "personas": 29,
+    "pages": 16,
+    "checks": [
+      {
+        "persona": "Priya Sharma",
+        "passed": true
+      },
+      {
+        "persona": "Rohan Gupta",
+        "passed": true
+      },
+      {
+        "persona": "Ananya Reddy",
+        "passed": true
+      },
+      {
+        "persona": "Kabir Khan",
+        "passed": true
+      },
+      {
+        "persona": "Ishaan Verma",
+        "passed": true
+      },
+      {
+        "persona": "Diya Joshi",
+        "passed": true
+      },
+      {
+        "persona": "Arjun Nair",
+        "passed": true
+      },
+      {
+        "persona": "Sneha Kulkarni",
+        "passed": true
+      },
+      {
+        "persona": "Varun Rao",
+        "passed": true
+      },
+      {
+        "persona": "Aditya Das",
+        "passed": true
+      },
+      {
+        "persona": "Kavya Menon",
+        "passed": true
+      },
+      {
+        "persona": "Siddharth Bose",
+        "passed": true
+      },
+      {
+        "persona": "Meera Iyer",
+        "passed": true
+      },
+      {
+        "persona": "Nikhil Bhat",
+        "passed": true
+      },
+      {
+        "persona": "Tanvi Kapoor",
+        "passed": true
+      },
+      {
+        "persona": "Devansh Pillai",
+        "passed": true
+      },
+      {
+        "persona": "Rhea Saxena",
+        "passed": true
+      },
+      {
+        "persona": "Manish Tiwari",
+        "passed": true
+      },
+      {
+        "persona": "Pooja Hegde",
+        "passed": true
+      },
+      {
+        "persona": "Karan Malhotra",
+        "passed": true
+      },
+      {
+        "persona": "Sanya Chopra",
+        "passed": true
+      },
+      {
+        "persona": "Gaurav Sen",
+        "passed": true
+      },
+      {
+        "persona": "Neha Nambiar",
+        "passed": true
+      },
+      {
+        "persona": "Harsh Vardhan",
+        "passed": true
+      },
+      {
+        "persona": "Aarav Patel",
+        "passed": true
+      },
+      {
+        "page": "/gamer/before-you-board",
+        "passed": true
+      },
+      {
+        "page": "/gamer/sprint-board",
+        "passed": true
+      },
+      {
+        "page": "/gamer/team-room",
+        "passed": true
+      },
+      {
+        "page": "/gamer/daily-journal",
+        "passed": true
+      },
+      {
+        "page": "/gamer/rewards",
+        "passed": true
+      },
+      {
+        "page": "/gamer/ide",
+        "passed": true
+      },
+      {
+        "feature": "Code Lab baseline and asynchronous failure detection during preview recompile",
+        "passed": true
+      },
+      {
+        "feature": "Code Lab timeout releases test controls",
+        "passed": true
+      },
+      {
+        "feature": "Code Lab syntax-error recovery and MongoDB save/reload",
+        "passed": true
+      },
+      {
+        "feature": "All virtual terminal commands, staged snapshot and commit history",
+        "passed": true
+      },
+      {
+        "feature": "Saved Code Lab project stays isolated across persona switches",
+        "passed": true
+      },
+      {
+        "persona": "Commander Vikramaditya",
+        "passed": true
+      },
+      {
+        "page": "/commander/dashboard",
+        "passed": true
+      },
+      {
+        "page": "/commander/sprints",
+        "passed": true
+      },
+      {
+        "page": "/commander/coaching",
+        "passed": true
+      },
+      {
+        "page": "/commander/awards",
+        "passed": true
+      },
+      {
+        "persona": "Balaji",
+        "passed": true
+      },
+      {
+        "page": "/centre-command/setup",
+        "passed": true
+      },
+      {
+        "page": "/centre-command/dashboard",
+        "passed": true
+      },
+      {
+        "page": "/centre-command/rules-approvals",
+        "passed": true
+      },
+      {
+        "page": "/centre-command/client-control",
+        "passed": true
+      },
+      {
+        "page": "/centre-command/reports",
+        "passed": true
+      },
+      {
+        "persona": "Karun",
+        "passed": true
+      },
+      {
+        "persona": "Ranjeetha",
+        "passed": true
+      },
+      {
+        "feature": "Two-lead approval through persona switches and disabled duplicate review controls",
+        "passed": true
+      },
+      {
+        "feature": "Arena week setup, first disruption broadcast and alert toggle",
+        "passed": true
+      },
+      {
+        "feature": "Live chat submit, scroll update and navigation without React cleanup crash",
+        "passed": true
+      },
+      {
+        "feature": "Journal submission, immutable receipt and reload persistence",
+        "passed": true
+      },
+      {
+        "feature": "Quest pre-deadline receipt, status transition and attendance submission",
+        "passed": true
+      },
+      {
+        "feature": "True 768px tablet and 375px mobile preview, project reset and passing ledger suite",
+        "passed": true
+      },
+      {
+        "feature": "390px mobile Code Lab, navigation and quest board without page overflow",
+        "passed": true
+      },
+      {
+        "page": "/gamer/dashboard",
+        "passed": true
+      },
+      {
+        "feature": "Logout stays signed out after background refresh interval",
+        "passed": true
+      }
+    ]
+  },
+  "automated": {
+    "productionBuild": "passed",
+    "regressionTests": 9,
+    "acceptance": "all expanded workflow checks passed"
+  },
+  "expectedFailureChecks": [
+    "Invalid ledger code and async assertion failures are reported",
+    "Pending test times out and releases controls",
+    "Overdraft and invalid money amounts are rejected"
+  ],
+  "environment": "Browser and API mutations used isolated temporary QA databases; no user game records were changed.",
+  "liveApplication": {
+    "url": "http://127.0.0.1:3000",
+    "health": "HTTP 200",
+    "databaseRecovery": "Graceful shutdown and automatic restart verified; game record counts unchanged"
+  },
+  "fixes": [
+    "Live chat scroll effect no longer returns an invalid React cleanup value",
+    "Session refresh cannot restore a signed-out persona; post-action refresh waits for fresh data",
+    "Code Lab preview and test runs use independent identities, await asynchronous tests and recover from timeouts",
+    "Saved project loading errors can be retried; controls wait for workspace readiness",
+    "Formatter does not overwrite newer edits; saved and unsaved source are distinguished",
+    "Exact decimal-to-paise conversion accepts INR 0.29 without floating-point error",
+    "Tablet and mobile previews render at their actual 768px and 375px widths",
+    "Rescue cases close after qualifying clean days even when HP was fully restored",
+    "Duplicate and self-review controls are disabled consistently with server rules",
+    "First client disruption is alerted; cohort labels reflect configuration",
+    "Build source scanning is limited to UI files with one page-data worker",
+    "Development launcher recovers a stopped managed local MongoDB while preserving records"
+  ],
+  "cleanup": "Temporary browser QA servers and databases removed; actual CODEWILD app remains running."
+}

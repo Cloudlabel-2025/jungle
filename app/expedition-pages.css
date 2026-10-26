@@ -1,0 +1,380 @@
+/* Expedition interiors: readable game equipment over distinct jungle settings. */
+.field-mode {
+  --field-accent: #83ddd0;
+  --field-edge: #628e7b;
+}
+.jungle-world .field-mode .workspace {
+  background:
+    linear-gradient(#081c17e8, #081c17f7),
+    url("/images/verdant-wilds.webp") center / cover fixed;
+}
+.jungle-world .field-mode .main-content {
+  padding: 20px 28px 32px;
+}
+.field-brief {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  padding: 0 0 14px;
+  color: #afc5b5;
+  font-size: 10px;
+}
+.field-brief > span,
+.field-brief a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.field-brief > span:first-child {
+  color: #d7ebc6;
+}
+.field-brief svg {
+  color: #91c6a2;
+}
+.field-brief a {
+  margin-left: auto;
+  color: #a4e7da;
+  padding: 6px 0;
+}
+.jungle-world .field-mode .expedition-heading {
+  --scene-image: url("/images/verdant-terrain.webp");
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 235px;
+  margin: 0 0 24px;
+  padding: 32px;
+  overflow: hidden;
+  border: 1px solid #7e9d6f70;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, #071c17f2 5%, #0b241ac9 46%, #071c1720),
+    var(--scene-image) center 55% / cover;
+  box-shadow: inset 0 -55px 65px -35px #06150dec;
+}
+.expedition-heading.scene-objectives {
+  --scene-image: url("/images/uncharted-valley.webp") !important;
+}
+.expedition-heading.scene-campfire {
+  --scene-image: url("/images/expedition-camp.webp") !important;
+}
+.expedition-heading.scene-journal {
+  --scene-image: url("/images/verdant-wilds.webp") !important;
+}
+.expedition-heading.scene-rewards {
+  --scene-image: url("/images/uncharted-east.webp") !important;
+}
+.expedition-heading.scene-encounters {
+  --scene-image: url("/images/uncharted-west.webp") !important;
+}
+.expedition-heading-copy {
+  max-width: 620px;
+}
+.scene-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 1.4px;
+  color: #bfdf9c;
+}
+.jungle-world .expedition-heading h1 {
+  font-family: var(--display);
+  font-size: clamp(29px, 3.3vw, 45px);
+  line-height: 1.12;
+  margin: 14px 0 12px;
+  color: #f1f3da;
+  text-shadow: 0 3px 12px #0006;
+}
+.jungle-world .expedition-heading p {
+  max-width: 470px;
+  color: #e2e6cf;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.scene-instruction {
+  display: block;
+  max-width: 500px;
+  margin-top: 10px;
+  font-size: 11px;
+  line-height: 1.65;
+  color: #b7cab8;
+}
+.scene-action {
+  align-self: flex-start;
+  flex-shrink: 0;
+}
+.scene-action .badge {
+  padding: 8px 10px;
+  background: #0a211bdd;
+  border: 1px solid #a3be7d70;
+}
+.scene-reference {
+  position: absolute;
+  right: 16px;
+  bottom: 13px;
+  font-family: var(--mono);
+  font-size: 6px;
+  letter-spacing: 1.5px;
+  color: #e0ead5a8;
+}
+.jungle-world .field-mode .panel {
+  background: linear-gradient(135deg, #173327f5, #0b211af7);
+  border: 1px solid #4b6c4f;
+  border-top: 2px solid #a2ba795e;
+  box-shadow: 0 8px 24px #0002;
+  border-radius: 7px;
+}
+.field-mode .panel-heading {
+  background: #071e1940;
+}
+.field-mode .panel-heading > svg {
+  color: #b5cf86;
+}
+.field-mode .callout {
+  background: #182e24db;
+  border-left: 3px solid #99ba6c;
+  border-radius: 3px;
+}
+.field-mode .btn.primary {
+  background: #b1d883;
+  color: #172a17;
+  border-color: #d6ebad;
+  box-shadow: inset 0 1px 0 #edf8d04d;
+}
+.field-mode .btn.primary:hover {
+  background: #c8e99a;
+}
+.field-mode .btn:focus-visible,
+.field-mode button:focus-visible,
+.field-mode a:focus-visible {
+  outline: 2px solid #8fe0cf;
+  outline-offset: 3px;
+}
+.field-mode .board {
+  gap: 15px;
+}
+.field-mode .board-column {
+  background: #081e18b8;
+  border: 1px solid #50704d85;
+  border-radius: 6px;
+  padding: 12px;
+}
+.field-mode .column-heading {
+  border-bottom: 1px solid #74936255;
+  padding: 5px 3px 14px;
+  margin-bottom: 14px;
+  color: #d6e5c5;
+}
+.jungle-world .field-mode .quest-card {
+  position: relative;
+  background: linear-gradient(145deg, #274132, #10251d);
+  border: 1px solid #6c8a5f80;
+  border-left: 3px solid #9ab673;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 5px 12px #0002;
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
+}
+.jungle-world .field-mode .quest-card:hover {
+  transform: translateY(-2px);
+  border-color: #b4d48d;
+}
+.field-mode .quest-card h3 {
+  color: #f1efcf;
+}
+.field-mode .board-callout {
+  margin-bottom: 20px;
+}
+.field-mode .encounters-banner {
+  min-height: 0;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  background: #112b21;
+  border: 1px solid #6a8a5860;
+}
+.field-mode .encounters-banner h2 {
+  font-size: 21px;
+  margin: 5px 0;
+}
+.field-mode .encounters-banner p {
+  font-size: 11px;
+}
+.field-mode .encounter-count > strong {
+  font-size: 26px;
+}
+.jungle-world .field-mode .encounter-card {
+  border-color: #789b5f75;
+  background: #11291f;
+  box-shadow: 0 7px 20px #0003;
+}
+.field-mode .encounter-card.complete {
+  border-color: #9fd179;
+}
+.field-mode .encounter-index {
+  border-radius: 4px;
+  background: #0a252ad9;
+  border: 1px solid #71e6dc70;
+  color: #a9ece1;
+}
+.field-mode .chat-panel {
+  border-top-color: #d5a064;
+}
+.field-mode .chat-stream {
+  background: radial-gradient(ellipse at bottom, #63432922, transparent 75%);
+}
+.field-mode .chat-message {
+  border-radius: 4px 12px 12px;
+  background: #1c3528;
+  border: 1px solid #4e6e4c70;
+}
+.field-mode .chat-message.own {
+  background: #294533;
+  border-color: #86a66c80;
+}
+.field-mode .chat-compose {
+  background: #092017d9;
+  border-top-color: #8c9e6760;
+}
+.field-mode [data-screen="daily-journal"] {
+  --field-accent: #dfc58d;
+}
+.jungle-world .field-mode [data-screen="daily-journal"] .panel {
+  background: linear-gradient(135deg, #302e20f5, #1d271bf7);
+  border-color: #887b4e80;
+  border-top-color: #c1ac73;
+}
+.field-mode [data-screen="daily-journal"] .panel-heading {
+  background: #221f1640;
+}
+.field-mode [data-screen="daily-journal"] textarea {
+  background:
+    repeating-linear-gradient(transparent, transparent 25px, #b7a67c14 26px),
+    #141e15;
+  line-height: 26px;
+  border-color: #827b526b;
+}
+.field-mode [data-screen="daily-journal"] label {
+  color: #dfd5af;
+}
+.jungle-world .field-mode .personal-experience {
+  background: #113329e8;
+  border: 1px solid #7ba96685;
+  border-left: 3px solid #b3f16c;
+}
+.jungle-world .field-mode [data-screen="rewards"] .panel {
+  border-top-color: #c5a361;
+}
+.field-mode .leaderboard-row.is-you {
+  background: #bc9b4720;
+  border-left: 3px solid #e5c37b;
+}
+.field-mode .leaderboard-row .rank {
+  color: #e4c77d;
+}
+.jungle-world .field-mode .perk-card {
+  position: relative;
+  background: linear-gradient(145deg, #393620, #162b20);
+  border: 1px solid #9b885580;
+  border-top: 2px solid #c7b16b;
+  border-radius: 6px;
+  box-shadow: inset 0 0 25px #cbb65d08;
+}
+.field-mode .perk-icon {
+  color: #e7cb82;
+  background: #c2a85418;
+  border: 1px solid #c2a85450;
+  border-radius: 5px;
+}
+.field-mode .lab-heading {
+  min-height: 170px;
+  padding: 25px;
+  margin-bottom: 18px;
+  border: 1px solid #7e9d6f70;
+  border-radius: 7px;
+  background:
+    linear-gradient(90deg, #09231bf5, #0b241abc 65%, #0b241a55),
+    url("/images/expedition-camp.webp") center 65% / cover;
+}
+.field-mode .lab-heading h1 {
+  color: #f1f3da;
+  font-family: var(--display);
+}
+.field-mode .lab-heading .eyebrow {
+  color: #bfdf9c;
+}
+.field-mode .lab-mission {
+  background: #193a2d;
+  border: 1px solid #6a957c80;
+  border-left: 3px solid #83ddd0;
+}
+.field-mode .editor-panel {
+  border-color: #588872;
+}
+.field-mode .editor-tabs,
+.field-mode .editor-status,
+.field-mode .editor-path {
+  background: #10271f;
+  border-color: #3f6553;
+}
+.field-mode .editor-status {
+  color: #a2c6b0;
+}
+@media (max-width: 1050px) {
+  .field-mode .board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .jungle-world .field-mode .expedition-heading {
+    min-height: 220px;
+    padding: 26px;
+  }
+}
+@media (max-width: 767px) {
+  .jungle-world .field-mode .main-content {
+    padding: 14px 12px 24px;
+  }
+  .field-brief {
+    gap: 10px;
+    font-size: 9px;
+    padding-bottom: 12px;
+  }
+  .field-brief a {
+    margin-left: 0;
+  }
+  .jungle-world .field-mode .expedition-heading {
+    padding: 23px 20px 35px;
+    min-height: 240px;
+    flex-wrap: wrap;
+    gap: 14px;
+    background-position:
+      center,
+      65% center;
+  }
+  .scene-location {
+    font-size: 7px;
+    letter-spacing: 0.7px;
+  }
+  .jungle-world .expedition-heading p {
+    font-size: 12px;
+  }
+  .scene-instruction {
+    font-size: 10px;
+  }
+  .scene-action {
+    align-self: auto;
+  }
+  .field-mode .board {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .field-mode .lab-heading {
+    padding: 20px;
+    min-height: 190px;
+  }
+}

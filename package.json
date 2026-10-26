@@ -1,0 +1,33 @@
+{
+  "name": "codewild",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:next": "next dev --webpack --hostname 127.0.0.1",
+    "prepare": "node scripts/prepare-lab.mjs",
+    "build": "npm run prepare && next build --webpack",
+    "start": "next start --hostname 127.0.0.1",
+    "seed": "node --env-file-if-exists=.env.local scripts/seed.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@babel/standalone": "^7.28.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/orbitron": "^5.3.0",
+    "@fontsource/rajdhani": "^5.3.0",
+    "@tailwindcss/postcss": "^4.1.0",
+    "esbuild": "^0.28.2",
+    "lucide-react": "^0.468.0",
+    "mongoose": "^8.19.0",
+    "next": "latest",
+    "prettier": "^3.6.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "^4.1.0"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.2.0"
+  }
+}
