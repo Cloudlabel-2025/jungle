@@ -9,8 +9,11 @@ import {
 import { models, connect, transaction } from "@/lib/db.js";
 import { snapshot } from "@/lib/snapshot.js";
 import { supportAction, supportSnapshot } from "@/lib/support.js";
+import { comparisonTotals } from "@/lib/effort-rules.js";
 import { checkPassword } from "@/lib/password.js";
 import { challengeAction, taskAudit } from "@/lib/challenges.js";
+import { projectAction } from "@/lib/projects.js";
+import { projectLevels } from "@/lib/project-catalog.js";
 import { teamRoles, playerRole } from "@/lib/team-roles.js";
 import { award, deduct, id } from "@/lib/engine.js";
 import { DAILY_XP_CAP } from "@/lib/rewards.js";
@@ -139,6 +142,29 @@ async function handle(request, { params }) {
         serverTime: new Date().toISOString(),
       });
     assertRole(user, all);
+    if (
+      path[0] === "projects" &&
+      path.length === 2 &&
+      request.method === "POST"
+    )
+      return NextResponse.json({
+        success: true,
+        ...(await projectAction(user, path[1], body)),
+      });
+    if (
+      ["gamer/task-status", "commander/task"].includes(route) &&
+      request.method === "POST" &&
+      (await models.Task.exists({
+        _id: body.taskId,
+        projectAttemptId: { $type: "string" },
+      }))
+    ) {
+      assertRole(user, route.startsWith("gamer/") ? ["GAMER"] : staff);
+      return NextResponse.json({
+        success: true,
+        ...(await projectAction(user, "task", body)),
+      });
+    }
     if (route === "challenges" && request.method === "GET") {
       const state = await snapshot(user);
       return NextResponse.json(
@@ -159,6 +185,38 @@ async function handle(request, { params }) {
         success: true,
         ...(await challengeAction(user, path[1], body)),
       });
+    }
+    if (route === "support/comparisons/export" && request.method === "GET") {
+      assertRole(user, ["CENTRE_COMMAND"]);
+      const state = await supportSnapshot(user);
+      const filters = new URL(request.url).searchParams;
+      const technology = (filters.get("technology") || "").toLowerCase();
+      const umbrella = filters.get("umbrella");
+      const comparisons = state.effort.comparisons.filter(
+        (r) =>
+          r.technology.toLowerCase().includes(technology) &&
+          (!umbrella ||
+            state.tickets.find((t) => t._id === r.repeatTicketId)?.category ===
+              umbrella),
+      );
+      return NextResponse.json(
+        {
+          label: "Verified difference between comparable tasks",
+          cohortId: user.cohortId || "alpha",
+          exportedAt: new Date().toISOString(),
+          totals: comparisonTotals(comparisons),
+          comparisons: comparisons.filter((r) => r.status === "VERIFIED"),
+          caveat:
+            "Descriptive reviewed evidence; prior experience, reuse, AI, coaching, workload and task difficulty may affect effort. No causal productivity claim.",
+        },
+        {
+          headers: {
+            "Cache-Control": "no-store",
+            "Content-Disposition":
+              'attachment; filename="codewild-verified-comparisons.json"',
+          },
+        },
+      );
     }
     if (route === "support/export" && request.method === "GET") {
       assertRole(user, ["CENTRE_COMMAND"]);
@@ -779,11 +837,33 @@ async function handle(request, { params }) {
         const operative = await gamer(body.userId, session);
         const nextTeamId = body.teamId || operative.teamId;
         if (!teams.some((t) => t._id === nextTeamId)) fail("Unknown squad.");
+        if (nextTeamId !== operative.teamId) {
+          const activeProjects = await models.ProjectAttempt.find({
+            teamId: operative.teamId,
+            status: { $ne: "CLEARED" },
+          })
+            .select("_id")
+            .session(session)
+            .lean();
+          if (
+            await models.Task.exists({
+              assigneeId: operative._id,
+              projectAttemptId: { $in: activeProjects.map((a) => a._id) },
+            }).session(session)
+          )
+            fail(
+              "This player contributes to an active team project. Complete it or reassign their work before changing teams.",
+              409,
+            );
+        }
         if (
           nextTeamId !== operative.teamId &&
           (await models.Task.exists({
             assigneeId: operative._id,
-            challengeId: { $type: "string" },
+            $or: [
+              { challengeId: { $type: "string" } },
+              { projectAttemptId: { $type: "string" } },
+            ],
             status: { $ne: "Done" },
           }).session(session))
         )
@@ -828,8 +908,11 @@ async function handle(request, { params }) {
       } else if (route === "centre-command/clearance") {
         assertRole(user, ["CENTRE_COMMAND"]);
         const operative = await gamer(body.userId, session);
-        const completed = await models.Progress.countDocuments({
-          userId: operative._id,
+        const completed = await models.ProjectAttempt.countDocuments({
+          teamId: operative.teamId,
+          status: "CLEARED",
+          levelId: { $in: projectLevels.map((l) => l._id) },
+          stars: { $gte: 1 },
         }).session(session);
         const open = await models.Rescue.exists({
           userId: operative._id,
@@ -839,9 +922,14 @@ async function handle(request, { params }) {
           assigneeId: operative._id,
           status: { $ne: "Done" },
         }).session(session);
-        if (completed < 10 || open || operative.hp === 0 || tasks > 0)
+        if (
+          completed < projectLevels.length ||
+          open ||
+          operative.hp === 0 ||
+          tasks > 0
+        )
           fail(
-            "Clearance requires all 10 foundations, all assigned quests approved, positive HP, and no open rescue.",
+            "Clearance requires all 10 team projects cleared, all assigned objectives approved, positive HP, and no open rescue.",
           );
         if (
           !Number.isInteger(body.competency) ||

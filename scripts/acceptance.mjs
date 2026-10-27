@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";
+import { mkdir } from "node:fs/promises";
+import { resolve } from "node:path";
 import mongoose from "mongoose";
 import { seed } from "../lib/seed.js";
 import { models } from "../lib/db.js";
@@ -8,7 +10,9 @@ import { modules, personas, navigation, prefix } from "../lib/catalog.js";
 import { initialFiles } from "../lib/lab-project.js";
 import { stopNext } from "./dev-runtime.mjs";
 import { supportAcceptance } from "./support-acceptance.mjs";
+import { effortAcceptance } from "./effort-acceptance.mjs";
 import { challengeAcceptance } from "./challenge-acceptance.mjs";
+import { projectAcceptance } from "./project-acceptance.mjs";
 
 if (!process.env.TEST_MONGODB_URI)
   throw new Error("Set TEST_MONGODB_URI to a running replica set.");
@@ -143,6 +147,7 @@ try {
     "PASS production routes, origin checks, arena access code and role sessions",
   );
   await supportAcceptance(request, personas);
+  await effortAcceptance(request);
   await request(commander, "commander/coaching", {
     userId: gamer,
     standupRating: 4,
@@ -226,12 +231,17 @@ try {
       .filter((t) => t.assigneeId === gamer)
       .every((t) => t.reportedAt && t.status === "Done"),
   );
-  await request(lead1, "centre-command/clearance", {
-    userId: gamer,
-    competency: 5,
-  });
+  await request(
+    lead1,
+    "centre-command/clearance",
+    {
+      userId: gamer,
+      competency: 5,
+    },
+    400,
+  );
   console.log(
-    "PASS foundation verification, immutable completion, quest reports, review, daily XP cap and certificate clearance",
+    "PASS optional lesson verification, immutable completion, quest review, daily caps and rejection of clearance without team projects",
   );
   await request(gamer, "gamer/clock-in", {
     latenessReason: "Acceptance test shift attendance.",
@@ -384,7 +394,38 @@ try {
   });
   const csv = await request(lead1, "centre-command/reports?format=csv");
   assert.match(csv, /Emergency|communication infraction/);
+  await projectAcceptance(request);
   await challengeAcceptance(request);
+  for (const script of ["scripts/migrate-v3.mjs", "scripts/migrate-v3.mjs"]) {
+    const operation = spawn(process.execPath, [script], {
+      env: process.env,
+      stdio: "inherit",
+      windowsHide: true,
+    });
+    const code = await new Promise((done, reject) => {
+      operation.once("error", reject);
+      operation.once("exit", done);
+    });
+    assert.equal(code, 0, "V3 migration is repeatable");
+  }
+  await mkdir(".data", { recursive: true });
+  const backup = spawn(
+    process.execPath,
+    [
+      "scripts/backup-verify.mjs",
+      resolve(`.data/v3-acceptance-backup-${Date.now()}.json`),
+    ],
+    { env: process.env, stdio: "inherit", windowsHide: true },
+  );
+  const backupCode = await new Promise((done, reject) => {
+    backup.once("error", reject);
+    backup.once("exit", done);
+  });
+  assert.equal(
+    backupCode,
+    0,
+    "V3 data and indexes restore into an isolated database",
+  );
   await request(gamer, "auth/logout", {});
   await request(gamer, "state", null, 401);
   console.log(

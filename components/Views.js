@@ -30,6 +30,7 @@ import {
 import { Panel, Badge, HP, Avatar, Modal, Empty, Form, Receipt } from "./ui";
 import { EncounterGrid } from "./Expedition";
 import JungleGame from "./JungleGame";
+import ProjectBoard, { ProjectTaskDetails } from "./Projects";
 import ExpeditionHeading from "./ExpeditionHeading";
 import SupportConsole from "./SupportConsole";
 import ChallengeManager, {
@@ -111,10 +112,12 @@ function QuestCard({ task, data, onClick, now }) {
         </Badge>
       </div>
       <h3>{task.title}</h3>
-      {task.challengeId && (
+      {(task.challengeId || task.projectAttemptId) && (
         <p className="challenge-card-label">
-          {task.challengeName} ·{" "}
-          {teamRoles.find((r) => r.code === task.targetRole)?.label}
+          {task.challengeName ||
+            data.projectLevels.find((l) => l._id === task.projectLevelId)
+              ?.name}{" "}
+          · {teamRoles.find((r) => r.code === task.targetRole)?.label}
           {task.assigneeId === data.user._id ? " · Assigned to you" : ""}
         </p>
       )}
@@ -141,7 +144,9 @@ function QuestCard({ task, data, onClick, now }) {
           {task.report || "Status report needed"}
         </span>
         <span>
-          +{task.xp * 3} XP · +{task.xp * 2} trophies
+          {task.projectAttemptId
+            ? "Team stars + contribution rewards"
+            : `+${task.xp * 3} XP · +${task.xp * 2} trophies`}
         </span>
       </div>
     </button>
@@ -149,6 +154,16 @@ function QuestCard({ task, data, onClick, now }) {
 }
 function QuestDetail({ task, data, close, act, staff = false }) {
   const fresh = data.tasks.find((t) => t._id === task._id) || task;
+  if (fresh.projectAttemptId)
+    return (
+      <Modal
+        title={fresh.title}
+        kicker="TEAM PROJECT / ROLE CONTRIBUTION"
+        close={close}
+      >
+        <ProjectTaskDetails task={fresh} data={data} act={act} staff={staff} />
+      </Modal>
+    );
   return (
     <Modal
       title={fresh.title}
@@ -321,6 +336,7 @@ function Board({ data, now, act, staff = false }) {
   );
   return (
     <>
+      <ProjectBoard data={data} act={act} />
       <ChallengeProgress
         data={data}
         selected={challenge}
@@ -580,8 +596,8 @@ function Foundations({ data, act }) {
     <>
       <Heading
         code="G02"
-        title="Jungle encounters"
-        subtitle="Ten trials stand between your party and the way home."
+        title="Field Guide"
+        subtitle="Optional lessons to help your team build its projects. These knowledge checks do not unlock map levels."
       />
       <EncounterGrid data={data} act={act} />
     </>
@@ -1519,6 +1535,7 @@ function Proposals({ data, act }) {
 function Setup({ data, act }) {
   return (
     <>
+      <ProjectBoard data={data} act={act} />
       <Heading
         code="CC01"
         title="Expedition setup"
@@ -1940,7 +1957,7 @@ function Reports({ data, act }) {
               <tr>
                 <th>EXPLORER</th>
                 <th>SQUAD</th>
-                <th>FOUNDATIONS</th>
+                <th>TEAM PROJECTS</th>
                 <th>QUESTS</th>
                 <th>HP</th>
                 <th>XP / LEVEL</th>
@@ -1952,8 +1969,8 @@ function Reports({ data, act }) {
               {data.roster.map((u) => {
                 const tasks = data.tasks.filter((t) => t.assigneeId === u._id),
                   done = tasks.filter((t) => t.status === "Done").length,
-                  progress = data.progress.filter(
-                    (p) => p.userId === u._id,
+                  progress = data.projectAttempts.filter(
+                    (p) => p.teamId === u.teamId && p.status === "CLEARED",
                   ).length,
                   clearance = data.clearances.find((c) => c.userId === u._id);
                 return (
@@ -2022,8 +2039,8 @@ function Reports({ data, act }) {
             }
           />
           <p className="muted fine-print">
-            Server checks all 10 foundations, approved assigned quests, positive
-            HP, and no open rescue case.
+            Server checks all 10 team projects, approved assigned objectives,
+            positive HP, and no open rescue case.
           </p>
         </Panel>
         <Panel title="Mission evidence" kicker="MEASURE WHAT MATTERS">

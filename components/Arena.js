@@ -88,7 +88,8 @@ export default function Arena({
   useEffect(() => {
     if (!data || data.user.role !== "GAMER") return;
     const own = data.tasks.filter(
-      (t) => t.challengeId && t.assigneeId === data.user._id,
+      (t) =>
+        (t.challengeId || t.projectAttemptId) && t.assigneeId === data.user._id,
     );
     const previous = challengeInbox.current;
     if (previous.userId === data.user._id) {

@@ -1,5 +1,29 @@
 # CODEWILD
 
+## Campus V3 investigation evidence
+
+Help Desk now supports active/waiting/blocked timers, dated manual effort entries, audited corrections, comparable-repeat candidates, CC/delegated MC verification and signed differences. Centre Command support reports filter technical areas/umbrellas and export verified comparisons; approved knowledge cases may include redacted version-pinned summaries. Source corrections require a fresh review. No speed scoring is added.
+
+Implementation, API contracts, migration, test evidence and remaining pilot gates: [Campus V3 handover](artifacts/campus-v3-handover.md). Apply `node --env-file=.env.local scripts/migrate-v3.mjs` after a verified backup. Build with `npm run build`; run the disposable unit/database/production API suite with `node scripts/verify-v3.mjs`.
+
+## Team mini-project levels
+
+The expedition map now represents ten shared team projects: message board, suggestion box, notes, contacts, reading list, expenses, supplies, task board, workshop registration, and private journal. Earlier knowledge encounters are optional lessons in **Field Guide** and no longer unlock the map or satisfy certificate clearance. This replaces the map and clearance behaviour described in earlier handover notes below.
+
+Open Level 1 on the map and choose **Start level and assign team tasks**. Any teammate can start the available project. Jungle assigns five persisted tasks to the team's active Team Lead / Full Stack, Frontend, Backend, Database / QA, and DevOps role holders. Missing or duplicate role holders block the whole start. Teams progress independently and cannot skip levels. Teams build locally in a shared Git repository; Jungle collects evidence and reviews rather than executing or hosting submitted applications.
+
+Budgets increase from 4 to 24 working hours. Project working hours are Monday–Friday, 09:00–17:00 IST; nights and weekends do not consume the budget. The two-star late window adds 25% of the budget, with a minimum of two working hours. These defaults are separate from the Help Desk's configurable SLA calendar.
+
+Players submit role contributions with a summary and 1–10 evidence references through **Objectives** or a map level. Once every role has submitted, any teammate can submit the integrated project without waiting for Guide reviews. Guides supply a rationale and score correctness (40), verification (25), timeliness (20), and collaboration (15). Returning or reopening a contribution requires a new integrated submission. Integration approval requires all five contributions approved and every published acceptance check verified. Command reviews projects through **Trail objectives** or **Expedition setup → Team project progression**.
+
+An accepted integrated submission by the target deadline earns three team stars; within the late window earns two; later accepted remediation earns one. Unaccepted work receives no stars and cannot unlock the next level. Stars use the accepted submission's server timestamp, so Guide waiting time does not reduce the result. The next project's timer begins only when the team starts it.
+
+Each member receives `round(level base × star multiplier × contribution score / 100)` independently for XP and trophies. Multipliers are 1×, 1.25×, and 1.5×. Level 1 bases are 100 XP / 50 trophies; subsequent levels add 25 XP / 10 trophies. Rewards are paid once, transactionally, at team clearance, separate from daily activity caps. Role-task approval alone pays nothing. Existing accounts, balances, lessons, and assignments are preserved. Cleared projects are sealed and cannot be farmed for additional rewards.
+
+Collections and indexes are additive; no reset or reseed is required. Catalogue: `lib/project-catalog.js`. Server rules: `lib/projects.js`. Views: `components/Projects.js`. API: `POST /api/projects/start`, `/submit`, `/review`, `/task`; project task submissions/reviews also use the existing gamer/commander task endpoints. Membership, assignments, evidence, scores, progression, and integration requirements are server-verified. Concurrent operations serialize on the shared attempt and preserve audit events.
+
+Validation: `node --test --test-concurrency=1 tests/*.test.mjs` (set `TEST_MONGODB_URI` for database checks). Production acceptance additionally exercises all ten projects through authenticated HTTP endpoints in a disposable database.
+
 ## Role-based challenges across all teams
 
 Centre Command → **Expedition setup → Manage challenges** creates a draft with one or more named tasks, target team roles, instructions, acceptance criteria and deadlines. **Preview recipients** lists the matching player in each of the five teams; **Publish to all teams** releases independent task assignments together. Missing or duplicate active role holders block publication. Draft edits and roster changes require a fresh preview; repeated publication never creates duplicate work.

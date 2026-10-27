@@ -2,6 +2,11 @@
 import { useState } from "react";
 import { Panel, Form, Badge, Empty } from "./ui";
 import { umbrellas, interventions, transitions } from "@/lib/support-rules.js";
+import {
+  EffortWorkspace,
+  EffortReport,
+  CaseComparison,
+} from "./EffortWorkspace";
 
 const field = (name, label, optional = false) => ({
   name,
@@ -118,6 +123,12 @@ function Desk({ data, act, now }) {
       {ticket && (
         <Panel title="Ticket workspace" kicker={ticket._id}>
           <p className="support-copy">{ticket.description}</p>
+          <EffortWorkspace
+            key={ticket._id}
+            ticket={ticket}
+            data={data}
+            act={act}
+          />
           <p className="muted">
             Created {stamp(ticket.createdAt)} · Owner{" "}
             {s.operators.find((o) => o._id === ticket.assignedTo)?.name ||
@@ -506,6 +517,7 @@ function Library({ data, act }) {
       {entries.map((c) => (
         <article className="support-record" key={c._id}>
           <h3>{c.content.title}</h3>
+          <CaseComparison entry={c} data={data} act={act} />
           <Badge>
             {c.status || "PUBLISHED"} · v{c.version}
           </Badge>
@@ -770,7 +782,7 @@ function Growth({ data, act }) {
     </>
   );
 }
-function Operations({ data }) {
+function Operations({ data, act }) {
   const s = data.support;
   return (
     <>
@@ -778,6 +790,7 @@ function Operations({ data }) {
         Support metrics use the original first-response obligation. Unassigned
         wait is elapsed time and is reported separately from working-time SLA.
       </p>
+      <EffortReport data={data} act={act} />
       <div className="detail-grid">
         <span>
           Unassigned backlog

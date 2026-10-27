@@ -125,7 +125,7 @@ export function EncounterGrid({ data, act }) {
             {completed.length}
             <small> / 10</small>
           </strong>
-          <span>ENCOUNTERS CLEARED</span>
+          <span>LESSONS COMPLETED</span>
         </div>
       </div>
       <div className="module-grid jungle-encounters">

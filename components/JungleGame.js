@@ -15,7 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { encounters } from "@/lib/expedition";
-import { EncounterDialog } from "./Expedition";
+import { ProjectDialog, projectState, starsLabel } from "./Projects";
 import { Modal, Receipt } from "./ui";
 
 const stops = encounters.map((encounter, index) => ({
@@ -56,10 +56,10 @@ export default function JungleGame({
       document.removeEventListener("keydown", escape);
     };
   }, [panel]);
-  const modules = data.modules;
-  const completed = data.progress
-    .filter((p) => p.userId === data.user._id)
-    .map((p) => p.moduleId);
+  const modules = data.projectLevels;
+  const completed = data.projectAttempts
+    .filter((p) => p.teamId === data.user.teamId && p.status === "CLEARED")
+    .map((p) => p.levelId);
   const next = modules.find((m) => !completed.includes(m._id));
   const tasks = data.tasks.filter((t) => t.assigneeId === data.user._id);
   const rescue = data.rescues.some(
@@ -126,7 +126,7 @@ export default function JungleGame({
     party: "Your expedition party",
     objectives: "Your objectives",
     extraction: "Expedition clearance",
-    encounters: "Choose an encounter",
+    encounters: "Team project levels",
     leaderboard: "Trophy leaderboard",
     support: "Help Desk & growth",
   };
@@ -180,16 +180,17 @@ export default function JungleGame({
             const e = stops[m.number - 1],
               clear = completed.includes(m._id),
               active = next?._id === m._id;
+            const { attempt, state } = projectState(data, m);
             return (
               <button
                 key={m._id}
-                className={`game-stop ${clear ? "cleared" : ""} ${active ? "current" : ""}`}
+                className={`game-stop ${clear ? "cleared" : ""} ${active ? "current" : ""} ${state === "LOCKED" ? "project-locked" : ""}`}
                 style={{
                   left: `${e.x}%`,
                   top: `${e.y}%`,
                 }}
                 onClick={() => setSelected(m)}
-                aria-label={`Encounter ${m.number}: ${e.name}, ${clear ? "cleared" : active ? "next encounter" : "available"}`}
+                aria-label={`Team project ${m.number}: ${m.name}, ${state}, ${attempt?.stars || 0} stars`}
               >
                 <span className="game-stop-marker">
                   {clear ? (
@@ -199,13 +200,17 @@ export default function JungleGame({
                   )}
                 </span>
                 <span className="game-stop-label">
-                  {e.name}
+                  {m.name}
                   <small>
                     {clear
-                      ? "CLEARED"
+                      ? starsLabel(attempt.stars)
                       : active
-                        ? "YOUR NEXT ENCOUNTER"
-                        : "+15 XP · +10 TROPHIES"}
+                        ? state === "AVAILABLE"
+                          ? "START TEAM PROJECT"
+                          : state === "REVIEW"
+                            ? "AWAITING REVIEW"
+                            : "TEAM PROJECT ACTIVE"
+                        : "LOCKED"}
                   </small>
                 </span>
               </button>
@@ -218,14 +223,14 @@ export default function JungleGame({
         <span className="game-location">
           <Compass size={20} />
           <span>
-            <small>CHAPTER I · THE LOST EXPEDITION</small>
+            <small>CHAPTER I · TEAM MINI PROJECTS</small>
             <h1>The Verdant Wilds</h1>
           </span>
         </span>
         <button
           className="game-progress"
           onClick={() => setPanel("encounters")}
-          aria-label="Open encounter list"
+          aria-label="Open team project levels"
         >
           <Footprints size={18} />
           <span>
@@ -304,22 +309,24 @@ export default function JungleGame({
           className="btn primary"
           onClick={() => (next ? setSelected(next) : setPanel("extraction"))}
         >
-          {next ? `Enter encounter ${next.number}` : "Review clearance"}
+          {next ? `Open team level ${next.number}` : "Review clearance"}
         </button>
         <span>
           {next
-            ? encounters[next.number - 1].name
+            ? next.name
             : ready
               ? "Your personal clearance is complete"
-              : "All knowledge encounters cleared"}
+              : "All team projects cleared"}
         </span>
       </div>
       {selected && (
-        <EncounterDialog
-          module={selected}
+        <ProjectDialog
+          key={selected._id}
+          level={selected}
           data={data}
           act={act}
           close={() => setSelected(null)}
+          onQuest={onQuest}
         />
       )}
       {panel && panel !== "camp" && (
@@ -371,8 +378,10 @@ export default function JungleGame({
                     <span>
                       <strong>{t.title}</strong>
                       <small>
-                        {t.status} · +{t.xp * 3} XP · +{t.xp * 2} trophies on
-                        approval
+                        {t.status} ·{" "}
+                        {t.projectAttemptId
+                          ? "Rewarded at team level completion"
+                          : `+${t.xp * 3} XP · +${t.xp * 2} trophies on approval`}
                       </small>
                     </span>
                   </button>
@@ -399,11 +408,12 @@ export default function JungleGame({
                 >
                   <span>
                     <strong>
-                      {String(m.number).padStart(2, "0")} ·{" "}
-                      {encounters[m.number - 1].name}
+                      {String(m.number).padStart(2, "0")} · {m.name}
                     </strong>
                     <small>
-                      {completed.includes(m._id) ? "Cleared" : "Available"}
+                      {completed.includes(m._id)
+                        ? starsLabel(projectState(data, m).attempt.stars)
+                        : projectState(data, m).state}
                     </small>
                   </span>
                   {completed.includes(m._id) && <Check size={17} />}
@@ -414,13 +424,12 @@ export default function JungleGame({
           {panel === "extraction" && (
             <>
               <p className="lesson-copy">
-                Explore the jungle freely. Programme clearance requires all
-                knowledge encounters, approved objectives, positive health, and
-                no open rescue case.
+                Programme clearance requires all ten team projects cleared,
+                approved objectives, positive health, and no open rescue case.
               </p>
               <div className="extraction-checks">
                 <p>
-                  Knowledge encounters
+                  Team projects
                   <strong>
                     {completed.length}/{modules.length} cleared
                   </strong>

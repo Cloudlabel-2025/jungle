@@ -7,6 +7,7 @@ import "@fontsource/jetbrains-mono/400.css";
 import "./jungle.css";
 import "./game-map.css";
 import "./expedition-pages.css";
+import "./projects.css";
 export const metadata = {
   title: "CODEWILD · Escape the Wild",
   description:

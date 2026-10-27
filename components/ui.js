@@ -156,7 +156,7 @@ export function Form({
             <select
               name={f.name}
               defaultValue={initial[f.name] ?? f.options[0]?.value}
-              required
+              required={!f.optional && !f.options.some((o) => o.value === "")}
             >
               {f.options.map((o) => (
                 <option value={o.value} key={o.value}>
