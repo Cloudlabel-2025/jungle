@@ -13,16 +13,14 @@ import {
   Trophy,
   LifeBuoy,
   X,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
-import { encounters } from "@/lib/expedition";
-import { ProjectDialog, projectState, starsLabel } from "./Projects";
+import { projectState, starsLabel } from "./Projects";
+import LevelBriefing from "./LevelBriefing";
 import { Modal, Receipt } from "./ui";
-
-const stops = encounters.map((encounter, index) => ({
-  ...encounter,
-  x: 7 + index * (83 / 9),
-  y: [68, 28, 72, 32, 68, 25, 72, 30, 68, 37][index],
-}));
+import LevelEmblem from "./LevelEmblem";
+import { terrainPosition } from "@/lib/map-terrain.js";
 
 export default function JungleGame({
   data,
@@ -34,10 +32,83 @@ export default function JungleGame({
 }) {
   const [panel, setPanel] = useState(null),
     [selected, setSelected] = useState(null);
+  const [mapSize, setMapSize] = useState({ width: 6000, height: 2000 / 3 });
   const viewport = useRef(null),
     drag = useRef(null);
   const campControl = useRef(null);
   const campTrigger = useRef(null);
+  const hold = useRef({
+    frame: null,
+    direction: 0,
+    started: 0,
+    previous: 0,
+    moved: false,
+  });
+  const [edges, setEdges] = useState({ left: true, right: false });
+  const chapters = Math.max(
+    1,
+    Math.ceil(Math.max(...data.projectLevels.map((l) => l.number), 1) / 10),
+  );
+  const measureEdges = () => {
+    const el = viewport.current;
+    if (el)
+      setEdges({
+        left: el.scrollLeft <= 1,
+        right: el.scrollLeft >= el.scrollWidth - el.clientWidth - 1,
+      });
+  };
+  function stopHold() {
+    hold.current.direction = 0;
+    cancelAnimationFrame(hold.current.frame);
+  }
+  function startHold(event, direction) {
+    if (event.button !== 0) return;
+    stopHold();
+    event.currentTarget.setPointerCapture(event.pointerId);
+    hold.current = {
+      frame: null,
+      direction,
+      started: performance.now(),
+      previous: performance.now(),
+      moved: false,
+    };
+    const tick = (now) => {
+      const state = hold.current;
+      if (!state.direction) return;
+      if (now - state.started > 280) {
+        viewport.current?.scrollBy({
+          left: state.direction * Math.min(now - state.previous, 40) * 0.65,
+          behavior: "instant",
+        });
+        state.moved = true;
+      }
+      state.previous = now;
+      state.frame = requestAnimationFrame(tick);
+    };
+    hold.current.frame = requestAnimationFrame(tick);
+  }
+  useEffect(() => () => stopHold(), []);
+  useEffect(() => {
+    const world = viewport.current?.firstElementChild;
+    if (!world) return;
+    const measure = () =>
+      setMapSize((previous) => {
+        const width = world.clientWidth,
+          height = world.clientHeight;
+        return previous.width === width && previous.height === height
+          ? previous
+          : { width, height };
+      });
+    measure();
+    measureEdges();
+    const observer = new ResizeObserver(() => {
+      measure();
+      measureEdges();
+    });
+    observer.observe(world);
+    observer.observe(viewport.current);
+    return () => observer.disconnect();
+  }, [chapters]);
   useEffect(() => {
     if (panel !== "camp") return;
     function dismiss(event) {
@@ -71,12 +142,14 @@ export default function JungleGame({
     data.user.hp > 0 &&
     !rescue;
   function locate() {
-    const stop = stops[(next?.number || modules.length) - 1];
+    const stop = terrainPosition(next || modules.at(-1), {
+      ...mapSize,
+      chapters,
+    });
     const el = viewport.current;
     if (!el || !stop) return;
-    const world = el.firstElementChild;
     el.scrollTo({
-      left: (world.clientWidth * stop.x) / 100 - el.clientWidth / 2,
+      left: stop.x - el.clientWidth / 2,
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
         ? "instant"
         : "smooth",
@@ -85,7 +158,7 @@ export default function JungleGame({
   useEffect(() => {
     const frame = requestAnimationFrame(locate);
     return () => cancelAnimationFrame(frame);
-  }, [data.user._id, next?._id]);
+  }, [data.user._id, next?._id, mapSize.width, mapSize.height]);
   useEffect(() => {
     const el = viewport.current;
     function wheel(event) {
@@ -135,6 +208,7 @@ export default function JungleGame({
       <div
         className="game-map-window"
         ref={viewport}
+        onScroll={measureEdges}
         tabIndex={0}
         aria-label="Uncharted jungle. Use left and right arrow keys, drag, or scroll to explore the forest."
         onKeyDown={(e) => {
@@ -172,12 +246,29 @@ export default function JungleGame({
           e.currentTarget.classList.remove("is-dragging");
         }}
       >
-        <div className="game-world">
-          <div className="game-region region-west" aria-hidden="true" />
-          <div className="game-region region-valley" aria-hidden="true" />
-          <div className="game-region region-east" aria-hidden="true" />
+        <div
+          className="game-world"
+          style={
+            chapters > 1
+              ? { width: `max(${6000 * chapters}px, ${900 * chapters}cqh)` }
+              : undefined
+          }
+        >
+          {Array.from({ length: chapters }, (_, chapter) =>
+            ["west", "valley", "east"].map((region, index) => (
+              <div
+                className={`game-region region-${region}`}
+                aria-hidden="true"
+                key={`${chapter}-${region}`}
+                style={{
+                  left: `${((chapter * 3 + index) / (chapters * 3)) * 100}%`,
+                  width: `${100 / (chapters * 3)}%`,
+                }}
+              />
+            )),
+          )}
           {modules.map((m) => {
-            const e = stops[m.number - 1],
+            const e = terrainPosition(m, { ...mapSize, chapters }),
               clear = completed.includes(m._id),
               active = next?._id === m._id;
             const { attempt, state } = projectState(data, m);
@@ -186,21 +277,30 @@ export default function JungleGame({
                 key={m._id}
                 className={`game-stop ${clear ? "cleared" : ""} ${active ? "current" : ""} ${state === "LOCKED" ? "project-locked" : ""}`}
                 style={{
-                  left: `${e.x}%`,
-                  top: `${e.y}%`,
+                  left: `${e.x}px`,
+                  top: `${e.y}px`,
                 }}
+                data-label-placement={e.labelPlacement}
+                title={`Level ${m.number} · ${m.name}`}
                 onClick={() => setSelected(m)}
-                aria-label={`Team project ${m.number}: ${m.name}, ${state}, ${attempt?.stars || 0} stars`}
+                aria-label={`Level ${m.number}: ${m.name}, ${state}, ${attempt?.stars || 0} stars`}
               >
-                <span className="game-stop-marker">
-                  {clear ? (
-                    <Check size={25} />
-                  ) : (
-                    String(m.number).padStart(2, "0")
+                <span className="game-stop-marker hazard-marker">
+                  <LevelEmblem level={m} />
+                  <span className="hazard-level-number">
+                    {String(m.number).padStart(2, "0")}
+                  </span>
+                  {clear && (
+                    <span className="hazard-clear-seal">
+                      <Check size={13} />
+                    </span>
                   )}
                 </span>
                 <span className="game-stop-label">
-                  {m.name}
+                  <span className="hazard-level-caption">
+                    LEVEL {String(m.number).padStart(2, "0")}
+                  </span>
+                  <span className="hazard-title">{m.name}</span>
                   <small>
                     {clear
                       ? starsLabel(attempt.stars)
@@ -219,6 +319,25 @@ export default function JungleGame({
         </div>
       </div>
       <div className="game-vignette" aria-hidden="true" />
+      {[-1, 1].map((direction) => (
+        <button
+          key={direction}
+          className={`map-scroll-arrow ${direction < 0 ? "map-scroll-left" : "map-scroll-right"}`}
+          aria-label={`Scroll map ${direction < 0 ? "left" : "right"}`}
+          disabled={direction < 0 ? edges.left : edges.right}
+          onPointerDown={(e) => startHold(e, direction)}
+          onPointerUp={stopHold}
+          onPointerCancel={stopHold}
+          onLostPointerCapture={stopHold}
+          onBlur={stopHold}
+          onClick={(e) => {
+            if (e.detail === 0 || !hold.current.moved) pan(direction);
+            hold.current.moved = false;
+          }}
+        >
+          {direction < 0 ? <ChevronLeft /> : <ChevronRight />}
+        </button>
+      ))}
       <header className="game-map-heading">
         <span className="game-location">
           <Compass size={20} />
@@ -320,7 +439,7 @@ export default function JungleGame({
         </span>
       </div>
       {selected && (
-        <ProjectDialog
+        <LevelBriefing
           key={selected._id}
           level={selected}
           data={data}
@@ -406,6 +525,7 @@ export default function JungleGame({
                     setSelected(m);
                   }}
                 >
+                  <LevelEmblem level={m} className="level-list-emblem" />
                   <span>
                     <strong>
                       {String(m.number).padStart(2, "0")} · {m.name}

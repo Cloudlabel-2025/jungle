@@ -1,5 +1,15 @@
 # CODEWILD
 
+## Player HUD and Centre Command level workshop
+
+The player header shows their name, team role, XP level and progress, five lives, and three energy on the left; trophies, streak, team, and account controls remain on the right. Each penalty consumes one energy. The third penalty consumes one life and refills energy to three; at zero lives energy stays zero and a rescue case opens. Existing life balances are preserved. Life restoration also refills energy. The audit distinguishes energy penalties from life restoration and retains historical HP events.
+
+The map has left/right buttons with click and hold scrolling, disabled at the world edges, plus the existing drag, wheel, and keyboard controls. Player navigation and the map controls sit lower on the left.
+
+In **Centre Command → Expedition setup → Level workshop**, create a project or edit an existing level, choose one of 42 forest emblems, set its working-hour budget and integrated acceptance criteria, select teams, and define exactly one evidence-backed deliverable for each of the five team roles. **Save draft → Preview assignments → Publish level and assign tasks** validates active role holders before publishing. Existing chapter levels apply to all teams; new levels can target selected teams. New levels append to the map, which expands into further terrain chapters.
+
+Publishing assigns tasks immediately to eligible teams. Teams on earlier projects queue until their preceding level is cleared; their clock begins when their project actually starts. Missing or duplicate roles block publication. If a roster becomes incomplete later, the preceding clearance and rewards are preserved, and the next level can be started after the roster is fixed. Started attempts retain a sealed copy of their definition, emblem, tasks, deadline, and reward basis. Draft changes do not alter existing attempts. Published team audiences can expand but cannot remove teams. Clearance checks every published level assigned to that team.
+
 ## Campus V3 investigation evidence
 
 Help Desk now supports active/waiting/blocked timers, dated manual effort entries, audited corrections, comparable-repeat candidates, CC/delegated MC verification and signed differences. Centre Command support reports filter technical areas/umbrellas and export verified comparisons; approved knowledge cases may include redacted version-pinned summaries. Source corrections require a fresh review. No speed scoring is added.
@@ -10,11 +20,13 @@ Implementation, API contracts, migration, test evidence and remaining pilot gate
 
 The expedition map now represents ten shared team projects: message board, suggestion box, notes, contacts, reading list, expenses, supplies, task board, workshop registration, and private journal. Earlier knowledge encounters are optional lessons in **Field Guide** and no longer unlock the map or satisfy certificate clearance. This replaces the map and clearance behaviour described in earlier handover notes below.
 
-Open Level 1 on the map and choose **Start level and assign team tasks**. Any teammate can start the available project. Jungle assigns five persisted tasks to the team's active Team Lead / Full Stack, Frontend, Backend, Database / QA, and DevOps role holders. Missing or duplicate role holders block the whole start. Teams progress independently and cannot skip levels. Teams build locally in a shared Git repository; Jungle collects evidence and reviews rather than executing or hosting submitted applications.
+Open Level 1 on the map and choose **Play**. Any teammate can start the available project. New attempts assign five distinct features to the team's five characters. Every player receives frontend, backend, database, testing and deployment/integration tasks for one complete feature: 25 persisted tasks per team. Missing or duplicate character holders block the whole start. Teams progress independently and cannot skip levels. Teams build locally in a shared Git repository; Jungle collects evidence and reviews rather than executing or hosting submitted applications. Existing attempts keep their original task definitions.
 
 Budgets increase from 4 to 24 working hours. Project working hours are Monday–Friday, 09:00–17:00 IST; nights and weekends do not consume the budget. The two-star late window adds 25% of the budget, with a minimum of two working hours. These defaults are separate from the Help Desk's configurable SLA calendar.
 
-Players submit role contributions with a summary and 1–10 evidence references through **Objectives** or a map level. Once every role has submitted, any teammate can submit the integrated project without waiting for Guide reviews. Guides supply a rationale and score correctness (40), verification (25), timeliness (20), and collaboration (15). Returning or reopening a contribution requires a new integrated submission. Integration approval requires all five contributions approved and every published acceptance check verified. Command reviews projects through **Trail objectives** or **Expedition setup → Team project progression**.
+Players submit each task with a summary and 1–10 evidence references through **Objectives** or a map level. Once all 25 tasks have been submitted, any teammate can submit the integrated project without waiting for Guide reviews. Guides supply a rationale and score correctness (40), verification (25), timeliness (20), and collaboration (15). Returning or reopening a contribution requires a new integrated submission. Integration approval requires all 25 task approvals and every published acceptance check verified. Individual level rewards use the rounded average of each player's five task scores, awarded once per player. Command reviews projects through **Trail objectives** or **Expedition setup → Team project progression**.
+
+The five character identities are Blaze (Zayn/Zara), Glitch (Jett/Juno), Shade (Nyx/Nia), Pulse (Kai/Kira), and Rune (Riven/Rhea). Their male/female versions have identical gameplay. Players choose their version through **Choose character** in the navigation drawer; Centre Command can swap character identities in **Squad allocations**. See [character art and full-stack details](docs/character-art-and-full-stack.md).
 
 An accepted integrated submission by the target deadline earns three team stars; within the late window earns two; later accepted remediation earns one. Unaccepted work receives no stars and cannot unlock the next level. Stars use the accepted submission's server timestamp, so Guide waiting time does not reduce the result. The next project's timer begins only when the team starts it.
 
@@ -23,6 +35,16 @@ Each member receives `round(level base × star multiplier × contribution score 
 Collections and indexes are additive; no reset or reseed is required. Catalogue: `lib/project-catalog.js`. Server rules: `lib/projects.js`. Views: `components/Projects.js`. API: `POST /api/projects/start`, `/submit`, `/review`, `/task`; project task submissions/reviews also use the existing gamer/commander task endpoints. Membership, assignments, evidence, scores, progression, and integration requirements are server-verified. Concurrent operations serialize on the shared attempt and preserve audit events.
 
 Validation: `node --test --test-concurrency=1 tests/*.test.mjs` (set `TEST_MONGODB_URI` for database checks). Production acceptance additionally exercises all ten projects through authenticated HTTP endpoints in a disposable database.
+
+## Centre Command team creation and character abilities
+
+In **Expedition setup → Teams & explorers**, Centre Command can create a named team with one to five members, or add members to an existing forming team. Each member needs a full name, unique username, initial password (8–256 characters), and one of the five character identities with a male/female version. Characters cannot repeat within a team. Account and team creation is atomic; usernames are case-insensitive and passwords are stored as salted scrypt hashes. New players use **Username or email** plus their password to sign in. They are not demo personas.
+
+Teams have a hard maximum of five members, including roster transfers. Teams with fewer than five active, distinct character holders show as forming and can explore the app; full-stack levels start when all five slots are ready. Existing accounts and email sign-in continue to work.
+
+Each character has a fixed optional support ability, shared by both versions: Blaze **Trail Planner**, Glitch **Debug Lens**, Shade **Edge Radar**, Pulse **Team Signal**, Rune **Contract Map**. Guidance is available in the character picker and beside a player's own feature tasks. Abilities do not change deadlines, task requirements, XP, trophies, life or energy.
+
+API: `POST /api/centre-command/teams/create` with `{name, members}`; `POST /api/centre-command/teams/add-members` with `{teamId, members}`. Each member supplies `{name, username, password, characterKey, variant}`. Only active Centre Command accounts may use these endpoints. Responses contain usernames and avatar choices, never passwords or hashes.
 
 ## Role-based challenges across all teams
 
@@ -70,6 +92,8 @@ If the app is already running, another `npm run dev` prints its URL and exits wi
 When the launcher manages local MongoDB, it checks the service every five seconds and restarts the same persistent replica set if that service stops. This also handles a reused database whose previous launcher exits. Explicitly configured `MONGODB_URI` services remain externally managed.
 
 To use your own database, copy `.env.example` to `.env.local`, provide `MONGODB_URI` and a random `SESSION_SECRET` of at least 32 characters, then run `npm run dev`. A replica set is required because game updates use multi-document transactions. `npm run seed` seeds an existing configured database without resetting records.
+
+The development launcher uses Node's system certificate store and forwards that setting to Next.js. This supports locally trusted certificate chains for Atlas while keeping TLS verification enabled. If a standalone database check reports `UNABLE_TO_VERIFY_LEAF_SIGNATURE`, run `node --use-system-ca --env-file-if-exists=.env.local scripts/check-db.mjs` with the supported Node 22 runtime.
 
 If your environment uses Windows-managed certificate authorities, start npm with `NODE_OPTIONS=--use-system-ca`. Certificate verification stays enabled.
 
@@ -133,6 +157,8 @@ npm test
 Database tests use an isolated `codewild_test_<timestamp>` database and remove only that database afterward. They cover concurrent duplicate awards, the daily cap, idempotent deductions, zero-HP rescue, Rule #10, and three-day recovery. With no test URI, integration tests are skipped and pure rule tests still run.
 
 ## Deployment boundary
+
+For MongoDB Atlas and Vercel setup, follow [the Vercel deployment guide](docs/vercel-deployment.md). Run `npm run db:check` to verify the configured database and transaction support without changing records.
 
 ```sh
 npm run build

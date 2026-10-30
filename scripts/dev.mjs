@@ -111,6 +111,7 @@ async function main() {
   child = spawn(
     process.execPath,
     [
+      ...process.execArgv.filter((arg) => arg === "--use-system-ca"),
       "node_modules/next/dist/bin/next",
       "dev",
       ...(args.some((arg) =>

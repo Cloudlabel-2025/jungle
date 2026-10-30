@@ -37,7 +37,14 @@ import ChallengeManager, {
   ChallengeProgress,
   ChallengeTaskDetails,
 } from "./Challenges";
+import LevelManager from "./LevelManager";
+import TeamManager from "./TeamManager";
 import { teamRoles, playerRole } from "@/lib/team-roles.js";
+import {
+  characters,
+  characterFor,
+  projectTaskLabel,
+} from "@/lib/characters.js";
 import { ist, league } from "@/lib/rules.js";
 const fmt = (date) =>
   new Date(date).toLocaleString("en-IN", {
@@ -117,7 +124,9 @@ function QuestCard({ task, data, onClick, now }) {
           {task.challengeName ||
             data.projectLevels.find((l) => l._id === task.projectLevelId)
               ?.name}{" "}
-          · {teamRoles.find((r) => r.code === task.targetRole)?.label}
+          ·{" "}
+          {projectTaskLabel(task) ||
+            teamRoles.find((r) => r.code === task.targetRole)?.label}
           {task.assigneeId === data.user._id ? " · Assigned to you" : ""}
         </p>
       )}
@@ -130,7 +139,7 @@ function QuestCard({ task, data, onClick, now }) {
       )}
       <div className="quest-card-bottom">
         <span>
-          <Avatar name={person?.name} small />
+          <Avatar name={person?.name} player={person} small />
           {person?.name.split(" ")[0]}
         </span>
         <span className="quest-time">
@@ -422,7 +431,7 @@ function SquadRoster({ data }) {
       <div className="roster">
         {users.map((u) => (
           <div className="roster-row" key={u._id}>
-            <Avatar name={u.name} />
+            <Avatar name={u.name} player={u} />
             <span>
               <strong>
                 {u.name}
@@ -430,7 +439,11 @@ function SquadRoster({ data }) {
                   <small className="you-label">YOU</small>
                 )}
               </strong>
-              <small>{u.assignment}</small>
+              <small>
+                {characterFor(u)
+                  ? `${characterFor(u).name} · ${characterFor(u).label} · Full stack`
+                  : u.assignment}
+              </small>
             </span>
             <span
               className={`presence-dot ${u.lastSeenAt && new Date(data.serverTime) - new Date(u.lastSeenAt) < 20000 ? "online" : ""}`}
@@ -517,7 +530,7 @@ function PunchIn({ data, now, act }) {
           </button>
           <small className="muted punch-footnote">
             {ist(now).minutes > 540
-              ? "Late check-in records a −1 HP attendance infraction."
+              ? "Late check-in records a −1 energy attendance infraction."
               : "On-time check-in earns +3 XP and +2 trophies."}
           </small>
         </>
@@ -637,7 +650,10 @@ function Comms({ data, act }) {
                   className={`chat-message ${m.senderId === data.user._id ? "own" : ""} ${m.isBlocker ? "blocker-message" : ""}`}
                   key={m._id}
                 >
-                  <Avatar name={m.senderName} />
+                  <Avatar
+                    name={m.senderName}
+                    player={data.roster.find((p) => p._id === m.senderId)}
+                  />
                   <div>
                     <div className="message-meta">
                       <strong>{m.senderName}</strong>
@@ -886,7 +902,10 @@ function Rewards({ data }) {
                 className={`leaderboard-row ${u._id === data.user._id ? "is-you" : ""}`}
               >
                 <span className="rank">{String(u.rank).padStart(2, "0")}</span>
-                <Avatar name={u.name} />
+                <Avatar
+                  name={u.name}
+                  player={data.roster.find((p) => p._id === u._id) || u}
+                />
                 <span>
                   <strong>{u.name}</strong>
                   <small>
@@ -1201,6 +1220,7 @@ function StaffCore({ screen, data, act, now }) {
     return (
       <>
         <Setup data={data} act={act} />
+        <LevelManager data={data} act={act} />
         <ChallengeManager data={data} act={act} />
       </>
     );
@@ -1281,7 +1301,7 @@ function Coaching({ data, act }) {
         <div className="two-columns">
           <Panel
             title="Log a rule infraction"
-            kicker="EXACTLY −1 HP / APPEND-ONLY AUDIT"
+            kicker="−1 ENERGY · THREE ENERGY PER LIFE"
           >
             <Form
               fields={[
@@ -1305,7 +1325,7 @@ function Coaching({ data, act }) {
                   min: 10,
                 },
               ]}
-              submit="Record −1 HP infraction"
+              submit="Record −1 energy infraction"
               onSubmit={(v) =>
                 act(
                   "commander/rules",
@@ -1333,7 +1353,7 @@ function Coaching({ data, act }) {
                   </span>
                   <b className={e.change > 0 ? "lime-text" : "danger-text"}>
                     {e.change > 0 ? "+" : ""}
-                    {e.change} HP
+                    {e.change} {e.resource === "ENERGY" ? "energy" : "life"}
                   </b>
                 </div>
               ))
@@ -1549,6 +1569,7 @@ function Setup({ data, act }) {
           </div>
         }
       />
+      <TeamManager data={data} act={act} />
       <div className="two-columns">
         <Panel
           title="Simulation topology"
@@ -1603,7 +1624,10 @@ function Setup({ data, act }) {
             </span>
           </div>
         </Panel>
-        <Panel title="Squad allocations" kicker="FIVE SQUADS / 25 EXPLORERS">
+        <Panel
+          title="Squad allocations"
+          kicker="SQUAD ROSTER · MAXIMUM FIVE MEMBERS PER TEAM"
+        >
           <Form
             fields={[
               {
@@ -1620,11 +1644,23 @@ function Setup({ data, act }) {
                 })),
               },
               {
-                name: "teamRoleCode",
-                label: "Team role",
+                name: "characterKey",
+                label: "Character identity · swaps with its current holder",
                 options: [
-                  { value: "", label: "Keep current role" },
-                  ...teamRoles.map((r) => ({ value: r.code, label: r.label })),
+                  { value: "", label: "Keep current character" },
+                  ...characters.map((c) => ({
+                    value: c.key,
+                    label: `${c.label} · ${c.male} / ${c.female}`,
+                  })),
+                ],
+              },
+              {
+                name: "characterVariant",
+                label: "Character version",
+                options: [
+                  { value: "", label: "Keep current version" },
+                  { value: "male", label: "Male version" },
+                  { value: "female", label: "Female version" },
                 ],
               },
             ]}
@@ -1730,7 +1766,7 @@ function Approvals({ data, act }) {
               <span className="mono">{String(r._id).padStart(2, "0")}</span>
               <strong>{r.text}</strong>
               <Badge>{r.track}</Badge>
-              <span className="danger-text">−1 HP</span>
+              <span className="danger-text">−1 energy</span>
             </div>
           ))}
         </Panel>
@@ -1977,7 +2013,7 @@ function Reports({ data, act }) {
                   <tr key={u._id}>
                     <td>
                       <span className="table-person">
-                        <Avatar name={u.name} small />
+                        <Avatar name={u.name} player={u} small />
                         {u.name}
                       </span>
                     </td>
@@ -2039,8 +2075,8 @@ function Reports({ data, act }) {
             }
           />
           <p className="muted fine-print">
-            Server checks all 10 team projects, approved assigned objectives,
-            positive HP, and no open rescue case.
+            Server checks every published project for the candidate’s team,
+            approved assigned objectives, positive HP, and no open rescue case.
           </p>
         </Panel>
         <Panel title="Mission evidence" kicker="MEASURE WHAT MATTERS">

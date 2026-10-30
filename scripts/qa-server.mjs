@@ -10,7 +10,7 @@ let source = process.env.TEST_MONGODB_URI;
 if (!source) {
   repl = await MongoMemoryReplSet.create({
     binary: { version: "7.0.24" },
-    instanceOpts: [{ port: 27021 }],
+    instanceOpts: [{ port: 27021, args: ["--wiredTigerCacheSizeGB", "0.25"] }],
     replSet: { count: 1, storageEngine: "wiredTiger" },
   });
   source = repl.getUri("codewild");

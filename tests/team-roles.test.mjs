@@ -37,10 +37,7 @@ test("multiple definitions produce independent per-team assignments", () => {
 });
 test("missing, inactive and duplicate role holders block all-team publication", () => {
   const definition = [{ _id: "api", title: "API task", targetRole: "BACKEND" }];
-  assert.equal(
-    planRecipients(definition, teams.slice(1), gamers).canPublish,
-    false,
-  );
+  assert.equal(planRecipients(definition, [], gamers).canPublish, false);
   const inactive = gamers.map((p) =>
     p._id === "usr_g03" ? { ...p, active: false } : p,
   );

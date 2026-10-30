@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   LayoutDashboard,
   BookOpen,
@@ -33,9 +34,19 @@ import { navigation, prefix, personas } from "@/lib/catalog.js";
 import { roleNames } from "@/lib/expedition";
 import { league } from "@/lib/rules.js";
 import { Avatar, Modal, HP, Busy, Badge, Form } from "./ui";
-import { GamerView, StaffView } from "./Views";
-import CodeLab from "./CodeLab";
-import PlayerStatus from "./PlayerStatus";
+import PlayerHeader from "./PlayerHeader";
+import TeamCompletionAnnouncements from "./LevelCompletion";
+import CharacterPicker from "./CharacterPicker";
+import { characterFor } from "@/lib/characters";
+const GamerView = dynamic(() => import("./Views").then((m) => m.GamerView), {
+  loading: () => <Busy />,
+});
+const StaffView = dynamic(() => import("./Views").then((m) => m.StaffView), {
+  loading: () => <Busy />,
+});
+const CodeLab = dynamic(() => import("./CodeLab"), {
+  loading: () => <Busy />,
+});
 const icons = {
   LayoutDashboard,
   BookOpen,
@@ -70,6 +81,7 @@ export default function Arena({
     [accessCode, setAccessCode] = useState(""),
     [switching, setSwitching] = useState(false),
     [soundEnabled, setSoundEnabled] = useState(false);
+  const [characterPicker, setCharacterPicker] = useState(false);
   const offset = useRef(0),
     busy = useRef(null),
     sessionGeneration = useRef(0),
@@ -80,6 +92,36 @@ export default function Arena({
     audio = useRef(null);
   const challengeInbox = useRef({ userId: null, ids: new Set() });
   const role = user?.role || "GAMER";
+  const playerMode = role === "GAMER";
+  const playerNavigation = useRef(null);
+  const playerNavigationTrigger = useRef(null);
+  useEffect(() => {
+    if (!playerMode || !mobile || !user) return;
+    const drawer = playerNavigation.current;
+    const controls = () =>
+      Array.from(
+        drawer?.querySelectorAll("a[href],button:not(:disabled)") || [],
+      );
+    controls()[0]?.focus();
+    function trap(event) {
+      if (event.key !== "Tab") return;
+      const items = controls(),
+        first = items[0],
+        last = items.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    }
+    document.addEventListener("keydown", trap);
+    return () => {
+      document.removeEventListener("keydown", trap);
+      playerNavigationTrigger.current?.focus();
+    };
+  }, [playerMode, mobile, user?._id]);
   const nav = navigation[role];
   const current = nav.find((n) => n[1] === screen) || nav[0];
   const notify = useCallback((message, type = "success") => {
@@ -261,7 +303,7 @@ export default function Arena({
       if (!r.ok) throw new Error(result.error);
       await refresh(true);
       notify(message);
-      return true;
+      return result;
     } catch (e) {
       notify(e.message, "error");
       return false;
@@ -332,10 +374,14 @@ export default function Arena({
               {roleNames[r]} / {personas.filter((p) => p.role === r).length}
             </span>
             {personas
+              .map((p) => ({
+                ...p,
+                ...data?.roster.find((member) => member._id === p._id),
+              }))
               .filter(
                 (p) =>
                   p.role === r &&
-                  `${p.name} ${p.assignment}`
+                  `${p.name} ${p.role === "GAMER" ? `${characterFor(p)?.name} ${characterFor(p)?.label}` : p.assignment}`
                     .toLowerCase()
                     .includes(search.toLowerCase()),
               )
@@ -346,10 +392,14 @@ export default function Arena({
                   className="persona-row"
                   key={p._id}
                 >
-                  <Avatar name={p.name} />
+                  <Avatar name={p.name} player={p} />
                   <span>
                     <strong>{p.name}</strong>
-                    <small>{p.assignment}</small>
+                    <small>
+                      {p.role === "GAMER"
+                        ? `${characterFor(p)?.name || "Explorer"} · ${characterFor(p)?.label || "Full stack"}`
+                        : p.assignment}
+                    </small>
                   </span>
                   {user?._id === p._id && <Check size={17} />}
                 </button>
@@ -390,7 +440,11 @@ export default function Arena({
           <h2>Enter your expedition.</h2>
           <Form
             fields={[
-              { name: "email", label: "Email", type: "email" },
+              {
+                name: "identifier",
+                label: "Username or email",
+                placeholder: "Your username or email",
+              },
               { name: "password", label: "Password", type: "password" },
             ]}
             submit="Sign in"
@@ -428,21 +482,55 @@ export default function Arena({
   const squad = data?.teams.find((t) => t._id === user.teamId);
   return (
     <div
-      className={`arena ${!(role === "GAMER" && screen === "dashboard") ? "field-mode" : ""} ${screen === "ide" ? "lab-mode" : ""} ${role === "GAMER" && screen === "dashboard" ? "expedition-mode" : ""}`}
+      className={`arena ${role === "GAMER" ? "player-arena" : ""} ${!(role === "GAMER" && screen === "dashboard") ? "field-mode" : ""} ${screen === "ide" ? "lab-mode" : ""} ${role === "GAMER" && screen === "dashboard" ? "expedition-mode" : ""}`}
     >
       {mobile && (
         <div className="sidebar-shade" onClick={() => setMobile(false)} />
       )}
-      <aside className={`sidebar ${mobile ? "open" : ""}`}>
+      {playerMode && (
+        <button
+          ref={playerNavigationTrigger}
+          className={`map-nav-toggle ${mobile ? "is-open" : ""}`}
+          aria-label={
+            mobile
+              ? "Close expedition navigation"
+              : "Open expedition navigation"
+          }
+          aria-expanded={mobile}
+          aria-controls="workspace-navigation"
+          onClick={() => setMobile((open) => !open)}
+        >
+          <Flame size={27} />
+        </button>
+      )}
+      <aside
+        ref={playerNavigation}
+        id="workspace-navigation"
+        className={`sidebar ${mobile ? "open" : ""}`}
+        inert={playerMode && !mobile ? true : undefined}
+        role={playerMode && mobile ? "dialog" : undefined}
+        aria-modal={playerMode && mobile ? true : undefined}
+        aria-label={playerMode ? "Expedition navigation" : undefined}
+      >
         <Link
           href={`/${prefix(role)}/dashboard`}
           className="brand"
           aria-label="CODEWILD home"
+          onClick={() => setMobile(false)}
         >
           <Flame size={27} />
           CODE<span>WILD</span>
           <i />
         </Link>
+        {playerMode && (
+          <button
+            className="icon-btn map-drawer-close"
+            aria-label="Close navigation"
+            onClick={() => setMobile(false)}
+          >
+            <X size={20} />
+          </button>
+        )}
         <div className="sidebar-season">
           <span className="eyebrow">
             {data?.cohort.name.toUpperCase() || "ARENA COHORT"}
@@ -471,9 +559,7 @@ export default function Arena({
                 href={`/${prefix(role)}/${path}`}
                 className={`nav-item ${screen === path ? "active" : ""}`}
                 title={label}
-                aria-label={
-                  role === "GAMER" && screen === "dashboard" ? label : undefined
-                }
+                aria-label={playerMode ? label : undefined}
                 key={code}
               >
                 <Icon size={18} />
@@ -484,6 +570,23 @@ export default function Arena({
             );
           })}
         </nav>
+        {playerMode && data && (
+          <button
+            className="btn character-nav-button"
+            onClick={() => {
+              setMobile(false);
+              setCharacterPicker(true);
+            }}
+          >
+            <img
+              src={characterFor(data.user)?.image}
+              alt=""
+              width={36}
+              height={36}
+            />
+            Choose character
+          </button>
+        )}
         <div className="sidebar-bottom">
           <div className="field-note">
             <ShieldCheck size={20} />
@@ -501,7 +604,11 @@ export default function Arena({
               <span className="squad-mark">{squad?.code || "CMD"}</span>
               <span>
                 <strong>{squad?.name || roleNames[role]}</strong>
-                <small>{user.assignment}</small>
+                <small>
+                  {playerMode
+                    ? `${characterFor(data?.user || user)?.name || "Explorer"} · Full stack`
+                    : user.assignment}
+                </small>
               </span>
             </div>
           </div>
@@ -524,13 +631,24 @@ export default function Arena({
             >
               <Menu size={20} />
             </button>
-            <Command size={16} />
-            <span>Expedition</span>
-
-            <strong>{current[2]}</strong>
+            {role === "GAMER" ? (
+              <PlayerHeader player={data?.user || user} />
+            ) : (
+              <>
+                <Command size={16} />
+                <span>Expedition</span>
+                <strong>{current[2]}</strong>
+              </>
+            )}
           </div>
-          {role === "GAMER" && data && <PlayerStatus player={data.user} />}
           <div className="topbar-right">
+            {role === "GAMER" && (
+              <PlayerHeader
+                player={data?.user || user}
+                part="rewards"
+                teamName={squad?.name}
+              />
+            )}
             {role !== "GAMER" && (
               <span className="server-clock">
                 <span className="status-dot" />
@@ -582,7 +700,7 @@ export default function Arena({
                 aria-label={`Switch persona · ${user.name}`}
                 onClick={() => setLauncher(true)}
               >
-                <Avatar name={user.name} small />
+                <Avatar name={user.name} player={data?.user || user} small />
                 <span>
                   {user.name}
                   <small>{role.replaceAll("_", " ")}</small>
@@ -690,6 +808,19 @@ export default function Arena({
         >
           {launcherContent}
         </Modal>
+      )}
+      {characterPicker && data && (
+        <CharacterPicker
+          data={data}
+          act={act}
+          close={() => setCharacterPicker(false)}
+        />
+      )}
+      {data && !launcher && !characterPicker && (
+        <TeamCompletionAnnouncements
+          key={`${data.user._id}:${data.user.teamId}`}
+          data={data}
+        />
       )}
       {toast && (
         <div role="status" className={`toast ${toast.type}`}>

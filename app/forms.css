@@ -1,0 +1,259 @@
+/* Expedition stationery: ink-green fields, brass fittings, cartographic lines. */
+.jungle-world .field-form {
+  --form-brass: #d6b575;
+  --form-ink: #081c17;
+  position: relative;
+  isolation: isolate;
+  gap: 22px;
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid #647052;
+  border-radius: 3px 14px 3px 14px;
+  background:
+    repeating-radial-gradient(
+      ellipse at 115% -20%,
+      transparent 0 27px,
+      #c9ba7f09 28px 29px,
+      transparent 30px 47px
+    ),
+    linear-gradient(140deg, #1c372a, #10291f 65%, #132d23);
+  box-shadow:
+    inset 0 0 0 4px #0a201a,
+    inset 0 0 0 5px #a3956033,
+    0 10px 25px #0002;
+}
+.jungle-world .modal .field-form,
+.jungle-world .project-task-detail .field-form {
+  padding: clamp(18px, 3vw, 26px);
+  border: 1px solid #647052;
+  margin-top: 18px;
+}
+.jungle-world .field-form[data-has-fields="false"] {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 12px 0;
+}
+.form-field-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #d6b575;
+  font-family: var(--mono);
+  font-size: 9px;
+  line-height: 1.5;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #b8a5753b;
+}
+.form-field-mark > svg {
+  flex-shrink: 0;
+}
+.form-field-rule {
+  flex: 1;
+  min-width: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, #b8a57560, transparent);
+}
+.jungle-world .field-form label {
+  color: #e5e8d0;
+  font-size: 13px;
+  line-height: 1.6;
+  gap: 10px;
+  min-width: 0;
+}
+.form-field-caption {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.form-field-caption > span:nth-child(2) {
+  flex: 1;
+}
+.form-field-number {
+  color: #d6b575;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.form-field-caption small {
+  color: #b8c5aa;
+  font-size: 10px;
+  font-weight: 400;
+}
+.jungle-world
+  .field-form
+  :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+  color-scheme: dark;
+  background-color: #081e18;
+  color: #f0efdb;
+  border: 1px solid #61735b;
+  border-bottom: 2px solid #8f9366;
+  border-radius: 3px;
+  min-height: 47px;
+  padding: 13px 14px;
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.6;
+  box-shadow: inset 0 2px 7px #0003;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background-color 150ms ease;
+}
+.jungle-world .field-form textarea {
+  min-height: 125px;
+  background-image: repeating-linear-gradient(
+    transparent 0 27px,
+    #a3ba8b09 27px 28px
+  );
+  line-height: 28px;
+}
+.jungle-world .field-form select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23d6b575' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+}
+.jungle-world .field-form :is(input, textarea)::placeholder {
+  color: #a5b39c;
+  opacity: 1;
+}
+.jungle-world .field-form :is(input, select, textarea):hover {
+  border-color: #a9b787;
+}
+.jungle-world .field-form :is(input, select, textarea):focus-visible {
+  outline: 2px solid #e5c982;
+  outline-offset: 3px;
+  border-color: #d6b575;
+  background-color: #102b21;
+  box-shadow:
+    0 0 0 5px #d6b57512,
+    inset 0 2px 7px #0002;
+}
+.jungle-world .field-form :is(input, select, textarea):user-invalid {
+  border-color: #f0a48f;
+}
+.jungle-world .field-form :is(input, textarea, select):disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.jungle-world .field-form input:is([type="checkbox"], [type="radio"]) {
+  accent-color: #dfc080;
+}
+.jungle-world .field-form .btn.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  min-height: 46px;
+  max-width: 100%;
+  padding: 12px 18px;
+  color: #17251a;
+  background: linear-gradient(110deg, #eed9a3, #cbb16f);
+  border: 1px solid #f0dca5;
+  border-radius: 3px 9px 3px 9px;
+  box-shadow:
+    inset 0 1px 0 #fff6,
+    0 3px 0 #77633d,
+    0 7px 14px #0003;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: normal;
+  text-align: left;
+}
+.jungle-world .field-form .btn.primary > svg {
+  flex-shrink: 0;
+}
+.jungle-world .field-form .btn.primary:hover:not(:disabled) {
+  background: linear-gradient(110deg, #f8e7b9, #e2c788);
+  border-color: #fff0c7;
+}
+.jungle-world .field-form .btn.primary:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 1px 0 #fff6,
+    0 1px 0 #77633d;
+}
+.jungle-world .field-form .btn.primary:focus-visible {
+  outline: 2px solid #fff0bf;
+  outline-offset: 5px;
+}
+.jungle-world .field-form .btn.primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.form-submit-arrow {
+  margin-left: 6px;
+}
+.jungle-world .field-form .challenge-definition {
+  background: #0b2119;
+  border: 1px solid #78815b;
+  border-radius: 3px;
+  padding: 20px;
+}
+.jungle-world .field-form legend {
+  color: #e1c484;
+  padding: 0 9px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.jungle-world .modal:has(.field-form) {
+  border-color: #a79765;
+  box-shadow:
+    inset 0 0 0 5px #0a211a,
+    inset 0 0 0 6px #a7976533,
+    0 25px 90px #0008;
+  background:
+    radial-gradient(ellipse at 100% 0, #31432b, transparent 55%), #102a20;
+}
+.jungle-world .modal:has(.field-form) > .panel-heading {
+  border-bottom-color: #a7976555;
+}
+.jungle-world .modal:has(.field-form) > .panel-heading .eyebrow {
+  color: #d8be83;
+}
+@media (max-width: 600px) {
+  .jungle-world .field-form,
+  .jungle-world .modal .field-form,
+  .jungle-world .project-task-detail .field-form {
+    padding: 18px 15px;
+    gap: 20px;
+  }
+  .form-field-mark {
+    font-size: 8px;
+    letter-spacing: 1px;
+    gap: 8px;
+  }
+  .jungle-world
+    .field-form
+    :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+    font-size: 16px;
+  }
+  .jungle-world .field-form .btn.primary {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .jungle-world .field-form .btn.primary > span {
+    flex: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jungle-world .field-form :is(input, select, textarea, .btn) {
+    transition: none;
+  }
+  .jungle-world .field-form .spin {
+    animation: none;
+  }
+}
+@media (forced-colors: active) {
+  .jungle-world .field-form select {
+    appearance: auto;
+  }
+  .jungle-world .field-form .btn.primary {
+    border: 2px solid ButtonText;
+  }
+}

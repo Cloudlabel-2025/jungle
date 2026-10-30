@@ -1,6 +1,14 @@
 "use client";
-import { X, Check, LoaderCircle, Inbox } from "lucide-react";
+import {
+  X,
+  Check,
+  LoaderCircle,
+  Inbox,
+  Compass,
+  ArrowUpRight,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { characterFor } from "@/lib/characters";
 export function Badge({ children, tone = "" }) {
   return <span className={`badge ${tone}`}>{children}</span>;
 }
@@ -27,7 +35,14 @@ export function Empty({ title = "All clear on this channel", children }) {
     </div>
   );
 }
-export function Modal({ title, kicker, children, close, wide = false }) {
+export function Modal({
+  title,
+  kicker,
+  children,
+  close,
+  wide = false,
+  variant,
+}) {
   const root = useRef(null),
     closeRef = useRef(close);
   closeRef.current = close;
@@ -43,6 +58,12 @@ export function Modal({ title, kicker, children, close, wide = false }) {
       ).filter((el) => el.getClientRects().length);
     controls()[0]?.focus();
     function onKey(e) {
+      // Only the top dialog handles keyboard input when a celebration overlays a level.
+      if (
+        Array.from(document.querySelectorAll('[aria-modal="true"]')).at(-1) !==
+        root.current
+      )
+        return;
       if (e.key === "Escape") {
         e.preventDefault();
         closeRef.current();
@@ -69,7 +90,7 @@ export function Modal({ title, kicker, children, close, wide = false }) {
   }, []);
   return (
     <div
-      className="modal-backdrop"
+      className={`modal-backdrop ${variant === "level-drawer" ? "level-drawer-backdrop" : ""} ${variant === "level-completion" ? "level-completion-backdrop" : ""}`}
       onClick={(e) => e.target === e.currentTarget && close()}
     >
       <section
@@ -77,7 +98,7 @@ export function Modal({ title, kicker, children, close, wide = false }) {
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={`modal ${wide ? "wide" : ""}`}
+        className={`modal ${wide ? "wide" : ""} ${variant === "level-drawer" ? "level-drawer" : ""} ${variant === "level-completion" ? "level-completion-modal" : ""}`}
       >
         <div className="panel-heading">
           <div>
@@ -108,14 +129,31 @@ export function HP({ value = 5 }) {
     </span>
   );
 }
-export function Avatar({ name = "", small = false }) {
+export function Avatar({ name = "", player, small = false }) {
+  const character = player && characterFor(player);
+  const [failedSource, setFailedSource] = useState(null);
+  const portrait = character?.image && failedSource !== character.image;
+  const displayName = name || player?.name || "";
   return (
-    <span className={`avatar ${small ? "small" : ""}`}>
-      {name
-        .split(" ")
-        .map((x) => x[0])
-        .slice(0, 2)
-        .join("")}
+    <span
+      className={`avatar ${small ? "small" : ""}${portrait ? " character-avatar" : ""}`}
+    >
+      {portrait ? (
+        <img
+          src={character.image}
+          alt={`${displayName ? `${displayName} as ` : ""}${character.name}`}
+          width={80}
+          height={80}
+          decoding="async"
+          onError={() => setFailedSource(character.image)}
+        />
+      ) : (
+        displayName
+          .split(" ")
+          .map((x) => x[0])
+          .slice(0, 2)
+          .join("")
+      )}
     </span>
   );
 }
@@ -130,6 +168,8 @@ export function Form({
   return (
     <form
       className="field-form"
+      data-has-fields={fields.length > 0 ? "true" : "false"}
+      aria-busy={submitting}
       onSubmit={async (e) => {
         e.preventDefault();
         if (submitting) return;
@@ -149,9 +189,23 @@ export function Form({
         }
       }}
     >
-      {fields.map((f) => (
-        <label key={f.name}>
-          {f.label}
+      {fields.length > 0 && (
+        <div className="form-field-mark" aria-hidden="true">
+          <Compass size={17} />
+          <span>Expedition field record</span>
+          <span className="form-field-rule" />
+          <span>✦</span>
+        </div>
+      )}
+      {fields.map((f, index) => (
+        <label key={f.name} className="expedition-field">
+          <span className="form-field-caption">
+            <span className="form-field-number" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span>{f.label}</span>
+            {f.optional && <small aria-hidden="true">Optional</small>}
+          </span>
           {f.options ? (
             <select
               name={f.name}
@@ -190,7 +244,19 @@ export function Form({
       ))}
       {children}
       <button className="btn primary" type="submit" disabled={submitting}>
-        {submitting ? "Recording…" : submit}
+        {submitting ? (
+          <LoaderCircle className="spin" size={16} aria-hidden="true" />
+        ) : (
+          <Compass size={16} aria-hidden="true" />
+        )}
+        <span>{submitting ? "Recording…" : submit}</span>
+        {!submitting && (
+          <ArrowUpRight
+            className="form-submit-arrow"
+            size={17}
+            aria-hidden="true"
+          />
+        )}
       </button>
     </form>
   );

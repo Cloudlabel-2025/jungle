@@ -2,6 +2,17 @@
 import { useState } from "react";
 import { Modal, Form, Badge, Panel, Receipt } from "./ui";
 import { teamRoles } from "@/lib/team-roles.js";
+import LevelEmblem from "./LevelEmblem";
+import ProjectPreview from "./ProjectPreview";
+import LevelStars from "./LevelStars";
+import { CompletionCelebration } from "./LevelCompletion";
+import FullStackTasks from "./FullStackTasks";
+import {
+  projectTaskLabel,
+  characterKey,
+  fullStackTeamReady,
+} from "@/lib/characters";
+import { levelsForTeam, previousLevel } from "@/lib/level-definitions.js";
 
 const roleName = (role) =>
   teamRoles.find((r) => r.code === role)?.label || role;
@@ -16,12 +27,16 @@ export function projectState(data, level, teamId = data.user.teamId) {
   const attempt = data.projectAttempts?.find(
     (a) => a.teamId === teamId && a.levelId === level._id,
   );
+  const previous = previousLevel(
+    levelsForTeam(data.projectLevels, teamId),
+    level._id,
+  );
   const unlocked =
-    level.number === 1 ||
+    !previous ||
     data.projectAttempts?.some(
       (a) =>
         a.teamId === teamId &&
-        a.number === level.number - 1 &&
+        a.levelId === previous._id &&
         a.status === "CLEARED" &&
         a.stars >= 1,
     );
@@ -70,7 +85,7 @@ export function ProjectTaskDetails({
         <strong>Acceptance criteria:</strong> {task.acceptanceCriteria}
       </p>
       <p className="muted">
-        {roleName(task.targetRole)} ·{" "}
+        {projectTaskLabel(task) || roleName(task.targetRole)} ·{" "}
         {data.roster.find((p) => p._id === task.assigneeId)?.name} · Due{" "}
         {time(task.dueAt)}
       </p>
@@ -89,7 +104,9 @@ export function ProjectTaskDetails({
       )}
       {grant && (
         <Receipt>
-          Earned {grant.xp} XP and {grant.trophies} trophies.
+          Level reward: {grant.xp} XP and {grant.trophies} trophies.
+          {task.targetCharacter &&
+            " Awarded once using the average score across your five tasks."}
         </Receipt>
       )}
       {(owner || staff) && task.submittedAt && (
@@ -241,14 +258,18 @@ export function ProjectTaskDetails({
           fields={[
             {
               name: "userId",
-              label: "Reassign to an active matching role holder",
+              label: task.targetCharacter
+                ? "Reassign this entire feature to its active character holder"
+                : "Reassign to an active matching role holder",
               options: data.roster
                 .filter(
                   (p) =>
                     p.teamId === task.teamId &&
                     p.active !== false &&
-                    (p.teamRoleCode === task.targetRole ||
-                      p.assignment === roleName(task.targetRole)),
+                    (task.targetCharacter
+                      ? characterKey(p) === task.targetCharacter
+                      : p.teamRoleCode === task.targetRole ||
+                        p.assignment === roleName(task.targetRole)),
                 )
                 .map((p) => ({ value: p._id, label: p.name })),
             },
@@ -274,14 +295,20 @@ export function ProjectTaskDetails({
 }
 
 export function ProjectDialog({
-  level,
+  level: requestedLevel,
   data,
   act,
   close,
   teamId = data.user.teamId,
   onQuest,
+  drawer = false,
 }) {
-  const { attempt, state } = projectState(data, level, teamId);
+  const { attempt, state } = projectState(data, requestedLevel, teamId);
+  const level = attempt?.definitionSnapshot || requestedLevel;
+  const forming =
+    !attempt &&
+    level.learningMode === "FULL_STACK" &&
+    !fullStackTeamReady(data.roster, teamId);
   const staff = data.user.role !== "GAMER";
   const tasks = data.tasks.filter((t) => t.projectAttemptId === attempt?._id);
   const approved = tasks.filter((t) => t.status === "Done").length;
@@ -289,6 +316,7 @@ export function ProjectDialog({
     ["Review", "Done"].includes(t.status),
   ).length;
   const [openTask, setOpenTask] = useState(null);
+  const [celebrating, setCelebrating] = useState(false);
   const [checks, setChecks] = useState({});
   const [feedback, setFeedback] = useState("");
   const [busy, setBusy] = useState(false);
@@ -313,244 +341,308 @@ export function ProjectDialog({
     }
   };
   return (
-    <Modal
-      title={level.name}
-      kicker={`TEAM PROJECT ${String(level.number).padStart(2, "0")} · ${data.teams.find((t) => t._id === teamId)?.name || "YOUR TEAM"}`}
-      close={close}
-    >
-      <div className="project-summary">
-        <Badge>{state}</Badge>
-        <span
-          className="project-stars"
-          aria-label={`${attempt?.stars || 0} of 3 stars`}
-        >
-          {starsLabel(attempt?.stars)}
-        </span>
-      </div>
-      <p className="detail-copy">{level.description}</p>
-      <p className="muted">
-        Budget: {level.hours} working hours · 09:00–17:00 IST, Monday–Friday.
-        Build locally in your shared repository; submit evidence here.
-      </p>
-      <h3>Complete project acceptance</h3>
-      <ul className="project-criteria">
-        {level.criteria.map((c) => (
-          <li key={c}>{c}</li>
-        ))}
-      </ul>
-      <p className="support-copy">
-        3 stars: accepted submission by the target deadline. 2 stars: accepted
-        within the late window. 1 star: accepted after remediation. Guide review
-        waiting time does not reduce stars. Incomplete projects stay active.
-      </p>
-      <p className="muted">
-        Base reward per member: {level.baseXp} XP / {level.baseTrophies}{" "}
-        trophies × star multiplier (1× / 1.25× / 1.5×) × contribution score /
-        100. Project rewards are separate from daily activity caps.
-      </p>
-      {state === "LOCKED" && (
-        <p className="callout">
-          Your team must clear Level {level.number - 1} with at least one star
-          first.
-        </p>
-      )}
-      {state === "AVAILABLE" && (
-        <Form
-          fields={[]}
-          submit="Start level and assign team tasks"
-          onSubmit={() =>
-            act(
-              "projects/start",
-              { teamId, levelId: level._id },
-              "Team project started. Tasks assigned automatically by role.",
-            )
-          }
-        />
-      )}
-      {!attempt && (
-        <div className="project-role-list">
-          {level.tasks.map((t) => (
-            <article key={t.targetRole}>
-              <h4>{roleName(t.targetRole)}</h4>
-              <p>{t.instructions}</p>
-            </article>
-          ))}
-        </div>
-      )}
-      {attempt && (
-        <>
-          <p className="receipt">
-            {approved}/{level.tasks.length} contributions approved
+    <>
+      <Modal
+        title={level.name}
+        kicker={`TEAM PROJECT ${String(level.number).padStart(2, "0")} · ${data.teams.find((t) => t._id === teamId)?.name || "YOUR TEAM"}`}
+        close={close}
+        variant={drawer ? "level-drawer" : undefined}
+      >
+        {drawer && <ProjectPreview level={level} />}
+        <div className={drawer ? "level-work-content" : "project-dialog-body"}>
+          <div className="project-summary">
+            <Badge>{state}</Badge>
+          </div>
+          <LevelStars attempt={attempt} level={level} />
+          {!drawer && (
+            <div className="project-hazard-brief">
+              <LevelEmblem level={level} />
+              <div>
+                <span className="eyebrow">
+                  TEAM PROJECT · LEVEL {String(level.number).padStart(2, "0")}
+                </span>
+                <h3>{level.name}</h3>
+                <p>Five explorers. One shared project.</p>
+              </div>
+            </div>
+          )}
+          <p className="detail-copy">{level.description}</p>
+          <p className="muted">
+            Budget: {level.hours} working hours · 09:00–17:00 IST,
+            Monday–Friday. Build locally in your shared repository; submit
+            evidence here.
           </p>
-          <div className="detail-grid">
-            <span>
-              TARGET DEADLINE<strong>{time(attempt.dueAt)}</strong>
-            </span>
-            <span>
-              TWO-STAR WINDOW ENDS<strong>{time(attempt.lateUntil)}</strong>
-            </span>
-          </div>
-          <div className="project-role-list">
-            {tasks.map((t) => (
-              <article key={t._id}>
-                <button
-                  className="project-task-trigger"
-                  onClick={() =>
-                    onQuest
-                      ? (close(), onQuest(t))
-                      : setOpenTask(openTask === t._id ? null : t._id)
-                  }
-                >
-                  <span>
-                    <strong>{roleName(t.targetRole)}</strong>
-                    <small>
-                      {data.roster.find((p) => p._id === t.assigneeId)?.name}
-                      {t.assigneeId === data.user._id ? " · Your task" : ""}
-                    </small>
-                  </span>
-                  <Badge>{t.status}</Badge>
-                </button>
-                <p>{t.description}</p>
-                {openTask === t._id && (
-                  <ProjectTaskDetails
-                    task={t}
-                    data={data}
-                    act={act}
-                    staff={staff}
-                  />
-                )}
-              </article>
+          <h3>Complete project acceptance</h3>
+          <ul className="project-criteria">
+            {level.criteria.map((c) => (
+              <li key={c}>{c}</li>
             ))}
-          </div>
-          {attempt.feedback && (
+          </ul>
+          <p className="muted">
+            Base reward per member: {level.baseXp} XP / {level.baseTrophies}{" "}
+            trophies × star multiplier (1× / 1.25× / 1.5×) × contribution score
+            / 100. Project rewards are separate from daily activity caps.
+          </p>
+          {state === "LOCKED" && (
             <p className="callout">
-              Integrated project feedback: {attempt.feedback}
+              Your team must clear Level {level.number - 1} with at least one
+              star first.
             </p>
           )}
-          {!staff &&
-            attempt.status === "ACTIVE" &&
-            submitted === level.tasks.length && (
+          {state === "AVAILABLE" &&
+            (forming ? (
+              <p className="callout">
+                This team is forming. Fill all five character slots before
+                starting this level.
+              </p>
+            ) : (
               <Form
-                fields={submissionFields}
-                submit="Submit integrated team project"
-                onSubmit={({ evidence, ...v }) =>
+                fields={[]}
+                submit="Start level and assign team tasks"
+                onSubmit={() =>
                   act(
-                    "projects/submit",
-                    {
-                      attemptId: attempt._id,
-                      ...v,
-                      evidenceReferences: references(evidence),
-                    },
-                    "Team project submitted for integration review.",
+                    "projects/start",
+                    { teamId, levelId: level._id },
+                    "Team project started. Feature tasks assigned automatically.",
                   )
                 }
               />
-            )}
-          {attempt.submittedAt && (
-            <article className="challenge-record">
-              <h3>Integrated submission {attempt.submissionVersion}</h3>
-              <p>{attempt.submissionSummary}</p>
-              <ul>
-                {attempt.evidenceReferences?.map((r, i) => (
-                  <li key={i}>{r}</li>
-                ))}
-              </ul>
-              <small>Submitted {time(attempt.submittedAt)}</small>
-            </article>
+            ))}
+          {!attempt && level.learningMode === "FULL_STACK" && (
+            <FullStackTasks level={level} data={data} teamId={teamId} />
           )}
-          {attempt.status === "REVIEW" && !staff && (
-            <Receipt>
-              Your Guide is checking the integrated application. The submission
-              time is recorded.
-            </Receipt>
+          {!attempt && level.learningMode !== "FULL_STACK" && (
+            <div className="project-role-list">
+              {level.tasks.map((t) => (
+                <article key={t.targetRole}>
+                  <h4>{roleName(t.targetRole)}</h4>
+                  <p>{t.instructions}</p>
+                </article>
+              ))}
+            </div>
           )}
-          {staff && attempt.status === "REVIEW" && (
-            <form
-              className="field-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                review("approve");
-              }}
-            >
-              <h3>Verify the integrated application</h3>
-              {level.criteria.map((c, i) => (
-                <label className="project-check" key={c}>
-                  <input
-                    type="checkbox"
-                    checked={!!checks[i]}
-                    onChange={(e) =>
-                      setChecks({ ...checks, [i]: e.target.checked })
+          {attempt && (
+            <>
+              <p className="receipt">
+                {approved}/{level.tasks.length} contributions approved
+              </p>
+              <div className="detail-grid">
+                <span>
+                  TARGET DEADLINE<strong>{time(attempt.dueAt)}</strong>
+                </span>
+                <span>
+                  TWO-STAR WINDOW ENDS<strong>{time(attempt.lateUntil)}</strong>
+                </span>
+              </div>
+              {level.learningMode === "FULL_STACK" ? (
+                <FullStackTasks
+                  level={level}
+                  data={data}
+                  attempt={attempt}
+                  onTask={(task) =>
+                    onQuest
+                      ? (close(), onQuest(task))
+                      : setOpenTask(openTask === task._id ? null : task._id)
+                  }
+                  renderTask={(task) =>
+                    openTask === task._id && (
+                      <ProjectTaskDetails
+                        task={task}
+                        data={data}
+                        act={act}
+                        staff={staff}
+                      />
+                    )
+                  }
+                />
+              ) : (
+                <div className="project-role-list">
+                  {tasks.map((t) => (
+                    <article key={t._id}>
+                      <button
+                        className="project-task-trigger"
+                        onClick={() =>
+                          onQuest
+                            ? (close(), onQuest(t))
+                            : setOpenTask(openTask === t._id ? null : t._id)
+                        }
+                      >
+                        <span>
+                          <strong>{roleName(t.targetRole)}</strong>
+                          <small>
+                            {
+                              data.roster.find((p) => p._id === t.assigneeId)
+                                ?.name
+                            }
+                            {t.assigneeId === data.user._id
+                              ? " · Your task"
+                              : ""}
+                          </small>
+                        </span>
+                        <Badge>{t.status}</Badge>
+                      </button>
+                      <p>{t.description}</p>
+                      {openTask === t._id && (
+                        <ProjectTaskDetails
+                          task={t}
+                          data={data}
+                          act={act}
+                          staff={staff}
+                        />
+                      )}
+                    </article>
+                  ))}
+                </div>
+              )}
+              {attempt.feedback && (
+                <p className="callout">
+                  Integrated project feedback: {attempt.feedback}
+                </p>
+              )}
+              {!staff &&
+                attempt.status === "ACTIVE" &&
+                submitted === level.tasks.length && (
+                  <Form
+                    fields={submissionFields}
+                    submit="Submit integrated team project"
+                    onSubmit={({ evidence, ...v }) =>
+                      act(
+                        "projects/submit",
+                        {
+                          attemptId: attempt._id,
+                          ...v,
+                          evidenceReferences: references(evidence),
+                        },
+                        "Team project submitted for integration review.",
+                      )
                     }
                   />
-                  {c}
-                </label>
-              ))}
-              <label>
-                Review evidence and feedback
-                <textarea
-                  required
-                  minLength={10}
-                  maxLength={4000}
-                  value={feedback}
-                  onChange={(e) => setFeedback(e.target.value)}
-                />
-              </label>
-              <div className="button-row">
-                <button
-                  className="btn primary"
-                  disabled={busy || level.criteria.some((_, i) => !checks[i])}
-                >
-                  Approve project and award stars
-                </button>
-                <button
-                  type="button"
-                  className="btn"
-                  disabled={busy || feedback.trim().length < 10}
-                  onClick={() => review("return")}
-                >
-                  Return for integration fixes
-                </button>
-              </div>
-            </form>
-          )}
-          {attempt.status === "CLEARED" && (
-            <>
-              <Receipt>
-                Team level cleared with {attempt.stars} stars.{" "}
-                {level.number < data.projectLevels.length
-                  ? "The next project is unlocked."
-                  : "All beginner projects are complete."}
-              </Receipt>
-              <div className="challenge-table-wrap">
-                <table className="challenge-table">
-                  <thead>
-                    <tr>
-                      <th>Member</th>
-                      <th>Contribution</th>
-                      <th>XP</th>
-                      <th>Trophies</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {attempt.rewards.map((r) => (
-                      <tr key={r.userId}>
-                        <td>
-                          {data.roster.find((p) => p._id === r.userId)?.name ||
-                            r.userId}
-                        </td>
-                        <td>{r.score}/100</td>
-                        <td>+{r.xp}</td>
-                        <td>+{r.trophies}</td>
-                      </tr>
+                )}
+              {attempt.submittedAt && (
+                <article className="challenge-record">
+                  <h3>Integrated submission {attempt.submissionVersion}</h3>
+                  <p>{attempt.submissionSummary}</p>
+                  <ul>
+                    {attempt.evidenceReferences?.map((r, i) => (
+                      <li key={i}>{r}</li>
                     ))}
-                  </tbody>
-                </table>
-              </div>
+                  </ul>
+                  <small>Submitted {time(attempt.submittedAt)}</small>
+                </article>
+              )}
+              {attempt.status === "REVIEW" && !staff && (
+                <Receipt>
+                  Your Guide is checking the integrated application. The
+                  submission time is recorded.
+                </Receipt>
+              )}
+              {staff && attempt.status === "REVIEW" && (
+                <form
+                  className="field-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    review("approve");
+                  }}
+                >
+                  <h3>Verify the integrated application</h3>
+                  {level.criteria.map((c, i) => (
+                    <label className="project-check" key={c}>
+                      <input
+                        type="checkbox"
+                        checked={!!checks[i]}
+                        onChange={(e) =>
+                          setChecks({ ...checks, [i]: e.target.checked })
+                        }
+                      />
+                      {c}
+                    </label>
+                  ))}
+                  <label>
+                    Review evidence and feedback
+                    <textarea
+                      required
+                      minLength={10}
+                      maxLength={4000}
+                      value={feedback}
+                      onChange={(e) => setFeedback(e.target.value)}
+                    />
+                  </label>
+                  <div className="button-row">
+                    <button
+                      className="btn primary"
+                      disabled={
+                        busy || level.criteria.some((_, i) => !checks[i])
+                      }
+                    >
+                      Approve project and award stars
+                    </button>
+                    <button
+                      type="button"
+                      className="btn"
+                      disabled={busy || feedback.trim().length < 10}
+                      onClick={() => review("return")}
+                    >
+                      Return for integration fixes
+                    </button>
+                  </div>
+                </form>
+              )}
+              {attempt.status === "CLEARED" && (
+                <>
+                  <button
+                    type="button"
+                    className="btn primary"
+                    onClick={() => setCelebrating(true)}
+                  >
+                    Replay level celebration
+                  </button>
+                  <Receipt>
+                    Team level cleared with {attempt.stars} stars.{" "}
+                    {levelsForTeam(data.projectLevels, teamId).some(
+                      (l) => l.number > level.number,
+                    )
+                      ? "The next project is unlocked."
+                      : "All beginner projects are complete."}
+                  </Receipt>
+                  <div className="challenge-table-wrap">
+                    <table className="challenge-table">
+                      <thead>
+                        <tr>
+                          <th>Member</th>
+                          <th>Contribution</th>
+                          <th>XP</th>
+                          <th>Trophies</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {attempt.rewards.map((r) => (
+                          <tr key={r.userId}>
+                            <td>
+                              {data.roster.find((p) => p._id === r.userId)
+                                ?.name || r.userId}
+                            </td>
+                            <td>{r.score}/100</td>
+                            <td>+{r.xp}</td>
+                            <td>+{r.trophies}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              )}
             </>
           )}
-        </>
+        </div>
+      </Modal>
+      {celebrating && attempt?.status === "CLEARED" && (
+        <CompletionCelebration
+          attempt={attempt}
+          data={data}
+          close={() => setCelebrating(false)}
+        />
       )}
-    </Modal>
+    </>
   );
 }
 
@@ -558,6 +650,11 @@ export default function ProjectBoard({ data, act }) {
   const [team, setTeam] = useState(data.user.teamId || data.teams[0]?._id);
   const [selected, setSelected] = useState(null);
   const attempts = data.projectAttempts.filter((a) => a.teamId === team);
+  const levels = levelsForTeam(data.projectLevels, team).map(
+    (level) =>
+      attempts.find((a) => a.levelId === level._id)?.definitionSnapshot ||
+      level,
+  );
   return (
     <Panel
       title="Team project progression"
@@ -582,13 +679,12 @@ export default function ProjectBoard({ data, act }) {
         </label>
       )}
       <p className="muted">
-        {attempts.filter((a) => a.status === "CLEARED").length}/
-        {data.projectLevels.length} projects cleared ·{" "}
-        {attempts.reduce((n, a) => n + a.stars, 0)}/
-        {data.projectLevels.length * 3} stars
+        {attempts.filter((a) => a.status === "CLEARED").length}/{levels.length}{" "}
+        projects cleared · {attempts.reduce((n, a) => n + a.stars, 0)}/
+        {levels.length * 3} stars
       </p>
       <div className="project-level-grid">
-        {data.projectLevels.map((level) => {
+        {levels.map((level) => {
           const { attempt, state } = projectState(data, level, team);
           return (
             <button
@@ -599,10 +695,11 @@ export default function ProjectBoard({ data, act }) {
               <small>
                 LEVEL {String(level.number).padStart(2, "0")} · {level.hours}H
               </small>
+              <div className="project-card-hazard">
+                <LevelEmblem level={level} />
+              </div>
               <h3>{level.name}</h3>
-              <span className="project-stars">
-                {starsLabel(attempt?.stars)}
-              </span>
+              <LevelStars attempt={attempt} level={level} compact />
               <p>{state === "REVIEW" ? "Awaiting integrated review" : state}</p>
             </button>
           );

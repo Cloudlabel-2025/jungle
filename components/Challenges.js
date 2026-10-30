@@ -316,7 +316,7 @@ export default function ChallengeManager({ data, act }) {
       >
         <p className="challenge-intro">
           Add named tasks, select a team role for each, preview the players,
-          then publish to all five teams. Each player receives an independent
+          then publish to all teams. Each player receives an independent
           assignment.
         </p>
         {message && (

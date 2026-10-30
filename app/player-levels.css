@@ -1,0 +1,563 @@
+.jungle-world .player-topbar {
+  grid-template-columns: minmax(280px, 1fr) auto;
+  min-height: 88px;
+  padding: 8px 22px;
+  gap: 16px;
+}
+.player-topbar .breadcrumbs {
+  align-items: center;
+  gap: 12px;
+}
+.player-identity {
+  width: min(420px, 100%);
+  min-width: 0;
+}
+.player-name-line {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.player-name-line > strong {
+  font-size: 17px;
+  font-family: var(--display);
+  line-height: 1.2;
+  color: #ecedce !important;
+  white-space: normal !important;
+}
+.player-name-line > span {
+  font-size: 10px;
+  color: #afc492;
+}
+.player-experience {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  color: #c6e3a4;
+}
+.player-experience > span:first-child {
+  font-size: 11px;
+  white-space: nowrap;
+}
+.player-experience small {
+  font: 9px var(--mono);
+  color: #b5c4a2;
+  white-space: nowrap;
+}
+.player-xp-bar {
+  width: clamp(60px, 14vw, 180px);
+  height: 4px;
+  overflow: hidden;
+  background: #253c28;
+  border-radius: 3px;
+}
+.player-xp-bar i {
+  display: block;
+  height: 100%;
+  background: #c3e69a;
+}
+.player-vitals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 4px;
+}
+.player-vitals > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.player-vitals > span > span {
+  margin-right: 3px;
+  font-size: 10px;
+  color: #c0ceb2;
+}
+.player-vitals small {
+  margin-left: 3px;
+  color: #a4b99d;
+  font: 9px var(--mono);
+}
+.life-counter {
+  color: #ff8298;
+}
+.energy-counter {
+  color: #8ee9ed;
+}
+.player-vitals .vital-filled {
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px currentColor);
+  /* Explicit HUD effect: keep these icons animated under reduced motion. */
+  animation: vital-breathe 2.6s ease-in-out infinite !important;
+}
+.energy-counter .vital-filled {
+  animation-delay: -1.3s !important;
+}
+@keyframes vital-breathe {
+  0%,
+  100% {
+    transform: scale(0.96);
+    filter: drop-shadow(0 0 2px currentColor);
+  }
+  50% {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 0 8px currentColor);
+  }
+}
+.player-vitals .vital-empty {
+  opacity: 0.24;
+}
+.player-honours {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 5px 20px;
+  align-items: center;
+  padding-right: 16px;
+  border-right: 1px solid #68825b40;
+}
+.player-team-name {
+  grid-column: 1 / -1;
+  text-align: right;
+  color: #b2c3a0;
+  font-size: 11px;
+}
+.player-trophy-count,
+.player-streak-count {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 3px 7px;
+}
+.player-trophy-count {
+  color: #ffd16b;
+}
+.player-streak-count {
+  color: #c4a1ff;
+}
+.player-trophy-count > svg {
+  filter: drop-shadow(0 0 3px #ffd16b40);
+}
+.player-streak-count > svg {
+  filter: drop-shadow(0 0 3px #c4a1ff40);
+}
+.player-honours strong {
+  font: 16px var(--display);
+}
+.player-honours small {
+  grid-column: 1 / -1;
+  font: 8px var(--mono);
+  color: #a8b798;
+  text-align: right;
+}
+.player-topbar .persona-trigger > span:nth-child(2) {
+  display: none;
+}
+.player-topbar .topbar-right {
+  grid-column: 2;
+  grid-row: 1;
+  gap: 12px;
+}
+.player-arena .sidebar nav {
+  margin-top: auto;
+}
+.player-arena .sidebar-bottom {
+  margin-top: 20px;
+}
+@media (min-width: 1000px) {
+  .player-arena.expedition-mode .sidebar nav {
+    margin-top: auto;
+    margin-bottom: 20px;
+  }
+  .player-arena.expedition-mode .nav-item {
+    margin-bottom: 5px;
+    padding: 12px 0;
+  }
+}
+.jungle-game .game-action-rail {
+  top: auto;
+  bottom: 20px;
+}
+.jungle-game .camp-control {
+  position: static;
+}
+.jungle-game .camp-popover {
+  top: auto;
+  bottom: 0;
+  max-height: min(480px, calc(100dvh - 240px));
+}
+.map-scroll-arrow {
+  position: absolute;
+  z-index: 6;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  background: #0d241ce8;
+  border: 1px solid #a59d66;
+  color: #e2d49b;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px #0005;
+  touch-action: none;
+}
+.map-scroll-left {
+  left: 94px;
+}
+.map-scroll-right {
+  right: 14px;
+}
+.map-scroll-arrow:not(:disabled):hover {
+  background: #33482a;
+  border-color: #e3cd83;
+}
+.map-scroll-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.map-scroll-arrow:focus-visible {
+  outline: 2px solid #ead18a;
+  outline-offset: 4px;
+}
+.jungle-world .expedition-mode .jungle-game {
+  height: auto;
+  min-height: 440px;
+}
+.jungle-world .expedition-mode .workspace {
+  display: flex;
+  flex-direction: column;
+}
+.jungle-world .expedition-mode .main-content {
+  flex: 1;
+  min-height: 0;
+}
+.level-workshop-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+.level-workshop-intro p {
+  max-width: 650px;
+  color: #b2c4ae;
+  line-height: 1.65;
+}
+.level-workshop-intro .btn {
+  flex-shrink: 0;
+}
+.level-library {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+.level-library-card {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  text-align: left;
+  padding: 17px 12px;
+  border: 1px solid #54704b66;
+  background: #0a201b;
+  border-radius: 5px;
+  color: #dce3bf;
+}
+.level-library-card:hover {
+  border-color: #b5a76d;
+  background: #172e22;
+}
+.level-library-card > .level-emblem {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+}
+.level-library-card > span {
+  display: grid;
+  gap: 5px;
+  flex: 1;
+}
+.level-library-card small {
+  font-size: 9px;
+  color: #a6b798;
+}
+.level-library-card strong {
+  font-size: 15px;
+}
+.level-editor-heading {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding-block: 24px;
+}
+.level-editor-heading > .level-emblem {
+  width: 80px;
+  height: 80px;
+}
+.level-editor-heading h3 {
+  margin-block: 9px;
+}
+.level-editor-heading p {
+  color: #b8c5a7;
+}
+.level-author-form {
+  margin-top: 22px;
+}
+.level-author-form > label,
+.level-role-tasks label {
+  display: grid;
+  gap: 9px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  color: #d3ddbf;
+}
+.level-author-form small {
+  color: #a5b49a;
+  line-height: 1.6;
+  font-size: 11px;
+}
+.level-author-form fieldset {
+  min-width: 0;
+  margin: 0 0 22px;
+  padding: 20px;
+  border: 1px solid #4c654544;
+  border-radius: 5px;
+  background: #071a1433;
+}
+.level-author-form legend {
+  padding-inline: 9px;
+  font-size: 13px;
+  color: #d9ca93;
+}
+.level-team-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+.level-team-options label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+}
+.level-team-options input {
+  width: auto !important;
+  accent-color: #a6c875;
+}
+.emblem-picker h4 {
+  margin: 18px 0 12px;
+  color: #afc199;
+  font: 10px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.emblem-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 9px;
+}
+.emblem-options label {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px 7px;
+  border: 1px solid #425840;
+  background: #0b201b;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  color: #afc0a6;
+  font-size: 10px;
+  position: relative;
+}
+.emblem-options .level-emblem {
+  width: 48px;
+  height: 48px;
+}
+.emblem-options input {
+  width: 12px !important;
+  height: 12px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  accent-color: #d4bd78;
+}
+.emblem-options label.selected {
+  border-color: #c3ad69;
+  background: #233829;
+  color: #eee1b2;
+}
+.emblem-options label:focus-within {
+  outline: 2px solid #cee392;
+  outline-offset: 2px;
+}
+.level-role-tasks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 18px;
+}
+.level-role-tasks fieldset:last-child {
+  grid-column: 1 / -1;
+}
+.level-publish-preview {
+  padding: 20px;
+  margin-top: 28px;
+  border: 1px solid #a28d51;
+  border-radius: 6px;
+  background: #152a1d;
+}
+.level-publish-preview > p {
+  color: #afc0a2;
+  line-height: 1.6;
+}
+.level-publish-preview article {
+  padding-block: 15px;
+  border-top: 1px solid #66804b50;
+}
+.level-publish-preview h4 {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.level-publish-preview li {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #c1ceb2;
+}
+.level-publish-preview li small {
+  display: block;
+  color: #92aa8f;
+}
+.level-publish-preview article p {
+  font-size: 12px;
+  color: #d3c391;
+}
+
+/* Float the player HUD over the map without reserving a header row. */
+.jungle-world .expedition-mode .workspace {
+  position: relative;
+}
+.jungle-world .expedition-mode .player-topbar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  pointer-events: none;
+  text-shadow:
+    0 1px 5px #000,
+    0 2px 12px #000b;
+}
+.expedition-mode .player-topbar button,
+.expedition-mode .player-topbar a {
+  pointer-events: auto;
+}
+.jungle-world .expedition-mode .main-content {
+  padding: 0;
+}
+.jungle-world .expedition-mode .main-content > .jungle-game {
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+}
+.expedition-mode .game-map-heading {
+  top: 102px;
+}
+.expedition-mode .game-next {
+  top: auto;
+  bottom: 22px;
+  right: 24px;
+}
+.expedition-mode .workspace:has(.modal-backdrop) > .player-topbar {
+  visibility: hidden;
+}
+@media (max-width: 767px) {
+  .jungle-world .player-topbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 8px 12px;
+    gap: 8px;
+    min-height: 112px;
+    align-items: start;
+  }
+  .player-name-line > strong {
+    font-size: 15px;
+  }
+  .player-experience {
+    flex-wrap: wrap;
+    gap: 5px 8px;
+  }
+  .player-name-line > span {
+    font-size: 9px;
+  }
+  .player-topbar .topbar-right {
+    max-width: 135px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .player-honours {
+    flex: 0 0 100%;
+    gap: 6px 12px;
+    padding: 0;
+    border: 0;
+  }
+  .player-team-name {
+    max-width: 130px;
+    font-size: 9px;
+  }
+  .player-honours strong {
+    font-size: 14px;
+  }
+  .player-honours small {
+    font-size: 7px;
+  }
+  .player-vitals {
+    gap: 8px;
+  }
+  .player-vitals small {
+    display: none;
+  }
+  .player-vitals > span {
+    gap: 2px;
+  }
+  .player-vitals svg {
+    width: 10px;
+  }
+  .jungle-game .game-action-rail {
+    bottom: 12px;
+  }
+  .map-scroll-left {
+    left: 67px;
+  }
+  .map-scroll-right {
+    right: 8px;
+  }
+  .map-scroll-arrow {
+    width: 32px;
+    height: 48px;
+  }
+  .level-workshop-intro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .level-role-tasks {
+    grid-template-columns: 1fr;
+  }
+  .level-author-form fieldset {
+    padding: 14px;
+  }
+  .emblem-options {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  }
+  .expedition-mode .game-map-heading {
+    top: 112px;
+  }
+  .expedition-mode .game-next {
+    right: 14px;
+    bottom: 18px;
+  }
+}

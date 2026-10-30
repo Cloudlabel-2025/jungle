@@ -39,15 +39,25 @@ test("daily trophy cap cannot be exceeded or become negative", () => {
   assert.equal(boundedAward(5, 55), 0);
   assert.equal(boundedAward(1, 0), 1);
 });
-test("HP drops open rescue and warn after three consecutive infractions", () => {
-  assert.deepEqual(healthDrop(3, 2), {
+test("every third energy penalty costs one life and resets energy", () => {
+  assert.deepEqual(healthDrop(3, 2, 1), {
     hp: 2,
+    energy: 3,
+    lifeChange: -1,
     drops: 3,
     warning: true,
     rescue: false,
   });
-  assert.equal(healthDrop(1, 4).rescue, true);
+  assert.equal(healthDrop(1, 4, 1).rescue, true);
   assert.equal(healthDrop(0, 5).hp, 0);
+  let state = { hp: 5, drops: 0, energy: 3 };
+  for (let i = 1; i <= 15; i++) {
+    state = healthDrop(state.hp, state.drops, state.energy);
+    assert.equal(state.hp, 5 - Math.floor(i / 3));
+    assert.equal(state.energy, i === 15 ? 0 : 3 - (i % 3));
+    assert.equal(state.rescue, i === 15);
+  }
+  assert.equal(healthDrop(0, 15, 0).energy, 0);
 });
 test("finishing on time does not substitute for a pre-deadline report", () => {
   const dueAt = "2026-10-25T10:00:00Z";

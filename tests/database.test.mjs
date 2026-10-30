@@ -109,18 +109,19 @@ test(
         (await models.RewardMigration.findOne({ userId: "legacy" })).legacyXp,
         5,
       );
-      for (let i = 0; i < 5; i++)
+      for (let i = 0; i < 15; i++)
         await transaction((s) =>
           deduct("test_gamer", `Infraction ${i}`, 10, `hp_${i}`, s),
         );
       user = await models.User.findById("test_gamer");
       assert.equal(user.hp, 0);
-      assert.equal(user.drops, 5);
+      assert.equal(user.drops, 15);
+      assert.equal(user.energy, 0);
       assert.equal(await models.Rescue.countDocuments({ status: "OPEN" }), 1);
       await transaction((s) =>
         deduct("test_gamer", "Repeated event", 10, "hp_4", s),
       );
-      assert.equal(await models.Energy.countDocuments(), 5);
+      assert.equal(await models.Energy.countDocuments(), 15);
       await models.Task.create({
         _id: "late_quest",
         teamId: "test_team",
@@ -173,6 +174,7 @@ test(
       await reconcile([user._id]);
       user = await models.User.findById(user._id);
       assert.equal(user.hp, 1);
+      assert.equal(user.energy, 3);
       assert.equal(user.streak, 3);
       assert.equal(await models.Rescue.countDocuments({ status: "CLOSED" }), 1);
       await reconcile([user._id]);
@@ -219,6 +221,46 @@ test(
         "CLOSED",
       );
       assert.equal(await models.Energy.countDocuments({ userId: restored }), 0);
+      await models.User.create({
+        _id: "energy_player",
+        name: "Energy Player",
+        email: "energy@example.invalid",
+        role: "GAMER",
+        teamId: "test_team",
+      });
+      await Promise.all(
+        Array.from({ length: 3 }, () =>
+          transaction((session) =>
+            deduct(
+              "energy_player",
+              "Same energy penalty",
+              10,
+              "energy_once",
+              session,
+            ),
+          ),
+        ),
+      );
+      let energyPlayer = await models.User.findById("energy_player");
+      assert.equal(energyPlayer.hp, 5);
+      assert.equal(energyPlayer.energy, 2);
+      await Promise.all(
+        ["second", "third"].map((key) =>
+          transaction((session) =>
+            deduct("energy_player", "Energy penalty", 10, key, session),
+          ),
+        ),
+      );
+      energyPlayer = await models.User.findById("energy_player");
+      assert.equal(energyPlayer.hp, 4);
+      assert.equal(energyPlayer.energy, 3);
+      assert.equal(
+        await models.Energy.countDocuments({
+          userId: "energy_player",
+          lifeChange: -1,
+        }),
+        1,
+      );
     } finally {
       assert.match(mongoose.connection.name, /^codewild_test_\d+$/);
       await mongoose.connection.dropDatabase();

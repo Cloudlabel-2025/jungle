@@ -190,6 +190,16 @@ test(
         role: "MISSION_COMMANDER",
       };
       await models.User.create([...users, other, guide]);
+      // Explicit published legacy definitions verify existing five-role attempts still work after the full-stack upgrade.
+      await models.ProjectLevel.create(
+        projectLevels.map((level) => ({
+          _id: level._id,
+          published: level,
+          createdBy: "guide",
+          updatedBy: "guide",
+          version: 1,
+        })),
+      );
       const lead = users[0];
       await assert.rejects(
         projectAction(lead, "start", { levelId: "project_2" }),

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { allowedWriteOrigin } from "@/lib/request-origin.js";
 import {
   currentUser,
   setSession,
@@ -13,11 +14,15 @@ import { comparisonTotals } from "@/lib/effort-rules.js";
 import { checkPassword } from "@/lib/password.js";
 import { challengeAction, taskAudit } from "@/lib/challenges.js";
 import { projectAction } from "@/lib/projects.js";
-import { projectLevels } from "@/lib/project-catalog.js";
+import { publishedLevels } from "@/lib/published-levels.js";
+import { levelAction } from "@/lib/level-authoring.js";
+import { chooseCharacter } from "@/lib/character-actions.js";
+import { teamAction } from "@/lib/team-management.js";
+import { characters, characterKey } from "@/lib/characters.js";
 import { teamRoles, playerRole } from "@/lib/team-roles.js";
 import { award, deduct, id } from "@/lib/engine.js";
 import { DAILY_XP_CAP } from "@/lib/rewards.js";
-import { modules, personas, perks, rules, teams } from "@/lib/catalog.js";
+import { modules, personas, perks, rules } from "@/lib/catalog.js";
 import {
   ist,
   attendanceRule,
@@ -52,11 +57,7 @@ async function handle(request, { params }) {
     const { path } = await params;
     const route = path.join("/");
     if (request.method === "POST") {
-      const origin = request.headers.get("origin");
-      const expectedOrigin =
-        process.env.APP_ORIGIN ||
-        `${new URL(request.url).protocol}//${request.headers.get("host")}`;
-      if (origin && origin !== expectedOrigin)
+      if (!allowedWriteOrigin(request))
         fail("Cross-origin writes are not allowed.", 403);
       if (Number(request.headers.get("content-length") || 0) > 100000)
         fail("Request is too large.", 413);
@@ -72,8 +73,15 @@ async function handle(request, { params }) {
       });
     if (route === "auth/login" && request.method === "POST") {
       if (body.password !== undefined) {
-        const email = text(body.email, "Email", 3, 120);
-        const user = await models.User.findOne({ email }).lean();
+        const identity = text(
+          body.username ?? body.identifier ?? body.email,
+          "Username or email",
+          3,
+          120,
+        ).toLowerCase();
+        const user = await models.User.findOne(
+          identity.includes("@") ? { email: identity } : { username: identity },
+        ).lean();
         const credential =
           user &&
           user.active !== false &&
@@ -124,6 +132,11 @@ async function handle(request, { params }) {
       )
         fail("Invalid arena access code.", 401);
       const email = text(body.email, "Email", 3, 120);
+      if (!personas.some((persona) => persona.email === email))
+        fail(
+          "Use your username and password. Persona switching is only available for demo accounts.",
+          403,
+        );
       const user = await models.User.findOne({ email }).lean();
       if (!user || user.active === false)
         fail("Unknown or inactive persona.", 404);
@@ -142,6 +155,32 @@ async function handle(request, { params }) {
         serverTime: new Date().toISOString(),
       });
     assertRole(user, all);
+    if (
+      path[0] === "centre-command" &&
+      path[1] === "teams" &&
+      path.length === 3 &&
+      request.method === "POST"
+    )
+      return NextResponse.json({
+        success: true,
+        ...(await teamAction(user, path[2], body)),
+      });
+    if (route === "gamer/character" && request.method === "POST")
+      return NextResponse.json({
+        success: true,
+        ...(await chooseCharacter(user, body)),
+      });
+    if (
+      path[0] === "levels" &&
+      path.length === 2 &&
+      request.method === "POST"
+    ) {
+      assertRole(user, ["CENTRE_COMMAND"]);
+      return NextResponse.json({
+        success: true,
+        ...(await levelAction(user, path[1], body)),
+      });
+    }
     if (
       path[0] === "projects" &&
       path.length === 2 &&
@@ -305,7 +344,7 @@ async function handle(request, { params }) {
               t.change,
               t.reason,
               t.createdAt,
-              "HP",
+              t.resource === "ENERGY" ? "ENERGY" : "HP",
             ]),
             ...allExperience.map((t) => [
               t._id,
@@ -654,7 +693,7 @@ async function handle(request, { params }) {
           body.deduction !== 1 &&
           body.deduction !== -1
         )
-          fail("An infraction deducts exactly one HP.");
+          fail("An infraction deducts exactly one energy.");
         const eventKey = text(body.eventKey, "Idempotency key", 10, 150);
         await deduct(
           body.userId,
@@ -747,6 +786,7 @@ async function handle(request, { params }) {
               const operative = await gamer(proposal.recipientId, session);
               const change = Math.min(proposal.amount, 5 - operative.hp);
               operative.hp += change;
+              if (change > 0) operative.energy = 3;
               await operative.save({ session });
               await models.Energy.create(
                 [
@@ -755,6 +795,9 @@ async function handle(request, { params }) {
                     userId: operative._id,
                     change,
                     result: operative.hp,
+                    resource: "LIFE",
+                    energyResult: operative.hp > 0 ? operative.energy : 0,
+                    lifeChange: change,
                     reason: `Two-lead emergency restoration: ${proposal.rationale}`,
                     eventKey: `override:${proposal._id}`,
                     day,
@@ -836,8 +879,16 @@ async function handle(request, { params }) {
         assertRole(user, ["CENTRE_COMMAND"]);
         const operative = await gamer(body.userId, session);
         const nextTeamId = body.teamId || operative.teamId;
-        if (!teams.some((t) => t._id === nextTeamId)) fail("Unknown squad.");
+        if (!(await models.Team.exists({ _id: nextTeamId }).session(session)))
+          fail("Unknown squad.");
         if (nextTeamId !== operative.teamId) {
+          if (
+            (await models.User.countDocuments({
+              teamId: nextTeamId,
+              role: "GAMER",
+            }).session(session)) >= 5
+          )
+            fail("The destination team already has five members.", 409);
           const activeProjects = await models.ProjectAttempt.find({
             teamId: operative.teamId,
             status: { $ne: "CLEARED" },
@@ -882,6 +933,41 @@ async function handle(request, { params }) {
           operative.teamRoleCode = selected.code;
           operative.assignment = selected.label;
         }
+        if (body.characterKey) {
+          if (!characters.some((c) => c.key === body.characterKey))
+            fail("Unknown character.");
+          const currentKey = characterKey(operative);
+          const peers = await models.User.find({
+            teamId: nextTeamId,
+            role: "GAMER",
+            active: { $ne: false },
+            _id: { $ne: operative._id },
+          }).session(session);
+          const holders = peers.filter(
+            (p) => characterKey(p) === body.characterKey,
+          );
+          if (holders.length > 1)
+            fail(
+              "Resolve duplicate character identities in this squad first.",
+              409,
+            );
+          if (holders.length && operative.teamId !== nextTeamId)
+            fail(
+              "Choose an unused character when moving a player to another squad.",
+              409,
+            );
+          if (holders.length && body.characterKey !== currentKey) {
+            if (!currentKey) fail("Assign an unused character first.", 409);
+            holders[0].characterKey = currentKey;
+            await holders[0].save({ session });
+          }
+          operative.characterKey = body.characterKey;
+        }
+        if (body.characterVariant) {
+          if (!["male", "female"].includes(body.characterVariant))
+            fail("Choose a valid character version.");
+          operative.characterVariant = body.characterVariant;
+        }
         operative.teamId = nextTeamId;
         await operative.save({ session });
         await models.Task.updateMany(
@@ -908,6 +994,7 @@ async function handle(request, { params }) {
       } else if (route === "centre-command/clearance") {
         assertRole(user, ["CENTRE_COMMAND"]);
         const operative = await gamer(body.userId, session);
+        const projectLevels = await publishedLevels(session, operative.teamId);
         const completed = await models.ProjectAttempt.countDocuments({
           teamId: operative.teamId,
           status: "CLEARED",
@@ -929,7 +1016,7 @@ async function handle(request, { params }) {
           tasks > 0
         )
           fail(
-            "Clearance requires all 10 team projects cleared, all assigned objectives approved, positive HP, and no open rescue.",
+            "Clearance requires every published team project cleared, all assigned objectives approved, positive life, and no open rescue.",
           );
         if (
           !Number.isInteger(body.competency) ||

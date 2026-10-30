@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { models } from "../lib/db.js";
-import { projectLevels } from "../lib/project-catalog.js";
+import { projectLevels as legacyProjectLevels } from "../lib/project-catalog.js";
+import { fullStackLevel } from "../lib/full-stack-levels.js";
+import { characterKey } from "../lib/characters.js";
+const projectLevels = legacyProjectLevels.map(fullStackLevel);
 
 export async function projectAcceptance(request) {
   const lead = "usr_g01",
@@ -27,7 +30,7 @@ export async function projectAcceptance(request) {
   const first = (await request(lead, "state")).projectAttempts[0];
   assert.equal(
     await models.Task.countDocuments({ projectAttemptId: first._id }),
-    5,
+    25,
   );
   const foreign = await request(other, "state");
   assert.ok(!foreign.projectAttempts.some((a) => a._id === first._id));
@@ -51,6 +54,7 @@ export async function projectAcceptance(request) {
   );
   let xpExpected = oldXp;
   for (const level of projectLevels) {
+    review.checks = level.criteria.map(() => true);
     if (level.number > 1)
       await request(lead, "projects/start", { levelId: level._id });
     let state = await request(lead, "state");
@@ -58,8 +62,8 @@ export async function projectAcceptance(request) {
     const tasks = state.tasks.filter((t) => t.projectAttemptId === attempt._id);
     for (const t of tasks) {
       assert.equal(
-        state.roster.find((p) => p._id === t.assigneeId).teamRoleCode,
-        t.targetRole,
+        characterKey(state.roster.find((p) => p._id === t.assigneeId)),
+        t.targetCharacter,
       );
       await request(
         other,

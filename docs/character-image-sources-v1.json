@@ -1,0 +1,72 @@
+[
+  {
+    "key": "blaze",
+    "name": "Zayn",
+    "variant": "male",
+    "style": "amber expedition bomber, flame patches, cropped textured dark hair",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-a0c5010f-4a5e-4011-bfe3-c14958c392ba.png"
+  },
+  {
+    "key": "blaze",
+    "name": "Zara",
+    "variant": "female",
+    "style": "amber expedition bomber, flame patches, dark high ponytail",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-dc63141e-8ca6-45d6-a1e6-90f6504525b7.png"
+  },
+  {
+    "key": "glitch",
+    "name": "Jett",
+    "variant": "male",
+    "style": "mint techwear, utility straps, visor pushed onto forehead, short platinum hair",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-73bca944-79fb-4a46-ab5b-1a00ac489834.png"
+  },
+  {
+    "key": "glitch",
+    "name": "Juno",
+    "variant": "female",
+    "style": "mint techwear, utility straps, visor pushed onto forehead, platinum bob",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-9d851554-ddb6-4f26-9e71-742a2e857310.png"
+  },
+  {
+    "key": "shade",
+    "name": "Nyx",
+    "variant": "male",
+    "style": "violet hooded streetwear, silver details, dark wavy hair",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-085d0dd2-de6d-4301-873c-8bd08e119be7.png"
+  },
+  {
+    "key": "shade",
+    "name": "Nia",
+    "variant": "female",
+    "style": "violet hooded streetwear, silver details, long dark braids",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-3c6bbd88-77f0-4f5f-b766-0e3f0f5998b2.png"
+  },
+  {
+    "key": "pulse",
+    "name": "Kai",
+    "variant": "male",
+    "style": "coral trail jacket, oversized headphones around neck, tousled brown hair",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-4e4e7cbc-3da4-43d7-93c9-ff5883a5275f.png"
+  },
+  {
+    "key": "pulse",
+    "name": "Kira",
+    "variant": "female",
+    "style": "coral trail jacket, oversized headphones around neck, brown double buns",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-06b6c803-30d6-4e79-88f4-0681e2801220.png"
+  },
+  {
+    "key": "rune",
+    "name": "Riven",
+    "variant": "male",
+    "style": "sage utility vest, botanical patches, dark braided hair with shaved sides",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-32db5944-c25d-4cd3-ae2d-43d1de5205d7.png"
+  },
+  {
+    "key": "rune",
+    "name": "Rhea",
+    "variant": "female",
+    "style": "sage utility vest, botanical patches, long dark braided hair",
+    "path": "C:\\Users\\sakth\\.codex\\generated_images\\01a17bbb-15db-7242-b639-57b0ae491a48\\exec-4673ee68-7421-4f1b-83cc-79c4d7aa9bfc.png"
+  }
+]

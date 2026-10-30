@@ -13,6 +13,8 @@ import { supportAcceptance } from "./support-acceptance.mjs";
 import { effortAcceptance } from "./effort-acceptance.mjs";
 import { challengeAcceptance } from "./challenge-acceptance.mjs";
 import { projectAcceptance } from "./project-acceptance.mjs";
+import { levelAcceptance } from "./level-acceptance.mjs";
+import { teamManagementAcceptance } from "./team-management-acceptance.mjs";
 
 if (!process.env.TEST_MONGODB_URI)
   throw new Error("Set TEST_MONGODB_URI to a running replica set.");
@@ -171,11 +173,16 @@ try {
     action: "reassign",
     userId: "usr_g02",
   });
-  await request(lead1, "centre-command/roster", {
-    userId: "usr_g25",
-    teamId: "team_04",
-  });
-  assert.equal((await request("usr_g25", "state")).user.teamId, "team_04");
+  await request(
+    lead1,
+    "centre-command/roster",
+    {
+      userId: "usr_g25",
+      teamId: "team_04",
+    },
+    409,
+  );
+  assert.equal((await request("usr_g25", "state")).user.teamId, "team_05");
   await request(lead1, "centre-command/roster", {
     userId: "usr_g25",
     teamId: "team_05",
@@ -321,7 +328,7 @@ try {
     });
   assert.equal((await request(gamer, "state")).user.xp, 150);
   const target = "usr_g02";
-  for (let i = 0; i < 5; i++)
+  for (let i = 0; i < 15; i++)
     await request(commander, "commander/rules", {
       userId: target,
       ruleId: 10,
@@ -336,6 +343,7 @@ try {
   });
   state = await request(commander, "state");
   assert.equal(state.roster.find((u) => u._id === target).hp, 0);
+  assert.equal(state.roster.find((u) => u._id === target).energy, 0);
   const rescue = state.rescues.find((r) => r.userId === target);
   assert.ok(rescue);
   await request(commander, "commander/rescue", {
@@ -364,6 +372,7 @@ try {
     });
   state = await request(lead1, "state");
   assert.equal(state.roster.find((u) => u._id === target).hp, 2);
+  assert.equal(state.roster.find((u) => u._id === target).energy, 3);
   console.log(
     "PASS distinct approval seals, self-approval rejection, exact HP deductions, rescue plan and emergency override",
   );
@@ -395,6 +404,7 @@ try {
   const csv = await request(lead1, "centre-command/reports?format=csv");
   assert.match(csv, /Emergency|communication infraction/);
   await projectAcceptance(request);
+  await levelAcceptance(request);
   await challengeAcceptance(request);
   for (const script of ["scripts/migrate-v3.mjs", "scripts/migrate-v3.mjs"]) {
     const operation = spawn(process.execPath, [script], {
@@ -426,6 +436,7 @@ try {
     0,
     "V3 data and indexes restore into an isolated database",
   );
+  await teamManagementAcceptance(request);
   await request(gamer, "auth/logout", {});
   await request(gamer, "state", null, 401);
   console.log(

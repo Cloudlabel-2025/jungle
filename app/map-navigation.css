@@ -1,0 +1,187 @@
+.player-arena {
+  --map-drawer-width: min(270px, calc(100vw - 72px));
+}
+.jungle-world .player-arena .workspace {
+  margin-left: 0;
+}
+.jungle-world .player-arena.field-mode .main-content {
+  padding-left: 72px;
+}
+.jungle-world .player-arena .sidebar {
+  width: var(--map-drawer-width);
+  padding: 26px 18px 20px;
+  z-index: 40;
+  transform: translateX(-100%);
+  visibility: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-shadow: 12px 0 40px #0006;
+  /* The requested navigation slide remains visible with reduced motion. */
+  transition:
+    transform 280ms cubic-bezier(0.22, 0.8, 0.25, 1),
+    visibility 0s 280ms !important;
+}
+.jungle-world .player-arena .sidebar.open {
+  transform: translateX(0);
+  visibility: visible;
+  transition-delay: 0s, 0s !important;
+}
+.player-arena .sidebar-shade {
+  position: fixed;
+  inset: 0;
+  z-index: 39;
+  background: #03140b85;
+}
+.map-nav-toggle {
+  position: fixed;
+  z-index: 41;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  background: #0c241ce8;
+  color: #cee5a4;
+  border: 1px solid #a18d55;
+  border-radius: 5px 12px 12px 5px;
+  box-shadow: 0 5px 20px #0006;
+  transition: left 280ms cubic-bezier(0.22, 0.8, 0.25, 1) !important;
+}
+.map-nav-toggle.is-open {
+  left: calc(var(--map-drawer-width) + 12px);
+}
+.map-nav-toggle:hover {
+  background: #2c482b;
+  border-color: #d9c484;
+}
+.map-nav-toggle:focus-visible {
+  outline: 2px solid #e6d18c;
+  outline-offset: 4px;
+}
+.jungle-world .player-arena .sidebar .brand {
+  font-size: 21px;
+  justify-content: flex-start;
+  margin: 0 34px 25px 0;
+}
+.jungle-world .player-arena .sidebar .brand > span {
+  font-size: inherit;
+}
+.jungle-world .player-arena .sidebar .brand > svg {
+  width: 27px;
+  height: 27px;
+  margin-right: 3px;
+}
+.player-arena .map-drawer-close {
+  position: absolute;
+  top: 26px;
+  right: 10px;
+}
+.player-arena .sidebar .sidebar-season,
+.player-arena .sidebar .nav-label {
+  display: block;
+}
+.jungle-world .player-arena .sidebar nav {
+  padding: 0;
+  margin: 14px 0 0;
+}
+.jungle-world .player-arena .sidebar .nav-item {
+  justify-content: flex-start;
+  padding: 12px 10px;
+  gap: 11px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.player-arena .sidebar .nav-item > span,
+.player-arena .sidebar .nav-item > small {
+  display: inline;
+}
+.player-arena .sidebar .nav-item > small {
+  margin-left: auto;
+}
+.player-arena .player-topbar .menu-toggle {
+  display: none;
+}
+.player-arena:has(.modal-backdrop) .map-nav-toggle {
+  visibility: hidden;
+}
+.expedition-mode .game-action-rail {
+  top: auto;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  padding: 8px;
+  border: 1px solid #7d8e6080;
+  border-radius: 12px;
+  background: #092119c9;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 28px #0006;
+}
+.expedition-mode .game-action-rail > button,
+.expedition-mode .game-action-rail > a,
+.expedition-mode .game-action-rail .game-camp-trigger {
+  width: 60px;
+  min-height: 47px;
+}
+.expedition-mode .camp-popover {
+  left: 0;
+  top: auto;
+  bottom: calc(100% + 12px);
+  width: min(340px, calc(100vw - 24px));
+  max-height: min(480px, calc(100dvh - 220px));
+}
+.expedition-mode .map-scroll-left {
+  left: 76px;
+}
+@media (max-width: 1000px) {
+  .expedition-mode .game-next {
+    bottom: 96px;
+    right: 18px;
+  }
+}
+@media (max-width: 767px) {
+  .expedition-mode .game-action-rail {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    max-width: none;
+    transform: none;
+    gap: 4px;
+    padding: 6px;
+    border-radius: 9px;
+  }
+  .expedition-mode .game-action-rail > button,
+  .expedition-mode .game-action-rail > a,
+  .expedition-mode .game-action-rail > .camp-control {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+  }
+  .expedition-mode .game-action-rail .game-camp-trigger {
+    width: 100%;
+  }
+  .expedition-mode .game-action-rail > button,
+  .expedition-mode .game-action-rail > a,
+  .expedition-mode .game-action-rail .game-camp-trigger {
+    min-height: 46px;
+    gap: 5px;
+    padding: 4px 1px;
+  }
+  .expedition-mode .game-action-rail svg {
+    width: 18px;
+    height: 18px;
+  }
+  .expedition-mode .game-action-rail > button span,
+  .expedition-mode .game-action-rail > a span,
+  .expedition-mode .game-camp-trigger > span {
+    font-size: 7px;
+    letter-spacing: 0;
+  }
+}
