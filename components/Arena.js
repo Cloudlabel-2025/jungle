@@ -31,6 +31,12 @@ import {
   VolumeX,
 } from "lucide-react";
 import { navigation, prefix, personas } from "@/lib/catalog.js";
+import { weekOneNavigation } from "@/lib/week-one-catalog.js";
+import {
+  workspaceNavigation,
+  programmeScreen,
+  legacyWorkspaceData,
+} from "@/lib/workspace-navigation.js";
 import { roleNames } from "@/lib/expedition";
 import { league } from "@/lib/rules.js";
 import { Avatar, Modal, HP, Busy, Badge, Form } from "./ui";
@@ -122,8 +128,12 @@ export default function Arena({
       playerNavigationTrigger.current?.focus();
     };
   }, [playerMode, mobile, user?._id]);
-  const nav = navigation[role];
-  const current = nav.find((n) => n[1] === screen) || nav[0];
+  const nav = workspaceNavigation(role);
+  const weekOneMode = programmeScreen(screen) !== null;
+  const current = weekOneMode
+    ? weekOneNavigation[role].find((n) => n[1] === programmeScreen(screen)) ||
+      nav.at(-1)
+    : nav.find((n) => n[1] === screen) || nav[0];
   const notify = useCallback((message, type = "success") => {
     setToast({ message, type });
   }, []);
@@ -480,6 +490,11 @@ export default function Arena({
       </div>
     );
   const squad = data?.teams.find((t) => t._id === user.teamId);
+  const headerPlayer = data
+    ? weekOneMode
+      ? data.user
+      : legacyWorkspaceData(data).user
+    : user;
   return (
     <div
       className={`arena ${role === "GAMER" ? "player-arena" : ""} ${!(role === "GAMER" && screen === "dashboard") ? "field-mode" : ""} ${screen === "ide" ? "lab-mode" : ""} ${role === "GAMER" && screen === "dashboard" ? "expedition-mode" : ""}`}
@@ -557,7 +572,7 @@ export default function Arena({
               <Link
                 onClick={() => setMobile(false)}
                 href={`/${prefix(role)}/${path}`}
-                className={`nav-item ${screen === path ? "active" : ""}`}
+                className={`nav-item ${screen === path || (path === "week-one" && weekOneMode) ? "active" : ""}`}
                 title={label}
                 aria-label={playerMode ? label : undefined}
                 key={code}
@@ -632,7 +647,7 @@ export default function Arena({
               <Menu size={20} />
             </button>
             {role === "GAMER" ? (
-              <PlayerHeader player={data?.user || user} />
+              <PlayerHeader player={headerPlayer} />
             ) : (
               <>
                 <Command size={16} />
@@ -644,7 +659,7 @@ export default function Arena({
           <div className="topbar-right">
             {role === "GAMER" && (
               <PlayerHeader
-                player={data?.user || user}
+                player={headerPlayer}
                 part="rewards"
                 teamName={squad?.name}
               />
@@ -767,21 +782,27 @@ export default function Arena({
           </div>
         )}
         <main id="main-content" className="main-content" data-screen={screen}>
-          {data && role === "GAMER" && screen !== "dashboard" && (
-            <div className="field-brief" aria-label="Expedition briefing">
-              <span>
-                <Radio size={13} /> {squad?.name || "Your expedition"}
-              </span>
-              <span>
-                <ShieldCheck size={13} />{" "}
-                {data.progress.filter((p) => p.userId === data.user._id).length}
-                /{data.modules.length} encounters cleared
-              </span>
-              <Link href="/gamer/dashboard">
-                <Radar size={13} /> Return to map
-              </Link>
-            </div>
-          )}
+          {data &&
+            role === "GAMER" &&
+            screen !== "dashboard" &&
+            !weekOneMode && (
+              <div className="field-brief" aria-label="Expedition briefing">
+                <span>
+                  <Radio size={13} /> {squad?.name || "Your expedition"}
+                </span>
+                <span>
+                  <ShieldCheck size={13} />{" "}
+                  {
+                    data.progress.filter((p) => p.userId === data.user._id)
+                      .length
+                  }
+                  /{data.modules.length} encounters cleared
+                </span>
+                <Link href="/gamer/dashboard">
+                  <Radar size={13} /> Return to map
+                </Link>
+              </div>
+            )}
           {!data ? (
             <Busy />
           ) : screen === "ide" ? (

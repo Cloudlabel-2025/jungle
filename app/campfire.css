@@ -1,0 +1,295 @@
+/* Campfire is a place first; equipment opens from the camp dock. */
+.jungle-world .player-arena:has(.camp-territory) .workspace {
+  position: relative;
+}
+.jungle-world .player-arena:has(.camp-territory) .player-topbar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  pointer-events: none;
+  text-shadow:
+    0 1px 5px #000,
+    0 2px 12px #000b;
+}
+.player-arena:has(.camp-territory) .player-topbar button,
+.player-arena:has(.camp-territory) .player-topbar a {
+  pointer-events: auto;
+}
+.player-arena:has(.camp-territory .modal-backdrop) .player-topbar {
+  visibility: hidden;
+}
+.jungle-world .player-arena.field-mode .main-content[data-screen="team-room"] {
+  padding: 0;
+}
+.main-content[data-screen="team-room"] > .field-brief {
+  display: none;
+}
+.player-arena:has(.camp-territory) .workspace-footer {
+  display: none;
+}
+.camp-territory {
+  --camp-header-height: 0px;
+  position: relative;
+  isolation: isolate;
+  min-height: calc(100dvh - var(--camp-header-height));
+  overflow: hidden;
+  background: #142117;
+  color: #fff2d1;
+}
+.camp-scene-window {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+.camp-scene-art {
+  position: absolute;
+  width: max(100%, calc((100dvh - var(--camp-header-height)) * 1.777));
+  aspect-ratio: 1672 / 941;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.camp-scene-art > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.camp-territory::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: linear-gradient(
+    #08170b80,
+    transparent 32%,
+    transparent 64%,
+    #091b0ed9
+  );
+}
+.camp-territory-heading {
+  padding: 112px 78px 30px;
+  text-shadow: 0 2px 14px #000;
+}
+.camp-territory-heading > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e9bc75;
+  font: 10px var(--mono);
+  letter-spacing: 2px;
+}
+.camp-territory-heading h1 {
+  font-family: var(--display);
+  font-size: clamp(26px, 3.5vw, 44px);
+  margin: 7px 0 3px;
+  line-height: 1.15;
+}
+.camp-territory-heading p {
+  font-size: 15px;
+  color: #dfdfc6;
+  margin: 0;
+}
+.camp-occupancy {
+  position: absolute;
+  bottom: 34px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #e3d9b9;
+  font-size: 12px;
+}
+.camp-tool-dock {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid #bb975b99;
+  border-radius: 14px;
+  background: linear-gradient(#2f3129ed, #111c1dec);
+  box-shadow:
+    0 12px 35px #0008,
+    inset 0 1px 0 #f3d59830;
+}
+.camp-tool-dock button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 78px;
+  min-height: 67px;
+  background: #112220;
+  color: #efd2a1;
+  border: 1px solid #806b454f;
+  border-radius: 8px;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.camp-tool-dock button:hover {
+  transform: translateY(-4px);
+  background: #51432b;
+  color: #fff2c4;
+}
+.camp-tool-dock button span {
+  font-size: 11px;
+}
+.camp-tool-dock button:focus-visible,
+.camp-tool-switcher button:focus-visible {
+  outline: 2px solid #ffe0a1;
+  outline-offset: 3px;
+}
+.camp-territory .modal-backdrop {
+  background: #020f17a6;
+}
+.camp-territory .modal {
+  background: #0c2223f5;
+  border-color: #9c8056;
+  max-height: calc(100dvh - 40px);
+}
+.camp-tool-switcher {
+  display: flex;
+  gap: 7px;
+  padding: 16px 22px 0;
+  flex-wrap: wrap;
+}
+.camp-tool-switcher button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border: 1px solid #8c80575e;
+  border-radius: 5px;
+  background: transparent;
+  color: #c2c9b5;
+  font-size: 12px;
+}
+.camp-tool-switcher button[aria-pressed="true"] {
+  background: #d4ae6a;
+  color: #172322;
+}
+.camp-tool-content {
+  padding: 20px;
+  overflow-wrap: anywhere;
+}
+.camp-tool-content .chat-stream {
+  height: min(38dvh, 350px);
+  min-height: 130px;
+  padding: 20px;
+}
+.camp-tool-content .chat-panel {
+  margin-bottom: 0;
+}
+.camp-tool-content > .muted {
+  margin-bottom: 16px;
+}
+.camp-scene-description {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+/* Insect paths share the background's coordinate space as the scene resizes. */
+.camp-firefly {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e8ffa6;
+  box-shadow: 0 0 7px 2px #d4fc8255;
+  animation: camp-insect calc(4.5s + var(--i) * 0.2s) ease-in-out infinite
+    alternate !important;
+  animation-delay: calc(var(--i) * -1.7s) !important;
+}
+@keyframes camp-insect {
+  0% {
+    opacity: 0.1;
+    transform: translate(0, 0);
+  }
+  30% {
+    opacity: 0.9;
+    transform: translate(calc(48px * var(--drift)), -26px);
+  }
+  70% {
+    opacity: 0.3;
+    transform: translate(calc(-28px * var(--drift)), -65px);
+  }
+  100% {
+    opacity: 0.8;
+    transform: translate(calc(78px * var(--drift)), -38px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Ambient scene effects stay active as requested, while UI transitions
+     continue to respect the system motion preference. */
+  .camp-tool-dock button {
+    transition: none;
+  }
+}
+@media (max-width: 700px) {
+  .camp-territory {
+    --camp-header-height: 0px;
+  }
+  /* Keep the whole camp in view on a portrait screen instead of cropping
+     a landscape image to a small section of the tents. */
+  .camp-scene-window::before {
+    content: "";
+    position: absolute;
+    inset: -24px;
+    background: url("/images/team-campfire-daytime.webp") center / cover;
+    filter: blur(16px) brightness(0.45);
+  }
+  .camp-scene-art {
+    width: 140%;
+    mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
+  }
+  .camp-territory-heading {
+    padding: 132px 22px 24px 70px;
+  }
+  .camp-territory-heading p {
+    max-width: 240px;
+    font-size: 13px;
+  }
+  .camp-occupancy {
+    bottom: 116px;
+    left: 20px;
+  }
+  .camp-tool-dock {
+    bottom: 17px;
+    width: calc(100% - 32px);
+    max-width: 370px;
+    justify-content: stretch;
+    gap: 4px;
+    padding: 6px;
+  }
+  .camp-tool-dock button {
+    flex: 1;
+    min-width: 0;
+    min-height: 64px;
+  }
+  .camp-tool-content {
+    padding: 12px;
+  }
+  .camp-tool-switcher {
+    padding: 12px 12px 0;
+    gap: 5px;
+  }
+  .camp-tool-switcher button {
+    padding: 8px;
+  }
+  .camp-tool-switcher button span {
+    font-size: 11px;
+  }
+}

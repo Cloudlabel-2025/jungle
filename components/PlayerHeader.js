@@ -13,8 +13,19 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
         </span>
         <span className="player-trophy-count">
           <Trophy size={18} />
-          <strong>{player.trophies || 0}</strong>
-          <small>Trophies</small>
+          <strong>
+            {player.weekOneTrophies ??
+              player.dayOneTrophies ??
+              player.trophies ??
+              0}
+          </strong>
+          <small>
+            {player.weekOneEnergy
+              ? "Week 1 trophies"
+              : player.dayOneEnergy
+                ? "Day 1 trophies"
+                : "Trophies"}
+          </small>
         </span>
         <span className="player-streak-count">
           <Flame size={17} />
@@ -23,7 +34,9 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
         </span>
       </div>
     );
-  const energy = playerEnergy(player);
+  const energy =
+    player.weekOneEnergy ?? player.dayOneEnergy ?? playerEnergy(player);
+  const energyMax = player.weekOneEnergy || player.dayOneEnergy ? 5 : 3;
   const progress = (player.xp || 0) % XP_PER_LEVEL;
   const character = characterFor(player);
   const role = character
@@ -69,11 +82,15 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
         </span>
         <span
           className="energy-counter"
-          aria-label={`${energy} of 3 energy`}
-          title="Every third energy lost costs one life. Energy refills to 3 while lives remain."
+          aria-label={`${energy} of ${energyMax} energy`}
+          title={
+            player.weekOneEnergy || player.dayOneEnergy
+              ? "Week 1 energy remains 5/5. No deductions apply."
+              : "Every third energy lost costs one life. Energy refills to 3 while lives remain."
+          }
         >
           <span>Energy</span>
-          {Array.from({ length: 3 }, (_, i) => (
+          {Array.from({ length: energyMax }, (_, i) => (
             <Zap
               aria-hidden="true"
               size={13}
@@ -81,7 +98,9 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
               className={i < energy ? "vital-filled" : "vital-empty"}
             />
           ))}
-          <small>{energy}/3</small>
+          <small>
+            {energy}/{energyMax}
+          </small>
         </span>
       </div>
     </section>

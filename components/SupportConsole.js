@@ -891,6 +891,8 @@ function Configuration({ data, act }) {
     </>
   );
 }
+export { Desk as SupportDesk, Library as SupportLibrary };
+
 export default function SupportConsole({ screen, data, act, now }) {
   const [tab, setTab] = useState("");
   const gamer = data.user.role === "GAMER",

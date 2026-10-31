@@ -9,6 +9,10 @@ import {
 } from "@/lib/auth.js";
 import { models, connect, transaction } from "@/lib/db.js";
 import { snapshot } from "@/lib/snapshot.js";
+import { programAudit } from "@/lib/week-one-program.js";
+import { programAction, programSnapshot } from "@/lib/week-one-program.js";
+import { dayOneSnapshot, dayOneAction, dayOneSignIn } from "@/lib/day-one.js";
+import { weekOneSnapshot, weekOneAction } from "@/lib/week-one.js";
 import { supportAction, supportSnapshot } from "@/lib/support.js";
 import { comparisonTotals } from "@/lib/effort-rules.js";
 import { checkPassword } from "@/lib/password.js";
@@ -119,6 +123,7 @@ async function handle(request, { params }) {
           { $set: { failures: 0, lockedUntil: null } },
         );
         await setSession(user._id);
+        await dayOneSignIn(user);
         return NextResponse.json({ success: true, user });
       }
       if (!demoEnabled())
@@ -141,6 +146,7 @@ async function handle(request, { params }) {
       if (!user || user.active === false)
         fail("Unknown or inactive persona.", 404);
       await setSession(user._id);
+      await dayOneSignIn(user);
       return NextResponse.json({ success: true, user });
     }
     if (route === "auth/logout" && request.method === "POST") {
@@ -155,6 +161,39 @@ async function handle(request, { params }) {
         serverTime: new Date().toISOString(),
       });
     assertRole(user, all);
+    if (route === "week1/audit" && request.method === "GET") {
+      const search = new URL(request.url).searchParams;
+      return NextResponse.json(
+        await programAudit(user, {
+          cursor: search.get("cursor"),
+          kind: search.get("kind"),
+        }),
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
+    if (route === "week1/program" && request.method === "GET")
+      return NextResponse.json(await programSnapshot(user), {
+        headers: { "Cache-Control": "no-store" },
+      });
+    if (
+      path[0] === "week1" &&
+      path[1] === "program" &&
+      path.length === 3 &&
+      request.method === "POST"
+    )
+      return NextResponse.json(await programAction(user, path[2], body));
+    if (route === "week1/state" && request.method === "GET")
+      return NextResponse.json(await weekOneSnapshot(user), {
+        headers: { "Cache-Control": "no-store" },
+      });
+    if (path[0] === "week1" && path.length === 2 && request.method === "POST")
+      return NextResponse.json(await weekOneAction(user, path[1], body));
+    if (route === "day1/state" && request.method === "GET")
+      return NextResponse.json(await dayOneSnapshot(user), {
+        headers: { "Cache-Control": "no-store" },
+      });
+    if (path[0] === "day1" && path.length === 2 && request.method === "POST")
+      return NextResponse.json(await dayOneAction(user, path[1], body));
     if (
       path[0] === "centre-command" &&
       path[1] === "teams" &&

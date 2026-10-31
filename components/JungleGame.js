@@ -29,6 +29,7 @@ export default function JungleGame({
   party,
   onQuest,
   support,
+  discovery,
 }) {
   const [panel, setPanel] = useState(null),
     [selected, setSelected] = useState(null);
@@ -202,6 +203,7 @@ export default function JungleGame({
     encounters: "Team project levels",
     leaderboard: "Trophy leaderboard",
     support: "Help Desk & growth",
+    discovery: "Day 1 discovery mission",
   };
   return (
     <section className="jungle-game" aria-label="Expedition game map">
@@ -398,6 +400,7 @@ export default function JungleGame({
           )}
         </div>
         {[
+          ...(discovery ? [["discovery", Compass, "Discovery"]] : []),
           ["party", Users, "Party"],
           ["leaderboard", Trophy, "Ranks"],
           ["objectives", ListChecks, "Objectives"],
@@ -456,6 +459,7 @@ export default function JungleGame({
         >
           {panel === "party" && party}
           {panel === "support" && support}
+          {panel === "discovery" && discovery}
           {panel === "leaderboard" && (
             <div className="game-objective-list">
               <p className="muted">

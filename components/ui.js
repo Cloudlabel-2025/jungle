@@ -223,7 +223,7 @@ export function Form({
               name={f.name}
               rows={f.rows || 3}
               minLength={f.min || 1}
-              maxLength={4000}
+              maxLength={f.maxLength || 4000}
               defaultValue={initial[f.name] || ""}
               required={!f.optional}
               placeholder={f.placeholder}
@@ -235,6 +235,7 @@ export function Form({
               defaultValue={initial[f.name] ?? ""}
               min={f.min}
               max={f.max}
+              step={f.type === "number" ? f.step || "any" : undefined}
               minLength={f.type === "number" ? undefined : f.min}
               required={!f.optional}
               placeholder={f.placeholder}

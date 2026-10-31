@@ -33,13 +33,21 @@ import JungleGame from "./JungleGame";
 import ProjectBoard, { ProjectTaskDetails } from "./Projects";
 import ExpeditionHeading from "./ExpeditionHeading";
 import SupportConsole from "./SupportConsole";
+import { SupportDesk, SupportLibrary } from "./SupportConsole";
+import CampfireScene from "./CampfireScene";
 import ChallengeManager, {
   ChallengeProgress,
   ChallengeTaskDetails,
 } from "./Challenges";
 import LevelManager from "./LevelManager";
 import TeamManager from "./TeamManager";
+import { DiscoveryMission } from "./DayOneFeatures";
 import { teamRoles, playerRole } from "@/lib/team-roles.js";
+import WeekOneView, { hasWeekOneView } from "./WeekOneViews";
+import {
+  programmeScreen,
+  legacyWorkspaceData,
+} from "@/lib/workspace-navigation.js";
 import {
   characters,
   characterFor,
@@ -539,10 +547,20 @@ function PunchIn({ data, now, act }) {
   );
 }
 export function GamerView(props) {
+  const moduleScreen = programmeScreen(props.screen);
+  if (
+    props.data.weekOneProgram &&
+    moduleScreen &&
+    hasWeekOneView(props.data.user.role, moduleScreen)
+  )
+    return <WeekOneView {...props} screen={moduleScreen} />;
+  props = { ...props, data: legacyWorkspaceData(props.data) };
   return (
     <>
       <GamerCore {...props} />
-      {props.screen !== "dashboard" && <SupportConsole {...props} />}
+      {!["dashboard", "team-room"].includes(props.screen) && (
+        <SupportConsole {...props} />
+      )}
     </>
   );
 }
@@ -560,6 +578,7 @@ function GamerCore({ screen, data, act, now }) {
           support={
             <SupportConsole screen={screen} data={data} act={act} now={now} />
           }
+          discovery={<DiscoveryMission data={data} act={act} now={now} />}
         />
         {selected && (
           <QuestDetail
@@ -598,7 +617,7 @@ function GamerCore({ screen, data, act, now }) {
     );
   if (screen === "before-you-board")
     return <Foundations data={data} act={act} />;
-  if (screen === "team-room") return <Comms data={data} act={act} />;
+  if (screen === "team-room") return <Comms data={data} act={act} now={now} />;
   if (screen === "daily-journal")
     return <Journal data={data} act={act} now={now} />;
   if (screen === "rewards") return <Rewards data={data} />;
@@ -616,7 +635,7 @@ function Foundations({ data, act }) {
     </>
   );
 }
-function Comms({ data, act }) {
+function Comms({ data, act, now }) {
   const [message, setMessage] = useState(""),
     [blocker, setBlocker] = useState(false);
   const bottom = useRef();
@@ -624,100 +643,106 @@ function Comms({ data, act }) {
     const stream = bottom.current?.parentElement;
     if (stream) stream.scrollTop = stream.scrollHeight;
   }, [data.messages.length]);
-  return (
-    <>
-      <Heading
-        code="G04"
-        title="Campfire communications"
-        subtitle="Good teams don’t go silent. Keep your channel open."
-        action={
-          <Badge tone="cyan">
-            <Radio size={12} />
-            SQUAD CHANNEL
-          </Badge>
-        }
-      />
-      <div className="comms-grid">
-        <Panel
-          title={data.teams.find((t) => t._id === data.user.teamId)?.name}
-          kicker="PRIVATE SQUAD FREQUENCY"
-          className="chat-panel"
-        >
-          <div className="chat-stream">
-            {data.messages.length ? (
-              data.messages.map((m) => (
-                <div
-                  className={`chat-message ${m.senderId === data.user._id ? "own" : ""} ${m.isBlocker ? "blocker-message" : ""}`}
-                  key={m._id}
-                >
-                  <Avatar
-                    name={m.senderName}
-                    player={data.roster.find((p) => p._id === m.senderId)}
-                  />
-                  <div>
-                    <div className="message-meta">
-                      <strong>{m.senderName}</strong>
-                      <small>{fmt(m.createdAt)} IST</small>
-                      {m.isBlocker && (
-                        <Badge tone={m.resolvedAt ? "lime" : "red"}>
-                          {m.resolvedAt ? "RESOLVED" : "BLOCKER"}
-                        </Badge>
-                      )}
-                    </div>
-                    <p>{m.message}</p>
-                  </div>
+  const chat = (
+    <Panel
+      title={data.teams.find((t) => t._id === data.user.teamId)?.name}
+      kicker="PRIVATE SQUAD FREQUENCY"
+      className="chat-panel"
+    >
+      <div className="chat-stream">
+        {data.messages.length ? (
+          data.messages.map((m) => (
+            <div
+              className={`chat-message ${m.senderId === data.user._id ? "own" : ""} ${m.isBlocker ? "blocker-message" : ""}`}
+              key={m._id}
+            >
+              <Avatar
+                name={m.senderName}
+                player={data.roster.find((p) => p._id === m.senderId)}
+              />
+              <div>
+                <div className="message-meta">
+                  <strong>{m.senderName}</strong>
+                  <small>{fmt(m.createdAt)} IST</small>
+                  {m.isBlocker && (
+                    <Badge tone={m.resolvedAt ? "lime" : "red"}>
+                      {m.resolvedAt ? "RESOLVED" : "BLOCKER"}
+                    </Badge>
+                  )}
                 </div>
-              ))
-            ) : (
-              <Empty title="Open the channel">
-                Share a win, ask a question, or raise a blocker with your squad.
-              </Empty>
-            )}
-            <div ref={bottom} />
-          </div>
-          <form
-            className="chat-compose"
-            onSubmit={async (e) => {
-              e.preventDefault();
-              if (
-                await act(
-                  "gamer/messages",
-                  { message, isBlocker: blocker },
-                  "Transmission delivered.",
-                )
-              ) {
-                setMessage("");
-                setBlocker(false);
-              }
-            }}
-          >
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={blocker}
-                onChange={(e) => setBlocker(e.target.checked)}
-              />
-              <Flag size={13} />
-              Raise as a blocker
-            </label>
-            <div>
-              <input
-                aria-label="Message"
-                placeholder="Transmit to your squad…"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                maxLength={2000}
-                required
-              />
-              <button className="btn primary" aria-label="Send message">
-                <Send size={17} />
-              </button>
+                <p>{m.message}</p>
+              </div>
             </div>
-            <small className="muted">
-              Your party’s radio updates automatically.
-            </small>
-          </form>
-        </Panel>
+          ))
+        ) : (
+          <Empty title="Open the channel">
+            Share a win, ask a question, or raise a blocker with your squad.
+          </Empty>
+        )}
+        <div
+          ref={(node) => {
+            bottom.current = node;
+            if (node?.parentElement)
+              node.parentElement.scrollTop = node.parentElement.scrollHeight;
+          }}
+        />
+      </div>
+      <form
+        className="chat-compose"
+        onSubmit={async (e) => {
+          e.preventDefault();
+          if (
+            await act(
+              "gamer/messages",
+              { message, isBlocker: blocker },
+              "Transmission delivered.",
+            )
+          ) {
+            setMessage("");
+            setBlocker(false);
+          }
+        }}
+      >
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            checked={blocker}
+            onChange={(e) => setBlocker(e.target.checked)}
+          />
+          <Flag size={13} />
+          Raise as a blocker
+        </label>
+        <div>
+          <input
+            aria-label="Message"
+            placeholder="Transmit to your squad…"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            maxLength={2000}
+            required
+          />
+          <button className="btn primary" aria-label="Send message">
+            <Send size={17} />
+          </button>
+        </div>
+        <small className="muted">
+          Your party’s radio updates automatically.
+        </small>
+      </form>
+    </Panel>
+  );
+  return (
+    <CampfireScene
+      teamName={data.teams.find((t) => t._id === data.user.teamId)?.name}
+      roster={data.roster}
+      user={data.user}
+      members={
+        data.roster.filter(
+          (p) => p.teamId === data.user.teamId && p.active !== false,
+        ).length
+      }
+      chat={chat}
+      team={
         <div>
           <SquadRoster data={data} />
           <div className="callout">
@@ -729,8 +754,22 @@ function Comms({ data, act }) {
             </p>
           </div>
         </div>
-      </div>
-    </>
+      }
+      tickets={
+        data.support ? (
+          <SupportDesk data={data} act={act} now={now} />
+        ) : (
+          <Empty title="Support is connecting" />
+        )
+      }
+      library={
+        data.support ? (
+          <SupportLibrary data={data} act={act} now={now} />
+        ) : (
+          <Empty title="Library is connecting" />
+        )
+      }
+    />
   );
 }
 function Journal({ data, act, now }) {
@@ -1192,6 +1231,13 @@ function Telemetry({ data, now, act, executive = false }) {
   );
 }
 export function StaffView(props) {
+  const moduleScreen = programmeScreen(props.screen);
+  if (
+    props.data.weekOneProgram &&
+    moduleScreen &&
+    hasWeekOneView(props.data.user.role, moduleScreen)
+  )
+    return <WeekOneView {...props} screen={moduleScreen} />;
   return (
     <>
       <StaffCore {...props} />
@@ -1202,7 +1248,11 @@ export function StaffView(props) {
 function StaffCore({ screen, data, act, now }) {
   const isCentre = data.user.role === "CENTRE_COMMAND";
   if (screen === "dashboard")
-    return <Telemetry data={data} now={now} act={act} executive={isCentre} />;
+    return (
+      <>
+        <Telemetry data={data} now={now} act={act} executive={isCentre} />
+      </>
+    );
   if (screen === "sprints")
     return (
       <>

@@ -1,14 +1,32 @@
 import { notFound, redirect } from "next/navigation";
 import { currentUser, demoEnabled } from "@/lib/auth.js";
 import { navigation, prefix } from "@/lib/catalog.js";
+import { weekOneNavigation } from "@/lib/week-one-catalog.js";
+import {
+  validProgrammeScreen,
+  programmePath,
+} from "@/lib/workspace-navigation.js";
 import Arena from "@/components/Arena";
 export const dynamic = "force-dynamic";
 export default async function Page({ params }) {
   const { workspace, screen } = await params;
   const role = Object.keys(navigation).find((r) => prefix(r) === workspace);
-  if (!role || !navigation[role].some((n) => n[1] === screen)) notFound();
+  if (
+    !role ||
+    !(
+      navigation[role].some((n) => n[1] === screen) ||
+      validProgrammeScreen(role, screen) ||
+      weekOneNavigation[role].some((n) => n[1] === screen)
+    )
+  )
+    notFound();
   const user = await currentUser();
   if (user && user.role !== role) redirect(`/${prefix(user.role)}/dashboard`);
+  if (
+    !navigation[role].some((n) => n[1] === screen) &&
+    !validProgrammeScreen(role, screen)
+  )
+    redirect(programmePath(role, screen));
   return (
     <Arena
       screen={screen}
