@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-05T13:33:04.189Z",
+  "synthetic": true,
+  "results": [
+    {
+      "role": "GAMER",
+      "tasks": 20,
+      "oldState": 200
+    },
+    {
+      "role": "MISSION_COMMANDER",
+      "tasks": 100,
+      "oldState": 200
+    },
+    {
+      "role": "CENTRE_COMMAND",
+      "tasks": 100,
+      "oldState": 200
+    },
+    {
+      "role": "TEAM_LEAD",
+      "resolvedFromLiveAssignment": true
+    },
+    {
+      "role": "SCHEDULER",
+      "authenticatedProcessing": "PASS"
+    }
+  ],
+  "simultaneousGamerWrites": 25,
+  "elapsedMs": 4694,
+  "guards": "Unauthenticated, role, origin, injection, request size, scheduler and missing private storage checked.",
+  "externalBlobRoundtrip": "NOT RUN: credentials are not configured."
+}

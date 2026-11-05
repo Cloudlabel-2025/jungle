@@ -1,0 +1,46 @@
+CODEWILD Pilot V0.1 — additive implementation handover
+Date: 5 November 2026
+
+SCOPE AND SOURCE
+User-approved additions to D:\Projects\Jungle. The ZIP's clean-room/static replacement direction is superseded by the user's explicit instruction to keep the existing application. No uploaded script was executed. No map redesign, root vercel.json replacement, production database migration, remote deployment, commit or push was performed. Source hashes and the original Git commit are recorded in pilot-source-baseline.json.
+
+WHERE TO REVIEW
+Original map: /gamer/dashboard.
+Original tasks: /gamer/sprint-board > Existing Objectives (default).
+New engine: same page > Programme Sprint Work.
+MC: /commander/sprints > Programme Sprint Work.
+CC: existing /centre-command/setup > Programme setup.
+My Day: map > Objectives > My Day and weekly sprint work.
+Role pages also have additive disclosures for programme acceptance, rules, reports, recovery and rewards. Operator JSON imports provide downloadable formats for complex, approved configurations; they do not fabricate product inputs.
+
+IMPLEMENTATION
+Separate transactional Sprint/Task/Review/Event/Ledger/Handover/Daily/Client/Policy/Batch/Evidence/Recovery/Notice records. Cohort/team isolation, assigned MC scope, explicit CC permissions, active-account rechecks and idempotent request keys. Sprint 1 and Sprint 2 frozen task tables, acceptance conditions and Sprint 2 field contract are transcribed from the master. Future core sprints use approved content through the same engine.
+Locked foundation/recovery prerequisite; approved draft/load; read-only preview; kickoff and random nonrepeating TL; explicit owner/Joker coverage; task state and five SDLC stages; independent checkpoint/final reviews; working-calendar SLAs; one-hour dependency handovers; two-hour delivery warnings; original/revised target histories; core acceptance separate from card completion.
+My Day, daily factual Spark/free retries/cosmetic milestones, hygiene, journals, meeting agendas, team EOD/MC exceptions, versioned 19-rule acknowledgement/explanation and configured one-time Week 3 consequence. Shared Help Pass ledger and free essential support; paid approved resources; real assigned Help Desk tickets. Co-Gamer attribution remains separate.
+Immutable 35-item CL bank; MC proposal/CC common-event release; Monday frozen previous fully assessed five-person >82 cap; two active slots with In Review freeing a slot; paused task guards and reasoned manual rescheduling. No automatic critical-path optimisation or blocker penalties.
+Separate five-energy policy/ledger and independent adjustments; individual recovery; configured midpoint, two attempts and human disposition; all-member-low intervention notice without collective clearance. Existing map energy is unchanged. Optional approved quests/Discovery/GOAT/trophies and at most three advanced extension packs use separate bonus ledgers; content remains an approval input.
+13 criterion human evidence ratings preserving 40/20/25/15 totals. Manual assessment export with attributed evidence and objective daily records, CSV/XLSX import validation/quarantine, human sign-off, sealed commits and reasoned correction history. External AI is not called automatically. Three Gamer reassessments across the game, with CC audits outside that quota.
+Private evidence: three slots, 5 MB per file, scoped direct-to-Blob upload, verified type/size/signature and bounded Office extraction; private authorized download links; explicit fidelity warnings. No evidence written into a Vercel Function filesystem.
+Separate deliberately unsolved MERN starter: learner-starter and pilot-alumni-unsolved-starter.zip. Its working scaffold and 501 responses are not completed learner tasks.
+
+VALIDATION AND EVIDENCE
+See pilot-regression.log for the final developer regression counts; these include existing foundation/project/recovery tests and new multi-actor sprint tests. No developer suite is represented as independent QA.
+pilot-http-verification.json: password login, live TL identity, legacy state/routes, scoped new snapshots, origin/role/injection/body-size/unauthenticated/scheduler/missing-storage guards, and 25 concurrent Gamer HTTP writes.
+Pilot database test additionally performs 25 Gamer + MC + CC simultaneous writes and common five-team release without duplicate delivery.
+pilot-build.log: optimized Next.js build and route output.
+pilot-dependency-audit.json: root dependency audit.
+pilot-storage-tests.log: forged type, 5 MB limit, Office type/expansion bounds and extraction-fidelity warning.
+pilot-starter-tests.log / pilot-starter-build.log: separate unsolved scaffold verification.
+pilot-backup-verification.log: staging snapshot restored and verified across 65 collections. Actual backup, credentials and DB files remain ignored under .data/pilot-staging.
+pilot-original-map.png / pilot-sprint-saved.png / pilot-mobile-landscape.png: existing map, added sprint workspace and mobile landscape evidence. Landscape board scrolls inside its container. The pre-existing portrait orientation rule is retained.
+
+RELEASE LIMITS / EXTERNAL WORK
+Not deployed remotely. No real private Blob credential/store roundtrip was available; missing configuration returns 503 rather than pretending to save a file. Configure and independently test uploads/downloads and actual Vercel deployment limits before go-live. No hosting plan, organization account or paid scheduler was purchased/configured. Run the worker through a real minute scheduler and verify observability/alert response.
+MC/CC must supply real approved Curriculum resources, S1 estimates, final policy/rubric inputs, CL bank, midpoint window, future core/extension content and actual participants. Synthetic review accounts/data/resource URLs cannot establish learner acceptance. Genuine integrated learner apps must pass each sprint's seven client gates.
+Independent QA catalogue and six E2E journeys remain for an independent tester to execute, with MC/CC workload and security acceptance. No claim of a complete independently tested six-week production MVP, real learner application completion, certificate/award content or production readiness is made.
+
+SAFE START AND ROLLBACK
+Root: npm ci; npm run build; npm run pilot:staging. Staging URL is http://127.0.0.1:3105, local only. Passwords are in .data/pilot-staging/accounts.json; do not commit or send that file. TL is a normal Gamer account selected by the sprint, not a separate elevated login. Stop the staging launcher before building or starting it again. Existing npm run dev and the original .data/mongo remain separate.
+Real pilot: configure environment from .env.example, provision and scope accounts, publish genuine foundation roster and programme inputs, approve/load, then record kickoff. Test private storage, scheduler and independent acceptance before admitting real participants.
+Backup command: node scripts/backup-verify.mjs <new absolute private backup path>, with MONGODB_URI set to the intended database. It writes a new file, restores to a uniquely named verification DB, verifies counts/hashes/indexes, and removes only that verification DB. Keep backups private.
+Current source changes are uncommitted. Preserve any subsequent user work before rollback. Review git diff plus untracked paths: git restore alone cannot remove new files. Restore tracked changes and remove only the explicitly reviewed new pilot paths if discarding this integration. Never run broad git clean or delete .data/.env files. For a deployed release, roll back the deployment to the recorded known-good Git SHA and restore a verified backup through the deployment owner's procedure; do not overwrite a live database with the local synthetic backup.

@@ -1,0 +1,30 @@
+{
+  "source": "C:\\Users\\sakth\\Downloads\\CODEWILD_Pilot_V0_1_Vercel_Static_Review.zip",
+  "zipSha256": "c035a2a5c6f59032c1fa0dd001a1edbac1ac7a0397cca5a6fd8da46ac385c9e2",
+  "masterDocument": "CODEWILD_Master_MVP_Implementation_and_Independent_QA_Pack_V1_1_CLEAN_BUILD.docx",
+  "masterSha256": "ce4962c08172cd088a86c0d2557a58562d9b0a4a822d5e77b728d2829d847f84",
+  "baselineCommit": "291cf2cb66d9deee0730cc590994a23cde45a1fa",
+  "strategy": "Additive integration; clean-room/replacement instructions superseded by explicit user choice. Current changes are uncommitted.",
+  "requirements": 30,
+  "independentCases": 128,
+  "preservedFiles": [
+    {
+      "path": "app/game-map.css",
+      "unchanged": true
+    },
+    {
+      "path": "app/map-navigation.css",
+      "unchanged": true
+    },
+    {
+      "path": "app/level-briefing.css",
+      "unchanged": true
+    },
+    {
+      "path": "components/WeekOneViews.js",
+      "unchanged": true
+    }
+  ],
+  "learnerArchiveSha256": "67de94c0f5121b587278a12ecc95526661b26e44dc1da56d5aea76e21ffef605",
+  "generatedAt": "2026-11-05T13:08:31.089Z"
+}

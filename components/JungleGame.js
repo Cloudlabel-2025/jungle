@@ -30,6 +30,7 @@ export default function JungleGame({
   onQuest,
   support,
   discovery,
+  dailyWork,
 }) {
   const [panel, setPanel] = useState(null),
     [selected, setSelected] = useState(null);
@@ -517,6 +518,7 @@ export default function JungleGame({
               <Link href="/gamer/sprint-board" className="btn">
                 Open squad objectives
               </Link>
+              {dailyWork&&<details><summary>My Day and weekly sprint work</summary>{dailyWork}</details>}
             </div>
           )}
           {panel === "encounters" && (

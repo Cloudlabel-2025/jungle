@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createApp} from '../server/app.js';
+test('starter boots and does not silently claim task completion',async()=>{const server=createApp().listen(0,'127.0.0.1');await new Promise(r=>server.once('listening',r));try{const base=`http://127.0.0.1:${server.address().port}`;assert.equal((await(await fetch(base+'/health')).json()).implemented,false);assert.equal((await fetch(base+'/api/alumni')).status,501);}finally{await new Promise(r=>server.close(r));}});

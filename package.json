@@ -16,7 +16,9 @@
     "db:check": "node --env-file-if-exists=.env.local scripts/check-db.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:day1": "node scripts/check-day-one.mjs",
-    "test:week1": "node scripts/check-day-one.mjs --all"
+    "test:week1": "node scripts/check-day-one.mjs --all",
+    "pilot:staging": "node --use-system-ca scripts/pilot-staging.mjs",
+    "pilot:process": "node --env-file-if-exists=.env.local scripts/process-pilot.mjs"
   },
   "dependencies": {
     "@babel/standalone": "^7.28.0",
@@ -24,6 +26,7 @@
     "@fontsource/orbitron": "^5.3.0",
     "@fontsource/rajdhani": "^5.3.0",
     "@tailwindcss/postcss": "^4.1.0",
+    "@vercel/blob": "^2.8.2",
     "esbuild": "^0.28.2",
     "lucide-react": "^0.468.0",
     "mongoose": "^8.19.0",
@@ -36,5 +39,8 @@
   },
   "devDependencies": {
     "mongodb-memory-server": "^10.2.0"
+  },
+  "overrides": {
+    "zod": "^4.6.6"
   }
 }

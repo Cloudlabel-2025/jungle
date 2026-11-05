@@ -41,6 +41,7 @@ import ChallengeManager, {
 } from "./Challenges";
 import LevelManager from "./LevelManager";
 import TeamManager from "./TeamManager";
+import PilotWorkspace,{PilotBoardSlot} from './PilotWorkspace';
 import { DiscoveryMission } from "./DayOneFeatures";
 import { teamRoles, playerRole } from "@/lib/team-roles.js";
 import WeekOneView, { hasWeekOneView } from "./WeekOneViews";
@@ -558,6 +559,7 @@ export function GamerView(props) {
   return (
     <>
       <GamerCore {...props} />
+      {['team-room','daily-journal','rewards'].includes(props.screen)&&<details><summary>Weekly programme work</summary><PilotWorkspace user={props.data.user} mode={props.screen==='rewards'?'rewards':props.screen==='daily-journal'?'journal':'help'}/></details>}
       {!["dashboard", "team-room"].includes(props.screen) && (
         <SupportConsole {...props} />
       )}
@@ -571,6 +573,7 @@ function GamerCore({ screen, data, act, now }) {
       <>
         <JungleGame
           data={data}
+          dailyWork={<PilotWorkspace user={data.user} mode="daily"/>}
           act={act}
           camp={<PunchIn data={data} now={now} act={act} />}
           party={<SquadRoster data={data} />}
@@ -612,7 +615,7 @@ function GamerCore({ screen, data, act, now }) {
             completed work.
           </p>
         </div>
-        <Board data={data} now={now} act={act} />
+        <PilotBoardSlot data={data}><Board data={data} now={now} act={act} /></PilotBoardSlot>
       </>
     );
   if (screen === "before-you-board")
@@ -1241,6 +1244,7 @@ export function StaffView(props) {
   return (
     <>
       <StaffCore {...props} />
+      {['dashboard','rules-approvals','client-control','reports','awards','coaching'].includes(props.screen)&&<details><summary>Weekly programme operations</summary><PilotWorkspace user={props.data.user} mode={props.screen==='reports'?'reports':props.screen==='rules-approvals'?'approvals':'board'}/></details>}
       <SupportConsole {...props} />
     </>
   );
@@ -1261,7 +1265,7 @@ function StaffCore({ screen, data, act, now }) {
           title="Trail objectives"
           subtitle="Remove friction. Review the work. Make the next move clear."
         />
-        <Board data={data} now={now} act={act} staff />
+        <PilotBoardSlot data={data}><Board data={data} now={now} act={act} staff /></PilotBoardSlot>
       </>
     );
   if (screen === "coaching") return <Coaching data={data} act={act} />;
@@ -1270,6 +1274,7 @@ function StaffCore({ screen, data, act, now }) {
     return (
       <>
         <Setup data={data} act={act} />
+          <details><summary>Weekly sprint setup and permissions</summary><PilotWorkspace user={data.user} mode="setup"/></details>
         <LevelManager data={data} act={act} />
         <ChallengeManager data={data} act={act} />
       </>

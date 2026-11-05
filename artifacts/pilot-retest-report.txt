@@ -1,0 +1,33 @@
+CODEWILD additions — verification and fixes
+Generated: 2026-11-05T13:33:08.341Z
+
+RESULT
+108/108 developer regression tests passed; no failures or skips. Optimized Next.js production build passed. Platform and learner-starter dependency audits both report zero known vulnerabilities. Learner starter scaffold test and Vite build passed.
+
+FIXED
+1. Supersede obsolete checkpoint reviews so they do not block closure.
+2. Bind reassessments to task evidence; invalidate appeals when evidence changes.
+3. Reject unexpected marks columns, including forged human approval fields.
+4. Freeze ongoing core/client delivery and Co-Gamer uploads during energy recovery while allowing blocker reporting.
+5. Show assigned independent reviews to the TL in the existing programme board.
+6. Reroute a TL review when the TL becomes an attributed contributor; prevent contributor self-review.
+7. Bind idempotent request replays to the authenticated actor.
+8. Keep MC exceptions reports private to staff.
+9. Return a failing scheduler status when processing fails, while retaining a staff-visible failure notice.
+10. Reject malformed/formula-bearing XLSX cells; accept common UTF-8 BOM CSV files.
+11. Clear stale connection errors after successful refresh and avoid contradictory saved/offline notices.
+
+VERIFIED WORKFLOWS
+Existing foundation/project/recovery regression suite. Frozen S1/S2 manifests and calendar behavior. Five-team loading, kickoff, TL assignment, SDLC checkpoints, independent final reviews, reassessment quota and CC audit, handovers, Spark/idempotency, assessment export/import/human commit, common client release, two-active-slot behavior and slot release at In Review. Energy/recovery, paid-help rollback, optional challenges, Phase 2 unlock, midpoint attempts/team intervention, roster holds, permissions and private records. Scheduler failure visibility and timestamp-stable reminders.
+
+HTTP AND BROWSER
+Real password logins and scoped Gamer/MC/CC snapshots; 25 simultaneous Gamer HTTP writes; separate database test has 25 Gamers plus MC and CC writing concurrently. Authenticated scheduler processing passed. TL UI review saved and verified on its task. MC/CC programme controls verified within original pages. Staff mobile landscape has no page-level horizontal overflow; original portrait rotation rule retained. Screenshot: pilot-tl-review-verified.png. Synthetic isolated staging only.
+
+RESILIENCE
+Backup restored and verified across 65 collections in a temporary verification DB. Private backup and credentials stay ignored under .data/pilot-staging.
+
+LIMITS
+These results establish the tested local behavior, not perfection or independent sign-off. A real private Blob upload/download roundtrip remains unverified because no store credentials are configured. Missing storage returns 503. Live Vercel deployment and scheduler infrastructure, real Curriculum content/approvals, later sprint content and independent execution of 122 catalogue cases plus six E2E journeys remain pending. No real learner app or competency result was certified using synthetic data. Existing map, page URLs and default Objectives workflow were retained. No deployment, commit or push performed.
+
+EVIDENCE
+pilot-retest.log; pilot-edge-before.log; pilot-edge-after.log; pilot-retest-build.log; pilot-http-retest.log; pilot-http-verification.json; pilot-backup-retest.log; pilot-dependency-audit.json; pilot-starter-audit.json.

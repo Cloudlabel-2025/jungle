@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-05T13:33:08.341Z",
+  "strategy": "Additions to existing application; original map/pages/default workflows retained",
+  "developerRegression": {
+    "tests": 108,
+    "passed": 108,
+    "failed": 0,
+    "skipped": 0
+  },
+  "productionBuild": "PASS",
+  "http": {
+    "at": "2026-11-05T13:33:04.189Z",
+    "synthetic": true,
+    "results": [
+      {
+        "role": "GAMER",
+        "tasks": 20,
+        "oldState": 200
+      },
+      {
+        "role": "MISSION_COMMANDER",
+        "tasks": 100,
+        "oldState": 200
+      },
+      {
+        "role": "CENTRE_COMMAND",
+        "tasks": 100,
+        "oldState": 200
+      },
+      {
+        "role": "TEAM_LEAD",
+        "resolvedFromLiveAssignment": true
+      },
+      {
+        "role": "SCHEDULER",
+        "authenticatedProcessing": "PASS"
+      }
+    ],
+    "simultaneousGamerWrites": 25,
+    "elapsedMs": 4694,
+    "guards": "Unauthenticated, role, origin, injection, request size, scheduler and missing private storage checked.",
+    "externalBlobRoundtrip": "NOT RUN: credentials are not configured."
+  },
+  "dependencyVulnerabilities": {
+    "platform": 0,
+    "learnerStarter": 0
+  },
+  "learnerStarter": {
+    "scaffoldTest": "PASS",
+    "viteBuild": "PASS",
+    "taskSolutions": "Intentionally absent"
+  },
+  "backupRestore": {
+    "environment": "Isolated synthetic staging only",
+    "collectionsVerified": 65
+  },
+  "browser": {
+    "originalMap": "PASS",
+    "originalObjectivesDefault": "PASS",
+    "newSprintSavedTransition": "Ready to Working verified",
+    "mobileLandscape": "844 x 390; page width 829; board scroll contained",
+    "teamLeadReview": "PASS: current TL inspected another Gamer task, submitted REWORK in the UI, and the saved finding appeared on the task.",
+    "commanderSprintControls": "PASS: original board retained; programme selector lists all five assigned teams.",
+    "centreCommandSetup": "PASS: original configuration retained alongside programme setup.",
+    "staffMobileLandscape": "PASS: 844px viewport, 829px page width.",
+    "portrait": "Existing Rotate your phone requirement retained."
+  },
+  "independentQA": {
+    "catalogueTests": 122,
+    "endToEndJourneys": 6,
+    "status": "NOT independently executed"
+  },
+  "pending": [
+    "Real private Blob roundtrip and deployed Vercel checks",
+    "Live scheduler / infrastructure configuration and operator acceptance",
+    "Genuine Curriculum resources, S1 estimates and final policy inputs",
+    "Later sprint/extension content and final awards/certificates",
+    "Independent QA and MC/CC go-live approval"
+  ],
+  "sourceControl": "Uncommitted local changes; no push or remote deployment",
+  "fixes": [
+    "Supersede obsolete checkpoint reviews so they do not block closure.",
+    "Bind reassessments to task evidence; invalidate appeals when evidence changes.",
+    "Reject unexpected marks columns, including forged human approval fields.",
+    "Freeze ongoing core/client delivery and Co-Gamer uploads during energy recovery while allowing blocker reporting.",
+    "Show assigned independent reviews to the TL in the existing programme board.",
+    "Reroute a TL review when the TL becomes an attributed contributor; prevent contributor self-review.",
+    "Bind idempotent request replays to the authenticated actor.",
+    "Keep MC exceptions reports private to staff.",
+    "Return a failing scheduler status when processing fails, while retaining a staff-visible failure notice.",
+    "Reject malformed/formula-bearing XLSX cells; accept common UTF-8 BOM CSV files.",
+    "Clear stale connection errors after successful refresh and avoid contradictory saved/offline notices."
+  ]
+}

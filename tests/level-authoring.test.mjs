@@ -75,7 +75,7 @@ test(
         startDate: "2026-10-01",
       });
       for (const id of ["a", "b", "outside"])
-        await models.Team.create({ _id: id, name: id, code: id });
+        await models.Team.create({ _id: id, name: id, code: id, commanderId:"mc" });
       const cc = await models.User.create({
         _id: "cc",
         name: "Council",

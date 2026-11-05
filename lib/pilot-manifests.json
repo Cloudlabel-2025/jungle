@@ -1,0 +1,614 @@
+{
+  "source": "Master V1.1 supplied in Pilot V0.1 ZIP",
+  "sprints": [
+    {
+      "number": 1,
+      "version": "1.1",
+      "tasks": [
+        {
+          "id": "FE-01",
+          "owner": "A",
+          "tt": "TT1",
+          "title": "React login screen and validation/errors",
+          "hours": null,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "FE-02",
+          "owner": "A",
+          "tt": "TT1",
+          "title": "Alumni directory + profile read screens",
+          "hours": null,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "FE-03",
+          "owner": "A",
+          "tt": "TT2",
+          "title": "Connect UI to login/directory/profile APIs",
+          "hours": null,
+          "depends": [
+            "BE-02",
+            "BE-03"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "QA-01",
+          "owner": "A",
+          "tt": "TT1",
+          "title": "Basic frontend component test checks",
+          "hours": null,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "BE-01",
+          "owner": "B",
+          "tt": "TT1",
+          "title": "Express API base, routes/health",
+          "hours": null,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "BE-02",
+          "owner": "B",
+          "tt": "TT2",
+          "title": "JWT login/logout and admin/alumnus role checks",
+          "hours": null,
+          "depends": [
+            "DB-02"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "BE-03",
+          "owner": "B",
+          "tt": "TT2",
+          "title": "Role-filtered alumni read endpoints",
+          "hours": null,
+          "depends": [
+            "DB-04",
+            "BE-02"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "DB-03",
+          "owner": "B",
+          "tt": "TT2",
+          "title": "Verify DB connection and query seeded accounts",
+          "hours": null,
+          "depends": [
+            "DB-01",
+            "DB-02",
+            "DB-04"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "DB-01",
+          "owner": "C",
+          "tt": "TT1",
+          "title": "MongoDB connection with Mongoose",
+          "hours": null,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "DB-02",
+          "owner": "C",
+          "tt": "TT1",
+          "title": "User schema and fictional secure test accounts",
+          "hours": null,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "DB-04",
+          "owner": "C",
+          "tt": "TT1",
+          "title": "Alumni schema, 20 records, repeatable seeds",
+          "hours": null,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "BE-04",
+          "owner": "C",
+          "tt": "TT2",
+          "title": "Safe record lookup/not-found service",
+          "hours": null,
+          "depends": [
+            "BE-01"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "QA-02",
+          "owner": "D",
+          "tt": "TT1",
+          "title": "Authentication, access, directory test cases",
+          "hours": null,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "QA-03",
+          "owner": "D",
+          "tt": "TT2",
+          "title": "Login/logout/invalid credentials/security tests",
+          "hours": null,
+          "depends": [
+            "BE-02",
+            "FE-03"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "QA-04",
+          "owner": "D",
+          "tt": "TT2",
+          "title": "Directory, 20 records, own profile checks",
+          "hours": null,
+          "depends": [
+            "BE-03",
+            "FE-03"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "OP-02",
+          "owner": "D",
+          "tt": "TT2",
+          "title": "Shared deployment health and login smoke",
+          "hours": null,
+          "depends": [
+            "OP-04"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "OP-01",
+          "owner": "E",
+          "tt": "TT1",
+          "title": "Staging environment/configuration notes",
+          "hours": null,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "OP-03",
+          "owner": "E",
+          "tt": "TT2",
+          "title": "Deployment/health configuration",
+          "hours": null,
+          "depends": [
+            "BE-01",
+            "DB-01"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "OP-04",
+          "owner": "E",
+          "tt": "TT2",
+          "title": "Integrate and publish full app",
+          "hours": null,
+          "depends": [
+            "FE-01",
+            "FE-02",
+            "FE-03",
+            "FE-04",
+            "BE-02",
+            "BE-03",
+            "DB-04",
+            "OP-03"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "FE-04",
+          "owner": "E",
+          "tt": "TT2",
+          "title": "Navigation between Login/Directory/Profile",
+          "hours": null,
+          "depends": [
+            "FE-01",
+            "FE-02"
+          ],
+          "releaseGates": []
+        }
+      ],
+      "acceptance": [
+        {
+          "id": "S1-AC01",
+          "text": "Administrator can log in."
+        },
+        {
+          "id": "S1-AC02",
+          "text": "Administrator reads all 20 fictional alumni records from MongoDB via API."
+        },
+        {
+          "id": "S1-AC03",
+          "text": "Administrator opens an individual alumni profile."
+        },
+        {
+          "id": "S1-AC04",
+          "text": "Alumnus logs in and views OWN profile."
+        },
+        {
+          "id": "S1-AC05",
+          "text": "Alumnus cannot see another alumnus’s private profile."
+        },
+        {
+          "id": "S1-AC06",
+          "text": "Invalid credentials and unauthorised API requests are rejected."
+        },
+        {
+          "id": "S1-AC07",
+          "text": "Working integrated shared test URL with test evidence is demonstrated."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "version": "1.1",
+      "tasks": [
+        {
+          "id": "BE-05",
+          "owner": "A",
+          "tt": "TT1",
+          "title": "Create/Update API route contract",
+          "hours": 2,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "BE-06",
+          "owner": "A",
+          "tt": "TT2",
+          "title": "Admin-only Create API",
+          "hours": 4,
+          "depends": [
+            "BE-05",
+            "BE-08",
+            "DB-07"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "DB-08",
+          "owner": "A",
+          "tt": "TT2",
+          "title": "Verify Create/Edit database record mutations",
+          "hours": 2,
+          "depends": [
+            "BE-06",
+            "BE-07"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "DB-05",
+          "owner": "B",
+          "tt": "TT1",
+          "title": "Profile fields and business-unique identity",
+          "hours": 2,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "DB-06",
+          "owner": "B",
+          "tt": "TT1",
+          "title": "Fictional normal/invalid/duplicate records",
+          "hours": 2,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "DB-07",
+          "owner": "B",
+          "tt": "TT2",
+          "title": "Schema validation and uniqueness",
+          "hours": 3,
+          "depends": [
+            "DB-05",
+            "DB-06"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "BE-08",
+          "owner": "B",
+          "tt": "TT2",
+          "title": "Reusable validation and API errors",
+          "hours": 2,
+          "depends": [
+            "DB-07"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "BE-07",
+          "owner": "B",
+          "tt": "TT2",
+          "title": "Admin-only Update API",
+          "hours": 4,
+          "depends": [
+            "BE-05",
+            "BE-08",
+            "DB-07"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "QA-05",
+          "owner": "C",
+          "tt": "TT1",
+          "title": "Create/Edit acceptance and security test cases",
+          "hours": 3,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "QA-06",
+          "owner": "C",
+          "tt": "TT2",
+          "title": "API, duplicate and unauthorised-access tests",
+          "hours": 4,
+          "depends": [
+            "QA-05",
+            "BE-06",
+            "BE-07"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "OP-08",
+          "owner": "C",
+          "tt": "TT2",
+          "title": "Deployed smoke and recovery testing",
+          "hours": 2,
+          "depends": [
+            "OP-07"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "QA-07",
+          "owner": "C",
+          "tt": "TT2",
+          "title": "Full Create/Edit + Sprint1 regression",
+          "hours": 3,
+          "depends": [
+            "OP-08",
+            "QA-06",
+            "QA-08"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "OP-05",
+          "owner": "D",
+          "tt": "TT1",
+          "title": "Staging environment readiness",
+          "hours": 2,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "FE-08",
+          "owner": "D",
+          "tt": "TT2",
+          "title": "Admin-only navigation controls",
+          "hours": 2,
+          "depends": [
+            "FE-05"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "OP-06",
+          "owner": "D",
+          "tt": "TT2",
+          "title": "Deployment + database configuration",
+          "hours": 2,
+          "depends": [
+            "OP-05",
+            "DB-07"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "FE-07",
+          "owner": "D",
+          "tt": "TT2",
+          "title": "Edit screen to API",
+          "hours": 3,
+          "depends": [
+            "FE-05",
+            "BE-07"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "OP-07",
+          "owner": "D",
+          "tt": "TT2",
+          "title": "Integrate and publish app",
+          "hours": 3,
+          "depends": [
+            "OP-06",
+            "FE-06",
+            "FE-07"
+          ],
+          "releaseGates": [
+            "QA-06",
+            "QA-08"
+          ]
+        },
+        {
+          "id": "FE-05",
+          "owner": "E",
+          "tt": "TT1",
+          "title": "Create/Edit UI screens",
+          "hours": 4,
+          "depends": [],
+          "releaseGates": []
+        },
+        {
+          "id": "FE-06",
+          "owner": "E",
+          "tt": "TT2",
+          "title": "Create screen to API, feedback/error state",
+          "hours": 3,
+          "depends": [
+            "FE-05",
+            "BE-06"
+          ],
+          "releaseGates": []
+        },
+        {
+          "id": "QA-08",
+          "owner": "E",
+          "tt": "TT2",
+          "title": "Frontend validation and permission checks",
+          "hours": 2,
+          "depends": [
+            "FE-06",
+            "FE-07",
+            "FE-08"
+          ],
+          "releaseGates": []
+        }
+      ],
+      "acceptance": [
+        {
+          "id": "S2-AC01",
+          "text": "Admin creates valid Alumni; saved record receives immutable unique ID."
+        },
+        {
+          "id": "S2-AC02",
+          "text": "Admin edits and saves existing Alumni; update persists after refresh and modified timestamp advances."
+        },
+        {
+          "id": "S2-AC03",
+          "text": "Duplicate email and duplicate nonblank student registration number rejected."
+        },
+        {
+          "id": "S2-AC04",
+          "text": "Names/DOB/address/postcode/required/LOV/employment-condition validation behaves as specified."
+        },
+        {
+          "id": "S2-AC05",
+          "text": "Non-admin Create/Edit is denied in UI AND direct API."
+        },
+        {
+          "id": "S2-AC06",
+          "text": "All seven Sprint 1 acceptance checks still pass."
+        },
+        {
+          "id": "S2-AC07",
+          "text": "Deployed Create/Edit passes smoke and full regression with stored evidence."
+        }
+      ],
+      "fieldContract": [
+        {
+          "field": "First name, last name",
+          "presence": "Required",
+          "validation": "Unicode letters, spaces, hyphen/apostrophe; reject digits/inappropriate symbols; do not reject legitimate international names."
+        },
+        {
+          "field": "Date of birth",
+          "presence": "Required",
+          "validation": "Real calendar date, not later than current date."
+        },
+        {
+          "field": "Email",
+          "presence": "Required; unique",
+          "validation": "Format validation and normalized duplicate check; reject duplicate across alumni."
+        },
+        {
+          "field": "Mobile",
+          "presence": "Required",
+          "validation": "Valid country code + number, normalized format; validation rules supplied in configuration."
+        },
+        {
+          "field": "Address line 1",
+          "presence": "Required",
+          "validation": "Non-blank, bounded length; line 2 optional."
+        },
+        {
+          "field": "City, State",
+          "presence": "Required",
+          "validation": "Non-blank; bounded length."
+        },
+        {
+          "field": "Country",
+          "presence": "Required LOV",
+          "validation": "Select from controlled list."
+        },
+        {
+          "field": "Postal/PIN code",
+          "presence": "Required",
+          "validation": "Validate against selected country format (e.g. India six-digit PIN); do not assume globally one format."
+        },
+        {
+          "field": "Course / Degree",
+          "presence": "Required LOV",
+          "validation": "Valid option from configured course list."
+        },
+        {
+          "field": "Graduation year",
+          "presence": "Required",
+          "validation": "Valid four-digit, not in future."
+        },
+        {
+          "field": "Student registration no.",
+          "presence": "Optional; unique if given",
+          "validation": "Reject duplicate nonempty normalized value."
+        },
+        {
+          "field": "Employment status",
+          "presence": "Required LOV",
+          "validation": "Employed / Self-employed / Seeking work / Higher studies."
+        },
+        {
+          "field": "Primary skill",
+          "presence": "Required LOV",
+          "validation": "e.g. Java/Python/React/Node.js/SQL/Testing/Cloud; controlled config."
+        },
+        {
+          "field": "Current job title",
+          "presence": "Conditional",
+          "validation": "Mandatory when employed."
+        },
+        {
+          "field": "Current organisation",
+          "presence": "Conditional",
+          "validation": "Mandatory when employed."
+        },
+        {
+          "field": "LinkedIn URL",
+          "presence": "Optional",
+          "validation": "Valid URL when present."
+        },
+        {
+          "field": "Alumni ID",
+          "presence": "System-generated",
+          "validation": "Unique immutable identifier; never editable by user."
+        },
+        {
+          "field": "Created / modified timestamps",
+          "presence": "System-generated",
+          "validation": "Server-created; modified advances on real update."
+        }
+      ]
+    }
+  ]
+}

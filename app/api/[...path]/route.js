@@ -1,4 +1,11 @@
 import { NextResponse } from "next/server";
+import { boundedJson } from "@/lib/request-body.js";
+import {
+  guardTargets,
+  cohortOf,
+  permitted,
+  demand,
+} from "@/lib/access-scope.js";
 import { allowedWriteOrigin } from "@/lib/request-origin.js";
 import {
   currentUser,
@@ -66,7 +73,7 @@ async function handle(request, { params }) {
       if (Number(request.headers.get("content-length") || 0) > 100000)
         fail("Request is too large.", 413);
     }
-    const body = request.method === "POST" ? await request.json() : {};
+    const body = request.method === "POST" ? await boundedJson(request) : {};
     if (JSON.stringify(body).length > 100000)
       fail("Request is too large.", 413);
     await connect();
@@ -161,6 +168,29 @@ async function handle(request, { params }) {
         serverTime: new Date().toISOString(),
       });
     assertRole(user, all);
+    if (
+      request.method === "POST" &&
+      !["week1", "day1", "support"].includes(path[0])
+    ) {
+      await guardTargets(
+        user,
+        route === "projects/start" && user.role === "GAMER"
+          ? { ...body, teamId: user.teamId }
+          : body,
+      );
+      if (user.role === "CENTRE_COMMAND")
+        demand(
+          permitted(
+            user,
+            route.startsWith("centre-command/teams")
+              ? "roster:write"
+              : route.startsWith("centre-command/client")
+                ? "client:write"
+                : "game:write",
+          ),
+          "Outside your delegated permissions.",
+        );
+    }
     if (route === "week1/audit" && request.method === "GET") {
       const search = new URL(request.url).searchParams;
       return NextResponse.json(
@@ -357,9 +387,21 @@ async function handle(request, { params }) {
         const data = await snapshot(user);
         if (new URL(request.url).searchParams.get("format") === "csv") {
           const [allTrophies, allEnergy, allExperience] = await Promise.all([
-            models.Trophy.find().sort({ createdAt: 1 }).lean(),
-            models.Energy.find().sort({ createdAt: 1 }).lean(),
-            models.Experience.find().sort({ createdAt: 1 }).lean(),
+            models.Trophy.find({
+              userId: { $in: data.roster.map((u) => u._id) },
+            })
+              .sort({ createdAt: 1 })
+              .lean(),
+            models.Energy.find({
+              userId: { $in: data.roster.map((u) => u._id) },
+            })
+              .sort({ createdAt: 1 })
+              .lean(),
+            models.Experience.find({
+              userId: { $in: data.roster.map((u) => u._id) },
+            })
+              .sort({ createdAt: 1 })
+              .lean(),
           ]);
           const esc = (x) =>
             '"' +
@@ -412,6 +454,40 @@ async function handle(request, { params }) {
     }
     if (request.method !== "POST") fail("Method not allowed.", 405);
     await transaction(async (session) => {
+      await models.Cohort.updateOne(
+        { _id: cohortOf(user) },
+        { $inc: { accessRevision: 1 } },
+        { session },
+      );
+      const fresh = await models.User.findOne({
+        _id: user._id,
+        active: { $ne: false },
+      })
+        .session(session)
+        .lean();
+      demand(
+        fresh && fresh.role === user.role && cohortOf(fresh) === cohortOf(user),
+        "Access changed; sign in again.",
+      );
+      if (fresh.role === "CENTRE_COMMAND")
+        demand(
+          permitted(
+            fresh,
+            route.startsWith("centre-command/teams")
+              ? "roster:write"
+              : route.startsWith("centre-command/client")
+                ? "client:write"
+                : "game:write",
+          ),
+          "Outside delegated permissions.",
+        );
+      await guardTargets(
+        fresh,
+        route === "projects/start" && fresh.role === "GAMER"
+          ? { ...body, teamId: fresh.teamId }
+          : body,
+        session,
+      );
       const now = new Date();
       const day = ist(now).day;
       if (route === "gamer/clock-in") {
@@ -876,7 +952,9 @@ async function handle(request, { params }) {
         );
       } else if (route === "centre-command/client-control") {
         assertRole(user, ["CENTRE_COMMAND"]);
-        const cohort = await models.Cohort.findById("alpha").session(session);
+        const cohort = await models.Cohort.findById(cohortOf(user)).session(
+          session,
+        );
         if (cohort.currentWeek < 3)
           fail("Client disruptions unlock in week 3.", 409);
         await models.ClientEvent.create(
@@ -892,6 +970,7 @@ async function handle(request, { params }) {
                 60,
               ),
               broadcastAt: now,
+              cohortId: cohortOf(user),
               creatorId: user._id,
             },
           ],
@@ -899,7 +978,9 @@ async function handle(request, { params }) {
         );
       } else if (route === "centre-command/setup") {
         assertRole(user, ["CENTRE_COMMAND"]);
-        const cohort = await models.Cohort.findById("alpha").session(session);
+        const cohort = await models.Cohort.findById(cohortOf(user)).session(
+          session,
+        );
         if (body.version !== cohort.version)
           fail("Arena configuration changed. Refresh before saving.", 409);
         cohort.name = text(body.name, "Cohort name", 3, 100);
@@ -962,7 +1043,7 @@ async function handle(request, { params }) {
             409,
           );
         await models.Cohort.updateOne(
-          { _id: "alpha" },
+          { _id: cohortOf(user) },
           { $inc: { rosterVersion: 1 } },
           { session },
         );
@@ -1016,13 +1097,16 @@ async function handle(request, { params }) {
         );
       } else if (route === "centre-command/rules") {
         assertRole(user, ["CENTRE_COMMAND"]);
-        const cohort = await models.Cohort.findById("alpha").session(session);
+        const cohort = await models.Cohort.findById(cohortOf(user)).session(
+          session,
+        );
         cohort.rulesVersion++;
         await models.RuleVersion.create(
           [
             {
               _id: id(),
               version: cohort.rulesVersion,
+              cohortId: cohortOf(user),
               text: text(body.text, "Rule amendment", 20),
               authorId: user._id,
             },

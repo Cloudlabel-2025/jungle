@@ -17,6 +17,7 @@ import "./characters.css";
 import "./campfire.css";
 import "./mobile-orientation.css";
 import "./camp-residents.css";
+import "./pilot.css";
 import { Smartphone, RotateCw } from "lucide-react";
 export const metadata = {
   title: "CODEWILD · Escape the Wild",

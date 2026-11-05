@@ -164,8 +164,8 @@ test(
         startDate: "2026-10-26",
       });
       await models.Team.create([
-        { _id: "a", name: "A", code: "A" },
-        { _id: "b", name: "B", code: "B" },
+        { _id: "a", name: "A", code: "A", commanderId:"guide" },
+        { _id: "b", name: "B", code: "B", commanderId:"guide" },
       ]);
       const users = teamRoles.map((r, i) => ({
         _id: `a${i}`,
@@ -230,7 +230,7 @@ test(
           taskId: task._id,
           status: "In Progress",
         }),
-        /another team/,
+        {status:403},
       );
       await assert.rejects(
         projectAction(lead, "task", {

@@ -1,23 +1,27 @@
 import { MongoMemoryReplSet } from "mongodb-memory-server";
 import { spawn } from "node:child_process";
 import { readdirSync } from "node:fs";
-const testFiles = process.argv.includes("--recovery")
-  ? ["tests/recovery-rules.test.mjs", "tests/recovery-database.test.mjs"]
-  : process.argv.includes("--program")
-    ? [
-        "tests/week-one-program-database.test.mjs",
-        "tests/week-one-program-rules.test.mjs",
-      ]
-    : process.argv.includes("--all")
-      ? readdirSync(new URL("../tests/", import.meta.url))
-          .filter((name) => name.endsWith(".test.mjs"))
-          .map((name) => `tests/${name}`)
-      : [
-          "tests/day-one-rules.test.mjs",
-          "tests/day-one-database.test.mjs",
-          "tests/week-one-rules.test.mjs",
-          "tests/week-one-database.test.mjs",
-        ];
+const testFiles = process.argv.includes("--pilot")
+  ? readdirSync(new URL("../tests/", import.meta.url))
+      .filter((n) => n.startsWith("pilot-") && n.endsWith(".test.mjs"))
+      .map((n) => `tests/${n}`)
+  : process.argv.includes("--recovery")
+    ? ["tests/recovery-rules.test.mjs", "tests/recovery-database.test.mjs"]
+    : process.argv.includes("--program")
+      ? [
+          "tests/week-one-program-database.test.mjs",
+          "tests/week-one-program-rules.test.mjs",
+        ]
+      : process.argv.includes("--all")
+        ? readdirSync(new URL("../tests/", import.meta.url))
+            .filter((name) => name.endsWith(".test.mjs"))
+            .map((name) => `tests/${name}`)
+        : [
+            "tests/day-one-rules.test.mjs",
+            "tests/day-one-database.test.mjs",
+            "tests/week-one-rules.test.mjs",
+            "tests/week-one-database.test.mjs",
+          ];
 const replica = await MongoMemoryReplSet.create({
   binary: { version: "7.0.24" },
   replSet: { count: 1, storageEngine: "wiredTiger" },

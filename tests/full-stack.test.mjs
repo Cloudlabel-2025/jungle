@@ -92,7 +92,7 @@ test(
         college: "Test",
         startDate: "2026-10-30",
       });
-      await models.Team.create({ _id: "a", name: "A", code: "A" });
+      await models.Team.create({ _id: "a", name: "A", code: "A", commanderId:"guide" });
       await models.User.create([
         ...players,
         {
