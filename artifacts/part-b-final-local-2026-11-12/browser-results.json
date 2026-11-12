@@ -1,0 +1,8 @@
+{
+  "fixture": "Disposable five-team/25-learner production-mode checkpoint, seeded prior work and SDLC stages; not real student acceptance or a complete six-week rehearsal",
+  "checks": [
+    {"id":"LOCAL-BR-01","cases":[],"status":"SYNTHETIC_BROWSER_CONTROL_VERIFIED","observation":"All 25 learners signed in through real UI, each with one correct team and four personal cards; MC saw 20 cards for each of five teams and CC had five unique authorised team choices.","evidence":["browser-25-learner-scope.json","browser-mc-scope.json","browser-cc-scope.json"]},
+    {"id":"LOCAL-BR-02","cases":[],"status":"SYNTHETIC_BROWSER_CONTROL_VERIFIED","observation":"Gamer 0 started DB-09, uploaded a fictional PDF through the real file chooser using private MongoDB, downloaded matching bytes, submitted the task, and assigned MC inspected evidence and independently accepted it. Prior SDLC stages were seeded; no real learner competence or app repair is certified.","evidence":["browser-evidence-upload.png","browser-download-hash.json","final-local-outcome.json","verification.txt"]},
+    {"id":"LOCAL-HTTP-01","cases":[],"status":"SYNTHETIC_HTTP_CONTROL_VERIFIED","observation":"27 simultaneous role-scoped reads; private upload/completion/hash/download and cross-team/signed-out/cross-origin denials in each team; exact 5 MB assembled upload and streamed download passed on local production mode.","evidence":["http-verification.json","verification.txt"]}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "teamViews": [
+    {
+      "team": "pilot-team-0",
+      "tasks": 20
+    },
+    {
+      "team": "pilot-team-1",
+      "tasks": 20
+    },
+    {
+      "team": "pilot-team-2",
+      "tasks": 20
+    },
+    {
+      "team": "pilot-team-3",
+      "tasks": 20
+    },
+    {
+      "team": "pilot-team-4",
+      "tasks": 20
+    }
+  ],
+  "independentUploadReview": "ACCEPTED",
+  "realStudentAssessment": false
+}

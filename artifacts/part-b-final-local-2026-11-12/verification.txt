@@ -1,0 +1,75 @@
+FINAL LOCAL PART B SETUP AND TESTING - 12 NOVEMBER 2026
+
+Resolved setup gap
+Ordinary evidence and marks returns now use the existing private MongoDB database
+when a Blob token is absent. Generated report storage continues to use MongoDB.
+Existing private Blob uploads remain supported. No credential was created, copied
+into Git, exposed in the browser or requested from the user for this default.
+
+Resolved compatibility/transport issues
+Uploaded MongoDB report PDFs are distinguished from generated reports by their
+generation ID, not merely their storage provider. This preserves manual report
+review compatibility while keeping generated-report freshness/pair guards.
+Large uploads use bounded 1 MB parts with a 5 MB assembled maximum and streamed
+downloads to account for hosted request/response limits. Incomplete parts have a
+one-hour TTL; successful assembly removes them. Different bytes cannot overwrite
+an existing part, and completion retries do not duplicate task evidence.
+
+Automated verification
+150 tests passed, zero failed/skipped, in the full disposable-database suite.
+The new storage regression performs real PDF byte round trips for all 25 learners
+across five teams, verifies assigned MC access and cross-team/unassigned denial,
+intentionally permits ordinary task evidence sharing within a team, checks MIME,
+signature, empty/oversized payloads, reservation expiry, three-slot limits, CSV
+marks return, duplicate/out-of-order parts, exact 5 MB transport and streamed bytes.
+A fresh disposable restore database received private files/task/evidence metadata;
+the recovered large-file SHA-256 matched. This is a logical restore rehearsal,
+not a configured operational backup service. The 5 MB header/padding payload
+tests transport only and is not asserted to be a semantically valid learner PDF.
+Production build: part-b-storage-build.txt, PASS.
+
+Production-mode HTTP checks
+Fresh --five-teams fixture at localhost:3188; the server used a temporary MongoDB
+replica set, random session secret, empty Blob token and cleared notification
+destinations. Normal Next.js configuration loading still applies. No production
+DB or external provider was targeted. Passed 27 concurrent actor reads, expected
+20 team cards per Gamer/100 across five teams per staff, five team file round
+trips and privacy checks, and exact 5 MB HTTP chunked upload/streamed download.
+Local simultaneous-read elapsed time was 2158 ms in this run; no performance SLO
+or real deployment capacity is inferred. Evidence: http-verification.json.
+
+Actual browser checks
+All 25 fictional learners signed in and loaded Programme Sprint Work. Each saw
+one correct team and four cards because My assigned work was checked. The initial
+diagnostic looked for twenty displayed cards; inspecting the UI confirmed the
+four-card personal filter was intentional, then all 25 personal counts passed.
+MC could select all five teams, each displaying twenty cards. CC's setup has two
+Team controls, both offering the same five authorised teams; the saved scope file
+contains their five unique choices, not ten teams.
+
+Gamer 0 opened DB-09, started work, selected the fictional PDF through the real
+file chooser and uploaded it. Three verified file links appeared (two from the
+earlier HTTP transport checks, one from the browser). The downloaded browser file
+exists and its SHA-256 equals the source exactly. Browser download event capture
+timed out and reset the automation session after the file itself had downloaded;
+verification recovered using the existing tab and the actual downloaded file/hash.
+No alternate browser or file-URL security bypass was used. This was an automation
+capture issue, not an observed application download failure.
+Gamer submitted DB-09 as In Review; assigned MC inspected the three evidence links
+and recorded an explicit fictional independent finding. Persisted state is
+Accepted with three evidence slots and a DECIDED final review. Prior SDLC work was
+seeded; sample file bytes do not prove a real DB repair or student achievement.
+Browser console warnings/errors at the final CC checkpoint: none observed.
+The test server/replica set was stopped after evidence capture.
+
+Test-harness corrections
+The first new storage fixture had a future kickoff; corrected its synthetic
+schedule. The HTTP runner initially assumed the wrong Gamer owned DB-09 and the
+server correctly rejected it; the runner now reads the actual owner. Restore
+cleanup was moved before database disconnection. These are harness corrections;
+they did not loosen application permissions or approval gates.
+
+Only external inputs/human verification remain
+See ../part-b-needs-user-or-assessor.txt for the real team repositories/sandbox
+access, deployment target/access and MC/CC approvals, observations and signatures.
+No entire real six-week/25-student journey or production acceptance is claimed.

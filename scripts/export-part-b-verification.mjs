@@ -30,6 +30,7 @@ cover([104,105], "pilot-part-b-controls.test.mjs: original criterion totals, hig
 cover([91], "pilot-part-b-controls.test.mjs: passing-witness showcase prerequisite and no scoring side effect; actual five-finalist selection requires CC");
 cover([92,93], "PARTIAL: absent source marked NOT_ASSESSABLE; unsupported code findings rejected; untrusted-source warning; actual external AI behavior not exercised");
 cover([107,109,110], "pilot-part-b-pdf.test.mjs + inspect-part-b-pdfs.py: actual two-page Passport and one-page certificate; 13 criteria/maxima, NOT_ASSESSED source controls, separate bonuses, exact certificate text, clickable evidence, real MongoDB bytes and SHA-256 round trip, privacy before issue, assigned MC review, CC issue, stale-source rejection and correction/reissue. Fictional assessed eligibility; real learner accuracy/signatures still require humans");
+cover([28,30,32,34], "PARTIAL platform control coverage: pilot-part-b-storage.test.mjs verifies 25 fictional learners/five teams, actual private evidence bytes, permissions, size/type/expiry/three-slot guards, chunked uploads and retryable completion; five-team production HTTP and browser evidence also recorded. Actual functional/non-functional/system/UAT findings and independent acceptance remain MC/CC work");
 cover([65,66,67,68,69,70,71,72,73,74,76,82,83,84,85,86,87,88,89,90], "PARTIAL: release/witness/approved-question gates and persona-scoped cross-team assessor access; no real learner observation or rooms simulated");
 cover([50,51,52,53,54,55], "pilot-help.test.mjs: consent, reservations, completed MC session, lifetime sponsorship, verified credit and carry-forward");
 const rows = source.map(row => {
@@ -38,7 +39,7 @@ const rows = source.map(row => {
     historical_result: prior?.result || "NOT_RECORDED", historical_retest: prior?.retest_result || "",
     new_automated_coverage: automated.get(row.test_id) || "Existing row evidence retained; no newly claimed independent pass",
     remaining_verification: prior?.result === "PASS" ? "Review existing row evidence during final independent sign-off" : categories[row.area],
-    evidence: automated.has(row.test_id) ? "part-b-full-regression.txt; part-b-pdf-verification.json; tests/pilot-part-b-controls.test.mjs; tests/pilot-part-b-pdf.test.mjs; tests/pilot-part-b-phase2.test.mjs; tests/pilot-part-b.test.mjs; tests/pilot-help.test.mjs" : prior?.run_evidence || "",
+    evidence: automated.has(row.test_id) ? "part-b-full-regression.txt; part-b-final-local-2026-11-12/verification.txt; part-b-pdf-verification.json; tests/pilot-part-b-controls.test.mjs; tests/pilot-part-b-storage.test.mjs; tests/pilot-part-b-pdf.test.mjs; tests/pilot-part-b-phase2.test.mjs; tests/pilot-part-b.test.mjs; tests/pilot-help.test.mjs" : prior?.run_evidence || "",
     independent_signoff: "NOT_CREATED_BY_AUTOMATED_TESTS" };
 });
 const admin = unzipSync(archive[root + "08_SOURCE_PACKS_UNCHANGED/CODEWILD_PartB_Week6_Admin_Chair_Frozen_AddOn_V1.zip"]);
@@ -69,6 +70,11 @@ try {
   const pdfBrowser = JSON.parse(await readFile("artifacts/part-b-pdf-browser-2026-11-12/browser-results.json", "utf8"));
   browser.checks.push(...pdfBrowser.checks.map(check => ({ ...check,
     evidence: check.evidence.map(path => `part-b-pdf-browser-2026-11-12/${path}`) })));
+} catch (error) { if (error.code !== "ENOENT") throw error; }
+try {
+  const local = JSON.parse(await readFile("artifacts/part-b-final-local-2026-11-12/browser-results.json", "utf8"));
+  browser.checks.push(...local.checks.map(check => ({ ...check,
+    evidence: check.evidence.map(path => `part-b-final-local-2026-11-12/${path}`) })));
 } catch (error) { if (error.code !== "ENOENT") throw error; }
 for (const row of rows) {
   const checks = browser.checks.filter(check => check.cases.includes(row.test_id));

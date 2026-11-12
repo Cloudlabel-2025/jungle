@@ -1,5 +1,21 @@
 PART B IMPLEMENTATION CLOSEOUT — 12 NOVEMBER 2026
 
+LATEST LOCAL CLOSEOUT
+150 automated tests passed without failures/skips; current production build passed.
+Ordinary evidence/marks uploads now default to private MongoDB, with bounded 1 MB
+parts, original 5 MB assembled limit, immutable parts, expiry, retryable completion
+and streamed authenticated downloads. No Blob token is required for this default;
+existing configured private Blob deployments remain supported. Uploaded reports
+remain compatible with human review without being mistaken for generated reports.
+All 25 fictional learners passed real browser login/team/four-card checks; MC/CC
+five-team scopes passed, as did browser upload/download and independent review.
+Production-mode HTTP verified 27 simultaneous scoped actors, five private-file
+round trips and exact 5 MB transport. A logical file/metadata restore also passed.
+See part-b-final-local-2026-11-12/ and part-b-needs-user-or-assessor.txt. Older Blob
+setup blockers and one-team-only statements below are historical, now superseded
+for these scoped platform checks. No real six-week student journey, external AI,
+student-app integration, production deployment or independent sign-off is claimed.
+
 CURRENT REPORT UPDATE
 Automatic two-page Passport and one-page certificate generation is now implemented
 inside the app. Both PDFs are stored as private MongoDB binary records in the same

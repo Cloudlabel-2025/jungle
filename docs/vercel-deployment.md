@@ -62,6 +62,20 @@ For an intentionally private persona simulation, use `DEMO_MODE=true` plus a str
 
 ## 4. Verify the deployment
 
+Part B generated reports and ordinary evidence uploads use the configured private
+MongoDB database automatically. Leave `BLOB_READ_WRITE_TOKEN` blank for this default.
+The client sends files in parts of at most 1 MB, the server enforces 5 MB per file,
+and authorised downloads are streamed. Include `privatereportfiles`,
+`pilotevidences`, and their related task/report records in the approved backup
+policy. Temporary upload parts have an expiry; permanent documents do not.
+Existing deployments can continue using a configured PRIVATE Blob store.
+
+Configure the approved production scheduler for authenticated requests to
+`/api/pilot/cron` using the server-only `CRON_SECRET`; never place that secret in
+browser JavaScript or a public URL. Set any approved notification provider/contact
+configuration only after MC/CC approve its recipients. The local test launcher
+clears notification destinations and cannot certify production delivery.
+
 Open the assigned HTTPS URL, sign in with a provisioned account, and confirm that saved data survives reloads. A successful build alone does not verify runtime database access. If requests fail, run `npm run db:check` locally and inspect Vercel runtime logs and the Atlas IP access list.
 
 Environment variable changes apply to a new deployment; redeploy after updating them. Rotate any database password that has been shared in chat before publishing.

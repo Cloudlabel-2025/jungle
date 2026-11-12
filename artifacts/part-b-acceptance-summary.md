@@ -1,5 +1,9 @@
 # Part B acceptance execution
 
+## Final evidence-storage and cohort follow-up
+
+The final suite passed **150 tests, zero failures/skips** and the current production build passed. Ordinary evidence/marks uploads now work through private MongoDB without a Blob token, including bounded parts and streamed 5 MB delivery. Five-team HTTP checks passed 27 simultaneous scoped actors and private-file round trips in each team. All 25 fictional learners signed in through the browser and had the correct team/four assigned cards; MC/CC five-team views and the browser upload/download/independent-review handoff passed. A logical private-file/metadata restore was verified. These are seeded technical rehearsals, not real six-week delivery or operational production acceptance. See `part-b-needs-user-or-assessor.txt` for only the actual external inputs/human verification still needed. Earlier Blob prerequisites below are historical and superseded for the default MongoDB workflow.
+
 ## Final local verification
 
 The subsequent automatic-PDF implementation resolves the old generated-report storage blocker. Staff can generate both PDFs, review, issue and deliver them inside the app using private MongoDB storage. The updated suite passed **149 tests, zero failures/skips**, and the production build and configured-database transactional read check passed. Real PDF bytes, hashes, fixed pages, stale-source/correction/privacy guards were verified. The browser followed MC generation/review, CC issue and learner download, then denied signed-out and unrelated access. Evidence is in `part-b-pdf-browser-2026-11-12/` and `part-b-pdf-verification.json`. Actual learner accuracy, assessment and signatures remain human responsibilities. Earlier Blob-blocked and HTML-only records below are historical.

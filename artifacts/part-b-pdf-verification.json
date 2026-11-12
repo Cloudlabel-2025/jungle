@@ -2,14 +2,14 @@
   {
     "file": "output\\pdf\\part-b-fictional-passport.pdf",
     "pages": 2,
-    "sha256": "8dd544ed37488ffc644cfd282ffdad9ba95262e1a6ddade8a4527649a0880721",
+    "sha256": "983611b2d8ef8c70097aa3b9ffc462869393de52a40753ce8f8ebc787e39b100",
     "text_and_page_checks": "PASS",
     "fictional_unsigned_sample": true
   },
   {
     "file": "output\\pdf\\part-b-fictional-certificate.pdf",
     "pages": 1,
-    "sha256": "455e06ec0074e1b2404524db0d251cad0e2b4656f33d04c825130730eaaf9772",
+    "sha256": "cc70d05e973aca4b6a44a46f426548c815faa9c64274bdcf8f646b9577f700a4",
     "text_and_page_checks": "PASS",
     "fictional_unsigned_sample": true
   }

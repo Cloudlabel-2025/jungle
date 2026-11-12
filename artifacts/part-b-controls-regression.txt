@@ -3,56 +3,56 @@ TAP version 13
     # Subtest: PB-QA-092/093: missing source stays unassessable, unsafe URLs and Gamer exports rejected
     ok 1 - PB-QA-092/093: missing source stays unassessable, unsafe URLs and Gamer exports rejected
       ---
-      duration_ms: 184.12
+      duration_ms: 174.1673
       type: 'test'
       ...
     # Subtest: PB-QA-095: three question purposes, MC edits, CC version approval and stale-witness invalidation
     ok 2 - PB-QA-095: three question purposes, MC edits, CC version approval and stale-witness invalidation
       ---
-      duration_ms: 300.3588
+      duration_ms: 438.4877
       type: 'test'
       ...
     # Subtest: PB-QA-099: 25 voluntary ten-minute bookings fit; collisions, nonstaff and pre-arena slots rejected
     ok 3 - PB-QA-099: 25 voluntary ten-minute bookings fit; collisions, nonstaff and pre-arena slots rejected
       ---
-      duration_ms: 713.8813
+      duration_ms: 947.5299
       type: 'test'
       ...
     # Subtest: FF-ADV-03/04/05/08/11/12: mandatory witness, isolation, five-point evidence and duplicate guards
     ok 4 - FF-ADV-03/04/05/08/11/12: mandatory witness, isolation, five-point evidence and duplicate guards
       ---
-      duration_ms: 182.7224
+      duration_ms: 260.0578
       type: 'test'
       ...
     # Subtest: PB-QA-105/107/109: approved criterion evidence, real maxima, special calculations and overrides preserve marks
     ok 5 - PB-QA-105/107/109: approved criterion evidence, real maxima, special calculations and overrides preserve marks
       ---
-      duration_ms: 1522.386
+      duration_ms: 1939.952
       type: 'test'
       ...
     # Subtest: PB-QA-091/107/110: showcase does not score; private printable report drafts escape source text
     ok 6 - PB-QA-091/107/110: showcase does not score; private printable report drafts escape source text
       ---
-      duration_ms: 197.4179
+      duration_ms: 196.4588
       type: 'test'
       ...
     1..6
 ok 1 - Part B final controls: five-team permissions, 25 bookings, evidence, question versions and report drafts
   ---
-  duration_ms: 4089.5814
+  duration_ms: 5073.6057
   type: 'test'
   ...
 # Subtest: Part B PDF: real private bytes, MC review, CC issue, learner download and correction without Blob
 ok 2 - Part B PDF: real private bytes, MC review, CC issue, learner download and correction without Blob
   ---
-  duration_ms: 5035.8435
+  duration_ms: 6469.8133
   type: 'test'
   ...
 # Actual PDF round trip verified without Blob credentials. Sample files contain fictional assessment records and unsigned signature lines.
 # Subtest: Part B Phase 2: all sixty cards progress through submission, rework and independent review
 ok 3 - Part B Phase 2: all sixty cards progress through submission, rework and independent review
   ---
-  duration_ms: 19210.4822
+  duration_ms: 24948.3946
   type: 'test'
   ...
 # P2-S1: all 20 cards accepted through normal actions; one rework/resubmission; owner-only visibility checked for 25 Gamers.
@@ -60,33 +60,17 @@ ok 3 - Part B Phase 2: all sixty cards progress through submission, rework and i
 # P2-S3: all 20 cards accepted through normal actions; one rework/resubmission; owner-only visibility checked for 25 Gamers.
 # Prior Key 5 eligibility was synthetic. Actual APIs, sandbox payments, webhooks, concurrency and student code remain external verification.
 # Subtest: Part B private evidence: all 25 learners, five teams, immutable uploads, format/size/expiry and scoped downloads without Blob
-not ok 4 - Part B private evidence: all 25 learners, five teams, immutable uploads, format/size/expiry and scoped downloads without Blob
+ok 4 - Part B private evidence: all 25 learners, five teams, immutable uploads, format/size/expiry and scoped downloads without Blob
   ---
-  duration_ms: 10358.5236
+  duration_ms: 12687.7017
   type: 'test'
-  location: 'D:\\Projects\\Jungle\\tests\\pilot-part-b-storage.test.mjs:12:1'
-  failureType: 'hookFailed'
-  error: 'Client must be connected before running operations'
-  code: 'ERR_TEST_FAILURE'
-  name: 'MongoNotConnectedError'
-  stack: |-
-    autoConnect (D:\Projects\Jungle\node_modules\mongoose\node_modules\mongodb\lib\operations\execute_operation.js:98:19)
-    executeOperation (D:\Projects\Jungle\node_modules\mongoose\node_modules\mongodb\lib\operations\execute_operation.js:40:40)
-    Db.dropDatabase (D:\Projects\Jungle\node_modules\mongoose\node_modules\mongodb\lib\db.js:269:63)
-    TestContext.<anonymous> (file:///D:/Projects/Jungle/tests/pilot-part-b-storage.test.mjs:108:28)
-    TestHook.runInAsyncScope (node:async_hooks:214:14)
-    TestHook.run (node:internal/test_runner/test:1047:25)
-    TestHook.run (node:internal/test_runner/test:1354:18)
-    TestHook.run (node:internal/util:561:20)
-    Test.runHook (node:internal/test_runner/test:965:20)
-    async after (node:internal/test_runner/test:1005:9)
   ...
 # 25 real PDF upload/completion/download round trips across five fictional teams; MC access and cross-team/unassigned access checked. CSV mark-return bytes preserved. No real learner work or external integrations certified.
 # Exact 5 MB transport payload assembled from bounded 1 MB parts, duplicate/out-of-order parts verified, download streamed and private-file/metadata logical restore checked. The limit payload tests transport, not PDF semantic validity or an operational backup policy.
 # Subtest: Frozen final sprint loads only after prior acceptance and requires private witnessed demos
 ok 5 - Frozen final sprint loads only after prior acceptance and requires private witnessed demos
   ---
-  duration_ms: 9585.5798
+  duration_ms: 7553.9032
   type: 'test'
   ...
 # PB-QA-077: verified loaded task split, five demos and four cards per Gamer
@@ -105,9 +89,9 @@ ok 5 - Frozen final sprint loads only after prior acceptance and requires privat
 1..5
 # tests 11
 # suites 0
-# pass 10
-# fail 1
+# pass 11
+# fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 53177.2643
+# duration_ms 62782.0721

@@ -1,0 +1,75 @@
+PART B - ONLY EXTERNAL INPUTS AND HUMAN VERIFICATION STILL NEEDED
+Updated 12 November 2026
+
+Completed locally
+150 automated tests passed, zero failures/skips. Production build passed.
+Private storage now covers generated PDFs, ordinary evidence and marks-return
+uploads through the existing MongoDB connection. No Blob token is required for
+the default workflow. Existing configured private Blob stores remain supported.
+Exact 5 MB chunked upload/streamed download, retry/format/expiry/privacy guards and
+a logical backup/restore of private file bytes and related metadata were tested.
+All 25 fictional learners signed in through the actual browser and saw only their
+own team/four assigned cards. MC and CC views included all five authorised teams.
+The browser uploaded/downloaded actual evidence and completed independent MC
+review. HTTP checked 27 simultaneous scoped actors and file privacy in each team.
+Earlier automatic Passport/certificate generation, MC review, CC issuance,
+correction/reissue and learner/privacy checks remain verified.
+
+These are synthetic platform checks using seeded prior eligibility/work. They do
+not establish real student competence, real app correctness or production capacity.
+No known failing local implementation check remains. Historical independent
+acceptance rows remain open until the required real evidence/sign-offs exist.
+
+NEEDS YOUR INPUT
+
+1. Identify the five REAL team repositories and approved staging/baseline releases.
+   Supply the repository paths/URLs and staging links, plus approved sandbox
+   integration access through a secure local environment file if applicable.
+   Only the fictional reference application is currently identified for testing.
+   With these inputs, technical testing can cover the actual incident mappings,
+   isolated repair/rollback, prior regressions, APIs/events/payments/webhooks,
+   concurrency/reconciliation, and source-specific defects. Do not paste secrets.
+
+2. Identify the approved production hosting project/domain and provide deployment
+   access. The local project has no linked Vercel project or approved live target.
+   MC/CC must provide operational acceptance targets and the responsible owners
+   for scheduler, monitoring, backup retention/recovery and account provisioning.
+   With that target/access, deployment, live HTTPS/cookie/access checks, scheduler
+   operation, actual backup recovery and measured capacity can be verified.
+   Local build/load/restore observations do not certify an unspecified deployment.
+
+NEEDS MC/CC VERIFICATION OR APPROVAL
+
+3. Genuine programme delivery and assessment: approve the real roster, schedule,
+   resources, incident briefs/baselines and equivalent optional briefs; witness
+   the five protected UAT sessions, real persona demos/private defences and actual
+   Admin Chair execution; verify repair/retest/release evidence and QA-15/QA-18
+   feasibility. Confirm assessors, rooms, accessibility and comparable questions.
+   MC/CC must approve actual gates/keys, criterion marks, awards and showcase,
+   keep Campfire voluntary/ungraded, and provide final independent acceptance.
+   Automated checks must not invent these decisions or observations.
+
+4. Source sharing, questions and final documents: approve the external AI tool and
+   sanitised actual sources/dossiers, inspect missing-source/prompt-injection
+   behavior in that tool, and approve meaningful MC/CC question versions. Verify
+   the real learners' names, dates, evidence, observations and scores and supply
+   authorised signatures. Generated certificate signature lines are unsigned.
+   Provide the real roster before final document issuance so any additional font
+   script requirements can be identified; current fonts cover Latin/Devanagari.
+
+Evidence
+- part-b-full-regression.txt: 150 passing automated tests, no skips.
+- part-b-storage-build.txt: current production build passed.
+- part-b-final-local-2026-11-12/http-verification.json: 27 actor reads, five team
+  private-file round trips and exact 5 MB transport. Elapsed time is an observation,
+  not an approved performance pass threshold.
+- part-b-final-local-2026-11-12/browser-25-learner-scope.json: all 25 browser logins.
+- part-b-final-local-2026-11-12/browser-mc-scope.json and browser-cc-scope.json.
+- part-b-final-local-2026-11-12/browser-download-hash.json and
+  browser-evidence-upload.png: actual browser file upload/download proof.
+- part-b-final-local-2026-11-12/final-local-outcome.json: persisted synthetic state.
+- part-b-manual-verification.csv: all 143 source cases and scoped evidence;
+  historical outcomes and independent-signoff requirements preserved.
+
+No production deployment, real payments, external AI source sharing, actual learner
+certification or human signatures were performed or invented during local testing.
