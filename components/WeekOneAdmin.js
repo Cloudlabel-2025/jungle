@@ -959,6 +959,14 @@ export function StaffRules({ data, act }) {
   return (
     <>
       <WeekPanel title="Game Rules and shared FAQ">
+        {!p.rules.length && (
+          <p role="status">
+            No Game Rules have been published.{" "}
+            {cc
+              ? "Publish the approved rules below before opening a day."
+              : "Ask Centre Command to publish the approved rules before opening a day."}
+          </p>
+        )}
         {p.rules.map((r) => (
           <details key={r.version}>
             <summary>

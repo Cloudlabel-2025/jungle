@@ -1,4 +1,5 @@
 "use client";
+import PlayerVitals from "./PlayerVitals";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Clock3, Trophy, LockKeyhole, Mic, Search } from "lucide-react";
@@ -70,8 +71,7 @@ export function DayOneCheckIn({ data, act, now }) {
         <span>{c.timeZone}</span>
       </div>
       <p className="muted">
-        Clock-in cut-off: {fmt(c.clockCutoff, c.timeZone)}. Day 1 energy stays
-        at 5/5.
+        Clock-in cut-off: {fmt(c.clockCutoff, c.timeZone)}. Your player balance is shared across all programme stages.
       </p>
       {r?.clockAt ? (
         <Receipt>
@@ -108,7 +108,7 @@ export function DayOneRewards({ data }) {
       action={<Badge tone="amber">{r.trophies}/20 TROPHIES</Badge>}
     >
       <div className="button-row">
-        <Badge tone="lime">ENERGY 5/5 · NO DEDUCTIONS</Badge>
+        <PlayerVitals player={data.user} />
         <Badge tone={r.badge ? "lime" : ""}>
           FIRST DISCOVERY · {r.badge ? "EARNED" : "PENDING LINK VERIFICATION"}
         </Badge>
@@ -699,8 +699,7 @@ export function DayOneGameSetup({ data, act }) {
         </div>
         <p className="muted">
           Each AI and human rating is 0–4. Their average is weighted by the
-          criterion maximum. Total 33; 8 other criteria Not Assessed. Energy
-          stays 5/5 and trophies cap at 20.
+          criterion maximum. Total 33; 8 other criteria Not Assessed. Player lives and energy are shared across all stages; Day 1 trophies cap at 20.
         </p>
         <Form
           key={d.revision}
@@ -789,7 +788,7 @@ function DayOneReview({ person, record: r, data, act }) {
         <Badge tone={r.badge ? "lime" : "amber"}>
           {r.verification?.status || "NO SUBMISSION"}
         </Badge>
-        <Badge>ENERGY 5/5</Badge>
+        <PlayerVitals player={person} />
       </div>
       <p className="muted">
         Genre:{" "}

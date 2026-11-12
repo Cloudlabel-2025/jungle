@@ -1,0 +1,5 @@
+
+> codewild@1.0.0 db:check
+> node --env-file-if-exists=.env.local scripts/check-db.mjs
+
+MongoDB verified: codewild; ping and transactional read passed. No records changed.

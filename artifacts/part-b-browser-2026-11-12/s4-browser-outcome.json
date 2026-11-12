@@ -1,0 +1,4724 @@
+{
+  "PilotSprint": [
+    {
+      "_id": "browser-sprint-4",
+      "cohortId": "alpha",
+      "state": "ACCEPTED",
+      "version": 19,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "number": 4,
+        "calendar": {
+          "timeZone": "Asia/Kolkata",
+          "intervals": [
+            {
+              "startMinute": 600,
+              "endMinute": 780
+            },
+            {
+              "startMinute": 840,
+              "endMinute": 1020
+            }
+          ],
+          "weekdays": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "holidays": []
+        },
+        "kickoffStart": "2026-11-30T04:30:00Z",
+        "kickoffEnd": "2026-11-30T04:30:00Z",
+        "dueAt": "2026-12-04T11:30:00Z",
+        "teams": [
+          {
+            "teamId": "pilot-team-0",
+            "members": [
+              "pilot-g0",
+              "pilot-g1",
+              "pilot-g2",
+              "pilot-g3",
+              "pilot-g4"
+            ],
+            "commanderId": "pilot-mc",
+            "leaderId": "pilot-g0",
+            "kickoff": {
+              "by": "pilot-mc",
+              "at": "2026-11-30T04:30:00Z"
+            },
+            "owners": {
+              "QA-13": "pilot-g0",
+              "QA-14": "pilot-g0",
+              "OP-13": "pilot-g0",
+              "UAT-01": "pilot-g0",
+              "OP-14": "pilot-g1",
+              "OP-15": "pilot-g1",
+              "FE-13": "pilot-g1",
+              "UAT-02": "pilot-g1",
+              "FE-14": "pilot-g2",
+              "FE-15": "pilot-g2",
+              "BE-13": "pilot-g2",
+              "UAT-03": "pilot-g2",
+              "BE-14": "pilot-g3",
+              "BE-15": "pilot-g3",
+              "DB-13": "pilot-g3",
+              "UAT-04": "pilot-g3",
+              "DB-14": "pilot-g4",
+              "DB-15": "pilot-g4",
+              "QA-15": "pilot-g4",
+              "UAT-05": "pilot-g4"
+            }
+          }
+        ],
+        "resources": {
+          "BE-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/BE-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "BE-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/BE-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "DB-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/DB-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "DB-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/DB-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "DB-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/DB-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "DB-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/DB-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "BE-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/BE-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "BE-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/BE-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "QA-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/QA-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "QA-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/QA-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "OP-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/OP-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "QA-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/QA-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "OP-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/OP-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "FE-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/FE-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "OP-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/OP-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "FE-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/FE-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "OP-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/OP-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "FE-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/FE-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "FE-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/FE-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "QA-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/QA-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          }
+        },
+        "template": {
+          "number": 4,
+          "version": "Part B frozen 2026-11-06",
+          "tasks": [
+            {
+              "id": "QA-13",
+              "owner": "A",
+              "tt": "TT1",
+              "hours": 3,
+              "title": "Functional test suite",
+              "instructions": "Cover Create/Edit, duplicates, field/LOV/conditional validation and meaningful error handling; expected/actual results documented.",
+              "depends": [],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Testing"
+            },
+            {
+              "id": "QA-14",
+              "owner": "A",
+              "tt": "TT2",
+              "hours": 3,
+              "title": "Negative and security tests",
+              "instructions": "Run invalid-input and unauthorised API scenarios; log defects and retest evidence.",
+              "depends": [
+                "QA-13",
+                "BE-14",
+                "DB-14"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Testing"
+            },
+            {
+              "id": "OP-13",
+              "owner": "A",
+              "tt": "TT2",
+              "hours": 2,
+              "title": "Final staging release",
+              "instructions": "Deploy tested candidate, record version, perform smoke checks and maintain rollback proof.",
+              "depends": [
+                "QA-15",
+                "OP-15"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Deployment"
+            },
+            {
+              "id": "UAT-01",
+              "owner": "A",
+              "tt": "TT1",
+              "hours": 2.5,
+              "title": "Monday Client’s Chair",
+              "instructions": "2.5h protected: independently assess normal Create/Edit journeys; Pass/Fail/Blocked evidence and handover.",
+              "depends": [],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Client UAT",
+              "uat": {
+                "day": "Monday"
+              }
+            },
+            {
+              "id": "OP-14",
+              "owner": "B",
+              "tt": "TT1",
+              "hours": 2,
+              "title": "Environment assessment",
+              "instructions": "Document staging health, configuration, logs, test tools and recoverable baseline.",
+              "depends": [],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Deployment"
+            },
+            {
+              "id": "OP-15",
+              "owner": "B",
+              "tt": "TT2",
+              "hours": 3,
+              "title": "Non-functional testing",
+              "instructions": "Execute safe-load, reliability and approved performance checks; capture measured evidence, limits and failures.",
+              "depends": [
+                "OP-14",
+                "BE-14"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Deployment"
+            },
+            {
+              "id": "FE-13",
+              "owner": "B",
+              "tt": "TT2",
+              "hours": 3,
+              "title": "Frontend verification and corrections",
+              "instructions": "Correct assigned verified frontend/UI issues; attach responsive/accessibility retest evidence without duplicating FE-15 ownership.",
+              "depends": [
+                "FE-14",
+                "QA-13"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Frontend"
+            },
+            {
+              "id": "UAT-02",
+              "owner": "B",
+              "tt": "TT1",
+              "hours": 2.5,
+              "title": "Tuesday Client’s Chair",
+              "instructions": "2.5h protected: invalid-entry, boundary-condition and confusing business-journey UAT; evidence-backed verdict.",
+              "depends": [],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Client UAT",
+              "uat": {
+                "day": "Tuesday"
+              }
+            },
+            {
+              "id": "FE-14",
+              "owner": "C",
+              "tt": "TT1",
+              "hours": 3,
+              "title": "Frontend usability assessment",
+              "instructions": "Assess navigation, messages, accessibility, keyboard and mobile requirements; raise actionable findings.",
+              "depends": [],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Frontend"
+            },
+            {
+              "id": "FE-15",
+              "owner": "C",
+              "tt": "TT2",
+              "hours": 3,
+              "title": "Frontend defect repair",
+              "instructions": "Correct confirmed UI/accessibility/interaction issues and demonstrate passing retest.",
+              "depends": [
+                "FE-14",
+                "QA-13"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Frontend"
+            },
+            {
+              "id": "BE-13",
+              "owner": "C",
+              "tt": "TT2",
+              "hours": 2,
+              "title": "Cross-layer request tracing",
+              "instructions": "Trace relevant UI→API→backend→database journey with request/response evidence and failure analysis.",
+              "depends": [
+                "BE-14",
+                "DB-14"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Backend"
+            },
+            {
+              "id": "UAT-03",
+              "owner": "C",
+              "tt": "TT1",
+              "hours": 2.5,
+              "title": "Wednesday Client’s Chair",
+              "instructions": "2.5h protected: cross-session complete business-journey UAT with independent findings.",
+              "depends": [],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Client UAT",
+              "uat": {
+                "day": "Wednesday"
+              }
+            },
+            {
+              "id": "BE-14",
+              "owner": "D",
+              "tt": "TT1",
+              "hours": 3,
+              "title": "API behaviour testing",
+              "instructions": "Test requests, status codes, authentication, authorisation, validation and error contracts; collect evidence.",
+              "depends": [],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Backend"
+            },
+            {
+              "id": "BE-15",
+              "owner": "D",
+              "tt": "TT2",
+              "hours": 3,
+              "title": "Backend defect correction",
+              "instructions": "Correct confirmed API/authorisation defects; run unit tests and attach before/after proof.",
+              "depends": [
+                "BE-14",
+                "QA-14",
+                "BE-13"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Backend"
+            },
+            {
+              "id": "DB-13",
+              "owner": "D",
+              "tt": "TT2",
+              "hours": 2,
+              "title": "Database defect correction",
+              "instructions": "Resolve assigned data issue or demonstrate no fault; validate persistence and identity constraints.",
+              "depends": [
+                "DB-15"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Database"
+            },
+            {
+              "id": "UAT-04",
+              "owner": "D",
+              "tt": "TT1",
+              "hours": 2.5,
+              "title": "Thursday Client’s Chair",
+              "instructions": "2.5h protected: permissions, restricted actions and data accuracy UAT with client verdict.",
+              "depends": [],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Client UAT",
+              "uat": {
+                "day": "Thursday"
+              }
+            },
+            {
+              "id": "DB-14",
+              "owner": "E",
+              "tt": "TT1",
+              "hours": 3,
+              "title": "Data-integrity testing",
+              "instructions": "Test Create/Edit persistence, duplicate protection and data consistency on fictional data.",
+              "depends": [],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Database"
+            },
+            {
+              "id": "DB-15",
+              "owner": "E",
+              "tt": "TT2",
+              "hours": 3,
+              "title": "Database reliability and performance",
+              "instructions": "Run controlled queries and concurrency checks; report integrity and performance findings.",
+              "depends": [
+                "DB-14"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Database"
+            },
+            {
+              "id": "QA-15",
+              "owner": "E",
+              "tt": "TT2",
+              "hours": 3,
+              "title": "System end-to-end regression",
+              "instructions": "After fixes, execute integrated system tests and prior 21 accepted checks with reusable automated evidence; report gaps.",
+              "depends": [
+                "QA-14",
+                "OP-15",
+                "FE-13",
+                "FE-15",
+                "BE-15",
+                "DB-13"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Testing"
+            },
+            {
+              "id": "UAT-05",
+              "owner": "E",
+              "tt": "TT2",
+              "hours": 2.5,
+              "title": "Friday Client’s Chair",
+              "instructions": "2.5h protected after OP-13; independently retest corrected business journeys and recommend acceptance.",
+              "depends": [
+                "OP-13"
+              ],
+              "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+              "technicalRole": "Client UAT",
+              "uat": {
+                "day": "Friday"
+              }
+            }
+          ],
+          "acceptance": [
+            {
+              "id": "S4-AC-01",
+              "text": "Functional test results cover positive, negative, validation and restricted-access behaviours; repairs have retest proof."
+            },
+            {
+              "id": "S4-AC-02",
+              "text": "Non-functional testing supplies measured performance, reliability, security, accessibility and usability evidence against approved criteria and records limitations."
+            },
+            {
+              "id": "S4-AC-03",
+              "text": "System/E2E tests demonstrate complete journeys through frontend, API, database and deployed environment, including persistence and errors."
+            },
+            {
+              "id": "S4-AC-04",
+              "text": "All five Gamers complete independent 2.5-hour Client’s Chair UAT cards with evidence-backed Pass/Fail/Blocked findings."
+            },
+            {
+              "id": "S4-AC-05",
+              "text": "All confirmed defects have assigned dispositions and retests where fixed; no acceptance-blocking defect remains; CC explicitly approves any minor deferral."
+            },
+            {
+              "id": "S4-AC-06",
+              "text": "All 21 acceptance checks previously approved across Sprints 1–3 continue to pass regression."
+            },
+            {
+              "id": "S4-AC-07",
+              "text": "Final tested release is deployed, smoke-tested and formally accepted by CC after resolving or approving UAT findings; Key 4 decision recorded."
+            }
+          ]
+        },
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "contentApproval": "Fictional browser checkpoint only.",
+        "rosterDigest": "2fb7885cd20eedeab10b08d1d9189add0aad038ec1449732cb1f71e46e640e7b",
+        "gates": [
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-1",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/s4-browser-gate-1",
+            "reason": "Synthetic browser control verification only; independent business verification remains open.",
+            "by": "pilot-cc",
+            "at": "2026-11-30T07:01:54.333Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-2",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/s4-browser-gate-2",
+            "reason": "Synthetic browser control verification only; independent business verification remains open.",
+            "by": "pilot-cc",
+            "at": "2026-11-30T07:01:54.777Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-3",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/s4-browser-gate-3",
+            "reason": "Synthetic browser control verification only; independent business verification remains open.",
+            "by": "pilot-cc",
+            "at": "2026-11-30T07:01:55.169Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-5",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/s4-browser-gate-5",
+            "reason": "Synthetic browser control verification only; independent business verification remains open.",
+            "by": "pilot-cc",
+            "at": "2026-11-30T07:01:56.014Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-6",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/s4-browser-gate-6",
+            "reason": "Synthetic browser control verification only; independent business verification remains open.",
+            "by": "pilot-cc",
+            "at": "2026-11-30T07:01:56.444Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-7",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/s4-browser-gate-7",
+            "reason": "Synthetic browser control verification only; independent business verification remains open.",
+            "by": "pilot-cc",
+            "at": "2026-11-30T07:01:56.868Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-4",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/s4-browser-uat-retest",
+            "reason": "Synthetic recorded UAT retest and CC disposition; real student application remains unverified.",
+            "by": "pilot-cc",
+            "at": "2026-11-30T07:02:06.237Z"
+          }
+        ],
+        "acceptances": [
+          {
+            "teamId": "pilot-team-0",
+            "decision": "ACCEPTED",
+            "key": "Key 4",
+            "by": "pilot-cc",
+            "at": "2026-11-30T07:02:06.517Z",
+            "reason": "Synthetic CC acceptance after latest seven passing gates; platform control verified."
+          }
+        ],
+        "assistance": {
+          "GUIDE": 1,
+          "AI_PROMPT": 1,
+          "MC_ONE_TO_ONE": 1
+        }
+      }
+    },
+    {
+      "_id": "browser-prior-1",
+      "cohortId": "alpha",
+      "state": "CLOSED",
+      "version": 1,
+      "createdAt": "2026-11-01T00:00:00.000Z",
+      "data": {
+        "number": 1,
+        "teams": [],
+        "gates": [],
+        "acceptances": [
+          {
+            "teamId": "pilot-team-0",
+            "decision": "ACCEPTED",
+            "key": "Key 1",
+            "reason": "Seeded prior outcome for isolated browser checkpoint; not real UAT."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-prior-2",
+      "cohortId": "alpha",
+      "state": "CLOSED",
+      "version": 1,
+      "createdAt": "2026-11-02T00:00:00.000Z",
+      "data": {
+        "number": 2,
+        "teams": [],
+        "gates": [],
+        "acceptances": [
+          {
+            "teamId": "pilot-team-0",
+            "decision": "ACCEPTED",
+            "key": "Key 2",
+            "reason": "Seeded prior outcome for isolated browser checkpoint; not real UAT."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3",
+      "cohortId": "alpha",
+      "state": "CLOSED",
+      "version": 13,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "number": 3,
+        "calendar": {
+          "timeZone": "Asia/Kolkata",
+          "intervals": [
+            {
+              "startMinute": 600,
+              "endMinute": 780
+            },
+            {
+              "startMinute": 840,
+              "endMinute": 1020
+            }
+          ],
+          "weekdays": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "holidays": []
+        },
+        "kickoffStart": "2026-11-23T04:30:00Z",
+        "kickoffEnd": "2026-11-23T04:30:00Z",
+        "dueAt": "2026-11-27T11:30:00Z",
+        "teams": [
+          {
+            "teamId": "pilot-team-0",
+            "members": [
+              "pilot-g0",
+              "pilot-g1",
+              "pilot-g2",
+              "pilot-g3",
+              "pilot-g4"
+            ],
+            "commanderId": "pilot-mc",
+            "leaderId": "pilot-g0",
+            "kickoff": {
+              "by": "pilot-mc",
+              "at": "2026-11-23T04:30:00Z"
+            },
+            "owners": {
+              "DB-09": "pilot-g0",
+              "DB-10": "pilot-g0",
+              "DB-11": "pilot-g0",
+              "QA-12": "pilot-g0",
+              "QA-09": "pilot-g1",
+              "QA-10": "pilot-g1",
+              "QA-11": "pilot-g1",
+              "OP-12": "pilot-g1",
+              "OP-09": "pilot-g2",
+              "OP-10": "pilot-g2",
+              "OP-11": "pilot-g2",
+              "FE-12": "pilot-g2",
+              "FE-09": "pilot-g3",
+              "FE-10": "pilot-g3",
+              "FE-11": "pilot-g3",
+              "BE-12": "pilot-g3",
+              "BE-09": "pilot-g4",
+              "BE-10": "pilot-g4",
+              "BE-11": "pilot-g4",
+              "DB-12": "pilot-g4"
+            }
+          }
+        ],
+        "resources": {
+          "BE-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/BE-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "BE-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/BE-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "DB-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/DB-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "DB-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/DB-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "DB-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/DB-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "DB-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/DB-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "BE-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/BE-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "BE-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/BE-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "QA-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/QA-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "QA-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/QA-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "OP-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/OP-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "QA-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/QA-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "OP-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/OP-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "FE-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/FE-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "OP-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/OP-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "FE-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/FE-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "OP-07": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/OP-07",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "FE-05": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/FE-05",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "FE-06": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/FE-06",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          },
+          "QA-08": {
+            "author": "CURRICULUM",
+            "url": "https://example.invalid/QA-08",
+            "version": "QA-1",
+            "approval": "Synthetic Curriculum approval for disposable tests."
+          }
+        },
+        "template": {
+          "number": 3,
+          "version": "Part B frozen 2026-11-06",
+          "tasks": [
+            {
+              "id": "DB-09",
+              "owner": "A",
+              "tt": "TT1",
+              "title": "Establish data baseline",
+              "hours": 2,
+              "depends": []
+            },
+            {
+              "id": "DB-10",
+              "owner": "A",
+              "tt": "TT2",
+              "title": "Investigate persistence",
+              "hours": 2,
+              "depends": [
+                "DB-09",
+                "QA-11"
+              ]
+            },
+            {
+              "id": "DB-11",
+              "owner": "A",
+              "tt": "TT2",
+              "title": "Correct or rule out data fault",
+              "hours": 2,
+              "depends": [
+                "DB-10",
+                "BE-10"
+              ]
+            },
+            {
+              "id": "QA-12",
+              "owner": "A",
+              "tt": "TT2",
+              "title": "Verify repaired candidate before release",
+              "hours": 3,
+              "depends": [
+                "QA-10",
+                "DB-11",
+                "DB-12",
+                "BE-11",
+                "FE-11",
+                "BE-12"
+              ]
+            },
+            {
+              "id": "QA-09",
+              "owner": "B",
+              "tt": "TT1",
+              "title": "Design incident reproduction",
+              "hours": 2,
+              "depends": []
+            },
+            {
+              "id": "QA-10",
+              "owner": "B",
+              "tt": "TT1",
+              "title": "Prepare Sprint 1–2 regression tests",
+              "hours": 2,
+              "depends": []
+            },
+            {
+              "id": "QA-11",
+              "owner": "B",
+              "tt": "TT2",
+              "title": "Reproduce selected incident",
+              "hours": 2,
+              "depends": [
+                "QA-09",
+                "OP-09"
+              ]
+            },
+            {
+              "id": "OP-12",
+              "owner": "B",
+              "tt": "TT2",
+              "title": "Post-deployment smoke and recovery checks",
+              "hours": 2,
+              "depends": [
+                "OP-11"
+              ]
+            },
+            {
+              "id": "OP-09",
+              "owner": "C",
+              "tt": "TT1",
+              "title": "Verify test environment readiness",
+              "hours": 2,
+              "depends": []
+            },
+            {
+              "id": "OP-10",
+              "owner": "C",
+              "tt": "TT2",
+              "title": "Investigate runtime behaviour",
+              "hours": 2,
+              "depends": [
+                "OP-09",
+                "QA-11"
+              ]
+            },
+            {
+              "id": "OP-11",
+              "owner": "C",
+              "tt": "TT2",
+              "title": "Release repaired candidate to staging",
+              "hours": 3,
+              "depends": [
+                "OP-10",
+                "QA-12"
+              ]
+            },
+            {
+              "id": "FE-12",
+              "owner": "C",
+              "tt": "TT2",
+              "title": "Verify deployed frontend journey",
+              "hours": 2,
+              "depends": [
+                "OP-11"
+              ]
+            },
+            {
+              "id": "FE-09",
+              "owner": "D",
+              "tt": "TT1",
+              "title": "Map affected frontend journey",
+              "hours": 2,
+              "depends": []
+            },
+            {
+              "id": "FE-10",
+              "owner": "D",
+              "tt": "TT2",
+              "title": "Investigate frontend behaviour",
+              "hours": 2,
+              "depends": [
+                "FE-09",
+                "QA-11"
+              ]
+            },
+            {
+              "id": "FE-11",
+              "owner": "D",
+              "tt": "TT2",
+              "title": "Correct or rule out frontend fault",
+              "hours": 2,
+              "depends": [
+                "FE-10",
+                "BE-11"
+              ]
+            },
+            {
+              "id": "BE-12",
+              "owner": "D",
+              "tt": "TT2",
+              "title": "Verify API security and invalid requests",
+              "hours": 2,
+              "depends": [
+                "BE-11",
+                "QA-10"
+              ]
+            },
+            {
+              "id": "BE-09",
+              "owner": "E",
+              "tt": "TT1",
+              "title": "Map API/service behaviour",
+              "hours": 2,
+              "depends": []
+            },
+            {
+              "id": "BE-10",
+              "owner": "E",
+              "tt": "TT2",
+              "title": "Trace request lifecycle",
+              "hours": 2,
+              "depends": [
+                "BE-09",
+                "QA-11"
+              ]
+            },
+            {
+              "id": "BE-11",
+              "owner": "E",
+              "tt": "TT2",
+              "title": "Correct or rule out backend fault",
+              "hours": 3,
+              "depends": [
+                "BE-10",
+                "DB-10",
+                "OP-10"
+              ]
+            },
+            {
+              "id": "DB-12",
+              "owner": "E",
+              "tt": "TT2",
+              "title": "Validate final data consistency",
+              "hours": 2,
+              "depends": [
+                "DB-11",
+                "BE-11"
+              ]
+            }
+          ],
+          "acceptance": [
+            {
+              "id": "1",
+              "text": "Selected client-reported fault successfully reproduced and documented before repair."
+            },
+            {
+              "id": "2",
+              "text": "Actual root cause identified with supporting evidence and clear explanation."
+            },
+            {
+              "id": "3",
+              "text": "Selected incident corrected, with passing test proving original symptom resolved."
+            },
+            {
+              "id": "4",
+              "text": "Existing alumni records retain data integrity and required validation."
+            },
+            {
+              "id": "5",
+              "text": "Authentication, permissions and API security still satisfy earlier requirements."
+            },
+            {
+              "id": "6",
+              "text": "All seven Sprint 1 AND seven Sprint 2 acceptance checks continue to pass."
+            },
+            {
+              "id": "7",
+              "text": "Repaired deployed application passes smoke + end-to-end checks; all five Gamers defend their contribution."
+            }
+          ]
+        },
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "contentApproval": "Fictional browser checkpoint only.",
+        "rosterDigest": "2fb7885cd20eedeab10b08d1d9189add0aad038ec1449732cb1f71e46e640e7b",
+        "gates": [
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-1",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/browser-gate-1",
+            "reason": "Synthetic gate 1 for browser workflow verification; real incident and student delivery remain manual.",
+            "by": "pilot-cc",
+            "at": "2026-11-23T07:02:17.721Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-2",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/browser-gate-2",
+            "reason": "Synthetic gate 2 for browser workflow verification; real incident and student delivery remain manual.",
+            "by": "pilot-cc",
+            "at": "2026-11-23T07:02:17.994Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-3",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/browser-gate-3",
+            "reason": "Synthetic gate 3 for browser workflow verification; real incident and student delivery remain manual.",
+            "by": "pilot-cc",
+            "at": "2026-11-23T07:02:18.342Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-4",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/browser-gate-4",
+            "reason": "Synthetic gate 4 for browser workflow verification; real incident and student delivery remain manual.",
+            "by": "pilot-cc",
+            "at": "2026-11-23T07:02:18.693Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-5",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/browser-gate-5",
+            "reason": "Synthetic gate 5 for browser workflow verification; real incident and student delivery remain manual.",
+            "by": "pilot-cc",
+            "at": "2026-11-23T07:02:19.067Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-6",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/browser-gate-6",
+            "reason": "Synthetic gate 6 for browser workflow verification; real incident and student delivery remain manual.",
+            "by": "pilot-cc",
+            "at": "2026-11-23T07:02:19.442Z"
+          },
+          {
+            "teamId": "pilot-team-0",
+            "code": "AC-7",
+            "decision": "PASS",
+            "evidence": "https://example.invalid/browser-gate-7",
+            "reason": "Synthetic gate 7 for browser workflow verification; real incident and student delivery remain manual.",
+            "by": "pilot-cc",
+            "at": "2026-11-23T07:02:19.833Z"
+          }
+        ],
+        "acceptances": [
+          {
+            "teamId": "pilot-team-0",
+            "decision": "ACCEPTED",
+            "key": "Key 3",
+            "reason": "Seeded prior outcome for isolated browser checkpoint; not real UAT."
+          }
+        ],
+        "assistance": {
+          "GUIDE": 1,
+          "AI_PROMPT": 1,
+          "MC_ONE_TO_ONE": 1
+        }
+      }
+    }
+  ],
+  "PilotTask": [
+    {
+      "_id": "browser-sprint-3:pilot-team-0:DB-09",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "Accepted",
+      "version": 5,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "DB-09",
+        "owner": "A",
+        "tt": "TT1",
+        "title": "Establish data baseline",
+        "hours": 2,
+        "depends": [],
+        "code": "DB-09",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "494c47d2-ceaf-433e-9eb3-433e64dc571a",
+            "url": "https://example.invalid/browser-sprint3-baseline",
+            "summary": "Fictional browser baseline record; verified Gamer-to-MC submission controls only.",
+            "by": "pilot-g0",
+            "at": "2026-11-23T07:00:33.180Z"
+          }
+        ],
+        "acceptedAt": "2026-11-23T07:01:23.753Z"
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:DB-10",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "DB-10",
+        "owner": "A",
+        "tt": "TT2",
+        "title": "Investigate persistence",
+        "hours": 2,
+        "depends": [
+          "DB-09",
+          "QA-11"
+        ],
+        "code": "DB-10",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-DB-10",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g0",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:DB-11",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "DB-11",
+        "owner": "A",
+        "tt": "TT2",
+        "title": "Correct or rule out data fault",
+        "hours": 2,
+        "depends": [
+          "DB-10",
+          "BE-10"
+        ],
+        "code": "DB-11",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-DB-11",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g0",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:QA-12",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "QA-12",
+        "owner": "A",
+        "tt": "TT2",
+        "title": "Verify repaired candidate before release",
+        "hours": 3,
+        "depends": [
+          "QA-10",
+          "DB-11",
+          "DB-12",
+          "BE-11",
+          "FE-11",
+          "BE-12"
+        ],
+        "code": "QA-12",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-QA-12",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g0",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:QA-09",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g1",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "QA-09",
+        "owner": "B",
+        "tt": "TT1",
+        "title": "Design incident reproduction",
+        "hours": 2,
+        "depends": [],
+        "code": "QA-09",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-QA-09",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g1",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:QA-10",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g1",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "QA-10",
+        "owner": "B",
+        "tt": "TT1",
+        "title": "Prepare Sprint 1–2 regression tests",
+        "hours": 2,
+        "depends": [],
+        "code": "QA-10",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-QA-10",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g1",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:QA-11",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g1",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "QA-11",
+        "owner": "B",
+        "tt": "TT2",
+        "title": "Reproduce selected incident",
+        "hours": 2,
+        "depends": [
+          "QA-09",
+          "OP-09"
+        ],
+        "code": "QA-11",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-QA-11",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g1",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:OP-12",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g1",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "OP-12",
+        "owner": "B",
+        "tt": "TT2",
+        "title": "Post-deployment smoke and recovery checks",
+        "hours": 2,
+        "depends": [
+          "OP-11"
+        ],
+        "code": "OP-12",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-OP-12",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g1",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:OP-09",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g2",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "OP-09",
+        "owner": "C",
+        "tt": "TT1",
+        "title": "Verify test environment readiness",
+        "hours": 2,
+        "depends": [],
+        "code": "OP-09",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-OP-09",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g2",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:OP-10",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g2",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "OP-10",
+        "owner": "C",
+        "tt": "TT2",
+        "title": "Investigate runtime behaviour",
+        "hours": 2,
+        "depends": [
+          "OP-09",
+          "QA-11"
+        ],
+        "code": "OP-10",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-OP-10",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g2",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:OP-11",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g2",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "OP-11",
+        "owner": "C",
+        "tt": "TT2",
+        "title": "Release repaired candidate to staging",
+        "hours": 3,
+        "depends": [
+          "OP-10",
+          "QA-12"
+        ],
+        "code": "OP-11",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-OP-11",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g2",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:FE-12",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g2",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "FE-12",
+        "owner": "C",
+        "tt": "TT2",
+        "title": "Verify deployed frontend journey",
+        "hours": 2,
+        "depends": [
+          "OP-11"
+        ],
+        "code": "FE-12",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-FE-12",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g2",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:FE-09",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g3",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "FE-09",
+        "owner": "D",
+        "tt": "TT1",
+        "title": "Map affected frontend journey",
+        "hours": 2,
+        "depends": [],
+        "code": "FE-09",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-FE-09",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g3",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:FE-10",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g3",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "FE-10",
+        "owner": "D",
+        "tt": "TT2",
+        "title": "Investigate frontend behaviour",
+        "hours": 2,
+        "depends": [
+          "FE-09",
+          "QA-11"
+        ],
+        "code": "FE-10",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-FE-10",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g3",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:FE-11",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g3",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "FE-11",
+        "owner": "D",
+        "tt": "TT2",
+        "title": "Correct or rule out frontend fault",
+        "hours": 2,
+        "depends": [
+          "FE-10",
+          "BE-11"
+        ],
+        "code": "FE-11",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-FE-11",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g3",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:BE-12",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g3",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "BE-12",
+        "owner": "D",
+        "tt": "TT2",
+        "title": "Verify API security and invalid requests",
+        "hours": 2,
+        "depends": [
+          "BE-11",
+          "QA-10"
+        ],
+        "code": "BE-12",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-BE-12",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g3",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:BE-09",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g4",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "BE-09",
+        "owner": "E",
+        "tt": "TT1",
+        "title": "Map API/service behaviour",
+        "hours": 2,
+        "depends": [],
+        "code": "BE-09",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-BE-09",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g4",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:BE-10",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g4",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "BE-10",
+        "owner": "E",
+        "tt": "TT2",
+        "title": "Trace request lifecycle",
+        "hours": 2,
+        "depends": [
+          "BE-09",
+          "QA-11"
+        ],
+        "code": "BE-10",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-BE-10",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g4",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:BE-11",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g4",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "BE-11",
+        "owner": "E",
+        "tt": "TT2",
+        "title": "Correct or rule out backend fault",
+        "hours": 3,
+        "depends": [
+          "BE-10",
+          "DB-10",
+          "OP-10"
+        ],
+        "code": "BE-11",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-BE-11",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g4",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-3:pilot-team-0:DB-12",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g4",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "id": "DB-12",
+        "owner": "E",
+        "tt": "TT2",
+        "title": "Validate final data consistency",
+        "hours": 2,
+        "depends": [
+          "DB-11",
+          "BE-11"
+        ],
+        "code": "DB-12",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-11-27T11:30:00Z",
+        "originalDueAt": "2026-11-27T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-DB-12",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g4",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:QA-13",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "Accepted",
+      "version": 5,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "QA-13",
+        "owner": "A",
+        "tt": "TT1",
+        "hours": 3,
+        "title": "Functional test suite",
+        "instructions": "Cover Create/Edit, duplicates, field/LOV/conditional validation and meaningful error handling; expected/actual results documented.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Testing",
+        "code": "QA-13",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "5e131a42-f43f-411b-9cdd-1ddd62fc80fa",
+            "url": "https://example.invalid/functional-browser-check",
+            "summary": "Fictional functional test evidence to verify submission and independent review controls.",
+            "by": "pilot-g0",
+            "at": "2026-11-30T07:00:56.314Z"
+          }
+        ],
+        "acceptedAt": "2026-11-30T07:01:26.638Z"
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:QA-14",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "QA-14",
+        "owner": "A",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Negative and security tests",
+        "instructions": "Run invalid-input and unauthorised API scenarios; log defects and retest evidence.",
+        "depends": [
+          "QA-13",
+          "BE-14",
+          "DB-14"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Testing",
+        "code": "QA-14",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-QA-14",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g0",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:OP-13",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "OP-13",
+        "owner": "A",
+        "tt": "TT2",
+        "hours": 2,
+        "title": "Final staging release",
+        "instructions": "Deploy tested candidate, record version, perform smoke checks and maintain rollback proof.",
+        "depends": [
+          "QA-15",
+          "OP-15"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Deployment",
+        "code": "OP-13",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-OP-13",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g0",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:UAT-01",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "Accepted",
+      "version": 5,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "UAT-01",
+        "owner": "A",
+        "tt": "TT1",
+        "hours": 2.5,
+        "title": "Monday Client’s Chair",
+        "instructions": "2.5h protected: independently assess normal Create/Edit journeys; Pass/Fail/Blocked evidence and handover.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Monday"
+        },
+        "code": "UAT-01",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "b04e4cb2-e1a7-4e51-9e78-733e15223dad",
+            "url": "https://example.invalid/uat-failure",
+            "summary": "FAIL recommendation: fictional Create/Edit scenario blocked by a reproducible validation defect. CC must review disposition; this is not release approval.",
+            "by": "pilot-g0",
+            "at": "2026-11-30T07:00:40.494Z"
+          }
+        ],
+        "acceptedAt": "2026-11-30T07:01:26.380Z"
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:OP-14",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g1",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "OP-14",
+        "owner": "B",
+        "tt": "TT1",
+        "hours": 2,
+        "title": "Environment assessment",
+        "instructions": "Document staging health, configuration, logs, test tools and recoverable baseline.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Deployment",
+        "code": "OP-14",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-OP-14",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g1",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:OP-15",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g1",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "OP-15",
+        "owner": "B",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Non-functional testing",
+        "instructions": "Execute safe-load, reliability and approved performance checks; capture measured evidence, limits and failures.",
+        "depends": [
+          "OP-14",
+          "BE-14"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Deployment",
+        "code": "OP-15",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-OP-15",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g1",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:FE-13",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g1",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "FE-13",
+        "owner": "B",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Frontend verification and corrections",
+        "instructions": "Correct assigned verified frontend/UI issues; attach responsive/accessibility retest evidence without duplicating FE-15 ownership.",
+        "depends": [
+          "FE-14",
+          "QA-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Frontend",
+        "code": "FE-13",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-FE-13",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g1",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:UAT-02",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g1",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "UAT-02",
+        "owner": "B",
+        "tt": "TT1",
+        "hours": 2.5,
+        "title": "Tuesday Client’s Chair",
+        "instructions": "2.5h protected: invalid-entry, boundary-condition and confusing business-journey UAT; evidence-backed verdict.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Tuesday"
+        },
+        "code": "UAT-02",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-UAT-02",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g1",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:FE-14",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g2",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "FE-14",
+        "owner": "C",
+        "tt": "TT1",
+        "hours": 3,
+        "title": "Frontend usability assessment",
+        "instructions": "Assess navigation, messages, accessibility, keyboard and mobile requirements; raise actionable findings.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Frontend",
+        "code": "FE-14",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-FE-14",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g2",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:FE-15",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g2",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "FE-15",
+        "owner": "C",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Frontend defect repair",
+        "instructions": "Correct confirmed UI/accessibility/interaction issues and demonstrate passing retest.",
+        "depends": [
+          "FE-14",
+          "QA-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Frontend",
+        "code": "FE-15",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-FE-15",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g2",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:BE-13",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g2",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "BE-13",
+        "owner": "C",
+        "tt": "TT2",
+        "hours": 2,
+        "title": "Cross-layer request tracing",
+        "instructions": "Trace relevant UI→API→backend→database journey with request/response evidence and failure analysis.",
+        "depends": [
+          "BE-14",
+          "DB-14"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Backend",
+        "code": "BE-13",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-BE-13",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g2",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:UAT-03",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g2",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "UAT-03",
+        "owner": "C",
+        "tt": "TT1",
+        "hours": 2.5,
+        "title": "Wednesday Client’s Chair",
+        "instructions": "2.5h protected: cross-session complete business-journey UAT with independent findings.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Wednesday"
+        },
+        "code": "UAT-03",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-UAT-03",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g2",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:BE-14",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g3",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "BE-14",
+        "owner": "D",
+        "tt": "TT1",
+        "hours": 3,
+        "title": "API behaviour testing",
+        "instructions": "Test requests, status codes, authentication, authorisation, validation and error contracts; collect evidence.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Backend",
+        "code": "BE-14",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-BE-14",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g3",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:BE-15",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g3",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "BE-15",
+        "owner": "D",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Backend defect correction",
+        "instructions": "Correct confirmed API/authorisation defects; run unit tests and attach before/after proof.",
+        "depends": [
+          "BE-14",
+          "QA-14",
+          "BE-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Backend",
+        "code": "BE-15",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-BE-15",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g3",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:DB-13",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g3",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "DB-13",
+        "owner": "D",
+        "tt": "TT2",
+        "hours": 2,
+        "title": "Database defect correction",
+        "instructions": "Resolve assigned data issue or demonstrate no fault; validate persistence and identity constraints.",
+        "depends": [
+          "DB-15"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Database",
+        "code": "DB-13",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-DB-13",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g3",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:UAT-04",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g3",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "UAT-04",
+        "owner": "D",
+        "tt": "TT1",
+        "hours": 2.5,
+        "title": "Thursday Client’s Chair",
+        "instructions": "2.5h protected: permissions, restricted actions and data accuracy UAT with client verdict.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Thursday"
+        },
+        "code": "UAT-04",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-UAT-04",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g3",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:DB-14",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g4",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "DB-14",
+        "owner": "E",
+        "tt": "TT1",
+        "hours": 3,
+        "title": "Data-integrity testing",
+        "instructions": "Test Create/Edit persistence, duplicate protection and data consistency on fictional data.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Database",
+        "code": "DB-14",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-DB-14",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g4",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:DB-15",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g4",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "DB-15",
+        "owner": "E",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Database reliability and performance",
+        "instructions": "Run controlled queries and concurrency checks; report integrity and performance findings.",
+        "depends": [
+          "DB-14"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Database",
+        "code": "DB-15",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-DB-15",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g4",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:QA-15",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g4",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "QA-15",
+        "owner": "E",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "System end-to-end regression",
+        "instructions": "After fixes, execute integrated system tests and prior 21 accepted checks with reusable automated evidence; report gaps.",
+        "depends": [
+          "QA-14",
+          "OP-15",
+          "FE-13",
+          "FE-15",
+          "BE-15",
+          "DB-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Testing",
+        "code": "QA-15",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-QA-15",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g4",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:UAT-05",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g4",
+      "state": "Accepted",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "id": "UAT-05",
+        "owner": "E",
+        "tt": "TT2",
+        "hours": 2.5,
+        "title": "Friday Client’s Chair",
+        "instructions": "2.5h protected after OP-13; independently retest corrected business journeys and recommend acceptance.",
+        "depends": [
+          "OP-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Friday"
+        },
+        "code": "UAT-05",
+        "basic": {
+          "author": "CURRICULUM",
+          "url": "https://example.invalid/browser-evidence",
+          "version": "QA",
+          "approval": "Synthetic only"
+        },
+        "dueAt": "2026-12-04T11:30:00Z",
+        "originalDueAt": "2026-12-04T11:30:00Z",
+        "dueHistory": [],
+        "stages": [
+          {
+            "name": "Understand/Clarify",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Design",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Build/Configure",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "Unit Test",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          },
+          {
+            "name": "UAT Handover",
+            "state": "Complete",
+            "review": "OK",
+            "note": "Seeded prior work; not a browser action."
+          }
+        ],
+        "evidence": [
+          {
+            "id": "QA-UAT-05",
+            "url": "https://example.invalid/browser-evidence",
+            "by": "pilot-g4",
+            "summary": "Seeded fictional evidence for a browser checkpoint."
+          }
+        ]
+      }
+    }
+  ],
+  "PilotReview": [
+    {
+      "_id": "browser-sprint-3:pilot-team-0:DB-09:FINAL:3",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "DECIDED",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:38.114Z",
+      "data": {
+        "taskId": "browser-sprint-3:pilot-team-0:DB-09",
+        "kind": "FINAL",
+        "reviewerId": "pilot-mc",
+        "reviewerRole": null,
+        "dueAt": "2026-11-24T10:00:38.114Z",
+        "evidenceHash": "e7b8e095e9cbd2e3ca47ac25b4bd3bfed36d1ecd7994a6e95a341d0fc18f2d61",
+        "history": [],
+        "decision": "OK",
+        "reason": "Fictional MC review: inspected the browser-submitted baseline evidence; controls verified, not real student application correctness.",
+        "by": "pilot-mc",
+        "decidedAt": "2026-11-23T07:01:23.753Z"
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:UAT-01:FINAL:3",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "DECIDED",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:45.250Z",
+      "data": {
+        "taskId": "browser-sprint-4:pilot-team-0:UAT-01",
+        "kind": "FINAL",
+        "reviewerId": "pilot-mc",
+        "reviewerRole": null,
+        "dueAt": "2026-12-01T10:00:45.250Z",
+        "evidenceHash": "76cececaf11f1c444b59cbdf6346dc39015f8ca7c2fae066f552e11d02060f82",
+        "history": [],
+        "decision": "OK",
+        "reason": "Independent synthetic MC review: UAT failure recommendation is preserved as a finding, not converted into release approval.",
+        "by": "pilot-mc",
+        "decidedAt": "2026-11-30T07:01:26.380Z"
+      }
+    },
+    {
+      "_id": "browser-sprint-4:pilot-team-0:QA-13:FINAL:3",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "DECIDED",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:56.559Z",
+      "data": {
+        "taskId": "browser-sprint-4:pilot-team-0:QA-13",
+        "kind": "FINAL",
+        "reviewerId": "pilot-mc",
+        "reviewerRole": null,
+        "dueAt": "2026-12-01T10:00:56.559Z",
+        "evidenceHash": "c701bf7a3be3112bb11ae776d35b75e7015e03e0c1cc5b01b351061b544a51ec",
+        "history": [],
+        "decision": "OK",
+        "reason": "Independent synthetic MC review: UAT failure recommendation is preserved as a finding, not converted into release approval.",
+        "by": "pilot-mc",
+        "decidedAt": "2026-11-30T07:01:26.638Z"
+      }
+    }
+  ],
+  "PilotDaily": [],
+  "PilotLedger": [
+    {
+      "_id": "browser-sprint-3:help",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "HELP_PASS",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:00.000Z",
+      "data": {
+        "amount": 3,
+        "reason": "Fictional browser help balance."
+      }
+    },
+    {
+      "_id": "browser-sprint-4:help",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "HELP_PASS",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:00.000Z",
+      "data": {
+        "amount": 3,
+        "reason": "Fictional browser help balance."
+      }
+    },
+    {
+      "_id": "alpha:HELP_PASS:554ef2e0-08ee-4b30-8902-ef12c339edc6",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "HELP_PASS",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:24.683Z",
+      "data": {
+        "amount": -1,
+        "package": "GUIDE",
+        "taskId": "browser-sprint-4:pilot-team-0:UAT-01",
+        "guidance": {
+          "title": "User Acceptance Testing (UAT)",
+          "sections": [
+            {
+              "name": "Purpose",
+              "text": "Independently decide if the solution meets the **business** acceptance criteria, without letting implementation authors mark their own work."
+            },
+            {
+              "name": "Steps",
+              "text": "(1) read CC's client brief, not implementation notes; (2) identify one genuine alumni business goal; (3) perform approved client persona actions using fictional data; (4) compare actual outcome to agreed need; (5) raise evidenced defect or approve scenario; (6) issue Pass/Fail/Blocked recommendation; (7) hand unresolved tickets to next day's UAT rep, final approval remains CC."
+            },
+            {
+              "name": "Example",
+              "text": "Moving status from Employed to Higher Studies; check required employment fields and understandable business messages."
+            },
+            {
+              "name": "Evidence",
+              "text": "approved scenario, screenshot/results, defects, recommendation, independent reviewer where own work conflicts."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "PilotEvent": [
+    {
+      "_id": "alpha:request:c32b694a-e02c-462f-8e00-89c2dff18a38",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:24.703Z",
+      "data": {
+        "action": "task",
+        "requestHash": "982531e1534687f2ed4b69b8a41d92e65d624e1ebdf849e2693363441b5bb99d",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:439f4b1e-8a67-46d2-b3cc-f701969126de",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:33.180Z",
+      "data": {
+        "action": "task",
+        "requestHash": "48bd2c4cfcf5fc47eb6450b2c89782ff06d1bf1790a21e9787a39de7490667d9",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:6970f4df-f645-4773-9167-ea3c712155e3",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:00:38.114Z",
+      "data": {
+        "action": "task",
+        "requestHash": "c807994e5da16ec2360b76d8860dec4158fdd9157f67c46bcc84289a338db4eb",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:9aacddf6-1b67-497a-8d81-7dd9b2462b60",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-mc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:01:23.753Z",
+      "data": {
+        "action": "review",
+        "reason": "Fictional MC review: inspected the browser-submitted baseline evidence; controls verified, not real student application correctness.",
+        "requestHash": "7f47f54135e404d9ed342da115d1b5e3b93251d6baa6279c6c7966925ad284e2",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:17e1d534-1ad2-402c-b1f5-0ee3633ef550",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:02:17.721Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic gate 1 for browser workflow verification; real incident and student delivery remain manual.",
+        "requestHash": "0d40b82171f3a8093a82cf3a0f912bf5026991eafaada71ce8d9cafe0b216761",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:6f1384eb-a7fe-458e-a52b-86bd0905fe85",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:02:17.994Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic gate 2 for browser workflow verification; real incident and student delivery remain manual.",
+        "requestHash": "d5d4f371db29d9eab1d69557fae69c60000dc79c3455c7bc6ea913ffe81b686c",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:79e1233f-4f88-48e3-9f6d-2f7e43954bd3",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:02:18.342Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic gate 3 for browser workflow verification; real incident and student delivery remain manual.",
+        "requestHash": "4407e3d2308ad62e6bdd2db6b698c49a62db9a31c92286bb42053efe71929767",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:133e09cd-5bff-45a2-9f63-8b82dab60cdb",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:02:18.693Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic gate 4 for browser workflow verification; real incident and student delivery remain manual.",
+        "requestHash": "c417775ac251fc8fd2e10b76342d8314ac73c9efcd093a5038a8a9d6a3be9027",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:9c67f60f-ba38-40fc-bb81-320cd97cbb7a",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:02:19.067Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic gate 5 for browser workflow verification; real incident and student delivery remain manual.",
+        "requestHash": "94f705c3fe5393f3283ec1ecfd38489523dec2741812afe28e94b56cfc727bc3",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:f1f90cb5-f15b-472c-9499-931b854a1be1",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:02:19.442Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic gate 6 for browser workflow verification; real incident and student delivery remain manual.",
+        "requestHash": "8e7d2d3bad61dafe163332ffc55afd9613347263a16eec32c81cd8135a482581",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:6c25e79d-c9bf-4338-8c8e-f3f21d98ee82",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:02:19.833Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic gate 7 for browser workflow verification; real incident and student delivery remain manual.",
+        "requestHash": "f2ae333bca028bd73e8afe3364df5a48897c44dcc6aea480abc4e781efd049cb",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:cf09a607-c3a1-429e-b223-00a07cfcf78f",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-3",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-23T07:02:25.272Z",
+      "data": {
+        "action": "accept",
+        "reason": "Synthetic CC acceptance after seven browser-recorded gate passes; not independent real-application UAT.",
+        "requestHash": "0e3401a35e832ba5ce6baf197e2c81ba08362e0f9e846e4645666c9000df925d",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:554ef2e0-08ee-4b30-8902-ef12c339edc6",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:24.683Z",
+      "data": {
+        "action": "help",
+        "reason": "Help me distinguish independent client findings from implementation checks.",
+        "requestHash": "70fb55fd914a01db55fdcfdc355f6bfa834753712899e6d5c83b69dd8b3809f9",
+        "result": {
+          "success": true,
+          "guidance": {
+            "title": "User Acceptance Testing (UAT)",
+            "sections": [
+              {
+                "name": "Purpose",
+                "text": "Independently decide if the solution meets the **business** acceptance criteria, without letting implementation authors mark their own work."
+              },
+              {
+                "name": "Steps",
+                "text": "(1) read CC's client brief, not implementation notes; (2) identify one genuine alumni business goal; (3) perform approved client persona actions using fictional data; (4) compare actual outcome to agreed need; (5) raise evidenced defect or approve scenario; (6) issue Pass/Fail/Blocked recommendation; (7) hand unresolved tickets to next day's UAT rep, final approval remains CC."
+              },
+              {
+                "name": "Example",
+                "text": "Moving status from Employed to Higher Studies; check required employment fields and understandable business messages."
+              },
+              {
+                "name": "Evidence",
+                "text": "approved scenario, screenshot/results, defects, recommendation, independent reviewer where own work conflicts."
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:74cd97a2-cbba-495f-bc59-af40646a83f7",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:40.180Z",
+      "data": {
+        "action": "task",
+        "requestHash": "dd9d09e2969148f5f1fa2d792b313869e5aa5f361e8d7facb14bcc7baf2d1fea",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:f33fc85e-d6a4-4a9e-b4d0-65eded45b5f1",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:40.494Z",
+      "data": {
+        "action": "task",
+        "requestHash": "5a1008886df86a73b2de77af6a7998db659c29113a6e03fd5d800e0371a0f60d",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:b6c0f694-dbbe-48ee-bc22-93c3758a9af5",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:45.250Z",
+      "data": {
+        "action": "task",
+        "requestHash": "aedafefb39534b875e745d1cf0a2d69c24054de29a5bb5d6550ecb11f31c2023",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:7ab03569-ef6d-4424-9a07-7936f7762c56",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:55.941Z",
+      "data": {
+        "action": "task",
+        "requestHash": "7d587a38f8c537336eec125c13e62f0fece6ad14de9db7eae7598da4bd842287",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:3df6dfd6-9c41-45c1-bdd4-6820661dcbbb",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:56.314Z",
+      "data": {
+        "action": "task",
+        "requestHash": "598d2e589d6221ad33fba172b1c5f89f731e03b37038eb2cc31c68ba136f72f7",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:92857952-4a41-471c-973a-41cee5891392",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-g0",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:00:56.559Z",
+      "data": {
+        "action": "task",
+        "requestHash": "9f4cbaa55750e3d481a9dd0ee1559fee94f64e025a133fc853b3239484480057",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:1b0139d7-d196-4f5c-993b-292e689176bb",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-mc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:01:26.380Z",
+      "data": {
+        "action": "review",
+        "reason": "Independent synthetic MC review: UAT failure recommendation is preserved as a finding, not converted into release approval.",
+        "requestHash": "662d6f060fe1c2e456cae44c9195fc82160b59489a2c5907e906919b7ed7c180",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:2c748520-0ee3-4c4a-ae0a-073363c6d62a",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-mc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:01:26.638Z",
+      "data": {
+        "action": "review",
+        "reason": "Independent synthetic MC review: UAT failure recommendation is preserved as a finding, not converted into release approval.",
+        "requestHash": "b328fbe8e189ff31556692fce8342140b10627a0f269ce13fefcfb3ea678a80d",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:4c5e5884-2190-4b1b-a203-2269a5b68566",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:01:54.333Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic browser control verification only; independent business verification remains open.",
+        "requestHash": "bf694e1e62d69a440329cddc7b851c087004631c4f0784840ca106c91a5dfd42",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:b583929c-e702-4077-9500-7e70f9272eec",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:01:54.777Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic browser control verification only; independent business verification remains open.",
+        "requestHash": "cd675bc049844b0bf8b34874c32c6ed861a695e9fefecc2cf96cab3c35384d42",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:d722150c-81e0-4ced-9942-5d75c9410671",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:01:55.169Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic browser control verification only; independent business verification remains open.",
+        "requestHash": "835eb26a9e049e9c69e1458ce8b55c97941551c62e0bdee4bfec6e3d548f7ea0",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:7c2ef7b1-170c-4f8d-832d-644399d02630",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:01:55.589Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic failure: unresolved independent UAT finding blocks release acceptance.",
+        "requestHash": "946967fc006fa322dc23e65b351410e53cd5933f293d216f6b01e14efbf24456",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:91aa5b05-1115-4e12-93dc-9b01803a7f78",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:01:56.014Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic browser control verification only; independent business verification remains open.",
+        "requestHash": "6a6c283108ddbc3a33c482123d017c7f43590172495ddb223f16aa45c5229837",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:b3ffaa87-dbfe-459c-b34e-2634c5b769b1",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:01:56.444Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic browser control verification only; independent business verification remains open.",
+        "requestHash": "58572a946cc68213333b9b4602b1183e6d862ff7b24e55bcc1b1e16ee6e16ec3",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:2af7ce38-81ec-4a0d-834e-249beb046577",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:01:56.868Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic browser control verification only; independent business verification remains open.",
+        "requestHash": "e178fce096696f6409af99fa8a6dcf98068be943bbaf4d0fbe21280d2664e476",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:430db2ac-f905-4af8-b482-88a90bd9fdf2",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:02:06.237Z",
+      "data": {
+        "action": "gate",
+        "reason": "Synthetic recorded UAT retest and CC disposition; real student application remains unverified.",
+        "requestHash": "a04078fff2d5ccfb81946c30bb99ec7575285e9a02c5eb86741d8dd3eb6c06ae",
+        "result": {
+          "success": true
+        }
+      }
+    },
+    {
+      "_id": "alpha:request:24062f5e-305b-4e59-9569-fd78e4483fff",
+      "cohortId": "alpha",
+      "sprintId": "browser-sprint-4",
+      "teamId": "pilot-team-0",
+      "userId": "pilot-cc",
+      "state": "COMMAND",
+      "version": 1,
+      "createdAt": "2026-11-30T07:02:06.517Z",
+      "data": {
+        "action": "accept",
+        "reason": "Synthetic CC acceptance after latest seven passing gates; platform control verified.",
+        "requestHash": "01ea7c74ea2ecc3c2150f46108399ab0d4b9e0f81ea0f4171a6d4a3cf371a54c",
+        "result": {
+          "success": true
+        }
+      }
+    }
+  ]
+}

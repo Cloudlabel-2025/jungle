@@ -31,7 +31,7 @@ test(
         await call(mc, "kickoff", { teamId: team.id, evidence: reason });
       await call(cc, "settings", {
         policyVersion: "QA-ENERGY",
-        energy: { start: 5, max: 5, lives: 2, zeroMode: "AWAIT_RECOVERY" },
+        energy: { start: 3, max: 3, lives: 5, zeroMode: "AWAIT_RECOVERY" },
         assistance: { GUIDE: 1, AI_PROMPT: 2, MC_ONE_TO_ONE: 2 },
         bonusCap: 5,
       });

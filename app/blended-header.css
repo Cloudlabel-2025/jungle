@@ -1,0 +1,41 @@
+/* Let each page's scene continue behind the HUD instead of a solid strip. */
+.jungle-world .arena .workspace > .topbar {
+  background: linear-gradient(180deg, #04150d8c, #04150d00);
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  text-shadow: 0 1px 4px #000b;
+}
+.jungle-world .player-arena.expedition-mode .workspace > .player-topbar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 12;
+  background: linear-gradient(180deg, #03130de0, #03130d80 65%, #03130d00);
+}
+.jungle-world .player-arena.expedition-mode .workspace {
+  height: 100dvh;
+  min-height: 100dvh;
+}
+.jungle-world .player-arena.expedition-mode .main-content {
+  padding: 0;
+  flex: 1;
+  min-height: 0;
+}
+.jungle-world .player-arena.expedition-mode .main-content > .jungle-game {
+  height: 100dvh;
+  min-height: 100dvh;
+  flex: 1;
+  border: 0;
+  border-radius: 0;
+}
+@media (max-width: 767px) {
+  .player-arena.expedition-mode .game-map-heading {
+    top: 174px;
+  }
+}
+@media (forced-colors: active) {
+  .jungle-world .arena .workspace > .topbar {
+    background: Canvas;
+    text-shadow: none;
+  }
+}

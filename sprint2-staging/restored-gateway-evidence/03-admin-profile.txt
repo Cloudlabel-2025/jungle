@@ -1,0 +1,74 @@
+- main:
+  - heading "Alumni Connect" [level=1]
+  - paragraph: Sprint 2 staging candidate · Fictional Team A · CC acceptance pending
+  - paragraph: Signed in as Administrator
+  - button "Sign out"
+  - heading "Alumni directory (20)" [level=2]
+  - button "Create alumni"
+  - list:
+    - button "Fictional Alumnus A · alumnus-1@example.invalid"
+    - button "Fictional Alumnus B · alumnus-2@example.invalid"
+    - button "Fictional Alumnus C · alumnus-3@example.invalid"
+    - button "Fictional Alumnus D · alumnus-4@example.invalid"
+    - button "Fictional Alumnus E · alumnus-5@example.invalid"
+    - button "Fictional Alumnus F · alumnus-6@example.invalid"
+    - button "Fictional Alumnus G · alumnus-7@example.invalid"
+    - button "Fictional Alumnus H · alumnus-8@example.invalid"
+    - button "Fictional Alumnus I · alumnus-9@example.invalid"
+    - button "Fictional Alumnus J · alumnus-10@example.invalid"
+    - button "Fictional Alumnus K · alumnus-11@example.invalid"
+    - button "Fictional Alumnus L · alumnus-12@example.invalid"
+    - button "Fictional Alumnus M · alumnus-13@example.invalid"
+    - button "Fictional Alumnus N · alumnus-14@example.invalid"
+    - button "Fictional Alumnus O · alumnus-15@example.invalid"
+    - button "Fictional Alumnus P · alumnus-16@example.invalid"
+    - button "Fictional Alumnus Q · alumnus-17@example.invalid"
+    - button "Fictional Alumnus R · alumnus-18@example.invalid"
+    - button "Fictional Alumnus S · alumnus-19@example.invalid"
+    - button "Fictional Alumnus T · alumnus-20@example.invalid"
+  - heading "Fictional Alumnus A" [level=2]
+  - button "Edit profile"
+  - term: Alumni ID
+  - definition: AL-QA-001
+  - term: First name
+  - definition: Fictional
+  - term: Last name
+  - definition: Alumnus A
+  - term: Date of birth
+  - definition: 2000-01-01
+  - term: Email
+  - definition: alumnus-1@example.invalid
+  - term: Mobile
+  - definition: "+919000000000"
+  - term: Address line 1
+  - definition: 1 Fictional Lane
+  - term: Address line 2
+  - definition: —
+  - term: City
+  - definition: Test City
+  - term: State
+  - definition: Test State
+  - term: Country
+  - definition: India
+  - term: Postal/PIN code
+  - definition: "560001"
+  - term: Course / Degree
+  - definition: BTech
+  - term: Graduation year
+  - definition: "2022"
+  - term: Student registration number
+  - definition: QA-1
+  - term: Employment status
+  - definition: Seeking work
+  - term: Primary skill
+  - definition: Testing
+  - term: Current job title
+  - definition: —
+  - term: Current organisation
+  - definition: —
+  - term: LinkedIn URL
+  - definition: —
+  - term: Created
+  - definition: 2026-11-10T05:10:38.087Z
+  - term: Modified
+  - definition: 2026-11-10T05:10:38.087Z

@@ -1,0 +1,1845 @@
+{
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "at": "2026-11-10T07:19:00.129Z",
+  "scope": "Disposable loopback HTTPS through the Windows trusted connection with synthetic records and a private temporary MongoDB instance",
+  "runtime": {
+    "node": "v22.17.1",
+    "platform": "win32",
+    "osRelease": "10.0.26300",
+    "arch": "x64",
+    "logicalConcurrency": 12,
+    "mongo": "7.0.24"
+  },
+  "performance": [
+    {
+      "concurrency": 1,
+      "elapsedMs": 669.74,
+      "requestsPerSecond": 134.38,
+      "requests": 90,
+      "errors": 0,
+      "p50Ms": 6.82,
+      "p95Ms": 12.56,
+      "maxMs": 14.13,
+      "endpoints": {
+        "/health": {
+          "requests": 30,
+          "errors": 0,
+          "p50Ms": 5.32,
+          "p95Ms": 7.98,
+          "maxMs": 8.81
+        },
+        "/api/alumni": {
+          "requests": 30,
+          "errors": 0,
+          "p50Ms": 8.3,
+          "p95Ms": 13.11,
+          "maxMs": 13.85
+        },
+        "/api/alumni/AL-QA-001": {
+          "requests": 30,
+          "errors": 0,
+          "p50Ms": 7.17,
+          "p95Ms": 13.47,
+          "maxMs": 14.13
+        }
+      },
+      "samples": [
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 7.38
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 13.11
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 9.45
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 6.36
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 10.75
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 12.56
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 6.36
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 13.85
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 11.77
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 6.14
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 8.97
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 10.08
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 7.98
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 10.8
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 13.47
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 5.76
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 11.92
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 9.83
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 5.53
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 9.18
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 14.13
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 8.81
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 9.06
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 8.77
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 6.67
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 8.31
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 7.7
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 5.09
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 10.24
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 8.43
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 6.23
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 11.88
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 7.17
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.48
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 7.08
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 7.4
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.71
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 6.8
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.3
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 6.01
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 9.03
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 7.05
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.72
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 9.96
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.92
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.35
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 7.64
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 10.66
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 5.67
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 8.15
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.04
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.94
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 10.56
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.82
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.93
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 7.5
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 7.71
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 5.61
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 6.53
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.09
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 3.93
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 5.65
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 5.41
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 3.3
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 5.67
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 5.23
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 3.34
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 6.5
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.97
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.25
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 6.27
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.46
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 5.37
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 8.3
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 7.42
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 5.51
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 6.54
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.83
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.37
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 8.29
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.42
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 3.25
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 5.24
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.37
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.22
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 7.92
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 7.71
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 5.32
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 8.92
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 6.01
+        }
+      ]
+    },
+    {
+      "concurrency": 4,
+      "elapsedMs": 317.47,
+      "requestsPerSecond": 283.49,
+      "requests": 90,
+      "errors": 0,
+      "p50Ms": 11.92,
+      "p95Ms": 45.8,
+      "maxMs": 60.2,
+      "endpoints": {
+        "/health": {
+          "requests": 30,
+          "errors": 0,
+          "p50Ms": 8.82,
+          "p95Ms": 55.74,
+          "maxMs": 60.2
+        },
+        "/api/alumni": {
+          "requests": 30,
+          "errors": 0,
+          "p50Ms": 12.79,
+          "p95Ms": 15.89,
+          "maxMs": 49.15
+        },
+        "/api/alumni/AL-QA-001": {
+          "requests": 30,
+          "errors": 0,
+          "p50Ms": 13.02,
+          "p95Ms": 18.39,
+          "maxMs": 57.45
+        }
+      },
+      "samples": [
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 10.51
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 10.31
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 7.3
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.3
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 7.49
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 49.15
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 15.94
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 8.79
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 57.45
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 60.2
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 14.87
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 15.78
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 13.41
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 6.12
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 11
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 7.36
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 4.94
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 8.75
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 8.92
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 14.45
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 12.93
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 15.49
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 55.74
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 18.39
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 5.81
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 11.13
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 11.9
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 7.33
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 13.61
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 13.02
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 45.8
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 9.64
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 15.53
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 15.08
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 7.93
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 14.58
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 14.24
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 11.37
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 8.82
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 12.78
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 11.12
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 11.45
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 8.14
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 12.79
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 9.86
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 13.68
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 14.32
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 9.4
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 11.96
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 11.72
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 6.47
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 12.21
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 13.67
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 11.05
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 15.14
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 13.47
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 9.6
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 14.44
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 14.5
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 8.65
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 14.14
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 13.6
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 9.51
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 12.8
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 12.64
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 7.38
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 12.39
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 12.26
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 8.36
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 15.24
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 9.54
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 15.69
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 14.71
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 11.92
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 9.01
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 12.12
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 10.37
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 8.05
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 13.09
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 6.72
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 13.62
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 15.89
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 10.6
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 9.59
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 11.41
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 16.69
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 12.59
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 11.34
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 10.71
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 10.52
+        }
+      ]
+    },
+    {
+      "concurrency": 8,
+      "elapsedMs": 387.9,
+      "requestsPerSecond": 232.02,
+      "requests": 90,
+      "errors": 0,
+      "p50Ms": 28.2,
+      "p95Ms": 105.17,
+      "maxMs": 122.32,
+      "endpoints": {
+        "/health": {
+          "requests": 30,
+          "errors": 0,
+          "p50Ms": 22.45,
+          "p95Ms": 106.14,
+          "maxMs": 121.76
+        },
+        "/api/alumni": {
+          "requests": 30,
+          "errors": 0,
+          "p50Ms": 31.03,
+          "p95Ms": 62.46,
+          "maxMs": 122.32
+        },
+        "/api/alumni/AL-QA-001": {
+          "requests": 30,
+          "errors": 0,
+          "p50Ms": 31.32,
+          "p95Ms": 63.38,
+          "maxMs": 108.49
+        }
+      },
+      "samples": [
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 22.45
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 24.75
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 32.2
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 42.82
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 39.57
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 62.46
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 63.38
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 37.69
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 31.37
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 27.41
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 49.19
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 42.56
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 121.76
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 122.32
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 105.17
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 44.75
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 23.23
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 27.44
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 38.54
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 35.52
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 25.65
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 38.47
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 36.81
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 108.49
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 106.14
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 19.31
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 30.55
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 31.51
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 19.68
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 30.62
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 18.92
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 30.69
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 30.07
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 30.27
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 23.22
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 31.83
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 20.54
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 33.58
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 29.26
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 31.32
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 18.48
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 29.93
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 30.18
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 17.41
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 25.78
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 23.21
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 15.58
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 27.1
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 13.48
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 24.09
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 20.11
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 21.97
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 13.83
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 23.84
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 24.52
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 17.26
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 24.03
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 22.11
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 17.39
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 26.67
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 26.41
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 16.52
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 26.74
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 26.85
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 25.27
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 36.18
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 36.64
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 28.2
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 38.37
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 41.13
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 24.4
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 40.88
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 40.57
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 23.81
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 33.59
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 36.27
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 24.19
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 35.66
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 33.1
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 22.57
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 31.03
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 30.63
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 17.78
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 31.74
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 28.92
+        },
+        {
+          "path": "/health",
+          "status": 200,
+          "valid": true,
+          "ms": 18.21
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 26.05
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 24.56
+        },
+        {
+          "path": "/api/alumni",
+          "status": 200,
+          "valid": true,
+          "ms": 20
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "status": 200,
+          "valid": true,
+          "ms": 20.83
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "name": "Session cookie and response headers",
+      "httpOnly": true,
+      "sameSiteStrict": true,
+      "secure": true,
+      "maxAgeSeconds": 3600,
+      "apiCacheControl": "no-store",
+      "htmlCspPresent": false
+    },
+    {
+      "name": "Unsigned directory",
+      "expected": 401,
+      "actual": 401,
+      "pass": true
+    },
+    {
+      "name": "Invalid sign-in",
+      "expected": 401,
+      "actual": 401,
+      "pass": true
+    },
+    {
+      "name": "Alumnus own profile",
+      "expected": 200,
+      "actual": 200,
+      "pass": true
+    },
+    {
+      "name": "Alumnus directory denied",
+      "expected": 403,
+      "actual": 403,
+      "pass": true
+    },
+    {
+      "name": "Alumnus other profile denied",
+      "expected": 403,
+      "actual": 403,
+      "pass": true
+    },
+    {
+      "name": "Alumnus create denied",
+      "expected": 403,
+      "actual": 403,
+      "pass": true
+    },
+    {
+      "name": "Alumnus edit denied",
+      "expected": 403,
+      "actual": 403,
+      "pass": true
+    },
+    {
+      "name": "Alumnus sign-out",
+      "expected": 200,
+      "actual": 200,
+      "pass": true
+    },
+    {
+      "name": "Signed-out session rejected",
+      "expected": 401,
+      "actual": 401,
+      "pass": true
+    }
+  ],
+  "reliability": [
+    {
+      "name": "Concurrent duplicate create",
+      "actual": [
+        201,
+        409
+      ],
+      "expected": [
+        201,
+        409
+      ]
+    },
+    {
+      "name": "Created record opened from a second session",
+      "expected": 200,
+      "actual": 200,
+      "pass": true
+    },
+    {
+      "name": "Health after clean relaunch",
+      "expected": 200,
+      "actual": 200,
+      "pass": true
+    },
+    {
+      "name": "Clean relaunch to health",
+      "ms": 1581.39
+    },
+    {
+      "name": "Pre-restart session rejected",
+      "expected": 401,
+      "actual": 401,
+      "pass": true
+    },
+    {
+      "name": "Seed identity and clean reset",
+      "restoredCount": 20,
+      "rehearsalRowAbsent": true
+    }
+  ]
+}

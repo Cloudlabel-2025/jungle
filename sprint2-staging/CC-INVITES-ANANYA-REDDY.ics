@@ -1,0 +1,72 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CODEWILD//CC Session Drafts//EN
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:IST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:cc-fictional-a-s3-def-d@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261127T113000
+DTEND;TZID=Asia/Kolkata:20261127T115500
+SUMMARY:Sprint 3 defence | Gamer D (Ananya Reddy)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er D (Ananya Reddy) is listed in the verified isolated staging backup. CC 
+ assessor: Karun.\nSession location: Isolated localhost staging computer.\n
+ Scope: Frontend and backend.\n\nPreparation for Gamer D\nReview the INC-04
+  incident and rollback record. Bring evidence of your own contribution and
+  the handover to another role.\nTask cards: FE-09\, FE-10\, FE-11\, BE-12.
+ \n\nSession steps and evidence checklist\nTrace a browser action through i
+ ts API request to the visible result before and after repair. Show evidenc
+ e for your frontend finding and the backend evidence you received. Demonst
+ rate an invalid input and a restricted action.\nRecord task IDs\, personal
+  evidence links\, the demonstrated action or decision\, the observed resul
+ t and the handover recipient.\n\nCC assessor verification\nAsk why hiding 
+ Edit is insufficient. Verify that D can point to a server rejection as wel
+ l as the relevant UI behaviour.\nRecord the actual date and time\, assesso
+ r\, question and observed answer\, and PASS\, FAIL or BLOCKED with reason.
+  Link the witnessed record to Sprint 3 AC-7.\n\nKeep passwords\, cookie va
+ lues and tokens out of shared evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+BEGIN:VEVENT
+UID:cc-fictional-a-uat-04@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261203T100000
+DTEND;TZID=Asia/Kolkata:20261203T123000
+SUMMARY:Sprint 4 UAT-04 | Gamer D (Ananya Reddy)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er D (Ananya Reddy) is listed in the verified isolated staging backup. CC 
+ assessor: Karun.\nSession location: Isolated localhost staging computer.\n
+ Scope: Alumnus permissions and data accuracy.\n\nPreparation for Gamer D\n
+ Confirm the isolated staging URL\, candidate fingerprint\, assigned accoun
+ t and fictional test-data prefix with CC. Reserve the full 2.5-hour slot a
+ nd record your own findings.\nConfirm the assigned alumnus profile and the
+  approved test client or route before starting.\n\nSession steps and evide
+ nce checklist\nSign in as the assigned alumnus and confirm own-profile acc
+ uracy. Check that Create/Edit controls are unavailable. Use the approved t
+ est client or route to check that the server denies directory access\, ano
+ ther fictional profile and unauthorized Create/Edit. Capture statuses and 
+ confirm no data changed.\nCapture actual start and finish in IST\, staging
+  URL\, candidate SHA-256\, role\, fictional record IDs\, task or defect ID
+ s\, steps\, expected and observed results\, and evidence links. Record you
+ r verdict and any handover recipient.\n\nCC assessor verification\nMatch t
+ he displayed profile to the assigned account. Verify server denials as wel
+ l as the UI restrictions\, and check before/after record evidence.\nRecord
+  the independent CC verdict\, reason\, reviewer and date. Attach the sessi
+ on evidence to S4-AC-04.\n\nKeep passwords\, cookie values and tokens out 
+ of shared evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+END:VCALENDAR

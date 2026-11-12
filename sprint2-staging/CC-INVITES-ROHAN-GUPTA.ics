@@ -1,0 +1,70 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CODEWILD//CC Session Drafts//EN
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:IST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:cc-fictional-a-s3-def-c@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261127T110000
+DTEND;TZID=Asia/Kolkata:20261127T112500
+SUMMARY:Sprint 3 defence | Gamer C (Rohan Gupta)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er C (Rohan Gupta) is listed in the verified isolated staging backup. CC a
+ ssessor: Karun.\nSession location: Isolated localhost staging computer.\nS
+ cope: Deployment and frontend.\n\nPreparation for Gamer C\nReview the INC-
+ 04 incident and rollback record. Bring evidence of your own contribution a
+ nd the handover to another role.\nTask cards: OP-09\, OP-10\, OP-11\, FE-1
+ 2.\n\nSession steps and evidence checklist\nShow the readiness check\, pin
+ ned fingerprint and isolated scope. Explain the API target comparison\, wh
+ at was restored\, and which QA-12 evidence you used. Demonstrate the repai
+ red gateway login and a profile read or saved result.\nRecord task IDs\, p
+ ersonal evidence links\, the demonstrated action or decision\, the observe
+ d result and the handover recipient.\n\nCC assessor verification\nAsk how 
+ C verified that the rollback restored the expected target and working user
+  journey. Check that the smoke and browser evidence refer to the restored 
+ gateway.\nRecord the actual date and time\, assessor\, question and observ
+ ed answer\, and PASS\, FAIL or BLOCKED with reason. Link the witnessed rec
+ ord to Sprint 3 AC-7.\n\nKeep passwords\, cookie values and tokens out of 
+ shared evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+BEGIN:VEVENT
+UID:cc-fictional-a-uat-03@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261202T100000
+DTEND;TZID=Asia/Kolkata:20261202T123000
+SUMMARY:Sprint 4 UAT-03 | Gamer C (Rohan Gupta)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er C (Rohan Gupta) is listed in the verified isolated staging backup. CC a
+ ssessor: Karun.\nSession location: Isolated localhost staging computer.\nS
+ cope: Persistence after sign-out\, refresh and re-login.\n\nPreparation fo
+ r Gamer C\nConfirm the isolated staging URL\, candidate fingerprint\, assi
+ gned account and fictional test-data prefix with CC. Reserve the full 2.5-
+ hour slot and record your own findings.\n\nSession steps and evidence chec
+ klist\nCreate or use a uniquely assigned fictional record. Edit it\, recor
+ d its ID\, creation and modification timestamps and saved value. Sign out\
+ , refresh\, sign back in\, and reopen the same ID. Compare the value and t
+ imestamps.\nCapture actual start and finish in IST\, staging URL\, candida
+ te SHA-256\, role\, fictional record IDs\, task or defect IDs\, steps\, ex
+ pected and observed results\, and evidence links. Record your verdict and 
+ any handover recipient.\n\nCC assessor verification\nVerify separate brows
+ er sessions\, stable ID and creation time\, and that a real edit advanced 
+ the modification time and persisted.\nRecord the independent CC verdict\, 
+ reason\, reviewer and date. Attach the session evidence to S4-AC-04.\n\nKe
+ ep passwords\, cookie values and tokens out of shared evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+END:VCALENDAR

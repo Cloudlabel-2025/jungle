@@ -1,0 +1,76 @@
+{
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "startedAt": "2026-11-10T07:30:37.326Z",
+  "url": "https://127.0.0.1:3193",
+  "trustedOrigin": "https://127.0.0.1:3193",
+  "invalidConfigurationChecks": 5,
+  "checks": [
+    {
+      "name": "Validated TLS health",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Foreign HTTPS Origin denied",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "name": "Lookalike origin rejected",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "name": "Different port rejected",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "name": "HTTP downgrade rejected",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "name": "Exact same-origin HTTPS sign-in",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Session after login",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Same-origin HTTPS sign-out",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Signed-out session rejected",
+      "expected": 401,
+      "actual": 401
+    }
+  ],
+  "directTcp": {
+    "error": "ECONNRESET"
+  },
+  "tls": {
+    "authorized": true,
+    "protocol": "TLSv1.3"
+  },
+  "cookieAttributes": [
+    "HttpOnly",
+    "SameSite=Strict",
+    "Path=/",
+    "Secure",
+    "Max-Age=3600"
+  ],
+  "sessionCacheControl": "no-store",
+  "logoutCookieAttributes": [
+    "HttpOnly",
+    "SameSite=Strict",
+    "Path=/",
+    "Secure",
+    "Max-Age=0"
+  ]
+}

@@ -1,0 +1,7 @@
+    - strong: QA Gamer 0
+    - alert: Optional assistance must relate to your assigned contribution.
+    - heading "Sprint 4 · Alumni Connect" [level=2]
+      - option "BE-07" [selected]
+    - paragraph: "Available guided AI Help credits: 0"
+    - paragraph: "QA Gamer 0 requested sponsorship from QA Gamer 1. COMPLETED. Synthetic walkthrough: please coach me through interpreting the local test report."
+      - link "Open approved guided AI Help resource" [active]:

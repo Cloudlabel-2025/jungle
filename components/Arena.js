@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   BookOpen,
@@ -29,6 +29,7 @@ import {
   Hexagon,
   Volume2,
   VolumeX,
+  Bell,
 } from "lucide-react";
 import { navigation, prefix, personas } from "@/lib/catalog.js";
 import { weekOneNavigation } from "@/lib/week-one-catalog.js";
@@ -39,20 +40,14 @@ import {
 } from "@/lib/workspace-navigation.js";
 import { roleNames } from "@/lib/expedition";
 import { league } from "@/lib/rules.js";
-import { Avatar, Modal, HP, Busy, Badge, Form } from "./ui";
+import { Avatar, Modal, HP, Badge, Form } from "./ui";
 import PlayerHeader from "./PlayerHeader";
+import { WorkspaceContext } from "./WorkspaceContext";
 import TeamCompletionAnnouncements from "./LevelCompletion";
 import CharacterPicker from "./CharacterPicker";
 import { characterFor } from "@/lib/characters";
-const GamerView = dynamic(() => import("./Views").then((m) => m.GamerView), {
-  loading: () => <Busy />,
-});
-const StaffView = dynamic(() => import("./Views").then((m) => m.StaffView), {
-  loading: () => <Busy />,
-});
-const CodeLab = dynamic(() => import("./CodeLab"), {
-  loading: () => <Busy />,
-});
+import { monitoringRequired, claimSignInNotice } from "@/lib/notifications.js";
+import GameLoadingScreen, { useGameEntryLoading } from "./GameLoadingScreen";
 const icons = {
   LayoutDashboard,
   BookOpen,
@@ -68,6 +63,7 @@ const icons = {
   ShieldCheck,
   Zap,
   FileBarChart,
+  Bell,
 };
 export default function Arena({
   screen,
@@ -75,7 +71,9 @@ export default function Arena({
   initialUser,
   initialTime,
   demo,
+  children,
 }) {
+  const router = useRouter();
   const [user, setUser] = useState(initialUser),
     [data, setData] = useState(null),
     [error, setError] = useState(""),
@@ -97,12 +95,14 @@ export default function Arena({
     broadcastInitialized = useRef(false),
     audio = useRef(null);
   const challengeInbox = useRef({ userId: null, ids: new Set() });
+  const evaluatedSignIn = useRef(null);
   const role = user?.role || "GAMER";
   const playerMode = role === "GAMER";
+  const showEntryLoading = useGameEntryLoading(user?._id, Boolean(data), error);
   const playerNavigation = useRef(null);
   const playerNavigationTrigger = useRef(null);
   useEffect(() => {
-    if (!playerMode || !mobile || !user) return;
+    if (!mobile || !user) return;
     const drawer = playerNavigation.current;
     const controls = () =>
       Array.from(
@@ -110,6 +110,11 @@ export default function Arena({
       );
     controls()[0]?.focus();
     function trap(event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMobile(false);
+        return;
+      }
       if (event.key !== "Tab") return;
       const items = controls(),
         first = items[0],
@@ -134,9 +139,36 @@ export default function Arena({
     ? weekOneNavigation[role].find((n) => n[1] === programmeScreen(screen)) ||
       nav.at(-1)
     : nav.find((n) => n[1] === screen) || nav[0];
-  const notify = useCallback((message, type = "success") => {
-    setToast({ message, type });
+  const notify = useCallback((message, type = "success", action = {}) => {
+    setToast({ message, type, ...action });
   }, []);
+  useEffect(() => {
+    const session = data?.sessionKey;
+    if (
+      !session ||
+      data.user.role !== "GAMER" ||
+      evaluatedSignIn.current === session
+    )
+      return;
+    evaluatedSignIn.current = session;
+    let storage;
+    try {
+      storage = window.sessionStorage;
+    } catch {
+      storage = null;
+    }
+    const firstVisit = claimSignInNotice(session, storage);
+    if (firstVisit && monitoringRequired(data))
+      notify(
+        "A Commander check-in is needed. Review your support notification and agree the next steps.",
+        "warning",
+        {
+          href: "/gamer/notifications",
+          label: "Open notifications",
+          duration: 9000,
+        },
+      );
+  }, [data?.sessionKey, data?.user.drops, notify]);
   useEffect(() => {
     if (!data || data.user.role !== "GAMER") return;
     const own = data.tasks.filter(
@@ -259,10 +291,17 @@ export default function Arena({
   useEffect(() => {
     if (!user) return;
     refresh();
+    const balanceChanged = (event) => {
+      if (event.detail?.source !== "workspace") refresh(true);
+    };
+    window.addEventListener("codewild:balance-changed", balanceChanged);
     const timer = setInterval(() => {
       if (document.visibilityState === "visible") refresh();
     }, 6000);
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener("codewild:balance-changed", balanceChanged);
+    };
   }, [user?._id, refresh]);
   useEffect(() => {
     const t = setInterval(
@@ -273,7 +312,7 @@ export default function Arena({
   }, []);
   useEffect(() => {
     if (!toast) return;
-    const t = setTimeout(() => setToast(null), 5500);
+    const t = setTimeout(() => setToast(null), toast.duration || 5500);
     return () => clearTimeout(t);
   }, [toast]);
   useEffect(() => {
@@ -286,6 +325,22 @@ export default function Arena({
     document.addEventListener("keydown", key);
     return () => document.removeEventListener("keydown", key);
   }, []);
+  function enterWorkspace(nextUser) {
+    const destination = `/${prefix(nextUser.role)}/dashboard`;
+    // Keep the already loaded app for a fresh sign-in to this workspace.
+    // Role/persona switches still start an isolated workspace session.
+    if (!user && workspace === prefix(nextUser.role)) {
+      activeSession.current = true;
+      setError("");
+      setData(null);
+      setUser(nextUser);
+      setLauncher(false);
+      setSwitching(false);
+      router.replace(destination);
+      return;
+    }
+    window.location.assign(destination);
+  }
   async function login(p) {
     setSwitching(true);
     try {
@@ -296,7 +351,7 @@ export default function Arena({
       });
       const result = await r.json();
       if (!r.ok) throw new Error(result.error);
-      window.location.assign(`/${prefix(result.user.role)}/dashboard`);
+      enterWorkspace(result.user);
     } catch (e) {
       notify(e.message, "error");
       setSwitching(false);
@@ -312,7 +367,12 @@ export default function Arena({
       const result = await r.json();
       if (!r.ok) throw new Error(result.error);
       await refresh(true);
-      notify(message);
+      window.dispatchEvent(
+        new CustomEvent("codewild:balance-changed", {
+          detail: { source: "workspace" },
+        }),
+      );
+      if (message) notify(message);
       return result;
     } catch (e) {
       notify(e.message, "error");
@@ -467,9 +527,7 @@ export default function Arena({
                 });
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.error);
-                window.location.assign(
-                  `/${prefix(result.user.role)}/dashboard`,
-                );
+                enterWorkspace(result.user);
                 return true;
               } catch (error) {
                 notify(error.message, "error");
@@ -490,378 +548,346 @@ export default function Arena({
       </div>
     );
   const squad = data?.teams.find((t) => t._id === user.teamId);
-  const headerPlayer = data
-    ? weekOneMode
-      ? data.user
-      : legacyWorkspaceData(data).user
-    : user;
+  const headerPlayer = data ? legacyWorkspaceData(data).user : user;
   return (
-    <div
-      className={`arena ${role === "GAMER" ? "player-arena" : ""} ${!(role === "GAMER" && screen === "dashboard") ? "field-mode" : ""} ${screen === "ide" ? "lab-mode" : ""} ${role === "GAMER" && screen === "dashboard" ? "expedition-mode" : ""}`}
+    <WorkspaceContext.Provider
+      value={{ data, user, act, clock, notify, error, refresh }}
     >
-      {mobile && (
-        <div className="sidebar-shade" onClick={() => setMobile(false)} />
-      )}
-      {playerMode && (
-        <button
-          ref={playerNavigationTrigger}
-          className={`map-nav-toggle ${mobile ? "is-open" : ""}`}
-          aria-label={
-            mobile
-              ? "Close expedition navigation"
-              : "Open expedition navigation"
-          }
-          aria-expanded={mobile}
-          aria-controls="workspace-navigation"
-          onClick={() => setMobile((open) => !open)}
-        >
-          <Flame size={27} />
-        </button>
-      )}
-      <aside
-        ref={playerNavigation}
-        id="workspace-navigation"
-        className={`sidebar ${mobile ? "open" : ""}`}
-        inert={playerMode && !mobile ? true : undefined}
-        role={playerMode && mobile ? "dialog" : undefined}
-        aria-modal={playerMode && mobile ? true : undefined}
-        aria-label={playerMode ? "Expedition navigation" : undefined}
+      <div
+        className={`arena ${role === "GAMER" ? "player-arena" : ""} ${!(role === "GAMER" && screen === "dashboard") ? "field-mode" : ""} ${screen === "ide" ? "lab-mode" : ""} ${role === "GAMER" && screen === "dashboard" ? "expedition-mode" : ""}`}
+        inert={showEntryLoading ? true : undefined}
       >
-        <Link
-          href={`/${prefix(role)}/dashboard`}
-          className="brand"
-          aria-label="CODEWILD home"
-          onClick={() => setMobile(false)}
-        >
-          <Flame size={27} />
-          CODE<span>WILD</span>
-          <i />
-        </Link>
+        {mobile && (
+          <div className="sidebar-shade" onClick={() => setMobile(false)} />
+        )}
         {playerMode && (
           <button
-            className="icon-btn map-drawer-close"
-            aria-label="Close navigation"
+            ref={playerNavigationTrigger}
+            className={`map-nav-toggle ${mobile ? "is-open" : ""}`}
+            aria-label={
+              mobile
+                ? "Close expedition navigation"
+                : "Open expedition navigation"
+            }
+            aria-expanded={mobile}
+            aria-controls="workspace-navigation"
+            onClick={() => setMobile((open) => !open)}
+          >
+            <Flame size={27} />
+          </button>
+        )}
+        <aside
+          ref={playerNavigation}
+          id="workspace-navigation"
+          className={`sidebar ${mobile ? "open" : ""}`}
+          inert={playerMode && !mobile ? true : undefined}
+          role={mobile ? "dialog" : undefined}
+          aria-modal={mobile ? true : undefined}
+          aria-label="Expedition navigation"
+        >
+          <Link
+            href={`/${prefix(role)}/dashboard`}
+            className="brand"
+            aria-label="CODEWILD home"
             onClick={() => setMobile(false)}
           >
-            <X size={20} />
-          </button>
-        )}
-        <div className="sidebar-season">
-          <span className="eyebrow">
-            {data?.cohort.name.toUpperCase() || "ARENA COHORT"}
-          </span>
-          <div>
-            <span className="status-dot" />
-            EXPEDITION LIVE{" "}
-            <span className="season-week">
-              W{String(data?.cohort.currentWeek || 1).padStart(2, "0")}
-            </span>
-          </div>
-        </div>
-        <span className="nav-label">
-          {role === "GAMER"
-            ? "YOUR EXPEDITION"
-            : role === "MISSION_COMMANDER"
-              ? "GUIDE’S LOOKOUT"
-              : "EXPEDITION COUNCIL"}
-        </span>
-        <nav aria-label="Workspace">
-          {nav.map(([code, path, label, icon]) => {
-            const Icon = icons[icon];
-            return (
-              <Link
-                onClick={() => setMobile(false)}
-                href={`/${prefix(role)}/${path}`}
-                className={`nav-item ${screen === path || (path === "week-one" && weekOneMode) ? "active" : ""}`}
-                title={label}
-                aria-label={playerMode ? label : undefined}
-                key={code}
-              >
-                <Icon size={18} />
-                <span>{label}</span>
-                <small>{code}</small>
-                {screen === path && <i />}
-              </Link>
-            );
-          })}
-        </nav>
-        {playerMode && data && (
-          <button
-            className="btn character-nav-button"
-            onClick={() => {
-              setMobile(false);
-              setCharacterPicker(true);
-            }}
-          >
-            <img
-              src={characterFor(data.user)?.image}
-              alt=""
-              width={36}
-              height={36}
-            />
-            Choose character
-          </button>
-        )}
-        <div className="sidebar-bottom">
-          <div className="field-note">
-            <ShieldCheck size={20} />
-            <span>
-              Read the wild.
-              <br />
-              <strong>Leave no one behind.</strong>
-            </span>
-          </div>
-          <div className="squad-card">
+            <Flame size={27} />
+            CODE<span>WILD</span>
+            <i />
+          </Link>
+          {playerMode && (
+            <button
+              className="icon-btn map-drawer-close"
+              aria-label="Close navigation"
+              onClick={() => setMobile(false)}
+            >
+              <X size={20} />
+            </button>
+          )}
+          <div className="sidebar-season">
             <span className="eyebrow">
-              {squad ? "YOUR PARTY" : "YOUR CLEARANCE"}
+              {data?.cohort.name.toUpperCase() || "ARENA COHORT"}
             </span>
             <div>
-              <span className="squad-mark">{squad?.code || "CMD"}</span>
-              <span>
-                <strong>{squad?.name || roleNames[role]}</strong>
-                <small>
-                  {playerMode
-                    ? `${characterFor(data?.user || user)?.name || "Explorer"} · Full stack`
-                    : user.assignment}
-                </small>
+              <span className="status-dot" />
+              EXPEDITION LIVE{" "}
+              <span className="season-week">
+                W{String(data?.cohort.currentWeek || 1).padStart(2, "0")}
               </span>
             </div>
           </div>
-          <div className="sidebar-footer">
-            <span>
-              <span className="status-dot" />
-              CAMP SIGNAL ACTIVE
-            </span>
-            <span>v1.0</span>
-          </div>
-        </div>
-      </aside>
-      <div className="workspace">
-        <header className={`topbar ${role === "GAMER" ? "player-topbar" : ""}`}>
-          <div className="breadcrumbs">
+          <span className="nav-label">
+            {role === "GAMER"
+              ? "YOUR EXPEDITION"
+              : role === "MISSION_COMMANDER"
+                ? "GUIDE’S LOOKOUT"
+                : "EXPEDITION COUNCIL"}
+          </span>
+          <nav aria-label="Workspace">
+            {nav.map(([code, path, label, icon]) => {
+              const Icon = icons[icon];
+              return (
+                <Link
+                  onClick={() => setMobile(false)}
+                  href={`/${prefix(role)}/${path}`}
+                  className={`nav-item ${screen === path || (path === "week-one" && weekOneMode) ? "active" : ""}`}
+                  title={label}
+                  aria-label={playerMode ? label : undefined}
+                  key={code}
+                >
+                  <Icon size={18} />
+                  <span>{label}</span>
+                  <small>{code}</small>
+                  {screen === path && <i />}
+                </Link>
+              );
+            })}
+          </nav>
+          {playerMode && data && (
             <button
-              className="icon-btn menu-toggle"
-              aria-label="Open navigation"
-              onClick={() => setMobile(true)}
-            >
-              <Menu size={20} />
-            </button>
-            {role === "GAMER" ? (
-              <PlayerHeader player={headerPlayer} />
-            ) : (
-              <>
-                <Command size={16} />
-                <span>Expedition</span>
-                <strong>{current[2]}</strong>
-              </>
-            )}
-          </div>
-          <div className="topbar-right">
-            {role === "GAMER" && (
-              <PlayerHeader
-                player={headerPlayer}
-                part="rewards"
-                teamName={squad?.name}
-              />
-            )}
-            {role !== "GAMER" && (
-              <span className="server-clock">
-                <span className="status-dot" />
-                {time}
-                <small>IST</small>
-              </span>
-            )}
-            <button
-              className="icon-btn sound-toggle"
-              aria-label={
-                soundEnabled
-                  ? "Mute client alerts"
-                  : "Enable client alert sound"
-              }
-              title={
-                soundEnabled
-                  ? "Mute client alerts"
-                  : "Enable client alert sound"
-              }
+              className="btn character-nav-button"
               onClick={() => {
-                if (!audio.current) {
-                  const Audio =
-                    window.AudioContext || window.webkitAudioContext;
-                  if (!Audio) {
-                    notify(
-                      "Audio alerts are unavailable in this browser.",
-                      "error",
-                    );
-                    return;
-                  }
-                  audio.current = new Audio();
-                }
-                audio.current
-                  .resume()
-                  .catch(() =>
-                    notify(
-                      "Audio could not be enabled. Try the speaker control again.",
-                      "error",
-                    ),
-                  );
-                setSoundEnabled((v) => !v);
+                setMobile(false);
+                setCharacterPicker(true);
               }}
             >
-              {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+              <img
+                src={characterFor(data.user)?.image}
+                alt=""
+                width={36}
+                height={36}
+              />
+              Choose character
             </button>
-            {demo && (
-              <button
-                className="persona-trigger"
-                aria-label={`Switch persona · ${user.name}`}
-                onClick={() => setLauncher(true)}
-              >
-                <Avatar name={user.name} player={data?.user || user} small />
+          )}
+          <div className="sidebar-bottom">
+            <div className="field-note">
+              <ShieldCheck size={20} />
+              <span>
+                Read the wild.
+                <br />
+                <strong>Leave no one behind.</strong>
+              </span>
+            </div>
+            <div className="squad-card">
+              <span className="eyebrow">
+                {squad ? "YOUR PARTY" : "YOUR CLEARANCE"}
+              </span>
+              <div>
+                <span className="squad-mark">{squad?.code || "CMD"}</span>
                 <span>
-                  {user.name}
-                  <small>{role.replaceAll("_", " ")}</small>
+                  <strong>{squad?.name || roleNames[role]}</strong>
+                  <small>
+                    {playerMode
+                      ? `${characterFor(data?.user || user)?.name || "Explorer"} · Full stack`
+                      : user.assignment}
+                  </small>
                 </span>
+              </div>
+            </div>
+            <div className="sidebar-footer">
+              <span>
+                <span className="status-dot" />
+                CAMP SIGNAL ACTIVE
+              </span>
+              <span>v1.0</span>
+            </div>
+          </div>
+        </aside>
+        <div className="workspace">
+          <header
+            className={`topbar ${role === "GAMER" ? "player-topbar" : ""}`}
+          >
+            <div className="breadcrumbs">
+              <button
+                className="icon-btn menu-toggle"
+                ref={!playerMode ? playerNavigationTrigger : undefined}
+                aria-label="Open navigation"
+                aria-expanded={mobile}
+                aria-controls="workspace-navigation"
+                onClick={() => setMobile(true)}
+              >
+                <Menu size={20} />
               </button>
+              {role === "GAMER" ? (
+                <PlayerHeader player={headerPlayer} />
+              ) : (
+                <>
+                  <Command size={16} />
+                  <span>Expedition</span>
+                  <strong>{current[2]}</strong>
+                </>
+              )}
+            </div>
+            <div className="topbar-right">
+              {role === "GAMER" && (
+                <PlayerHeader
+                  player={headerPlayer}
+                  part="rewards"
+                  teamName={squad?.name}
+                />
+              )}
+              {role !== "GAMER" && (
+                <span className="server-clock">
+                  <span className="status-dot" />
+                  {time}
+                  <small>IST</small>
+                </span>
+              )}
+              <Link
+                className="icon-btn notification-bell"
+                href={`/${prefix(role)}/notifications`}
+                aria-label={`Notifications (${data?.notifications?.unread || 0} unread)`}
+                title="Notifications"
+              >
+                <Bell size={18} />
+                {data?.notifications?.unread > 0 && (
+                  <span aria-hidden="true">
+                    {data.notifications.unread > 99
+                      ? "99+"
+                      : data.notifications.unread}
+                  </span>
+                )}
+              </Link>
+              <button
+                className="icon-btn sound-toggle"
+                aria-label={
+                  soundEnabled
+                    ? "Mute client alerts"
+                    : "Enable client alert sound"
+                }
+                title={
+                  soundEnabled
+                    ? "Mute client alerts"
+                    : "Enable client alert sound"
+                }
+                onClick={() => {
+                  if (!audio.current) {
+                    const Audio =
+                      window.AudioContext || window.webkitAudioContext;
+                    if (!Audio) {
+                      notify(
+                        "Audio alerts are unavailable in this browser.",
+                        "error",
+                      );
+                      return;
+                    }
+                    audio.current = new Audio();
+                  }
+                  audio.current
+                    .resume()
+                    .catch(() =>
+                      notify(
+                        "Audio could not be enabled. Try the speaker control again.",
+                        "error",
+                      ),
+                    );
+                  setSoundEnabled((v) => !v);
+                }}
+              >
+                {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+              </button>
+              {demo && (
+                <button
+                  className="persona-trigger"
+                  aria-label={`Switch persona · ${user.name}`}
+                  onClick={() => setLauncher(true)}
+                >
+                  <Avatar name={user.name} player={data?.user || user} small />
+                  <span>
+                    {user.name}
+                    <small>{role.replaceAll("_", " ")}</small>
+                  </span>
+                </button>
+              )}
+              <button
+                className="icon-btn logout"
+                title="Sign out"
+                aria-label="Sign out"
+                disabled={switching}
+                onClick={logout}
+              >
+                <LogOut size={16} />
+              </button>
+            </div>
+          </header>
+          {error && (
+            <div className="connection-error">
+              <AlertTriangle size={16} />
+              {error}
+              <button onClick={() => refresh(true)}>Retry</button>
+            </div>
+          )}
+          <main id="main-content" className="main-content" data-screen={screen}>
+            {children}
+          </main>
+          <footer className="workspace-footer">
+            <span>
+              <Wifi size={12} /> CAMP RADIO CONNECTED <i /> ASIA / KOLKATA
+            </span>
+            <span>EXPLORE. ADAPT. SURVIVE.</span>
+            <span>CODEWILD © 2026</span>
+          </footer>
+        </div>
+        {launcher && (
+          <Modal
+            title="Switch persona"
+            kicker="29 PERSONAS / FIVE EXPEDITIONS"
+            close={() => setLauncher(false)}
+          >
+            {launcherContent}
+          </Modal>
+        )}
+        {characterPicker && data && (
+          <CharacterPicker
+            data={data}
+            act={act}
+            close={() => setCharacterPicker(false)}
+          />
+        )}
+        {data && !launcher && !characterPicker && (
+          <TeamCompletionAnnouncements
+            key={`${data.user._id}:${data.user.teamId}`}
+            data={data}
+          />
+        )}
+        {toast && (
+          <div
+            role={
+              toast.type === "error" || toast.type === "warning"
+                ? "alert"
+                : "status"
+            }
+            className={`toast ${toast.type}`}
+          >
+            <span>
+              {toast.type === "error" || toast.type === "warning" ? (
+                <AlertTriangle size={18} />
+              ) : (
+                <Check size={18} />
+              )}
+            </span>
+            {toast.message}
+            {toast.href && (
+              <Link
+                className="toast-action"
+                href={toast.href}
+                onClick={() => setToast(null)}
+              >
+                {toast.label}
+              </Link>
             )}
             <button
-              className="icon-btn logout"
-              title="Sign out"
-              aria-label="Sign out"
-              disabled={switching}
-              onClick={logout}
+              className="icon-btn"
+              aria-label="Dismiss notification"
+              onClick={() => setToast(null)}
             >
-              <LogOut size={16} />
+              <X size={16} />
             </button>
           </div>
-        </header>
-        {error && (
-          <div className="connection-error">
-            <AlertTriangle size={16} />
-            {error}
-            <button onClick={refresh}>Retry</button>
-          </div>
         )}
-        {data?.events[0] && (
-          <div className="broadcast-banner">
-            <Zap size={17} />
-            <strong>JUNGLE DISPATCH</strong>
-            <span>
-              {data.events[0].title} · {data.events[0].description}
-            </span>
-            <small>
-              {new Date(data.events[0].broadcastAt).toLocaleTimeString(
-                "en-GB",
-                { timeZone: "Asia/Kolkata" },
-              )}{" "}
-              IST
-            </small>
-          </div>
-        )}
-        {data?.roster.some(
-          (u) => u.drops >= 3 && (role !== "GAMER" || u.teamId === user.teamId),
-        ) && (
-          <div className="warning-banner">
-            <AlertTriangle size={17} />
-            Support alert:{" "}
-            {data.roster
-              .filter(
-                (u) =>
-                  u.drops >= 3 &&
-                  (role !== "GAMER" || u.teamId === user.teamId),
-              )
-              .map((u) => u.name)
-              .join(", ")}{" "}
-            reached three consecutive HP drops. A Commander check-in is needed.
-          </div>
-        )}
-        {data?.rescues.some(
-          (r) => r.status !== "CLOSED" && r.userId === user._id,
-        ) && (
-          <div className="warning-banner">
-            RESCUE PROTOCOL ACTIVE · Your mission continues. Work with your
-            Commander on a remediation plan.
-          </div>
-        )}
-        <main id="main-content" className="main-content" data-screen={screen}>
-          {data &&
-            role === "GAMER" &&
-            screen !== "dashboard" &&
-            !weekOneMode && (
-              <div className="field-brief" aria-label="Expedition briefing">
-                <span>
-                  <Radio size={13} /> {squad?.name || "Your expedition"}
-                </span>
-                <span>
-                  <ShieldCheck size={13} />{" "}
-                  {
-                    data.progress.filter((p) => p.userId === data.user._id)
-                      .length
-                  }
-                  /{data.modules.length} encounters cleared
-                </span>
-                <Link href="/gamer/dashboard">
-                  <Radar size={13} /> Return to map
-                </Link>
-              </div>
-            )}
-          {!data ? (
-            <Busy />
-          ) : screen === "ide" ? (
-            <CodeLab data={data} act={act} notify={notify} />
-          ) : role === "GAMER" ? (
-            <GamerView screen={screen} data={data} act={act} now={clock} />
-          ) : (
-            <StaffView screen={screen} data={data} act={act} now={clock} />
-          )}
-        </main>
-        <footer className="workspace-footer">
-          <span>
-            <Wifi size={12} /> CAMP RADIO CONNECTED <i /> ASIA / KOLKATA
-          </span>
-          <span>EXPLORE. ADAPT. SURVIVE.</span>
-          <span>CODEWILD © 2026</span>
-        </footer>
       </div>
-      {launcher && (
-        <Modal
-          title="Switch persona"
-          kicker="29 PERSONAS / FIVE EXPEDITIONS"
-          close={() => setLauncher(false)}
-        >
-          {launcherContent}
-        </Modal>
-      )}
-      {characterPicker && data && (
-        <CharacterPicker
-          data={data}
-          act={act}
-          close={() => setCharacterPicker(false)}
-        />
-      )}
-      {data && !launcher && !characterPicker && (
-        <TeamCompletionAnnouncements
-          key={`${data.user._id}:${data.user.teamId}`}
-          data={data}
-        />
-      )}
-      {toast && (
-        <div role="status" className={`toast ${toast.type}`}>
-          <span>
-            {toast.type === "error" ? (
-              <AlertTriangle size={18} />
-            ) : (
-              <Check size={18} />
-            )}
-          </span>
-          {toast.message}
-          <button
-            className="icon-btn"
-            aria-label="Dismiss notification"
-            onClick={() => setToast(null)}
-          >
-            <X size={16} />
-          </button>
-        </div>
-      )}
-    </div>
+      {showEntryLoading && <GameLoadingScreen onCancel={logout} />}
+    </WorkspaceContext.Provider>
   );
 }

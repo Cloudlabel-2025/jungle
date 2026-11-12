@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Fictional Team A Sprint 4 isolated UAT rehearsal</title>
+<style>body{font:16px/1.5 system-ui;max-width:1050px;margin:2em auto;padding:0 1em;color:#18332d}table{border-collapse:collapse;width:100%}th,td{border:1px solid #b7c8c1;padding:.65em;text-align:left;vertical-align:top}th{background:#e8f2ee}code{overflow-wrap:anywhere}</style>
+<h1>Fictional Team A Sprint 4 isolated UAT rehearsal</h1>
+<p>10 November 2026. Sprint 4 loaded through the normal CC draft, approval and load flow in a new disposable cohort. The fixture used a synthetic closure marker solely to exercise sequencing while the actual isolated Sprint 3 record remains pending CC defences. The existing Sprint 3 record was byte-identical before and after. Key 3 and Key 4 remain pending.</p>
+<p>The verified import contains the original 20 task IDs, 9 TT1 and 11 TT2 cards, 53.5 planned hours, seven acceptance gates, and one 2.5-hour Client’s Chair card per Gamer. The task panel now displays completion criteria, evidence requirements and planned UAT metadata. Dates and durations remain planning data. <a href="../sprint4-isolated-import.json">Imported template and verified card states</a> · <a href="../../scripts/rehearse-part-b-sprint4.mjs">Import rehearsal runner</a></p>
+<p>The browser and full Sprint 1–2 API verifier used the restored disposable Alumni Connect gateway at <code>http://127.0.0.1:55599/</code>, now stopped. Candidate SHA-256 <code>4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc</code>. The API verifier passed 16 field negatives, three configured country formats, persistence, duplicate constraints, role guards and clean reset before the browser run.</p>
+<h2>Client’s Chair rehearsal</h2>
+<table><thead><tr><th>Card and planned session</th><th>Rehearsal result</th><th>Observed evidence</th></tr></thead><tbody>
+<tr><td>UAT-01 · A · Monday</td><td>PASS, scenario</td><td>Administrator created Anika Rao, received a server-generated ID, and edited city to UAT City. <a href="01-normal-create.jpg">Create</a> · <a href="02-normal-edit.jpg">Edit</a></td></tr>
+<tr><td>UAT-02 · B · Tuesday</td><td>PASS, sampled scenarios</td><td>Browser rejected the wrong country postcode, missing employment details, normalized duplicate email and normalized duplicate registration. API suite covered the wider field matrix. <a href="03-invalid-postcode.jpg">Postcode</a> · <a href="04-employment-validation.jpg">Employment</a> · <a href="05-duplicate-email.jpg">Email</a> · <a href="06-duplicate-registration.jpg">Registration</a></td></tr>
+<tr><td>UAT-03 · C · Wednesday</td><td>PASS, scenario</td><td>Signed out, refreshed, signed in, and reopened the created profile. The saved city and record identity persisted. <a href="07-cross-session.jpg">Reopened record</a></td></tr>
+<tr><td>UAT-04 · D · Thursday</td><td>PASS, scenario</td><td>Alumnus saw own profile AL-QA-001 with no Create/Edit controls. Same-gateway API denied non-admin Create/Edit and other-profile reads. <a href="08-alumnus-permissions.jpg">Alumnus view</a></td></tr>
+<tr><td>UAT-05 · E · Friday</td><td>BLOCKED, prerequisite</td><td>Engine rejected starting UAT-05 until OP-13 is accepted. A separate preview smoke confirmed administrator login, directory of 21 after the fictional create, and the repaired saved profile. It is preview evidence only. <a href="09-restored-candidate-smoke.jpg">Candidate smoke</a> · <a href="../sprint4-isolated-import.json">Prerequisite result</a></td></tr>
+</tbody></table>
+<p>These are accelerated QA scenarios conducted by the assistant. The four cards started in the workflow rehearsal remain Working. The frozen requirement for five independent 2.5-hour Gamer sessions and attributable findings remains open.</p>
+<h2>Sprint 4 gates</h2>
+<table><thead><tr><th>Gate</th><th>Readiness for CC</th></tr></thead><tbody>
+<tr><td>S4-AC-01 Functional</td><td>Local evidence ready for sampled positive, negative, validation and restricted-access behavior. Sampled runs found no failure requiring a repair retest.</td></tr>
+<tr><td>S4-AC-02 Non-functional</td><td>Pending approved criteria and measured performance, reliability, accessibility, usability and other required evidence. Sampled authorization checks are available.</td></tr>
+<tr><td>S4-AC-03 System/E2E</td><td>Local evidence ready for the tested Create/Edit, errors and persistence journeys.</td></tr>
+<tr><td>S4-AC-04 Five independent UAT sessions</td><td>Blocked. Capture five independent Gamer outcomes at the protected sessions, including UAT-05 after OP-13.</td></tr>
+<tr><td>S4-AC-05 Defect disposition</td><td>Pending full test and defect review, retests of fixes and CC decisions on any minor deferrals.</td></tr>
+<tr><td>S4-AC-06 Earlier 21 gates</td><td>Blocked. Sprint 1–2 API regression passed and Sprint 3 technical evidence exists. Sprint 3 defence and CC acceptance are pending, so the 21-gate requirement remains open. Verify the QA-15 three-hour target with reusable evidence.</td></tr>
+<tr><td>S4-AC-07 Final release and Key 4</td><td>Blocked. OP-13, final UAT, all other gates and CC acceptance are required. Candidate preview smoke passed.</td></tr>
+</tbody></table>
+<p>Real Curriculum resources still need attaching. The isolated import used placeholder resource links. The existing Help Pass workflow was reused as a dependency. Donor sponsorship and earned guided AI Help rules were outside the exercised import and UAT scenarios and remain outstanding. Seven focused pilot checks passed and the edited JSX compiled. The live game was untouched.</p>
+</html>

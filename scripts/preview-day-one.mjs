@@ -10,6 +10,9 @@ import { weekOneAction, weekOneSnapshot } from "../lib/week-one.js";
 import { fixtureConfig } from "../tests/day-one-fixture.mjs";
 import { localParts } from "../lib/day-one-rules.js";
 import { seed } from "../lib/seed.js";
+import { publishFixtureRules } from "../tests/week-one-program-fixture.mjs";
+
+const fresh = process.argv.includes("--qa-fresh");
 
 const replica = await MongoMemoryReplSet.create({
   binary: { version: "7.0.24" },
@@ -55,91 +58,94 @@ try {
     { revision: 0, config },
     new Date(now.getTime() - 4 * 3600000),
   );
-  for (const [action, extra] of [
-    ["open", {}],
-    [
-      "publish-agenda",
-      {
-        text: "Independent research, class orientation, Research Showcase and end-of-day reflection.",
-      },
-    ],
-  ]) {
-    await weekOneAction(
-      cc,
-      action,
-      { day: 1, revision: (await weekOneSnapshot(cc)).revision, ...extra },
-      new Date(config.officialStart),
-    );
-  }
-  for (let i = 0; i < gamers.length; i++) {
-    const g = gamers[i],
-      early = new Date(now.getTime() - 3 * 3600000),
-      started = new Date(now.getTime() - 45 * 60000);
-    await call(g, "clock", {}, early);
-    await call(g, "agenda-view", {}, early);
-    await call(g, "agenda-ack", {}, early);
-    if (i % 7 === 0) continue;
-    await call(
-      g,
-      "sod",
-      {
-        text: "I will investigate the question, compare reliable sources and verify AI claims.",
-      },
-      early,
-    );
-    await call(g, "genre", { genreId: config.genres[i % 4].id }, early);
-    await call(g, "acknowledge", {}, early);
-    await call(g, "start", {}, started);
-    if (i % 6 === 0) continue;
-    await call(
-      g,
-      "submit",
-      { url: `https://chatgpt.com/share/preview-evidence-${i + 1}` },
-      new Date(now.getTime() - 5 * 60000),
-    );
-    const r = await models.DayOneRecord.findOne({ userId: g._id });
-    if (i % 5 === 0) {
-      await call(cc, "verify", {
-        userId: g._id,
-        revisionId: r.data.submissions[0].id,
-        status: "INACCESSIBLE",
-        reason: "Demo verification: sharing permissions require correction.",
-      });
-      continue;
+  await publishFixtureRules(cc, new Date(config.officialStart));
+  if (!fresh) {
+    for (const [action, extra] of [
+      ["open", {}],
+      [
+        "publish-agenda",
+        {
+          text: "Independent research, class orientation, Research Showcase and end-of-day reflection.",
+        },
+      ],
+    ]) {
+      await weekOneAction(
+        cc,
+        action,
+        { day: 1, revision: (await weekOneSnapshot(cc)).revision, ...extra },
+        new Date(config.officialStart),
+      );
     }
-    if (i % 4 !== 0) {
-      await call(cc, "verify", {
-        userId: g._id,
-        revisionId: r.data.submissions[0].id,
-        status: "VERIFIED",
-        reason: "Demo verification: shared conversation opened successfully.",
-      });
-      if (i % 3 !== 0) {
-        await call(cc, "assessment", {
+    for (let i = 0; i < gamers.length; i++) {
+      const g = gamers[i],
+        early = new Date(now.getTime() - 3 * 3600000),
+        started = new Date(now.getTime() - 45 * 60000);
+      await call(g, "clock", {}, early);
+      await call(g, "agenda-view", {}, early);
+      await call(g, "agenda-ack", {}, early);
+      if (i % 7 === 0) continue;
+      await call(
+        g,
+        "sod",
+        {
+          text: "I will investigate the question, compare reliable sources and verify AI claims.",
+        },
+        early,
+      );
+      await call(g, "genre", { genreId: config.genres[i % 4].id }, early);
+      await call(g, "acknowledge", {}, early);
+      await call(g, "start", {}, started);
+      if (i % 6 === 0) continue;
+      await call(
+        g,
+        "submit",
+        { url: `https://chatgpt.com/share/preview-evidence-${i + 1}` },
+        new Date(now.getTime() - 5 * 60000),
+      );
+      const r = await models.DayOneRecord.findOne({ userId: g._id });
+      if (i % 5 === 0) {
+        await call(cc, "verify", {
           userId: g._id,
-          ai: [3, 3, 2, 3, 4],
-          human: [3, 4, 3, 3, 4],
-          notes:
-            "Demo assessment evidence supports a clear investigation with verifiable sources.",
+          revisionId: r.data.submissions[0].id,
+          status: "INACCESSIBLE",
+          reason: "Demo verification: sharing permissions require correction.",
         });
-        await call(cc, "approve", { userId: g._id });
+        continue;
       }
+      if (i % 4 !== 0) {
+        await call(cc, "verify", {
+          userId: g._id,
+          revisionId: r.data.submissions[0].id,
+          status: "VERIFIED",
+          reason: "Demo verification: shared conversation opened successfully.",
+        });
+        if (i % 3 !== 0) {
+          await call(cc, "assessment", {
+            userId: g._id,
+            ai: [3, 3, 2, 3, 4],
+            human: [3, 4, 3, 3, 4],
+            notes:
+              "Demo assessment evidence supports a clear investigation with verifiable sources.",
+          });
+          await call(cc, "approve", { userId: g._id });
+        }
+      }
+      if (i % 3 !== 0)
+        await call(g, "eod", {
+          text: "I explored multiple sources and learned how to challenge and verify AI answers.",
+          mode: "TEXT",
+        });
+      await call(g, "class");
     }
-    if (i % 3 !== 0)
-      await call(g, "eod", {
-        text: "I explored multiple sources and learned how to challenge and verify AI answers.",
-        mode: "TEXT",
-      });
-    await call(g, "class");
+    // Ensure the first demo Gamer is useful for checking the full My Day layout.
+    const g = gamers[0];
+    await call(g, "sod", {
+      text: "Explore how discoveries about exoplanets are verified using independent observations.",
+    });
+    await call(g, "genre", { genreId: "genre-1" });
+    await call(g, "acknowledge");
+    await call(g, "start");
   }
-  // Ensure the first demo Gamer is useful for checking the full My Day layout.
-  const g = gamers[0];
-  await call(g, "sod", {
-    text: "Explore how discoveries about exoplanets are verified using independent observations.",
-  });
-  await call(g, "genre", { genreId: "genre-1" });
-  await call(g, "acknowledge");
-  await call(g, "start");
   server = spawn(
     process.execPath,
     [
@@ -168,6 +174,10 @@ try {
   console.log(
     "Disposable Day 1 preview: http://127.0.0.1:3101/gamer/dashboard",
   );
+  if (fresh)
+    console.log(
+      "Fresh QA state: Day 1 PREPARED, rules published, no learner attempts. Open Day 1 as CC through the browser. Production data is not connected.",
+    );
 } catch (e) {
   console.error(e);
   await close();

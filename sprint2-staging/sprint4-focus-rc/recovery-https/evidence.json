@@ -1,0 +1,159 @@
+{
+  "candidateSha256": "dfef38d57399aeb1785eb5f7e01fa4f3b561ec576943c958f70ea53e8f17a419",
+  "startedAt": "2026-11-10T06:14:26.777Z",
+  "tls": {
+    "generatedChain": {
+      "rootSubject": "CN=CODEWILD Disposable QA CA",
+      "leafIssuer": "CN=CODEWILD Disposable QA CA",
+      "leafFingerprint256": "AC:D6:7B:52:A6:CC:EF:E4:6F:BF:51:FD:76:0F:85:67:EA:19:96:5C:21:E0:EE:7B:85:F5:1C:4A:31:B6:F0:7A"
+    },
+    "curlProbeError": "curl: (60) schannel: the certificate chain is incomplete\r\nMore details here: https://curl.se/docs/sslcerts.html\r\n\r\ncurl failed to verify the legitimacy of the server and therefore could not\r\nestablish a secure connection to it. To learn more about this situation and\r\nhow to fix it, please visit the webpage mentioned above.",
+    "protocol": "TLSv1.3",
+    "authorized": true,
+    "certificateFingerprint256": "AC:D6:7B:52:A6:CC:EF:E4:6F:BF:51:FD:76:0F:85:67:EA:19:96:5C:21:E0:EE:7B:85:F5:1C:4A:31:B6:F0:7A",
+    "loopbackUrl": "https://127.0.0.1:3190",
+    "trust": "Ephemeral QA CA explicitly trusted by test client",
+    "transport": "In-process TLS socket pair at the gateway; HTTP loopback upstream",
+    "setCookieRewritten": false,
+    "htmlCspPresent": false,
+    "sameOriginLoginWithOriginPreserved": 403,
+    "originMapping": "For the remaining checks, exact gateway Origin mapped to the pinned loopback backend Origin. Other origins and Set-Cookie pass through.",
+    "cookie": {
+      "httpOnly": true,
+      "sameSiteStrict": true,
+      "secure": false,
+      "path": "/",
+      "maxAgeSeconds": 3600
+    },
+    "sessionCacheControl": "no-store",
+    "logoutClearsCookie": true
+  },
+  "session": [
+    {
+      "name": "Health over certificate-verified HTTPS",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Candidate HTML over HTTPS",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Foreign-origin sign-in rejected",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "name": "Administrator sign-in",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Signed-in session",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Unsigned session rejected",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "name": "Seed profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Create retained record",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "name": "Save retained edit",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Edit existing seed profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Later edit after snapshot",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Sign out",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Logged-out session rejected",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "name": "Administrator sign-in",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Pre-restart session rejected after recovery",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "name": "Administrator sign-in",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Reopen retained profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Reopen edited seed",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Restored unique constraints reject duplicate",
+      "expected": 409,
+      "actual": 409
+    }
+  ],
+  "backup": {
+    "at": "2026-11-10T06:14:32.397Z",
+    "records": 21,
+    "indexes": [
+      "_id_",
+      "email_1",
+      "registration_1"
+    ],
+    "bytes": 11259,
+    "sha256": "78959b4660551c39e3462086a77cd4db36005de75110198491488dc67d82033b",
+    "exportMs": 54
+  },
+  "restore": {
+    "recoveredRecords": 21,
+    "allDocumentsMatch": true,
+    "indexesMatch": true,
+    "applyMs": 15,
+    "relaunchThroughVerificationMs": 1473,
+    "retained": {
+      "id": "AL-68c87f90-aff1-4d3b-b4ab-7ce3b3d6a891",
+      "city": "Retained QA City",
+      "createdAt": "2026-11-10T06:14:32.247Z",
+      "modifiedAt": "2026-11-10T06:14:32.308Z"
+    },
+    "existing": {
+      "id": "AL-QA-001",
+      "city": "Updated Seed QA City",
+      "modifiedAt": "2026-11-10T06:14:32.377Z"
+    },
+    "laterEditExcluded": true
+  }
+}

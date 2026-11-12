@@ -1,0 +1,48 @@
+PART B BROWSER VERIFICATION — 12 NOVEMBER 2026
+
+Outcome
+Executed the application handoffs through the actual login screens, role pages, forms, file choosers and downloads in the ChatGPT in-app browser. The run covers Gamer, assigned MC, CC, a persona-only MC assessor and an unrelated Gamer. Nineteen scoped browser observations are in browser-results.json. These are synthetic platform-control checks, not independent student UAT.
+
+Environment and fixture boundary
+Local production build at http://localhost:3188 with a disposable MongoDB replica set. Five fictional Gamers in one team and five fictional authorised staff. The launcher does not read .env.local; normal Next.js build/start configuration loading still applies. Explicit child-process overrides select the disposable database, a random session secret and an empty Blob token. No external AI provider was used. There was no background notification worker. Future fixture runs also explicitly clear notification destinations. A server-only virtual clock accelerated programme dates; browser time was not overridden.
+
+Prior sprint acceptances, other technical cards and completed SDLC checkpoints were seeded to test representative handoffs without replaying weeks of learner work. DB-09, QA-13, UAT-01 and DEMO-01 were started/submitted via the browser; their independent final reviews were also completed via the browser. Other accepted cards are fixture setup, not executed student development. Full five-team capacity remains covered by automated tests rather than this one-team browser run.
+
+Browser execution
+1. Sprint 3: Gamer started DB-09, attached attributed evidence and submitted it. MC saw it in the independent review queue and accepted it. CC acceptance before seven gates was rejected. CC recorded seven explicitly synthetic gates and then Key 3.
+2. Sprint 4: Gamer retrieved task-specific UAT guidance, recorded an explicit FAIL recommendation and submitted UAT-01 plus QA-13. MC reviewed task completion independently; this did not grant client acceptance. A CC FAIL at AC-4 blocked acceptance despite the other six passing records. After a new synthetic retest record, CC recorded Key 4. Only the Monday UAT card was performed; the other four sessions and real 2.5-hour protected activity remain manual.
+3. Sprint 5: Gamer submitted DEMO-01 preparation and MC accepted it. MC used the real JSON upload control to request and download the Thursday export. The file contains five aliased dossiers with thirteen criterion rows each. A synthetic external advisory was imported as AWAITING_HUMAN_REVIEW v1. A passing defence before question approval was rejected. MC review produced AWAITING_CC_APPROVAL v2; CC approved that exact version.
+4. Final Friday: CC published the five-assessor arena plan, entered five synthetic five-minute witness outcomes linked to approved version 2, recorded seven gates and received Key 5. Actual human demo/defence ability and real student-app behavior were not assessed.
+5. Optional Admin Chair: an attempt before the mandatory defence was rejected. CC booked the ten-minute reviewer slot, then recorded exactly three evidenced points. The persisted records and downloaded Passport show CORE 100 and ADMIN_CHAIR +3 separately. No actual student-code change was performed.
+6. Recognition/reporting: CC recorded Systems Thinker and one DEMO-01 showcase selection, approved a fictional thirteen-criterion profile and core results, and downloaded the private Passport/certificate HTML drafts. Passport content contains two page sections and separates score/bonus. Actual print/PDF layout was not certified. The browser URL policy disallowed opening local file URLs; no workaround or bypass was attempted.
+7. Private storage: the actual browser upload control returned 'Private file storage is not configured.' The negative test used a header-only probe, not a real issued report; the server rejected the upload intent before examining any file bytes. Upload verification, MC document review, CC issue, correction and learner/private-download round trip remain blocked on a dedicated configured test store and real compliant PDFs.
+8. Phase 2: MC staged twenty Level 1 assignments; CC approved the workgroup; the assigned Gamer submitted EX1-01; CC accepted it. Nineteen other Level 1 cards and Levels 2/3 were not executed in this browser session. Actual event/payment/reconciliation delivery remains student-app work.
+9. Privacy: a persona-only MC assessor saw arena 4/Gamer 3 approved questions and zero general team tasks. Gamer 1 saw neither staff questions nor Gamer 0's optional assignments/report. Their own report remained 'Awaiting assessed completion and CC issuance.'
+
+Defect and retest
+PB-BR-001: an upload failure displayed the previous global 'Saved and verified by the server' message beside the error. Fixed components/PilotWorkspace.js to suppress the global success notice while an error is active.
+Retest on a fresh production build: successful profile save followed by the same failing private upload. Observed errorVisible=true and staleSuccessCount=0. Evidence: s5-storage-blocked.png (before), s5-storage-feedback-fixed.png (after). No database/source-rule bypass was introduced.
+
+Test harness corrections
+Corrected Windows file URL handling for the Node preload and preserved Date static methods/name for Next.js/Mongoose. The browser checkpoint was exported and restored after the UI fix/rebuild. The first snapshot omitted the arena Policy collection, so the observed plan was replayed through CC's browser control; future snapshots include PilotPolicy. These were test-harness issues, not reported as application defects. The restored clock was advanced for subsequent observations. No account or provider secrets are included in the evidence artifacts.
+
+Validation
+- Production build after PB-BR-001: PASS, build.txt.
+- Part B automated regression after the fix: 32 passed, 0 failed, 0 skipped; ../part-b-focused-regression.txt.
+- Browser observations checked against persisted disposable outcomes and downloaded artifacts: scripts/summarize-part-b-browser.mjs.
+- Final captured browser console: no warnings/errors, browser-console.json. Intentional pre-fix negative responses and launcher failures are documented above.
+- Verification register: ../part-b-manual-verification.csv, all 143 original rows retained, with browser_result, browser_coverage and browser_evidence. Historical PASS/FAIL/BLOCKED values and independent-signoff status were preserved.
+
+Still manual / external
+- All four team-specific fault blueprints, controlled injection, repair/rollback, confidentiality and original incident operator sign-off on real isolated student apps.
+- All five protected UAT sessions, real defect repair/retests and measured quality criteria; QA-15 (21 checks/3 hours) and QA-18 (28 checks/4 hours) feasibility.
+- Actual persona journeys and private defences, five simultaneous staffed rooms, equal question difficulty, accessibility and final MC/CC assessment.
+- Approved external AI with actual sanitised sources, prompt-injection and missing-source behavior in that tool, and meaningful human question content approval.
+- Actual Admin Chair implementation/config change, comparable briefs, cross-layer verification, rollback and independent defence; original FF-ADV cases still require operator sign-off.
+- All award categories/overrides/ties, four team awards, GOAT, five showcase finalists and voluntary ungraded Campfire.
+- Rendered final learner PDFs, signatures and exact page/wording checks; dedicated private Blob round trip, authorisation and file hashes; complete report review/issue/correction/download.
+- Other optional cards/levels, real sandbox integrations/payments/webhooks, final-seat concurrency/reconciliation and cross-team codebase governance.
+- Full accelerated Weeks 1–6/five-team/25-Gamer browser rehearsal, independent students and production/deployment/non-functional sign-off.
+
+Evidence interpretation
+Screenshots document visible checkpoints and surrounding UI; some viewport captures show context rather than the exact status line. Persisted outcome JSON and the recorded visible observations in browser-results.json supply the corresponding state detail. No real student competence, client acceptance, external storage success or operational staffing is inferred from the synthetic records.

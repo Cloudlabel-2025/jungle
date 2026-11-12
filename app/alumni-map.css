@@ -1,0 +1,19 @@
+.alumni-mission { display: grid; gap: 20px; }
+.alumni-mission h3 { margin: 0 0 10px; }
+.alumni-mission h3 small { display: inline-block; margin-left: 10px; font-size: .85rem; font-weight: 400; color: #c4cfbd; }
+.alumni-mission p { line-height: 1.6; }
+.alumni-mission > .detail-copy { margin: 0; }
+.alumni-mission > .badge { justify-self: start; }
+.alumni-mission > .btn { justify-self: start; }
+.alumni-unlock { display: flex; gap: 10px; padding: 16px; border-left: 2px solid #b5f36c; background: #152e23; }
+.alumni-unlock svg { flex-shrink: 0; margin-top: 3px; }
+.alumni-task-list, .alumni-checks { list-style: none; padding: 0; margin: 12px 0; }
+.alumni-task-list li { display: grid; gap: 6px; padding: 12px 0; border-bottom: 1px solid #c4d5b329; }
+.alumni-task-list span, .alumni-task-list small, .alumni-checks small { color: #c4cfbd; }
+.alumni-checks li { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid #c4d5b329; line-height: 1.5; }
+.alumni-checks svg { flex-shrink: 0; margin-top: 3px; color: #b5f36c; }
+.alumni-checks small { display: block; margin-top: 6px; }
+.alumni-history-task { padding: 14px 0; border-bottom: 1px solid #c4d5b329; }
+.alumni-history-task summary { cursor: pointer; line-height: 1.6; }
+.alumni-mission summary { cursor: pointer; }
+@media(max-width:600px) { .alumni-mission h3 small { display: block; margin: 6px 0 0; } }

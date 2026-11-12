@@ -1,0 +1,50 @@
+{
+  "url": "https://127.0.0.1:3193",
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "startedAt": "2026-11-10T07:41:54.685Z",
+  "stopAt": "2026-11-10T11:41:54.685Z",
+  "accounts": [
+    {
+      "slot": "A",
+      "card": "UAT-01",
+      "role": "admin",
+      "username": "uat-a@example.invalid",
+      "signIn": 200,
+      "directory": 200
+    },
+    {
+      "slot": "B",
+      "card": "UAT-02",
+      "role": "admin",
+      "username": "uat-b@example.invalid",
+      "signIn": 200,
+      "directory": 200
+    },
+    {
+      "slot": "C",
+      "card": "UAT-03",
+      "role": "admin",
+      "username": "uat-c@example.invalid",
+      "signIn": 200,
+      "directory": 200
+    },
+    {
+      "slot": "D",
+      "card": "UAT-04",
+      "role": "alumnus",
+      "alumniId": "AL-QA-001",
+      "username": "uat-d@example.invalid",
+      "signIn": 200,
+      "directory": 403
+    },
+    {
+      "slot": "E",
+      "card": "UAT-05",
+      "role": "admin",
+      "username": "uat-e@example.invalid",
+      "signIn": 200,
+      "directory": 200
+    }
+  ],
+  "windowsHttpsHealth": "ready"
+}

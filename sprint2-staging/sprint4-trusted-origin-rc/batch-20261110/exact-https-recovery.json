@@ -1,0 +1,136 @@
+{
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "startedAt": "2026-11-10T08:46:50.401Z",
+  "tls": {
+    "transport": "Certificate-validated localhost HTTPS using Windows trust",
+    "cookie": {
+      "httpOnly": true,
+      "sameSiteStrict": true,
+      "secure": true,
+      "path": "/",
+      "maxAgeSeconds": 3600
+    },
+    "sessionCacheControl": "no-store",
+    "logoutClearsCookie": true
+  },
+  "session": [
+    {
+      "name": "Source HTTPS health",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Administrator sign-in",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Signed-in session",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Unsigned session rejected",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "name": "Seed profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Create retained record",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "name": "Save retained edit",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Edit existing seed profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Later edit after snapshot",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Sign out",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Logged-out session rejected",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "name": "Administrator sign-in",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Pre-restart session rejected after recovery",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "name": "Administrator sign-in",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Reopen retained profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Reopen edited seed",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Restored unique constraints reject duplicate",
+      "expected": 409,
+      "actual": 409
+    }
+  ],
+  "backup": {
+    "at": "2026-11-10T08:46:52.219Z",
+    "records": 21,
+    "indexes": [
+      "_id_",
+      "email_1",
+      "registration_1"
+    ],
+    "bytes": 11259,
+    "sha256": "6a61b9653be0cdbb29102e2a243daa0185b47863880ba81c4b83e8e3a5012e03",
+    "exportMs": 21
+  },
+  "restore": {
+    "recoveredRecords": 21,
+    "allDocumentsMatch": true,
+    "indexesMatch": true,
+    "applyMs": 4,
+    "relaunchThroughVerificationMs": 926,
+    "retained": {
+      "id": "AL-83df64e5-6cb9-417c-bdbe-da8412e58dec",
+      "city": "Retained QA City",
+      "createdAt": "2026-11-10T08:46:52.177Z",
+      "modifiedAt": "2026-11-10T08:46:52.192Z"
+    },
+    "existing": {
+      "id": "AL-QA-001",
+      "city": "Updated Seed QA City",
+      "modifiedAt": "2026-11-10T08:46:52.210Z"
+    },
+    "laterEditExcluded": true
+  },
+  "sourceUrl": "https://127.0.0.1:51521",
+  "restoreUrl": "https://127.0.0.1:56379"
+}

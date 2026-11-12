@@ -1,0 +1,88 @@
+CODEWILD PART B IMPLEMENTATION AUDIT
+Date: 12 November 2026
+Project: D:/Projects/Jungle (current working tree, including uncommitted changes)
+Source: C:/Users/sakth/Downloads/CODEWILD_PART_B_FROZEN_HANDOVER_06_NOV_2026.zip
+
+VERDICT
+Not completely implemented and independently accepted. Frozen content is integrated extensively, and the existing pilot tests pass, but there are concrete workflow gaps and substantial outstanding acceptance evidence. No defensible overall implementation percentage can be inferred from test counts.
+
+SCOPE AND METHOD
+Read the master DOCX text, integration/change registers, operating guides, frozen cards and checks, reporting specifications, and both nested source-pack inventories and QA requirements. Treated document instructions as requirements to compare, not instructions to execute patches or alter the project. Verified all 32 registered archive checksums and sizes. Compared bundled frozen content against the source archive. Reviewed engine/UI implementation and current acceptance records. Ran tests/pilot-*.test.mjs against a newly created disposable MongoDB replica set. No application source or existing acceptance statuses were changed.
+
+FRESH VERIFICATION
+- Pilot suite: 25 tests passed, 0 failed, 0 skipped; approximately 70 seconds.
+- Trace: artifacts/part-b-audit-2026-11-12-tests.txt.
+- Content/integrity evidence: artifacts/part-b-audit-2026-11-12-content.json.
+- Sprint 3: exact 20 task cards and 7 checks; 43 baseline hours.
+- Sprint 4: exact 20 task cards and 7 checks, including ownership, instructions, dependencies, hours, roles and evidence requirements.
+- Sprint 5: exact 20 task cards and 7 checks, including five distinct persona cards.
+- Final Friday: six bundled JSON references match source exactly.
+- Optional Phase 2: complete approved 60-card catalogue matches source exactly.
+- The 121 acceptance scenarios and expected results match the supplied catalogue.
+
+CONCRETE GAPS
+
+1. HIGH: Thursday export omits required evidence and criterion detail.
+   Source: 04_FINAL_FRIDAY/THURSDAY_TWO_LINKED_EXPORTS_TEMPLATE.json and FINAL_FRIDAY_OPERATOR_WORKTABLE.md.
+   Code: lib/pilot-engine.js:2246-2283.
+   Actual export includes aliases, commit SHA, persona, task IDs/statuses, core total and rubric version. It does not populate the required 13 criterion scores/maxima/evidence, task commit/test references, role rotation history, strengths/gaps, source artifact link, deployed test URL, prior-check evidence or known-defect dispositions. Downloading the complete reference template is not equivalent to exporting these actual learner/team records. Staff can supplement externally, but the generated export alone does not meet the frozen specification.
+
+2. HIGH: Administrator's Chair bonus can be recorded before mandatory demo/defence.
+   Source: nested PB-W6-ADV-ADMIN-01_Final_Friday_Config.json mandatory_prerequisites and timing; FF-ADV-12.
+   Code: lib/pilot-engine.js:2356-2373.
+   The handler checks CC permission, sprint/team membership, active state, voluntary participation, 0-5 bounds and duplication. It does not require the completed individual persona journey/private defence or validate the five individual criterion points, ten-minute session, isolated target and rollback evidence as structured inputs. Those evidence checks are currently delegated to the operator's URL/reason.
+   Fresh test evidence: tests/pilot-part-b.test.mjs:155-170 successfully records +5 on the Monday fixture before the test begins demo/witness acceptance at lines 184 onward. This is a verified ordering gap, despite the test passing its current assertions.
+
+3. HIGH: Imported questions lack a linked CC approval/version gate.
+   Source: FINAL_FRIDAY_OPERATOR_WORKTABLE.md; PB-QA-095.
+   Code: lib/pilot-engine.js:2298-2355; components/PilotWorkspace.js:1099-1140.
+   Import accepts 1-12 questions per Gamer, stores advisory questions as AWAITING_HUMAN_REVIEW, and correctly avoids automatic grading. A separate staff action records artifact URLs and a reason. It does not transition a particular imported question version through MC review and CC approval, and final-demo-witness does not require that approved version. Manual external approval may supply the process, but the application does not enforce or link it. Exactly three questions with the frozen Q1/Q2/Q3 purposes are also not validated by import.
+
+4. Reports and awards have supporting controls, with completion still dependent on manual work.
+   Code: lib/pilot-engine.js:2374-2494; README.md:19-23.
+   Awards record recommendations/CC decisions and enforce at most one criterion honour per Gamer. Selection of numerical highest-score specials and their source calculations is not performed by this handler; it accepts an operator-selected recipient and evidence. This requires witnessed manual verification for PB-QA-104/105/106.
+   Reports accept externally prepared PDFs, assigned-MC review and CC issue after core results, a passing witness and Key 5. The application does not generate or inspect the exact two-page Passport/wording. Manual preparation is a supported path, but actual compliant PDFs and a real storage round trip have not been established by simulated metadata tests. Do not describe the frozen report templates as delivered learner reports.
+
+WORKSTREAM ASSESSMENT
+PB01 Sprint 3: frozen tasks/checks integrated; team-specific fault mapping, confidentiality, injection/repair/rollback and operator sign-off remain incompletely verified. These act on student apps, not the CODEWILD platform.
+PB02/03 Sprint 4 cards/gates: content integrated; scheduled UAT and acceptance guards exist. All five protected independent sessions and complete prior-check/defect retests remain unverified.
+PB04 Testing guidance: discipline guidance and task-specific help controls exist; browser evidence has been recorded for several paths.
+PB05 Help rules: sponsorship, verified discovery/quest credit and carry-forward have automated coverage. Remaining exact cross-role/browser cases still need execution.
+PB06/07 Sprint 5: cards, prior-acceptance load guard, release-before-live-witness and Key 5 guards exist; complete real persona journeys and human sign-off remain open.
+PB08 Final Friday arenas: five distinct authorised assessors and time-window planning implemented. Actual simultaneous rooms, privacy, sequential candidates and staffing still need a witnessed rehearsal.
+PB09 Thursday AI: partial; see gaps 1 and 3. Manual external AI is the requested MVP approach, so absence of an OpenAI API integration is not a defect.
+PB10 Admin Chair: separate bounded/idempotent bonus implemented; prerequisite/evidence enforcement gap described above.
+PB11 Awards: categories and decision recording integrated; manual allocation/calculations and witnessed outcomes outstanding.
+PB12/13 Passport/certificate: templates and private upload/review/issue controls integrated; actual compliant documents/storage evidence outstanding.
+PB14 Phase 2: 60 cards, MC allocation, CC review, Key 5 eligibility, sequential levels and cross-Gamer handover implemented. Actual student app event/payment/reconciliation deliveries and sandbox safety remain separate, unverified work; they should not be mistaken for missing CODEWILD payment features.
+
+ACCEPTANCE STATUS (EXISTING PROJECT RECORD, NOT NEW INDEPENDENT QA)
+artifacts/part-b-acceptance-results.csv contains:
+- 36 PASS.
+- 4 original FAIL, all with recorded passing server retests: PB-QA-035/037/039/041.
+- 81 BLOCKED.
+Counting those four passing retests gives 40 cases with recorded passing outcomes and 81 unresolved. This is evidence coverage, not a completion percentage or independent certification.
+
+Area             PASS  original FAIL  BLOCKED
+Sprint3             3        0          23
+Sprint4            19        4          15
+Sprint5             2        0          18
+Final Friday        4        0          14
+Awards              1        0           3
+Passport            1        0           2
+Certificate         0        0           1
+Phase2              6        0           5
+
+The prose acceptance summary is stale: artifacts/part-b-acceptance-summary.md still mentions 26 direct passes and 91 blocked, while the current CSV has 36 and 81. Prefer the CSV with row-level evidence, retaining the distinction between server retests and outstanding browser/witness requirements.
+
+REMAINING RELEASE EVIDENCE
+- Complete the 81 unresolved Part B cases and obtain independent acceptance; do not equate blocked with a proven code defect.
+- Execute/record the nested Sprint 3 operator checks and original 12 FF-ADV tests in addition to the 121-row catalogue. No complete independent execution record for these was established in this audit.
+- Rehearse team-mapped incidents on isolated student apps with recovery and restricted Gamer views.
+- Witness all five protected UAT sessions, real persona demos/private defences, final question approval, awards and actual compliant private documents.
+- Run the accelerated full programme and five-team/25-Gamer capacity and permission rehearsal required by the handover.
+- Validate QA-15 (21 earlier checks in 3h), QA-18 (28 earlier checks in 4h), five qualified assessors and up to 250 optional reviewer-minutes. These are operational feasibility requirements, not reasons to invent new platform features.
+- Establish a real private Blob upload/download round trip and external AI source/privacy/prompt-injection checks. Existing metadata fixtures do not prove these integrations.
+
+LIMITS
+This was a source/content and disposable automated-test audit. It did not certify a deployed production instance, execute independent student UAT, inspect generated real learner PDFs or run the complete six-week/five-team programme. Existing modified and untracked files were included in the assessment; the result therefore describes the current workspace, not only committed code.

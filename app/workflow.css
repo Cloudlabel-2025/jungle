@@ -1,0 +1,273 @@
+/* Practical guidance, using the expedition's existing ink, parchment and brass. */
+.workspace-skeleton {
+  width: 100%;
+  padding: clamp(18px, 3vw, 32px);
+  min-height: 280px;
+  border: 1px solid #64705255;
+  border-radius: 8px;
+  background: #11291f;
+}
+.workspace-loading-label {
+  display: block;
+  margin-bottom: 26px;
+  color: #bdcbb1;
+  font-size: 14px;
+}
+.workspace-skeleton i {
+  display: block;
+  height: 12px;
+  border-radius: 4px;
+  background: #7e95652b;
+}
+.workspace-skeleton-heading {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.workspace-skeleton-heading i:first-child {
+  width: 40%;
+  height: 26px;
+}
+.workspace-skeleton-heading i:last-child {
+  width: 65%;
+}
+.workspace-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.workspace-skeleton-grid > div {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 22px;
+  min-height: 140px;
+  border: 1px solid #64705244;
+  border-radius: 6px;
+}
+.workspace-skeleton-grid i:last-child {
+  width: 60%;
+}
+@media (max-width: 640px) {
+  .workspace-skeleton-grid {
+    grid-template-columns: 1fr;
+  }
+  .workspace-skeleton-grid > div {
+    min-height: 90px;
+  }
+}
+.workflow-overview {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 2fr);
+  gap: 22px;
+  flex-shrink: 0;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  border: 1px solid #647052;
+  border-radius: 4px 14px 4px 14px;
+  background: linear-gradient(120deg, #1c372a, #10291f);
+}
+.workflow-heading .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #d6b575;
+}
+.workflow-heading h2 {
+  font: 700 23px var(--body);
+  margin: 7px 0;
+  color: #edf2d9;
+}
+.workflow-heading p {
+  margin: 0;
+  font-size: 13px;
+  color: #bdcbb1;
+  max-width: 33ch;
+}
+.workflow-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.workflow-action {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  padding: 13px;
+  background: #081c1770;
+  border: 1px solid #80936b50;
+  border-radius: 6px;
+}
+.workflow-action:hover {
+  background: #28472e;
+  border-color: #d6b575;
+}
+.workflow-action-number {
+  font: 11px var(--mono);
+  color: #d6b575;
+  padding-top: 3px;
+}
+.workflow-action > span:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+.workflow-action strong {
+  display: block;
+  font-size: 15px;
+  color: #edf2d9;
+  line-height: 1.3;
+}
+.workflow-action strong small {
+  display: inline-block;
+  margin-left: 6px;
+  border-radius: 12px;
+  padding: 1px 7px;
+  background: #b5f36c;
+  color: #172b1b;
+}
+.workflow-action strong + span {
+  display: block;
+  color: #bdcbb1;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+.programme-panel {
+  margin: 20px 0;
+  border: 1px solid #647052;
+  border-radius: 8px;
+  background: #11291f;
+  scroll-margin-top: 90px;
+}
+.programme-panel-toggle {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 18px 22px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  color: #d6b575;
+  border-radius: 8px;
+}
+.programme-panel-toggle > span {
+  flex: 1;
+  min-width: 0;
+}
+.programme-panel-toggle strong {
+  display: block;
+  font-size: 18px;
+  color: #edf2d9;
+}
+.programme-panel-toggle span span {
+  display: block;
+  color: #bdcbb1;
+  font-size: 13px;
+  margin-top: 3px;
+}
+.programme-panel-toggle:hover {
+  background: #28472e;
+}
+.programme-panel-toggle .is-open {
+  transform: rotate(180deg);
+}
+.programme-panel-content {
+  padding: 0 18px 18px;
+}
+.programme-panel-content[hidden] {
+  display: none;
+}
+.workflow-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 12px 0;
+  color: #bdcbb1;
+  font-size: 13px;
+}
+.workflow-status time {
+  margin-right: auto;
+}
+.workflow-form-feedback {
+  margin: 0;
+  padding: 10px 12px;
+  border-left: 3px solid #d6b575;
+  color: #edf2d9;
+  background: #081c17;
+}
+.workflow-form-feedback.is-error {
+  border-color: #ee8b83;
+  color: #ffd7d2;
+}
+.board-switcher {
+  padding-bottom: 12px;
+}
+.board-switcher p {
+  flex-basis: 100%;
+  margin: 0;
+  color: #bdcbb1;
+  font-size: 13px;
+}
+.jungle-world .expedition-mode .player-topbar {
+  position: relative;
+  inset: auto;
+  flex-shrink: 0;
+  background: #081c17;
+}
+.jungle-world .expedition-mode .main-content {
+  flex-direction: column;
+}
+.jungle-world .expedition-mode .workflow-overview {
+  margin-bottom: 12px;
+  padding: 14px 18px;
+}
+.jungle-world .expedition-mode .main-content > .jungle-game {
+  flex: 1;
+  min-height: 360px;
+}
+.jungle-world .jungle-game .modal .workflow-overview {
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+.jungle-game .modal .workflow-actions {
+  grid-template-columns: 1fr;
+}
+.jungle-game .modal .workflow-heading h2 {
+  display: none;
+}
+@media (max-width: 1100px) {
+  .workflow-overview {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .workflow-heading p {
+    max-width: none;
+  }
+}
+@media (max-width: 640px) {
+  .workflow-overview {
+    padding: 16px;
+  }
+  .workflow-actions {
+    grid-template-columns: 1fr;
+  }
+  .workflow-action {
+    min-height: 64px;
+  }
+  .programme-panel-toggle {
+    padding: 16px;
+  }
+  .programme-panel-content {
+    padding: 0 10px 10px;
+  }
+  .jungle-world .expedition-mode .workspace {
+    height: auto;
+    min-height: 100dvh;
+  }
+  .jungle-world .expedition-mode .main-content > .jungle-game {
+    min-height: 60dvh;
+    flex: none;
+  }
+}

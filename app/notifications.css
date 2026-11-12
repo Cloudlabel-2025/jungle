@@ -1,0 +1,173 @@
+/* One map-style player HUD on every player page. */
+.jungle-world .player-arena .player-topbar {
+  position: relative;
+  inset: auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) auto;
+  height: auto;
+  min-height: 91px;
+  padding: 8px 22px;
+  gap: 16px;
+  flex-shrink: 0;
+  background: #081c17;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  pointer-events: auto;
+  text-shadow:
+    0 1px 5px #000,
+    0 2px 12px #000b;
+}
+.notification-bell {
+  position: relative;
+  flex-shrink: 0;
+  overflow: visible;
+}
+.notification-bell > span {
+  position: absolute;
+  top: -4px;
+  right: -5px;
+  padding: 1px 4px;
+  min-width: 17px;
+  border-radius: 10px;
+  background: #d6b575;
+  color: #10291f;
+  font: 700 10px/15px var(--body);
+  text-align: center;
+  text-shadow: none;
+}
+.notification-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  margin: 20px 0 0;
+  border: 1px solid #647052;
+  border-radius: 8px;
+  background: #11291f;
+}
+.notification-toolbar > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+  color: #d6b575;
+}
+.notification-toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.notification-toolbar select {
+  background: #081c17;
+  border: 1px solid #647052;
+  border-radius: 4px;
+  color: #edf2d9;
+  padding: 8px;
+}
+.notification-help {
+  color: #bdcbb1;
+  font-size: 13px;
+  margin: 14px 0 22px;
+}
+.notification-list {
+  display: grid;
+  gap: 12px;
+}
+.notification-card {
+  display: flex;
+  align-items: start;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid #64705266;
+  border-radius: 5px 12px 5px 12px;
+  background: #11291f;
+}
+.notification-card.is-unread {
+  border-left: 3px solid #d6b575;
+  background: linear-gradient(120deg, #1c372a, #10291f);
+}
+.notification-symbol {
+  flex-shrink: 0;
+  color: #d6b575;
+  padding-top: 4px;
+}
+.notification-content {
+  flex: 1;
+  min-width: 0;
+}
+.notification-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 14px;
+  color: #b9c9ad;
+  font-size: 12px;
+}
+.notification-meta strong {
+  color: #d6b575;
+}
+.notification-meta time {
+  margin-left: auto;
+}
+.notification-content h2 {
+  margin: 8px 0;
+  font: 700 21px/1.3 var(--body);
+  color: #edf2d9;
+}
+.notification-content p {
+  margin: 0 0 16px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #c9d5bf;
+}
+.notification-empty {
+  text-align: center;
+  padding: 55px 20px;
+  border: 1px dashed #647052;
+  border-radius: 8px;
+  color: #bdcbb1;
+}
+.notification-empty > svg {
+  color: #d6b575;
+  margin: auto;
+}
+.notification-empty h2 {
+  color: #edf2d9;
+  font-size: 23px;
+}
+.toast.warning {
+  border-color: #d6b575;
+}
+.toast-action {
+  color: #f4d391;
+  text-decoration: underline;
+  font-weight: 700;
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .jungle-world .player-arena .player-topbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 112px;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .notification-toolbar {
+    padding: 16px;
+    gap: 12px;
+  }
+  .notification-toolbar > span {
+    flex-basis: 100%;
+  }
+  .notification-card {
+    padding: 16px;
+    gap: 12px;
+  }
+  .notification-meta time {
+    margin-left: 0;
+  }
+  .toast {
+    flex-wrap: wrap;
+  }
+}

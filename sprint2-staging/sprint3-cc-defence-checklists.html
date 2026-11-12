@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Fictional Team A Sprint 3 defence checklists</title>
+<style>
+body{font:16px/1.55 system-ui;max-width:860px;margin:2em auto;padding:0 1em;color:#19322b}
+section{border-top:1px solid #9cafaa;padding-top:1em;margin-top:2em}li{margin:.45em 0}
+@media print{section{break-inside:avoid}}
+</style>
+<h1>Fictional Team A Sprint 3 defence checklists</h1>
+<p>INC-04. Use these five checklists individually. The technical operator's log establishes the team incident and rollback. Each Gamer must present evidence of their own contribution. A well-supported ruling out of a healthy layer counts. The Sprint 3 pack requires individual contributions defended. The five-minute private format belongs to Sprint 5.</p>
+<p>For each person, record name, task IDs, evidence IDs, assessor, date, question asked, answer observed, and PASS, FAIL or BLOCKED with reason. Ask the Gamer to show one action or decision they personally took, its observed result, and how their evidence was handed to or used by another role. Use a fresh fictional record if a demonstration writes data.</p>
+
+<section>
+<h2>A — Database and Testing</h2>
+<p>Cards DB-09, DB-10, DB-11, QA-12.</p>
+<ul>
+<li>☐ Show the accepted Key 2 seed and your before/after data evidence. State which rows and fields were compared.</li>
+<li>☐ Explain what the unchanged data and the failing staged request establish about persistence. Show the evidence supporting your decision to correct or rule out a database fault.</li>
+<li>☐ Show a persisted create/edit result and your QA-12 candidate verification. Identify the evidence handed to deployment.</li>
+<li>☐ Ask which observation would have required a data restore rather than a configuration rollback.</li>
+</ul>
+<p>Gamer ______ Evidence ______ Assessor/date ______ Outcome and reason ______</p>
+</section>
+
+<section>
+<h2>B — Testing and Deployment</h2>
+<p>Cards QA-09, QA-10, QA-11, OP-12.</p>
+<ul>
+<li>☐ Show your reproduction and expected versus actual results before repair. Distinguish the page shell, staging API and direct API.</li>
+<li>☐ Show the 14-gate regression index and identify the checks you actually ran. Describe the QA-09 and OP-09 prerequisites that enabled QA-11.</li>
+<li>☐ Show restored staging smoke evidence and explain what result would have stopped release.</li>
+<li>☐ Ask how the team could distinguish a successful page load from a working business journey.</li>
+</ul>
+<p>Gamer ______ Evidence ______ Assessor/date ______ Outcome and reason ______</p>
+</section>
+
+<section>
+<h2>C — Deployment and Frontend</h2>
+<p>Cards OP-09, OP-10, OP-11, FE-12.</p>
+<ul>
+<li>☐ Show the staging readiness check, the accepted source fingerprint, and the approved isolation boundary.</li>
+<li>☐ Explain the API target comparison and the restoration. Identify the QA-12 release evidence used and show that recovery returned the expected staging target.</li>
+<li>☐ Demonstrate a repaired browser journey through the gateway, from sign-in to a saved result or profile read.</li>
+<li>☐ Ask how to verify the rollback before declaring the staging release healthy.</li>
+</ul>
+<p>Gamer ______ Evidence ______ Assessor/date ______ Outcome and reason ______</p>
+</section>
+
+<section>
+<h2>D — Frontend and Backend</h2>
+<p>Cards FE-09, FE-10, FE-11, BE-12.</p>
+<ul>
+<li>☐ Trace the user action from page load to request and visible result. Contrast the fault with the restored outcome.</li>
+<li>☐ Show your evidence for correcting or ruling out the frontend layer. Explain the evidence received from backend testing.</li>
+<li>☐ Demonstrate one invalid-input case and one role restriction. Distinguish the UI affordance from server enforcement.</li>
+<li>☐ Ask what evidence shows that hiding Edit alone would be insufficient.</li>
+</ul>
+<p>Gamer ______ Evidence ______ Assessor/date ______ Outcome and reason ______</p>
+</section>
+
+<section>
+<h2>E — Backend and Database</h2>
+<p>Cards BE-09, BE-10, BE-11, DB-12.</p>
+<ul>
+<li>☐ Trace staging gateway, API and MongoDB. Show the comparison between the failing staged endpoint and working direct endpoint.</li>
+<li>☐ Explain what the comparison ruled out and show your backend decision or layer finding. Identify the relevant runtime and persistence handovers.</li>
+<li>☐ Show a stored update after re-login and a consistency check against the accepted seed or pre-change record.</li>
+<li>☐ Ask what evidence would distinguish a wrong API target from a healthy API that fails to save data.</li>
+</ul>
+<p>Gamer ______ Evidence ______ Assessor/date ______ Outcome and reason ______</p>
+</section>
+
+<p>CC should record five witnessed outcomes and link them to Sprint 3 gate 7. Review all seven gates before deciding Key 3. These templates have no prefilled defence outcomes.</p>
+</html>

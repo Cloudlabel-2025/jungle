@@ -1,0 +1,76 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CODEWILD//CC Session Drafts//EN
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:IST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:cc-fictional-a-s3-def-e@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261127T120000
+DTEND;TZID=Asia/Kolkata:20261127T122500
+SUMMARY:Sprint 3 defence | Gamer E (Kabir Khan)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er E (Kabir Khan) is listed in the verified isolated staging backup. CC as
+ sessor: Karun.\nSession location: Isolated localhost staging computer.\nSc
+ ope: Backend and database.\n\nPreparation for Gamer E\nReview the INC-04 i
+ ncident and rollback record. Bring evidence of your own contribution and t
+ he handover to another role.\nTask cards: BE-09\, BE-10\, BE-11\, DB-12.\n
+ \nSession steps and evidence checklist\nTrace the gateway\, API and databa
+ se. Show the failing staged endpoint and working direct endpoint and expla
+ in what that comparison ruled out. Reopen a saved update after re-login an
+ d compare it with the seed or pre-change record. Identify your handovers.\
+ nRecord task IDs\, personal evidence links\, the demonstrated action or de
+ cision\, the observed result and the handover recipient.\n\nCC assessor ve
+ rification\nAsk how E would distinguish the wrong API target from an API t
+ hat reaches the database but fails to save. Check that E can tie the trace
+  and persisted result to their own work.\nRecord the actual date and time\
+ , assessor\, question and observed answer\, and PASS\, FAIL or BLOCKED wit
+ h reason. Link the witnessed record to Sprint 3 AC-7.\n\nKeep passwords\, 
+ cookie values and tokens out of shared evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+BEGIN:VEVENT
+UID:cc-fictional-a-uat-05@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261204T100000
+DTEND;TZID=Asia/Kolkata:20261204T123000
+SUMMARY:Sprint 4 UAT-05 | Gamer E (Kabir Khan)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er E (Kabir Khan) is listed in the verified isolated staging backup. CC as
+ sessor: Karun.\nSession location: Isolated localhost staging computer.\nSc
+ ope: Retest the released candidate and recommend acceptance.\n\nPreparatio
+ n for Gamer E\nConfirm the isolated staging URL\, candidate fingerprint\, 
+ assigned account and fictional test-data prefix with CC. Reserve the full 
+ 2.5-hour slot and record your own findings.\nConfirm OP-13 acceptance and 
+ receipt of the current handover after the required one working hour. Recor
+ d BLOCKED if either prerequisite is missing.\n\nSession steps and evidence
+  checklist\nBefore starting\, verify OP-13 is accepted in the isolated wor
+ kflow and receive the current handover after the required one working hour
+ . On the released candidate\, retest the corrected journeys and any open F
+ riday defect. Cover valid Create/Edit\, invalid-input rejection\, persiste
+ nce after re-login and a restricted action. Capture each outcome and submi
+ t an acceptance recommendation. If OP-13 or the handover is missing\, reco
+ rd BLOCKED.\nCapture actual start and finish in IST\, staging URL\, candid
+ ate SHA-256\, role\, fictional record IDs\, task or defect IDs\, steps\, e
+ xpected and observed results\, and evidence links. Record your verdict and
+  any handover recipient.\n\nCC assessor verification\nVerify the OP-13 evi
+ dence\, release fingerprint\, smoke and rollback references\, and handover
+  receipt and timing. Review the independent findings and the acceptance re
+ commendation against the actual Friday build.\nRecord the independent CC v
+ erdict\, reason\, reviewer and date. Attach the session evidence to S4-AC-
+ 04.\n\nKeep passwords\, cookie values and tokens out of shared evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+END:VCALENDAR

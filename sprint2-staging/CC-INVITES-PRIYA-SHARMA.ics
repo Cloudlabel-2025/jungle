@@ -1,0 +1,72 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CODEWILD//CC Session Drafts//EN
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:IST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:cc-fictional-a-s3-def-b@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261127T103000
+DTEND;TZID=Asia/Kolkata:20261127T105500
+SUMMARY:Sprint 3 defence | Gamer B (Priya Sharma)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er B (Priya Sharma) is listed in the verified isolated staging backup. CC 
+ assessor: Karun.\nSession location: Isolated localhost staging computer.\n
+ Scope: Testing and deployment.\n\nPreparation for Gamer B\nReview the INC-
+ 04 incident and rollback record. Bring evidence of your own contribution a
+ nd the handover to another role.\nTask cards: QA-09\, QA-10\, QA-11\, OP-1
+ 2.\n\nSession steps and evidence checklist\nShow your before-repair reprod
+ uction with expected and actual results for the page shell\, staged API an
+ d direct API. Identify which of the 14 regression checks you ran and the Q
+ A-09 and OP-09 prerequisites for QA-11. Show restored smoke evidence.\nRec
+ ord task IDs\, personal evidence links\, the demonstrated action or decisi
+ on\, the observed result and the handover recipient.\n\nCC assessor verifi
+ cation\nAsk what result would stop the release even if the page loads. Che
+ ck that B can distinguish their own execution evidence from the shared res
+ ults.\nRecord the actual date and time\, assessor\, question and observed 
+ answer\, and PASS\, FAIL or BLOCKED with reason. Link the witnessed record
+  to Sprint 3 AC-7.\n\nKeep passwords\, cookie values and tokens out of sha
+ red evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+BEGIN:VEVENT
+UID:cc-fictional-a-uat-02@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261201T100000
+DTEND;TZID=Asia/Kolkata:20261201T123000
+SUMMARY:Sprint 4 UAT-02 | Gamer B (Priya Sharma)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er B (Priya Sharma) is listed in the verified isolated staging backup. CC 
+ assessor: Karun.\nSession location: Isolated localhost staging computer.\n
+ Scope: Validation\, boundaries and corrections.\n\nPreparation for Gamer B
+ \nConfirm the isolated staging URL\, candidate fingerprint\, assigned acco
+ unt and fictional test-data prefix with CC. Reserve the full 2.5-hour slot
+  and record your own findings.\n\nSession steps and evidence checklist\nTr
+ y invalid postcode for the selected country\, missing conditional employme
+ nt details\, normalized duplicate email and registration\, and one permitt
+ ed boundary or correction. Record the exact message\, whether a bad record
+  was saved\, and whether the corrected attempt succeeds. Flag confusing wo
+ rding separately.\nCapture actual start and finish in IST\, staging URL\, 
+ candidate SHA-256\, role\, fictional record IDs\, task or defect IDs\, ste
+ ps\, expected and observed results\, and evidence links. Record your verdi
+ ct and any handover recipient.\n\nCC assessor verification\nCheck that the
+  negative cases were rejected without saving invalid data and the valid co
+ ntrol worked. Verify each reported issue has reproducible steps and an evi
+ dence link.\nRecord the independent CC verdict\, reason\, reviewer and dat
+ e. Attach the session evidence to S4-AC-04.\n\nKeep passwords\, cookie val
+ ues and tokens out of shared evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+END:VCALENDAR

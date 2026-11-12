@@ -1,0 +1,287 @@
+{
+  "startedAt": "2026-11-10T13:42:10.631Z",
+  "finishedAt": "2026-11-10T13:42:10.981Z",
+  "candidateSha256": "4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc",
+  "scope": "Fresh local disposable HTTP/API dry run",
+  "key3": "Pending",
+  "key4": "Pending",
+  "sessions": [
+    {
+      "id": "S3-DEF-A",
+      "role": "admin",
+      "startedAt": "2026-11-10T13:42:10.631Z",
+      "requests": [
+        {
+          "path": "/api/login",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/logout",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/session",
+          "method": "GET",
+          "status": 401,
+          "expected": 401
+        }
+      ],
+      "formalOutcome": "Pending",
+      "observed": {
+        "seedId": "AL-QA-001",
+        "seedCount": 20,
+        "rollback": "Restored the original API target. A fresh administrator session retrieved the identical 20-record directory and original profile from the same database."
+      },
+      "dryRun": "PASS",
+      "finishedAt": "2026-11-10T13:42:10.715Z"
+    },
+    {
+      "id": "S3-DEF-B",
+      "role": "admin",
+      "startedAt": "2026-11-10T13:42:10.715Z",
+      "requests": [
+        {
+          "path": "/api/login",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/health",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/logout",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/session",
+          "method": "GET",
+          "status": 401,
+          "expected": 401
+        }
+      ],
+      "formalOutcome": "Pending",
+      "observed": {
+        "symptom": "Staging HTML and bundle stayed reachable. Login and directory returned 404 through the incorrect API target while the app's direct login and directory returned 200.",
+        "priorWitnessedRegressionIndexCount": 14
+      },
+      "dryRun": "PASS",
+      "finishedAt": "2026-11-10T13:42:10.751Z"
+    },
+    {
+      "id": "S3-DEF-C",
+      "role": "admin",
+      "startedAt": "2026-11-10T13:42:10.751Z",
+      "requests": [
+        {
+          "path": "/api/login",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/health",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/logout",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/session",
+          "method": "GET",
+          "status": 401,
+          "expected": 401
+        }
+      ],
+      "formalOutcome": "Pending",
+      "observed": {
+        "candidateSha256": "4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc",
+        "cause": "Only the disposable staging gateway's API target changed. The approved application process, source and MongoDB remained in place."
+      },
+      "dryRun": "PASS",
+      "finishedAt": "2026-11-10T13:42:10.782Z"
+    },
+    {
+      "id": "S3-DEF-D",
+      "role": "alumnus",
+      "startedAt": "2026-11-10T13:42:10.782Z",
+      "requests": [
+        {
+          "path": "/api/login",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni",
+          "method": "GET",
+          "status": 403,
+          "expected": 403
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "PUT",
+          "status": 403,
+          "expected": 403
+        },
+        {
+          "path": "/api/login",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "PUT",
+          "status": 400,
+          "expected": 400
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/logout",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/logout",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/session",
+          "method": "GET",
+          "status": 401,
+          "expected": 401
+        }
+      ],
+      "formalOutcome": "Pending",
+      "observed": {
+        "rejectedEdit": 403,
+        "invalidPostcode": 400,
+        "unchangedRecord": "AL-QA-001"
+      },
+      "dryRun": "PASS",
+      "finishedAt": "2026-11-10T13:42:10.856Z"
+    },
+    {
+      "id": "S3-DEF-E",
+      "role": "admin",
+      "startedAt": "2026-11-10T13:42:10.856Z",
+      "requests": [
+        {
+          "path": "/api/login",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "PUT",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/login",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/alumni/AL-QA-001",
+          "method": "GET",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/logout",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/logout",
+          "method": "POST",
+          "status": 200,
+          "expected": 200
+        },
+        {
+          "path": "/api/session",
+          "method": "GET",
+          "status": 401,
+          "expected": 401
+        }
+      ],
+      "formalOutcome": "Pending",
+      "observed": {
+        "recordId": "AL-QA-001",
+        "persistedAcrossSessions": true,
+        "comparison": "Staging HTML and bundle stayed reachable. Login and directory returned 404 through the incorrect API target while the app's direct login and directory returned 200."
+      },
+      "dryRun": "PASS",
+      "finishedAt": "2026-11-10T13:42:10.917Z"
+    }
+  ]
+}

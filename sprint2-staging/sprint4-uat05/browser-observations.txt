@@ -1,0 +1,6 @@
+  - heading "Alumni directory (21)" [level=2]
+    - button "Friday Tester · friday-browser@example.invalid"
+  - heading "Friday Tester" [level=2]
+  - definition: AL-f7a0c35a-6d95-4a64-9a7a-0fc34fdd6c3e
+  - definition: Friday
+  - definition: Friday QA City

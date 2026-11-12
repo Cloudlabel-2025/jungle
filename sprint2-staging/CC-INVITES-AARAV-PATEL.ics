@@ -1,0 +1,70 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CODEWILD//CC Session Drafts//EN
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:IST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:cc-fictional-a-s3-def-a@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261127T100000
+DTEND;TZID=Asia/Kolkata:20261127T102500
+SUMMARY:Sprint 3 defence | Gamer A (Aarav Patel)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er A (Aarav Patel) is listed in the verified isolated staging backup. CC a
+ ssessor: Karun.\nSession location: Isolated localhost staging computer.\nS
+ cope: Database and testing.\n\nPreparation for Gamer A\nReview the INC-04 
+ incident and rollback record. Bring evidence of your own contribution and 
+ the handover to another role.\nTask cards: DB-09\, DB-10\, DB-11\, QA-12.\
+ n\nSession steps and evidence checklist\nShow which seed rows and fields y
+ ou compared before and after INC-04. Use the failed staged request and unc
+ hanged data to explain your database finding. Reopen a persisted Create/Ed
+ it result and show the QA-12 evidence you handed to deployment.\nRecord ta
+ sk IDs\, personal evidence links\, the demonstrated action or decision\, t
+ he observed result and the handover recipient.\n\nCC assessor verification
+ \nAsk what observation would require a data restore. Check that A can iden
+ tify the compared records and explain why the evidence supported a configu
+ ration rollback.\nRecord the actual date and time\, assessor\, question an
+ d observed answer\, and PASS\, FAIL or BLOCKED with reason. Link the witne
+ ssed record to Sprint 3 AC-7.\n\nKeep passwords\, cookie values and tokens
+  out of shared evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+BEGIN:VEVENT
+UID:cc-fictional-a-uat-01@example.invalid
+DTSTAMP:20261110T074857Z
+DTSTART;TZID=Asia/Kolkata:20261130T100000
+DTEND;TZID=Asia/Kolkata:20261130T123000
+SUMMARY:Sprint 4 UAT-01 | Gamer A (Aarav Patel)
+LOCATION:Isolated localhost staging computer
+DESCRIPTION:Fictional Team A. Draft invitation for confirmed IST time.\nGam
+ er A (Aarav Patel) is listed in the verified isolated staging backup. CC a
+ ssessor: Karun.\nSession location: Isolated localhost staging computer.\nS
+ cope: Normal Create/Edit.\n\nPreparation for Gamer A\nConfirm the isolated
+  staging URL\, candidate fingerprint\, assigned account and fictional test
+ -data prefix with CC. Reserve the full 2.5-hour slot and record your own f
+ indings.\n\nSession steps and evidence checklist\nSign in as admin. Create
+  a valid fictional profile. Capture the generated ID and first save. Edit 
+ a normal field\, reopen the record and compare the saved value and ID. Han
+ d over the record reference and findings.\nCapture actual start and finish
+  in IST\, staging URL\, candidate SHA-256\, role\, fictional record IDs\, 
+ task or defect IDs\, steps\, expected and observed results\, and evidence 
+ links. Record your verdict and any handover recipient.\n\nCC assessor veri
+ fication\nCheck the before/after evidence\, server-generated ID\, and save
+ d edit. Verify the handover identifies the record and any open finding.\nR
+ ecord the independent CC verdict\, reason\, reviewer and date. Attach the 
+ session evidence to S4-AC-04.\n\nKeep passwords\, cookie values and tokens
+  out of shared evidence.
+STATUS:CONFIRMED
+CLASS:PRIVATE
+END:VEVENT
+END:VCALENDAR

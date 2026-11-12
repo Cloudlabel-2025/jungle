@@ -1,0 +1,145 @@
+{
+  "base": "http://localhost:3188",
+  "stage": 3,
+  "sprintId": "browser-sprint-3",
+  "teamId": "pilot-team-0",
+  "accounts": [
+    {
+      "id": "pilot-cc",
+      "email": "cc@pilot.invalid",
+      "role": "CENTRE_COMMAND"
+    },
+    {
+      "id": "pilot-mc",
+      "email": "mc@pilot.invalid",
+      "role": "MISSION_COMMANDER"
+    },
+    {
+      "id": "pilot-g0",
+      "email": "g0@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g1",
+      "email": "g1@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g2",
+      "email": "g2@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g3",
+      "email": "g3@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g4",
+      "email": "g4@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g5",
+      "email": "g5@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g6",
+      "email": "g6@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g7",
+      "email": "g7@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g8",
+      "email": "g8@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g9",
+      "email": "g9@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g10",
+      "email": "g10@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g11",
+      "email": "g11@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g12",
+      "email": "g12@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g13",
+      "email": "g13@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g14",
+      "email": "g14@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g15",
+      "email": "g15@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g16",
+      "email": "g16@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g17",
+      "email": "g17@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g18",
+      "email": "g18@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g19",
+      "email": "g19@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g20",
+      "email": "g20@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g21",
+      "email": "g21@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g22",
+      "email": "g22@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g23",
+      "email": "g23@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g24",
+      "email": "g24@pilot.invalid",
+      "role": "GAMER"
+    }
+  ],
+  "seeded": "Prior sprint acceptances, prior technical cards and completed SDLC checkpoints are synthetic fixture setup. Browser actions are separately evidenced; no actual student apps or provider credentials.",
+  "clock": "2026-11-23T07:00:00Z"
+}

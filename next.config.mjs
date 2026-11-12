@@ -1,6 +1,9 @@
 const config = {
   experimental: { cpus: 1 },
   serverExternalPackages: ["mongoose"],
+  outputFileTracingIncludes: {
+    "/api/pilot": ["./node_modules/@fontsource/rajdhani/files/*-400-normal.woff"],
+  },
   poweredByHeader: false,
   async headers() {
     return [

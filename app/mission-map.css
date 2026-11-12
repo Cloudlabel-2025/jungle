@@ -1,0 +1,130 @@
+.mission-map-world {
+  background: #122b19 url("/images/uncharted-west.webp") left center / auto 100%
+    repeat-x;
+}
+.map-designer {
+  padding: 22px;
+  display: grid;
+  gap: 20px;
+}
+.map-designer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.map-designer-toolbar p {
+  max-width: 62ch;
+  margin: 0;
+  color: #c0cfb1;
+  line-height: 1.6;
+}
+.map-designer-scroll {
+  overflow-x: auto;
+  border: 1px solid #7d9560;
+  border-radius: 16px;
+  scrollbar-color: #a4bd76 #10281f;
+}
+.map-designer-canvas {
+  position: relative;
+  height: 500px;
+  min-width: 100%;
+  isolation: isolate;
+}
+.map-designer-marker {
+  position: absolute;
+  width: 190px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  transform: translate(-50%, -50%);
+  background: #0a241bd9;
+  color: #f4efd3;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 10px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.map-designer-marker.selected {
+  border-color: #d8d694;
+  background: #1b3925ed;
+}
+.map-designer-marker:focus-visible {
+  outline: 3px solid #fff2c6;
+  outline-offset: 3px;
+}
+.map-designer-marker:active {
+  cursor: grabbing;
+}
+.map-designer-marker strong {
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+}
+.map-designer-marker small {
+  color: #e9c990;
+}
+.map-designer-safe-area,
+.map-designer-controls-area {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  padding: 12px;
+  border: 1px dashed #d2d6a35c;
+  border-radius: 10px;
+  background: #071f1973;
+  color: #d3dfbe;
+  pointer-events: none;
+  font-size: 12px;
+}
+.map-designer-safe-area {
+  top: 12px;
+  height: 176px;
+}
+.map-designer-controls-area {
+  bottom: 12px;
+  height: 100px;
+}
+.map-designer-properties {
+  display: flex;
+  gap: 18px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+.map-designer-properties label {
+  display: grid;
+  gap: 7px;
+  flex: 1 1 160px;
+  min-width: 0;
+  color: #dfeacb;
+}
+.map-designer-properties input,
+.map-designer-properties select {
+  width: 100%;
+  min-height: 44px;
+}
+.map-designer-properties small {
+  color: #b6c8a7;
+}
+.map-designer-library {
+  border-top: 1px solid #8aa16d55;
+  padding-top: 16px;
+}
+.map-designer-library summary {
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+.map-designer-library .btn {
+  margin: 0 10px 10px 0;
+}
+@media (max-width: 600px) {
+  .map-designer {
+    padding: 16px 12px;
+  }
+  .map-designer-properties label {
+    flex-basis: 100%;
+  }
+}

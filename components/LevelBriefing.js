@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Play, LockKeyhole, Clock3, ArrowRight, Trophy } from "lucide-react";
+import { Play, LockKeyhole, Clock3, Trophy } from "lucide-react";
 import { Modal, Badge } from "./ui";
 import { ProjectDialog, projectState } from "./Projects";
 import LevelStars from "./LevelStars";
@@ -155,7 +155,7 @@ export default function LevelBriefing({
                           onQuest(task);
                         }}
                       >
-                        Open my task <ArrowRight size={14} />
+                        Open my task
                       </button>
                     )}
                   </article>

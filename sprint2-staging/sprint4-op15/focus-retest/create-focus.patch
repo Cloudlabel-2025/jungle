@@ -1,0 +1,66 @@
+diff --git a/sprint2-staging/ui.jsx b/sprint2-staging/ui.jsx
+index c65c70a..a117c74 100644
+--- a/sprint2-staging/ui.jsx
++++ b/sprint2-staging/ui.jsx
+@@ -1,4 +1,4 @@
+-import React, { useEffect, useState } from "react";
++import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+ import { createRoot } from "react-dom/client";
+ import { fields, options, optional } from "./fields.mjs";
+ 
+@@ -23,6 +23,17 @@ function App() {
+   const [error, setError] = useState("");
+   const [receipt, setReceipt] = useState("");
+   const [busy, setBusy] = useState(false);
++  const createTrigger = useRef(null);
++  const createHeading = useRef(null);
++  const returnToCreate = useRef(false);
++  useLayoutEffect(() => {
++    if (editor && !editor._id) {
++      createHeading.current?.focus();
++    } else if (!editor && returnToCreate.current) {
++      returnToCreate.current = false;
++      createTrigger.current?.focus();
++    }
++  }, [editor]);
+   async function run(action) {
+     setError("");
+     setBusy(true);
+@@ -106,6 +117,7 @@ function App() {
+             <section>
+               <h2>Alumni directory ({list.length})</h2>
+               <button
++                ref={createTrigger}
+                 onClick={() => {
+                   setEditor({});
+                   setReceipt("");
+@@ -183,7 +195,13 @@ function App() {
+                 });
+               }}
+             >
+-              <h2>{editor._id ? "Edit profile" : "Create alumni"}</h2>
++              {editor._id ? (
++                <h2>Edit profile</h2>
++              ) : (
++                <h2 ref={createHeading} tabIndex={-1}>
++                  Create alumni
++                </h2>
++              )}
+               <fieldset disabled={busy}>
+                 {fields.map(([key, label, type = "text"]) => (
+                   <label key={key}>
+@@ -211,7 +229,13 @@ function App() {
+                   </label>
+                 ))}
+                 <button>Save profile</button>
+-                <button type="button" onClick={() => setEditor(null)}>
++                <button
++                  type="button"
++                  onClick={() => {
++                    returnToCreate.current = !editor._id;
++                    setEditor(null);
++                  }}
++                >
+                   Cancel
+                 </button>
+               </fieldset>

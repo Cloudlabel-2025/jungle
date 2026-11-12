@@ -1,0 +1,167 @@
+{
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "recordedAt": "2026-11-10T10:09:20.254Z",
+  "scope": "Fresh fictional dataset over certificate-validated in-process localhost HTTPS. QA evidence for Gamer D review.",
+  "disposableInstanceStopped": true,
+  "checks": [
+    {
+      "name": "Invalid sign-in",
+      "method": "POST",
+      "route": "/api/login",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "expectedBody": {
+        "error": "Invalid email or password."
+      },
+      "actualBody": {
+        "error": "Invalid email or password."
+      }
+    },
+    {
+      "name": "Unsigned directory",
+      "method": "GET",
+      "route": "/api/alumni",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "expectedBody": {
+        "error": "Sign in first."
+      },
+      "actualBody": {
+        "error": "Sign in first."
+      }
+    },
+    {
+      "name": "Administrator sign-in",
+      "method": "POST",
+      "route": "/api/login",
+      "expectedStatus": 200,
+      "actualStatus": 200
+    },
+    {
+      "name": "Alumnus sign-in",
+      "method": "POST",
+      "route": "/api/login",
+      "expectedStatus": 200,
+      "actualStatus": 200
+    },
+    {
+      "name": "Alumnus own profile",
+      "method": "GET",
+      "route": "/api/alumni/AL-QA-001",
+      "expectedStatus": 200,
+      "actualStatus": 200
+    },
+    {
+      "name": "Alumnus directory denied",
+      "method": "GET",
+      "route": "/api/alumni",
+      "expectedStatus": 403,
+      "actualStatus": 403,
+      "expectedBody": {
+        "error": "Administrator access required."
+      },
+      "actualBody": {
+        "error": "Administrator access required."
+      }
+    },
+    {
+      "name": "Alumnus other profile denied",
+      "method": "GET",
+      "route": "/api/alumni/AL-QA-002",
+      "expectedStatus": 403,
+      "actualStatus": 403,
+      "expectedBody": {
+        "error": "You can only view your own profile."
+      },
+      "actualBody": {
+        "error": "You can only view your own profile."
+      }
+    },
+    {
+      "name": "Alumnus create denied",
+      "method": "POST",
+      "route": "/api/alumni",
+      "expectedStatus": 403,
+      "actualStatus": 403,
+      "expectedBody": {
+        "error": "Administrator access required."
+      },
+      "actualBody": {
+        "error": "Administrator access required."
+      }
+    },
+    {
+      "name": "Alumnus edit denied",
+      "method": "PUT",
+      "route": "/api/alumni/AL-QA-001",
+      "expectedStatus": 403,
+      "actualStatus": 403,
+      "expectedBody": {
+        "error": "Administrator access required."
+      },
+      "actualBody": {
+        "error": "Administrator access required."
+      }
+    },
+    {
+      "name": "Invalid postcode",
+      "method": "PUT",
+      "route": "/api/alumni/AL-QA-001",
+      "expectedStatus": 400,
+      "actualStatus": 400,
+      "expectedBody": {
+        "error": "Enter a postcode valid for the selected country."
+      },
+      "actualBody": {
+        "error": "Enter a postcode valid for the selected country."
+      }
+    },
+    {
+      "name": "Profile unchanged after rejected edit",
+      "method": "GET",
+      "route": "/api/alumni/AL-QA-001",
+      "expectedStatus": 200,
+      "actualStatus": 200
+    },
+    {
+      "name": "Duplicate email",
+      "method": "POST",
+      "route": "/api/alumni",
+      "expectedStatus": 409,
+      "actualStatus": 409,
+      "expectedBody": {
+        "error": "Email or registration number already exists."
+      },
+      "actualBody": {
+        "error": "Email or registration number already exists."
+      }
+    },
+    {
+      "name": "Directory unchanged after rejected create",
+      "method": "GET",
+      "route": "/api/alumni",
+      "expectedStatus": 200,
+      "actualStatus": 200
+    },
+    {
+      "name": "Administrator sign-out",
+      "method": "POST",
+      "route": "/api/logout",
+      "expectedStatus": 200,
+      "actualStatus": 200
+    },
+    {
+      "name": "Signed-out session rejected",
+      "method": "GET",
+      "route": "/api/session",
+      "expectedStatus": 401,
+      "actualStatus": 401,
+      "expectedBody": {
+        "error": "Sign in first."
+      },
+      "actualBody": {
+        "error": "Sign in first."
+      }
+    }
+  ]
+}

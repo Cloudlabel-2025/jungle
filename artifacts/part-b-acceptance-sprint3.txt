@@ -1,0 +1,5 @@
+PASS: sequential load guard; prior fixture sprints closed without Keys.
+PASS: 100 cards loaded with original IDs, owners, hours and edges; all seven gates retained.
+PASS: scoped views, kickoff, independent reviews and timed handover unlocking QA-11.
+PASS: CC recorded seven blocked client gates and the engine withheld Key 3.
+BLOCKED: learner-app incident, rollback, earlier client regression and live defence evidence.

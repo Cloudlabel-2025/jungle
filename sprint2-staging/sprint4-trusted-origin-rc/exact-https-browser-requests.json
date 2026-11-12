@@ -1,0 +1,71 @@
+{
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "url": "https://127.0.0.1:3193",
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/session",
+      "status": 401,
+      "fetchSite": "same-origin",
+      "sessionCookieSent": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/login",
+      "status": 200,
+      "origin": "https://127.0.0.1:3193",
+      "fetchSite": "same-origin",
+      "sessionCookieSent": false,
+      "responseCookieAttributes": [
+        "HttpOnly",
+        "SameSite=Strict",
+        "Path=/",
+        "Secure",
+        "Max-Age=3600"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/alumni",
+      "status": 200,
+      "fetchSite": "same-origin",
+      "sessionCookieSent": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/alumni",
+      "status": 200,
+      "fetchSite": "same-origin",
+      "sessionCookieSent": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/session",
+      "status": 200,
+      "fetchSite": "same-origin",
+      "sessionCookieSent": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/alumni",
+      "status": 200,
+      "fetchSite": "same-origin",
+      "sessionCookieSent": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/logout",
+      "status": 200,
+      "origin": "https://127.0.0.1:3193",
+      "fetchSite": "same-origin",
+      "sessionCookieSent": true,
+      "responseCookieAttributes": [
+        "HttpOnly",
+        "SameSite=Strict",
+        "Path=/",
+        "Secure",
+        "Max-Age=0"
+      ]
+    }
+  ]
+}

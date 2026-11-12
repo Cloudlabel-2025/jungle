@@ -1,0 +1,13 @@
+Chrome HTTPS browser sample
+Create opened and cancelled. AX did not expose page focus reliably.
+Invalid postcode rejected: Enter a postcode valid for the selected country.
+Corrected edit saved and reopened after reload.
+									17 edit (settable, string) Address and search bar Description: Ask Google or type a URL Value: 127.0.0.1:3193 ID: view_1012
+								457 document Alumni Connect | Sprint 2 staging Value: https://127.0.0.1:3193/ ID: RootWebArea
+												519 text AL-QA-001
+												543 text HTTPS Friday QA City
+AL-QA-001
+HTTPS Friday QA City
+Focused element: 17 edit (settable, string) Address and search bar Description: Ask Google or type a URL Value: 127.0.0.1:3193 ID: view_1012
+AL-QA-001
+HTTPS Friday QA City

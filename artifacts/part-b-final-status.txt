@@ -1,0 +1,84 @@
+PART B FINAL STATUS - 12 NOVEMBER 2026
+
+This is a technical closeout record, not independent programme acceptance.
+
+Completed locally
+- Implemented final evidence export, question version governance, assessor access,
+  optional Admin Chair bookings/evidence/scoring, recognition, report preparation,
+  private review/issue/correction controls and optional Phase 2 workflow controls.
+- Fixed PB-BR-001: an upload error no longer appears beside a stale success notice.
+  The correction was verified in the rebuilt browser application.
+- Added a complete synthetic Phase 2 engine journey: all 60 cards across three
+  levels submitted and independently reviewed through normal actions, one rework
+  and resubmission per level, working-calendar handovers, 25-Gamer visibility,
+  and no automatic marks/bonuses. Only prior Key 5 eligibility was seeded.
+- Preserved all 143 source verification rows and historical outcomes. Added the
+  new Phase 2 coverage to the verification register without inventing sign-off.
+
+Verification evidence
+- part-b-full-regression.txt: 149 passed, 0 failed, 0 skipped on a fresh disposable
+  database, including actual PDF generation/private byte storage and delivery.
+- part-b-controls-regression.txt: final 10 passed, 0 failed, 0 skipped, including
+  private PDF delivery, stale-identity protection and all 60 Phase 2 card workflows.
+  Fictional evidence does not certify real integrations.
+- part-b-pdf-build.txt: production build passed, including packaged PDF fonts.
+- part-b-report-storage-db-check.txt: configured MongoDB ping and transactional
+  read passed. Generated reports use that existing private connection automatically.
+- part-b-pdf-verification.json and part-b-pdf-browser-2026-11-12/: actual two-page
+  Passport/one-page certificate rendered and inspected; browser generation, MC
+  review, CC issuance, learner downloads and signed-out/unrelated access denial
+  passed. MC/learner file hashes match exactly. The old report-storage blocker is
+  resolved for generated reports. Assessment eligibility was fictional and signature
+  lines remain unsigned; no real learner certification is claimed.
+- part-b-browser-2026-11-12/browser-verification.txt and browser-results.json:
+  Historical run: 19 scoped observations; its partial PDF/storage-blocked results
+  are superseded for generated reports by the four new PDF browser checks above.
+  Gamer, MC, CC, persona assessor and unrelated Gamer
+  were exercised. This was one team at representative checkpoints; previous work
+  was seeded. A full five-team, six-week browser journey has not been completed.
+- The unchanged fictional reference app passed its local API/database regression
+  again. Candidate fingerprint:
+  4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc
+  This is reference evidence, not verification of the five real team apps.
+
+Still incomplete, and the input/action needed to close each item
+
+1. Real report content and signatures - HUMAN VERIFICATION
+   Automatic PDFs and private storage are implemented and technically verified.
+   Staff must still verify actual learner identities, dates, approved evidence and
+   observations and supply authorised signatures. The PDFs contain unsigned
+   signature lines; generation does not create signatures or decide competence.
+   Generated reports use private MongoDB, so no Blob token is needed for this
+   workflow. Other programme evidence uploads retain their existing Blob setup.
+
+2. Real student applications - REPOSITORIES/RELEASE EVIDENCE NEEDED
+   Identify the five team repository paths/URLs and approved staging releases.
+   Only the fictional reference app is identified locally; a GitHub backup of this
+   platform does not identify those five student releases. On isolated copies,
+   technical operators must verify all four incident blueprints, the assigned
+   incident per team, baselines, repair/rollback, prior regressions, genuine UAT
+   failures/retests, release/smoke behavior and QA-15/QA-18 time feasibility.
+
+3. Human assessment and Final Friday - WITNESSES/APPROVALS NEEDED
+   MC/CC must observe five protected UAT sessions, actual persona journeys/private
+   defences, room/reviewer availability, equal difficulty and accessibility; approve
+   genuine question content and criterion evidence; verify real Admin Chair code
+   execution/rollback; and sign awards, showcase and voluntary ungraded Campfire.
+   Synthetic passing records cannot substitute for these human decisions.
+
+4. External AI and Phase 2 integrations - REAL EXTERNAL EXECUTION NEEDED
+   Run the approved external AI workflow on sanitised real source/dossiers and
+   check missing-source/prompt-injection behavior. Verify actual mock APIs, event
+   registrations, sandbox payment authenticity, duplicate/out-of-order webhooks,
+   final-seat concurrency/reconciliation and cross-team codebase governance.
+   The platform assigns/reviews cards; it does not implement student applications.
+
+5. Full operational acceptance - INDEPENDENT RUN/DEPLOYMENT NEEDED
+   Run the full five-team/25-Gamer browser rehearsal with real authorised evidence,
+   complete the original operator/independent cases, and validate deployed HTTPS,
+   access provisioning, monitoring, backups and agreed non-functional targets.
+   No production deployment or GitHub push was performed as part of this closeout.
+
+Use part-b-manual-verification.csv for the exact source case, existing evidence,
+browser coverage and remaining action. The earlier historical BLOCKED rows remain
+open until their required real evidence and independent approvals are recorded.

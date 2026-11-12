@@ -5,7 +5,14 @@ import {
   LoaderCircle,
   Inbox,
   Compass,
-  ArrowUpRight,
+  PencilLine,
+  ListChecks,
+  Hash,
+  CalendarDays,
+  Link2,
+  Mail,
+  LockKeyhole,
+  AlertTriangle,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { characterFor } from "@/lib/characters";
@@ -98,7 +105,7 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={`modal ${wide ? "wide" : ""} ${variant === "level-drawer" ? "level-drawer" : ""} ${variant === "level-completion" ? "level-completion-modal" : ""}`}
+        className={`modal ${!variant ? "modal-dialog" : ""} ${wide ? "wide" : ""} ${variant === "level-drawer" ? "level-drawer" : ""} ${variant === "level-completion" ? "level-completion-modal" : ""}`}
       >
         <div className="panel-heading">
           <div>
@@ -115,7 +122,7 @@ export function Modal({
             <X size={20} />
           </button>
         </div>
-        {children}
+        {!variant ? <div className="modal-content">{children}</div> : children}
       </section>
     </div>
   );
@@ -165,15 +172,22 @@ export function Form({
   children,
 }) {
   const [submitting, setSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState(null);
+  const pending = useRef(false);
   return (
     <form
       className="field-form"
       data-has-fields={fields.length > 0 ? "true" : "false"}
+      data-feedback={
+        feedback ? (feedback.error ? "error" : "success") : undefined
+      }
       aria-busy={submitting}
       onSubmit={async (e) => {
         e.preventDefault();
-        if (submitting) return;
+        if (pending.current) return;
+        pending.current = true;
         setSubmitting(true);
+        setFeedback(null);
         const form = e.currentTarget;
         const data = Object.fromEntries(new FormData(form));
         for (const field of fields)
@@ -183,90 +197,149 @@ export function Form({
                 ? ""
                 : Number(data[field.name]);
         try {
-          if ((await onSubmit(data)) !== false) form.reset();
+          const result = await onSubmit(data);
+          if (result === false) {
+            setFeedback({
+              error: true,
+              message:
+                "This record wasn't saved. Your entries are still here. Check the error and try again.",
+            });
+          } else {
+            form.reset();
+            setFeedback({ error: false, message: "Saved successfully." });
+          }
+        } catch (error) {
+          setFeedback({
+            error: true,
+            message:
+              error.message ||
+              "This record couldn't be saved. Your entries are still here.",
+          });
         } finally {
+          pending.current = false;
           setSubmitting(false);
         }
       }}
     >
       {fields.length > 0 && (
         <div className="form-field-mark" aria-hidden="true">
-          <Compass size={17} />
-          <span>Expedition field record</span>
+          <span className="form-crest">
+            <Compass size={25} strokeWidth={2.5} />
+          </span>
+          <span className="form-record-title">Mission details</span>
           <span className="form-field-rule" />
-          <span>✦</span>
+          <span className="form-field-count">{fields.length} fields</span>
         </div>
       )}
-      {fields.map((f, index) => (
-        <label key={f.name} className="expedition-field">
-          <span className="form-field-caption">
-            <span className="form-field-number" aria-hidden="true">
-              {String(index + 1).padStart(2, "0")}
+      {fields.map((f) => {
+        const FieldIcon = f.options
+          ? ListChecks
+          : f.type === "number"
+            ? Hash
+            : ["date", "datetime-local", "time"].includes(f.type)
+              ? CalendarDays
+              : f.type === "url"
+                ? Link2
+                : f.type === "email"
+                  ? Mail
+                  : f.type === "password"
+                    ? LockKeyhole
+                    : PencilLine;
+        return (
+          <label key={f.name} className="expedition-field">
+            <span className="form-field-caption">
+              <span className="form-field-number" aria-hidden="true">
+                <FieldIcon size={17} strokeWidth={2.6} />
+              </span>
+              <span>{f.label}</span>
+              {f.optional && <small aria-hidden="true">Optional</small>}
             </span>
-            <span>{f.label}</span>
-            {f.optional && <small aria-hidden="true">Optional</small>}
-          </span>
-          {f.options ? (
-            <select
-              name={f.name}
-              defaultValue={initial[f.name] ?? f.options[0]?.value}
-              required={!f.optional && !f.options.some((o) => o.value === "")}
-            >
-              {f.options.map((o) => (
-                <option value={o.value} key={o.value}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
-          ) : f.type === "textarea" ? (
-            <textarea
-              name={f.name}
-              rows={f.rows || 3}
-              minLength={f.min || 1}
-              maxLength={f.maxLength || 4000}
-              defaultValue={initial[f.name] || ""}
-              required={!f.optional}
-              placeholder={f.placeholder}
-            />
-          ) : (
-            <input
-              name={f.name}
-              type={f.type || "text"}
-              defaultValue={initial[f.name] ?? ""}
-              min={f.min}
-              max={f.max}
-              step={f.type === "number" ? f.step || "any" : undefined}
-              minLength={f.type === "number" ? undefined : f.min}
-              required={!f.optional}
-              placeholder={f.placeholder}
-            />
-          )}
-        </label>
-      ))}
+            {f.options ? (
+              <select
+                disabled={submitting}
+                name={f.name}
+                defaultValue={initial[f.name] ?? f.options[0]?.value}
+                required={!f.optional && !f.options.some((o) => o.value === "")}
+              >
+                {f.options.map((o) => (
+                  <option value={o.value} key={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
+            ) : f.type === "textarea" ? (
+              <textarea
+                disabled={submitting}
+                name={f.name}
+                rows={f.rows || 3}
+                minLength={f.min || 1}
+                maxLength={f.maxLength || 4000}
+                defaultValue={initial[f.name] || ""}
+                required={!f.optional}
+                placeholder={f.placeholder}
+              />
+            ) : (
+              <input
+                disabled={submitting}
+                name={f.name}
+                type={f.type || "text"}
+                defaultValue={initial[f.name] ?? ""}
+                min={f.min}
+                max={f.max}
+                step={f.type === "number" ? f.step || "any" : undefined}
+                minLength={f.type === "number" ? undefined : f.min}
+                required={!f.optional}
+                placeholder={f.placeholder}
+              />
+            )}
+          </label>
+        );
+      })}
       {children}
+      {feedback && (
+        <p
+          className={`workflow-form-feedback ${feedback.error ? "is-error" : ""}`}
+          role={feedback.error ? "alert" : "status"}
+        >
+          <span className="form-feedback-icon" aria-hidden="true">
+            {feedback.error ? (
+              <AlertTriangle size={19} strokeWidth={2.5} />
+            ) : (
+              <Check size={20} strokeWidth={3} />
+            )}
+          </span>
+          <span>{feedback.message}</span>
+        </p>
+      )}
       <button className="btn primary" type="submit" disabled={submitting}>
-        {submitting ? (
-          <LoaderCircle className="spin" size={16} aria-hidden="true" />
-        ) : (
-          <Compass size={16} aria-hidden="true" />
-        )}
+        <span className="form-action-icon" aria-hidden="true">
+          {submitting ? (
+            <LoaderCircle className="spin" size={16} aria-hidden="true" />
+          ) : (
+            <Compass size={21} strokeWidth={2.6} aria-hidden="true" />
+          )}
+        </span>
         <span>{submitting ? "Recording…" : submit}</span>
-        {!submitting && (
-          <ArrowUpRight
-            className="form-submit-arrow"
-            size={17}
-            aria-hidden="true"
-          />
-        )}
       </button>
     </form>
   );
 }
-export function Busy() {
+export function Busy({ label = "Loading your workspace…" }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setVisible(true), 250);
+    return () => clearTimeout(timer);
+  }, []);
+  if (!visible) return <div className="page-pending-placeholder" aria-hidden="true" />;
   return (
-    <div className="loading-state">
-      <LoaderCircle className="spin" />
-      <span>Establishing uplink…</span>
+    <div
+      className="page-pending"
+      role="status"
+      aria-busy="true"
+      aria-label={label}
+    >
+      <LoaderCircle size={17} className="spin" aria-hidden="true" />
+      <span>{label}</span>
     </div>
   );
 }

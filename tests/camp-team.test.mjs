@@ -63,7 +63,7 @@ test("legacy duplicate character choices still receive separate tents", () => {
   assert.notEqual(members[0].tent.key, members[1].tent.key);
 });
 
-test("camp vitals follow live life/energy rules and the Day 1 energy override", () => {
+test("camp vitals follow the same account balance even with historical Day 1 flags", () => {
   assert.deepEqual(campVitals({ hp: 4, energy: 1 }), {
     life: 4,
     energy: 1,
@@ -76,7 +76,7 @@ test("camp vitals follow live life/energy rules and the Day 1 energy override", 
   });
   assert.deepEqual(campVitals({ hp: 3, energy: 1 }, true), {
     life: 3,
-    energy: 5,
-    energyMax: 5,
+    energy: 1,
+    energyMax: 3,
   });
 });

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 27,
+    "code": "QA-13",
+    "observed": "Task detail shows instructions and a free Curriculum clue link. No task-specific FIRE/STORY, detailed guide, or MC 1:1 controls appeared in the task detail.",
+    "screenshot": "27-QA-13-task.png"
+  },
+  {
+    "id": 28,
+    "code": "QA-13",
+    "observed": "Chrome saved the expected/actual summary and link, preserved both after reload, and opened the synthetic evidence receipt. The task stayed Working.",
+    "screenshot": "28-QA-13-evidence.png"
+  },
+  {
+    "id": 29,
+    "code": "OP-15",
+    "observed": "Task detail shows instructions and a free Curriculum clue link. No task-specific FIRE/STORY, detailed guide, or MC 1:1 controls appeared in the task detail.",
+    "screenshot": "29-OP-15-task.png"
+  },
+  {
+    "id": 30,
+    "code": "OP-15",
+    "observed": "Chrome saved the expected/actual summary and link, preserved both after reload, and opened the synthetic evidence receipt. The task stayed Working.",
+    "screenshot": "30-OP-15-evidence.png"
+  },
+  {
+    "id": 31,
+    "code": "QA-15",
+    "observed": "Task detail shows instructions and a free Curriculum clue link. No task-specific FIRE/STORY, detailed guide, or MC 1:1 controls appeared in the task detail.",
+    "screenshot": "31-QA-15-task.png"
+  },
+  {
+    "id": 32,
+    "code": "QA-15",
+    "observed": "Chrome saved the expected/actual summary and link, preserved both after reload, and opened the synthetic evidence receipt. The task stayed Working.",
+    "screenshot": "32-QA-15-evidence.png"
+  },
+  {
+    "id": 33,
+    "code": "UAT-01",
+    "observed": "Task detail shows instructions and a free Curriculum clue link. No task-specific FIRE/STORY, detailed guide, or MC 1:1 controls appeared in the task detail.",
+    "screenshot": "33-UAT-01-task.png"
+  },
+  {
+    "id": 34,
+    "code": "UAT-01",
+    "observed": "Chrome saved the expected/actual summary and link, preserved both after reload, and opened the synthetic evidence receipt. The task stayed Working.",
+    "screenshot": "34-UAT-01-evidence.png"
+  }
+]

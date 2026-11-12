@@ -1,0 +1,10 @@
+- main:
+  - heading "Alumni Connect" [level=1]
+  - paragraph: Sprint 2 staging candidate · Fictional Team A · CC acceptance pending
+  - alert: Invalid email or password.
+  - heading "Sign in" [level=2]
+  - text: Email
+  - textbox "Email": <redacted>
+  - text: Password
+  - textbox "Password": <redacted>
+  - button "Sign in"

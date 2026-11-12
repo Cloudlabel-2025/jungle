@@ -1,0 +1,176 @@
+TAP version 13
+# Subtest: pilot: five-team lifecycle, independent reviews, handovers, Spark, marking and 27 simultaneous actor writes
+ok 1 - pilot: five-team lifecycle, independent reviews, handovers, Spark, marking and 27 simultaneous actor writes
+  ---
+  duration_ms: 23868.2652
+  type: 'test'
+  ...
+# Subtest: pilot review edits, appeal evidence, energy freeze and contributor independence
+    # Subtest: a fresh programme returns empty collections before any sprint exists
+    ok 1 - a fresh programme returns empty collections before any sprint exists
+      ---
+      duration_ms: 98.7258
+      type: 'test'
+      ...
+    # Subtest: request replay is bound to its original authenticated actor
+    ok 2 - request replay is bound to its original authenticated actor
+      ---
+      duration_ms: 58.097
+      type: 'test'
+      ...
+    # Subtest: MC exceptions remain private while the TL team EOD is visible to the team
+    ok 3 - MC exceptions remain private while the TL team EOD is visible to the team
+      ---
+      duration_ms: 163.0565
+      type: 'test'
+      ...
+    # Subtest: editing a checkpoint supersedes pending reviews rather than blocking sprint closure
+    ok 4 - editing a checkpoint supersedes pending reviews rather than blocking sprint closure
+      ---
+      duration_ms: 410.8538
+      type: 'test'
+      ...
+    # Subtest: a reassessment cannot accept revised work against an obsolete final finding
+    ok 5 - a reassessment cannot accept revised work against an obsolete final finding
+      ---
+      duration_ms: 2132.5214
+      type: 'test'
+      ...
+    # Subtest: marks returned from external tools cannot forge the human sign-off field
+    ok 6 - marks returned from external tools cannot forge the human sign-off field
+      ---
+      duration_ms: 194.0618
+      type: 'test'
+      ...
+    # Subtest: zero energy freezes ongoing delivery while truthful blocker reporting remains available
+    ok 7 - zero energy freezes ongoing delivery while truthful blocker reporting remains available
+      ---
+      duration_ms: 864.6156
+      type: 'test'
+      ...
+    # Subtest: assigning a TL as contributor reroutes their pending review to an independent MC
+    ok 8 - assigning a TL as contributor reroutes their pending review to an independent MC
+      ---
+      duration_ms: 627.2584
+      type: 'test'
+      ...
+    # Subtest: scheduled reminders retain their first timestamp and worker failures are visible to staff
+    ok 9 - scheduled reminders retain their first timestamp and worker failures are visible to staff
+      ---
+      duration_ms: 7668.5026
+      type: 'test'
+      ...
+    1..9
+ok 2 - pilot review edits, appeal evidence, energy freeze and contributor independence
+  ---
+  duration_ms: 14540.7131
+  type: 'test'
+  ...
+# Subtest: programme workspace renders a successful no-sprint response for Gamer, MC and CC
+ok 3 - programme workspace renders a successful no-sprint response for Gamer, MC and CC
+  ---
+  duration_ms: 508.221
+  type: 'test'
+  ...
+# Subtest: Sprint 4 Help Passes: sponsorship settlement, verified AI credit and carry-forward
+    # Subtest: PB-QA-050/051/055: consent, free support, reservation, completed MC session and one lifetime charge
+    ok 1 - PB-QA-050/051/055: consent, free support, reservation, completed MC session and one lifetime charge
+      ---
+      duration_ms: 2564.4411
+      type: 'test'
+      ...
+    # Subtest: PB-QA-052/053: verified challenges, task scope, one award per week and one use per credit
+    ok 2 - PB-QA-052/053: verified challenges, task scope, one award per week and one use per credit
+      ---
+      duration_ms: 2420.4906
+      type: 'test'
+      ...
+    # Subtest: PB-QA-054: one carry-forward plus the new week's earned credit, with approvals pending
+    ok 3 - PB-QA-054: one carry-forward plus the new week's earned credit, with approvals pending
+      ---
+      duration_ms: 1500.0379
+      type: 'test'
+      ...
+    1..3
+ok 4 - Sprint 4 Help Passes: sponsorship settlement, verified AI credit and carry-forward
+  ---
+  duration_ms: 9296.7369
+  type: 'test'
+  ...
+# Subtest: Frozen final sprint loads only after prior acceptance and requires private witnessed demos
+ok 5 - Frozen final sprint loads only after prior acceptance and requires private witnessed demos
+  ---
+  duration_ms: 6391.2996
+  type: 'test'
+  ...
+# PB-QA-077: verified loaded task split, five demos and four cards per Gamer
+# PB-QA-098: three CC assessors rejected; no arena plan recorded
+# PB-QA-096: proposed final marks did not create any assessment, award, or witnessed pass
+# P2-S1: verified catalogue shape and denied assignment before Key 5
+# P2-S2: verified catalogue shape and denied assignment before Key 5
+# P2-S3: verified catalogue shape and denied assignment before Key 5
+# PB-QA-101: one separate +5 award, no core entry or trophy
+# PB-QA-076: Gamer could prepare before release; live witness recording required the accepted release
+# PB-QA-102: optional opt-out left the mandatory demo and core result intact
+# PB-QA-103: top repeat recipient rejected; next eligible recipient recorded without changing scores
+# PB-QA-108: 105 core rejected atomically; core, Admin Chair and Phase 2 awards remained separate
+# P2-S1: verified complete MC allocation after Key 5
+# P2-S2: verified complete MC allocation after Key 5
+# P2-S3: verified complete MC allocation after Key 5
+# Subtest: pilot: independent energy decisions, paid help, optional work, roster holds and real Phase 2 cards
+ok 6 - pilot: independent energy decisions, paid help, optional work, roster holds and real Phase 2 cards
+  ---
+  duration_ms: 4353.2748
+  type: 'test'
+  ...
+# Subtest: frozen manifests preserve exact task counts, ownership, 54 hours and separate deployment gates
+ok 7 - frozen manifests preserve exact task counts, ownership, 54 hours and separate deployment gates
+  ---
+  duration_ms: 3.4224
+  type: 'test'
+  ...
+# Subtest: frozen Part B task IDs retain their original spelling and dependencies
+ok 8 - frozen Part B task IDs retain their original spelling and dependencies
+  ---
+  duration_ms: 0.9888
+  type: 'test'
+  ...
+# Subtest: working calendar excludes lunch, holidays and weekends in both directions
+ok 9 - working calendar excludes lunch, holidays and weekends in both directions
+  ---
+  duration_ms: 1036.7551
+  type: 'test'
+  ...
+# Subtest: 82.0 versus 82.2 cap uses complete five-person core marks only
+ok 10 - 82.0 versus 82.2 cap uses complete five-person core marks only
+  ---
+  duration_ms: 2.2879
+  type: 'test'
+  ...
+# Subtest: CSV quotes and XLSX literals preserve values; formulas are rejected
+ok 11 - CSV quotes and XLSX literals preserve values; formulas are rejected
+  ---
+  duration_ms: 13.6983
+  type: 'test'
+  ...
+# Subtest: marks workbooks reject self-closing formulas, duplicate cells and data beyond headers
+ok 12 - marks workbooks reject self-closing formulas, duplicate cells and data beyond headers
+  ---
+  duration_ms: 2.1466
+  type: 'test'
+  ...
+# Subtest: private evidence rejects forged types, oversize and expanding Office files; extracted text retains fidelity warning
+ok 13 - private evidence rejects forged types, oversize and expanding Office files; extracted text retains fidelity warning
+  ---
+  duration_ms: 400.2457
+  type: 'test'
+  ...
+1..13
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 69908.2822

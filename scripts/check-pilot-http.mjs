@@ -107,12 +107,12 @@ assert.equal(
   (
     await request("/api/pilot/storage", cookie, {
       action: "intent",
-      filename: "evidence.pdf",
+      filename: "unsupported.exe",
       taskId: state.tasks[0]._id,
       requestId: randomUUID(),
     })
   ).status,
-  503,
+  400,
 );
 assert.equal((await request("/api/pilot/cron")).status, 401);
 if (config.cronSecret) {

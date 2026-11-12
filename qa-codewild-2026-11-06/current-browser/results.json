@@ -1,0 +1,95 @@
+{
+  "recordedAt": "2026-11-10T11:26:51.382Z",
+  "base": "https://voyageofwilderness-vow.vercel.app",
+  "results": [
+    {
+      "id": "Gamer-EMPTY",
+      "status": "PASS",
+      "actual": "Blank sign-in rejected by required-field validation: Please fill in this field.",
+      "evidence": "Gamer-EMPTY.png"
+    },
+    {
+      "id": "Gamer-LOGIN",
+      "status": "PASS",
+      "actual": "Own dashboard /gamer/dashboard",
+      "evidence": "Gamer-LOGIN.png"
+    },
+    {
+      "id": "Gamer-RETEST",
+      "status": "BLOCKED",
+      "actual": "page.goto: net::ERR_ABORTED at https://voyageofwilderness-vow.vercel.app/gamer/week-one-games",
+      "evidence": "Gamer-RETEST.png",
+      "title": "CODEWILD · Escape the Wild",
+      "assets": [
+        {
+          "path": "/api/auth/login",
+          "status": 200,
+          "method": "POST"
+        }
+      ],
+      "clientErrors": []
+    },
+    {
+      "id": "MC-RETEST",
+      "status": "BLOCKED",
+      "actual": "page.waitForURL: Timeout 18000ms exceeded.",
+      "evidence": "MC-RETEST.png",
+      "title": "CODEWILD · Escape the Wild",
+      "assets": [
+        {
+          "path": "/api/auth/login",
+          "status": 200,
+          "method": "POST"
+        }
+      ],
+      "clientErrors": []
+    },
+    {
+      "id": "CC-LOGIN",
+      "status": "PASS",
+      "actual": "Own dashboard /centre-command/dashboard",
+      "evidence": "CC-LOGIN.png"
+    },
+    {
+      "id": "CC-WEEK1",
+      "status": "PASS",
+      "actual": "Own Week 1 screen rendered",
+      "evidence": "CC-WEEK1.png",
+      "signals": [
+        "Support alert: Aarav Patel reached three consecutive HP drops. A Commander check-in is needed.",
+        "Prepare each day, then open it here. Close the current day after its scheduled activities end. Assessment reviews can remain pending.",
+        "Day 1 · Discover\tOPEN\t1\tClose Day 1",
+        "Day 2 · Explore\tDRAFT\tNot prepared\tContent preparation required",
+        "Day 3 · STORY IT!\tDRAFT\tNot prepared\tContent preparation required",
+        "Day 4 · FIRE IT!\tDRAFT\tNot prepared\tContent preparation required",
+        "Day 5 · Prove\tDRAFT\tNot prepared\tContent preparation required",
+        "Day 1 agenda",
+        "0 OPEN QUESTIONS",
+        "Day 1 discovery overview",
+        "Open Day 1 submissions, markers and reviews"
+      ]
+    },
+    {
+      "id": "CC-ROUTE-1",
+      "status": "PASS",
+      "actual": "Redirected to /centre-command/dashboard",
+      "evidence": "CC-ROUTE-1.png",
+      "attempted": "/gamer/week-one-games"
+    },
+    {
+      "id": "CC-RETEST",
+      "status": "BLOCKED",
+      "actual": "page.goto: Timeout 12000ms exceeded.",
+      "evidence": "CC-RETEST.png",
+      "title": "voyageofwilderness-vow.vercel.app",
+      "assets": [
+        {
+          "path": "/api/auth/login",
+          "status": 200,
+          "method": "POST"
+        }
+      ],
+      "clientErrors": []
+    }
+  ]
+}

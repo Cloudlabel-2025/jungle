@@ -1,0 +1,32 @@
+[
+  {
+    "check": "uat05-workflow",
+    "exitCode": 0,
+    "seconds": 47.67
+  },
+  {
+    "check": "op15",
+    "exitCode": 0,
+    "seconds": 5.13
+  },
+  {
+    "check": "ten-session-rehearsal",
+    "exitCode": 0,
+    "seconds": 0.84
+  },
+  {
+    "check": "retained-restore",
+    "exitCode": 0,
+    "seconds": 3.99
+  },
+  {
+    "check": "qa15-sprint1-2",
+    "exitCode": 0,
+    "seconds": 4.39
+  },
+  {
+    "check": "application-regression",
+    "exitCode": 0,
+    "seconds": 90.37
+  }
+]

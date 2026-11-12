@@ -1,0 +1,37 @@
+{
+  "keyboard": [
+    {
+      "name": "password",
+      "tag": "INPUT",
+      "text": null
+    },
+    {
+      "name": null,
+      "tag": "BUTTON",
+      "text": "Sign in"
+    }
+  ],
+  "loginError": "Invalid email or password.",
+  "directory": {
+    "content": 305,
+    "viewport": 305
+  },
+  "createForm": {
+    "content": 305,
+    "viewport": 305
+  },
+  "fields": {
+    "total": 19,
+    "withLabel": 19
+  },
+  "focusAfterOpening": {
+    "name": null,
+    "tag": "BODY",
+    "text": null
+  },
+  "focusAfterCancel": {
+    "name": null,
+    "tag": "BODY",
+    "text": null
+  }
+}

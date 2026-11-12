@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-12",
+  "zipSha256": "657539befdfcd0bb242ebacf678b01fc88b5e8a466637953578f81ec8f6fa091",
+  "integrityEntriesVerified": 32,
+  "contentComparison": {
+    "sprint3": "20 cards and 7 gates exact",
+    "sprint4": "20 cards and 7 gates exact",
+    "sprint5": "20 cards and 7 gates exact",
+    "finalFriday": "6 JSON references exact",
+    "phase2": "60-card catalogue exact",
+    "note": "Compared with deep equality in this audit; no importer was run and application content was not modified."
+  },
+  "acceptanceCatalogueScenariosUnchanged": true,
+  "acceptance": {
+    "total": 121,
+    "recorded": {
+      "BLOCKED": 81,
+      "PASS": 36,
+      "FAIL": 4
+    },
+    "originalFailuresWithPassingRetest": [
+      "PB-QA-035",
+      "PB-QA-037",
+      "PB-QA-039",
+      "PB-QA-041"
+    ],
+    "byArea": {
+      "Sprint3": {
+        "BLOCKED": 23,
+        "PASS": 3
+      },
+      "Sprint4": {
+        "PASS": 19,
+        "FAIL": 4,
+        "BLOCKED": 15
+      },
+      "Sprint5": {
+        "BLOCKED": 18,
+        "PASS": 2
+      },
+      "Final Friday": {
+        "BLOCKED": 14,
+        "PASS": 4
+      },
+      "Awards": {
+        "PASS": 1,
+        "BLOCKED": 3
+      },
+      "Passport": {
+        "BLOCKED": 2,
+        "PASS": 1
+      },
+      "Certificate": {
+        "BLOCKED": 1
+      },
+      "Phase2": {
+        "PASS": 6,
+        "BLOCKED": 5
+      }
+    }
+  }
+}

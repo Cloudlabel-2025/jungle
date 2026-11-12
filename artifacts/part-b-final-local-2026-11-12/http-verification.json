@@ -1,0 +1,238 @@
+{
+  "fixture": "Disposable five-team checkpoint; prior work and SDLC checkpoints seeded, no actual student development certified",
+  "accounts": [
+    {
+      "actor": "pilot-cc",
+      "role": "CENTRE_COMMAND",
+      "tasks": 100,
+      "teams": 5,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g1",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g5",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g9",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g10",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g11",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g12",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g13",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g14",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g15",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g16",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g17",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g19",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g8",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g0",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g2",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g3",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g18",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g6",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g4",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g24",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g20",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g23",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g22",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g21",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-g7",
+      "role": "GAMER",
+      "tasks": 20,
+      "teams": 1,
+      "scope": "PASS"
+    },
+    {
+      "actor": "pilot-mc",
+      "role": "MISSION_COMMANDER",
+      "tasks": 100,
+      "teams": 5,
+      "scope": "PASS"
+    }
+  ],
+  "simultaneousReads": {
+    "count": 27,
+    "elapsedMs": 2158,
+    "interpretation": "Local observation only; no CC-approved performance target or deployed capacity certification"
+  },
+  "uploads": [
+    {
+      "team": 1,
+      "actor": "pilot-g0",
+      "evidenceId": "12ed1180-fde6-42b6-8d3c-28386563251a",
+      "sha256": "25b4b63a3d9bdaf1b3b8107c693e3e0ed94de41e528c6e279e22b04f0b5b9953",
+      "roundTripAndPrivacy": "PASS"
+    },
+    {
+      "team": 2,
+      "actor": "pilot-g5",
+      "evidenceId": "9ff096ba-ec1d-417c-898b-493dbf584e9b",
+      "sha256": "25b4b63a3d9bdaf1b3b8107c693e3e0ed94de41e528c6e279e22b04f0b5b9953",
+      "roundTripAndPrivacy": "PASS"
+    },
+    {
+      "team": 3,
+      "actor": "pilot-g10",
+      "evidenceId": "3457f55a-b51d-44f7-8644-779ee417e652",
+      "sha256": "25b4b63a3d9bdaf1b3b8107c693e3e0ed94de41e528c6e279e22b04f0b5b9953",
+      "roundTripAndPrivacy": "PASS"
+    },
+    {
+      "team": 4,
+      "actor": "pilot-g15",
+      "evidenceId": "023106a7-0c97-4a22-931d-9bf8090338d9",
+      "sha256": "25b4b63a3d9bdaf1b3b8107c693e3e0ed94de41e528c6e279e22b04f0b5b9953",
+      "roundTripAndPrivacy": "PASS"
+    },
+    {
+      "team": 5,
+      "actor": "pilot-g20",
+      "evidenceId": "5d589344-57e9-4e62-b67e-ced9590c0e01",
+      "sha256": "25b4b63a3d9bdaf1b3b8107c693e3e0ed94de41e528c6e279e22b04f0b5b9953",
+      "roundTripAndPrivacy": "PASS"
+    }
+  ],
+  "fiveMegabyteChunkedUploadAndStreamedDownload": "PASS",
+  "payloadNote": "The 5 MB header/padding payload tests transport limits, not PDF semantics or learner evidence validity"
+}

@@ -1,0 +1,4 @@
+PASS: OP-13 accepted in disposable workflow, timed handover received, and UAT-05 completed after restored-candidate checks. No Key 4.
+PASS: 20 frozen Sprint 4 cards and seven gates loaded for Fictional Team A.
+PASS: owner checks, early UAT rejection, scheduled-day starts, UAT-05 prerequisite and Key 4 guards.
+Key 3 remains pending. No Key 4 recorded.

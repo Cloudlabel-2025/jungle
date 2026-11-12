@@ -9,11 +9,12 @@ import {
   validProgrammeScreen,
   legacyWorkspaceData,
 } from "../lib/workspace-navigation.js";
-test("original workspaces retain every page and gain just one programme entry", () => {
+test("original workspaces retain every page and add programme and notification entries", () => {
   for (const role of Object.keys(navigation)) {
     const nav = workspaceNavigation(role);
-    assert.deepEqual(nav.slice(0, -1), navigation[role]);
-    assert.equal(nav.at(-1)[1], "week-one");
+    assert.deepEqual(nav.slice(0, -2), navigation[role]);
+    assert.equal(nav.at(-2)[1], "week-one");
+    assert.equal(nav.at(-1)[1], "notifications");
     for (const [, screen] of navigation[role])
       assert.equal(programmeScreen(screen), null);
     for (const [, screen] of weekOneNavigation[role]) {

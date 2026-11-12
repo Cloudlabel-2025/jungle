@@ -13,9 +13,12 @@ import {
   clearSession,
   demoEnabled,
   assertRole,
+  currentSessionKey,
 } from "@/lib/auth.js";
 import { models, connect, transaction } from "@/lib/db.js";
 import { snapshot } from "@/lib/snapshot.js";
+import { markNotificationsRead } from "@/lib/notification-store.js";
+import { saveMapLayout } from "@/lib/mission-map-store.js";
 import { programAudit } from "@/lib/week-one-program.js";
 import { programAction, programSnapshot } from "@/lib/week-one-program.js";
 import { dayOneSnapshot, dayOneAction, dayOneSignIn } from "@/lib/day-one.js";
@@ -168,6 +171,8 @@ async function handle(request, { params }) {
         serverTime: new Date().toISOString(),
       });
     assertRole(user, all);
+    if (route === "notifications/read" && request.method === "POST")
+      return NextResponse.json(await markNotificationsRead(user, body.ids));
     if (
       request.method === "POST" &&
       !["week1", "day1", "support"].includes(path[0])
@@ -191,6 +196,8 @@ async function handle(request, { params }) {
           "Outside your delegated permissions.",
         );
     }
+    if (route === "map/layout" && request.method === "POST")
+      return NextResponse.json(await saveMapLayout(user, body));
     if (route === "week1/audit" && request.method === "GET") {
       const search = new URL(request.url).searchParams;
       return NextResponse.json(
@@ -345,7 +352,7 @@ async function handle(request, { params }) {
       return NextResponse.json({ success: true });
     }
     if (request.method === "GET") {
-      if (route === "state") return NextResponse.json(await snapshot(user));
+      if (route === "state") return NextResponse.json({ ...await snapshot(user), sessionKey: await currentSessionKey() }, { headers: { "Cache-Control": "private, no-store" } });
       if (route === "gamer/lab") {
         assertRole(user, ["GAMER"]);
         const saved = await models.Lab.findById(user._id).lean();

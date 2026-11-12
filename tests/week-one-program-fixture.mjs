@@ -3,6 +3,15 @@ import {
   emptyDayContent,
   defaultSettings,
 } from "../lib/week-one-program-rules.js";
+export const fixtureRules = {
+  text: "[QA FIXTURE] Read the released agenda, preserve evidence, respect peers, keep credentials private, and ask MC for clarification. Player lives and energy use the shared account balance, with defaults of five lives and three energy. Synthetic evidence is for workflow testing only.",
+  reason:
+    "Publish test-only Game Rules in the isolated QA cohort before release.",
+};
+export async function publishFixtureRules(cc, now = new Date()) {
+  const { programAction } = await import("../lib/week-one-program.js");
+  return programAction(cc, "publish-rules", fixtureRules, now);
+}
 export function programFixture(day) {
   const original = fixtureConfig();
   const start = new Date(

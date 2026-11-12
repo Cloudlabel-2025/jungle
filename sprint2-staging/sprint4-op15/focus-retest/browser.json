@@ -1,0 +1,42 @@
+{
+  "test": "OP15-A11Y-01",
+  "candidate": "disposable focus-fix build",
+  "url": "http://127.0.0.1:3189",
+  "narrow": {
+    "viewportWidth": 320,
+    "open": {
+      "name": null,
+      "tag": "H2",
+      "text": "Create alumni"
+    },
+    "firstTab": {
+      "name": "firstName",
+      "tag": "INPUT",
+      "text": ""
+    },
+    "cancel": {
+      "name": null,
+      "tag": "BUTTON",
+      "text": "Create alumni"
+    }
+  },
+  "defaultViewport": {
+    "open": {
+      "name": null,
+      "tag": "H2",
+      "text": "Create alumni"
+    },
+    "tabSequence": [
+      "LinkedIn URL",
+      "Save profile",
+      "Cancel"
+    ],
+    "cancel": {
+      "name": null,
+      "tag": "BUTTON",
+      "text": "Create alumni"
+    }
+  },
+  "directoryCount": 20,
+  "result": "PASS"
+}

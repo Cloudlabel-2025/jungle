@@ -1,0 +1,1 @@
+BLOCKED: isolated upload intent returns 503 until a private Blob token is configured.

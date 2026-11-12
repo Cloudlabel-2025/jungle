@@ -4,12 +4,15 @@ import { pilotAction, pilotSnapshot } from "@/lib/pilot-engine.js";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store" };
-export async function GET() {
+export async function GET(request) {
   try {
     const user = await currentUser();
     if (!user)
       return Response.json({ error: "Please sign in." }, { status: 401 });
-    return Response.json(await pilotSnapshot(user), { headers });
+    const sprintId = new URL(request.url).searchParams.get("sprint");
+    if (sprintId && !/^[\w:-]{1,150}$/.test(sprintId))
+      return Response.json({ error: "Invalid sprint identifier." }, { status: 400, headers });
+    return Response.json(await pilotSnapshot(user, new Date(), sprintId), { headers });
   } catch (e) {
     return Response.json(
       { error: e.message },

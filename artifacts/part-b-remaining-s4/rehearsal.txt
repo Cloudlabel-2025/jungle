@@ -1,0 +1,8 @@
+PASS PB-QA-046: Gamer could not change the deadline; CC revision preserved the Friday milestone.
+PASS PB-QA-047: independently reviewed no-defect outcome accepted without a code change.
+PASS PB-QA-045: Friday Gamer cannot self-review, record the release gate, or grant final acceptance.
+CHECK PB-QA-064: the simulated failed release gate persisted and acceptance was rejected.
+PASS: OP-13 accepted in disposable workflow, timed handover received, and UAT-05 completed after restored-candidate checks. No Key 4.
+PASS: 20 frozen Sprint 4 cards and seven gates loaded for Fictional Team A.
+PASS: owner checks, early UAT rejection, scheduled-day starts, UAT-05 prerequisite and Key 4 guards.
+Key 3 remains pending. No Key 4 recorded.

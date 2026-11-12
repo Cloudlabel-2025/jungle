@@ -1,0 +1,58 @@
+{
+  "startedAt": "2026-11-10T09:43:14.506Z",
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "backupSha256": "6a61b9653be0cdbb29102e2a243daa0185b47863880ba81c4b83e8e3a5012e03",
+  "checks": [
+    {
+      "check": "Health",
+      "result": "PASS",
+      "observed": "HTTP 200 and status ready",
+      "filename": "01-health.png",
+      "url": "https://127.0.0.1:55999/health"
+    },
+    {
+      "check": "Trusted HTTPS",
+      "result": "PASS",
+      "observed": "Chrome loaded the sign-in page with certificate validation enabled and reported a secure context",
+      "filename": "02-trusted-https.png",
+      "url": "https://127.0.0.1:55999/"
+    },
+    {
+      "check": "Administrator directory",
+      "result": "PASS",
+      "observed": "Sign-in HTTP 200, Secure cookie, and 21 restored fictional records visible",
+      "filename": "03-admin-directory.png",
+      "url": "https://127.0.0.1:55999/"
+    },
+    {
+      "check": "Sign-out after refresh",
+      "result": "PASS",
+      "observed": "Sign-out HTTP 200 and sign-in page restored after refresh",
+      "filename": "04-signed-out.png",
+      "url": "https://127.0.0.1:55999/"
+    }
+  ],
+  "url": "https://127.0.0.1:55999",
+  "restored": {
+    "records": 21,
+    "indexes": [
+      "_id_",
+      "email_1",
+      "registration_1"
+    ],
+    "exactMatch": true
+  },
+  "chromeVersion": "156.0.8078.81",
+  "security": {
+    "issuer": "Avast Web/Mail Shield Root",
+    "protocol": "TLS 1.3",
+    "subjectName": "127.0.0.1",
+    "validFrom": 1794296513,
+    "validTo": 1794382913
+  },
+  "disposableInstanceStopped": true,
+  "finishedAt": "2026-11-10T09:43:19.152Z",
+  "op13Approved": false,
+  "key3": null,
+  "key4": null
+}

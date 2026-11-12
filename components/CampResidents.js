@@ -55,10 +55,7 @@ export function CampResidentInfo({ roster, user, selected, close }) {
   );
   if (!member?.character) return null;
   const { player, character } = member;
-  const vitals = campVitals(
-    player,
-    user.weekOneEnergy != null || user.dayOneEnergy != null,
-  );
+  const vitals = campVitals(player);
   return (
     <section className="camp-resident-info" aria-labelledby={id}>
       <button

@@ -1,0 +1,50 @@
+- main:
+  - heading "Alumni Connect" [level=1]
+  - paragraph: Sprint 2 staging candidate · Fictional Team A · CC acceptance pending
+  - paragraph: Signed in as Alumnus
+  - button "Sign out"
+  - heading "Fictional Alumnus A" [level=2]
+  - term: Alumni ID
+  - definition: AL-QA-001
+  - term: First name
+  - definition: Fictional
+  - term: Last name
+  - definition: Alumnus A
+  - term: Date of birth
+  - definition: 2000-01-01
+  - term: Email
+  - definition: alumnus-1@example.invalid
+  - term: Mobile
+  - definition: "+919000000000"
+  - term: Address line 1
+  - definition: 1 Fictional Lane
+  - term: Address line 2
+  - definition: —
+  - term: City
+  - definition: Test City
+  - term: State
+  - definition: Test State
+  - term: Country
+  - definition: India
+  - term: Postal/PIN code
+  - definition: "560001"
+  - term: Course / Degree
+  - definition: BTech
+  - term: Graduation year
+  - definition: "2022"
+  - term: Student registration number
+  - definition: QA-1
+  - term: Employment status
+  - definition: Seeking work
+  - term: Primary skill
+  - definition: Testing
+  - term: Current job title
+  - definition: —
+  - term: Current organisation
+  - definition: —
+  - term: LinkedIn URL
+  - definition: —
+  - term: Created
+  - definition: 2026-11-10T05:10:38.087Z
+  - term: Modified
+  - definition: 2026-11-10T05:10:38.087Z

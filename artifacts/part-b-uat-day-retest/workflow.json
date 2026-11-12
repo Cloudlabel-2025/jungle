@@ -1,0 +1,1102 @@
+{
+  "team": "Fictional Team A",
+  "scope": "Disposable staging rehearsal",
+  "priorSprint": "Synthetic closure marker for import sequencing only. No Key 3 issued.",
+  "template": {
+    "number": 4,
+    "version": "Part B frozen 2026-11-06",
+    "tasks": [
+      {
+        "id": "QA-13",
+        "owner": "A",
+        "tt": "TT1",
+        "hours": 3,
+        "title": "Functional test suite",
+        "instructions": "Cover Create/Edit, duplicates, field/LOV/conditional validation and meaningful error handling; expected/actual results documented.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Testing"
+      },
+      {
+        "id": "QA-14",
+        "owner": "A",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Negative and security tests",
+        "instructions": "Run invalid-input and unauthorised API scenarios; log defects and retest evidence.",
+        "depends": [
+          "QA-13",
+          "BE-14",
+          "DB-14"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Testing"
+      },
+      {
+        "id": "OP-13",
+        "owner": "A",
+        "tt": "TT2",
+        "hours": 2,
+        "title": "Final staging release",
+        "instructions": "Deploy tested candidate, record version, perform smoke checks and maintain rollback proof.",
+        "depends": [
+          "QA-15",
+          "OP-15"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Deployment"
+      },
+      {
+        "id": "UAT-01",
+        "owner": "A",
+        "tt": "TT1",
+        "hours": 2.5,
+        "title": "Monday Client’s Chair",
+        "instructions": "2.5h protected: independently assess normal Create/Edit journeys; Pass/Fail/Blocked evidence and handover.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Monday"
+        }
+      },
+      {
+        "id": "OP-14",
+        "owner": "B",
+        "tt": "TT1",
+        "hours": 2,
+        "title": "Environment assessment",
+        "instructions": "Document staging health, configuration, logs, test tools and recoverable baseline.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Deployment"
+      },
+      {
+        "id": "OP-15",
+        "owner": "B",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Non-functional testing",
+        "instructions": "Execute safe-load, reliability and approved performance checks; capture measured evidence, limits and failures.",
+        "depends": [
+          "OP-14",
+          "BE-14"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Deployment"
+      },
+      {
+        "id": "FE-13",
+        "owner": "B",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Frontend verification and corrections",
+        "instructions": "Correct assigned verified frontend/UI issues; attach responsive/accessibility retest evidence without duplicating FE-15 ownership.",
+        "depends": [
+          "FE-14",
+          "QA-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Frontend"
+      },
+      {
+        "id": "UAT-02",
+        "owner": "B",
+        "tt": "TT1",
+        "hours": 2.5,
+        "title": "Tuesday Client’s Chair",
+        "instructions": "2.5h protected: invalid-entry, boundary-condition and confusing business-journey UAT; evidence-backed verdict.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Tuesday"
+        }
+      },
+      {
+        "id": "FE-14",
+        "owner": "C",
+        "tt": "TT1",
+        "hours": 3,
+        "title": "Frontend usability assessment",
+        "instructions": "Assess navigation, messages, accessibility, keyboard and mobile requirements; raise actionable findings.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Frontend"
+      },
+      {
+        "id": "FE-15",
+        "owner": "C",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Frontend defect repair",
+        "instructions": "Correct confirmed UI/accessibility/interaction issues and demonstrate passing retest.",
+        "depends": [
+          "FE-14",
+          "QA-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Frontend"
+      },
+      {
+        "id": "BE-13",
+        "owner": "C",
+        "tt": "TT2",
+        "hours": 2,
+        "title": "Cross-layer request tracing",
+        "instructions": "Trace relevant UI→API→backend→database journey with request/response evidence and failure analysis.",
+        "depends": [
+          "BE-14",
+          "DB-14"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Backend"
+      },
+      {
+        "id": "UAT-03",
+        "owner": "C",
+        "tt": "TT1",
+        "hours": 2.5,
+        "title": "Wednesday Client’s Chair",
+        "instructions": "2.5h protected: cross-session complete business-journey UAT with independent findings.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Wednesday"
+        }
+      },
+      {
+        "id": "BE-14",
+        "owner": "D",
+        "tt": "TT1",
+        "hours": 3,
+        "title": "API behaviour testing",
+        "instructions": "Test requests, status codes, authentication, authorisation, validation and error contracts; collect evidence.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Backend"
+      },
+      {
+        "id": "BE-15",
+        "owner": "D",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Backend defect correction",
+        "instructions": "Correct confirmed API/authorisation defects; run unit tests and attach before/after proof.",
+        "depends": [
+          "BE-14",
+          "QA-14",
+          "BE-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Backend"
+      },
+      {
+        "id": "DB-13",
+        "owner": "D",
+        "tt": "TT2",
+        "hours": 2,
+        "title": "Database defect correction",
+        "instructions": "Resolve assigned data issue or demonstrate no fault; validate persistence and identity constraints.",
+        "depends": [
+          "DB-15"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Database"
+      },
+      {
+        "id": "UAT-04",
+        "owner": "D",
+        "tt": "TT1",
+        "hours": 2.5,
+        "title": "Thursday Client’s Chair",
+        "instructions": "2.5h protected: permissions, restricted actions and data accuracy UAT with client verdict.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Thursday"
+        }
+      },
+      {
+        "id": "DB-14",
+        "owner": "E",
+        "tt": "TT1",
+        "hours": 3,
+        "title": "Data-integrity testing",
+        "instructions": "Test Create/Edit persistence, duplicate protection and data consistency on fictional data.",
+        "depends": [],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Database"
+      },
+      {
+        "id": "DB-15",
+        "owner": "E",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "Database reliability and performance",
+        "instructions": "Run controlled queries and concurrency checks; report integrity and performance findings.",
+        "depends": [
+          "DB-14"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Database"
+      },
+      {
+        "id": "QA-15",
+        "owner": "E",
+        "tt": "TT2",
+        "hours": 3,
+        "title": "System end-to-end regression",
+        "instructions": "After fixes, execute integrated system tests and prior 21 accepted checks with reusable automated evidence; report gaps.",
+        "depends": [
+          "QA-14",
+          "OP-15",
+          "FE-13",
+          "FE-15",
+          "BE-15",
+          "DB-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Testing"
+      },
+      {
+        "id": "UAT-05",
+        "owner": "E",
+        "tt": "TT2",
+        "hours": 2.5,
+        "title": "Friday Client’s Chair",
+        "instructions": "2.5h protected after OP-13; independently retest corrected business journeys and recommend acceptance.",
+        "depends": [
+          "OP-13"
+        ],
+        "evidenceRequired": "Task/defect IDs, traceable submitted artifact or test result, verified before/after evidence and reviewer outcome.",
+        "technicalRole": "Client UAT",
+        "uat": {
+          "day": "Friday"
+        }
+      }
+    ],
+    "acceptance": [
+      {
+        "id": "S4-AC-01",
+        "text": "Functional test results cover positive, negative, validation and restricted-access behaviours; repairs have retest proof."
+      },
+      {
+        "id": "S4-AC-02",
+        "text": "Non-functional testing supplies measured performance, reliability, security, accessibility and usability evidence against approved criteria and records limitations."
+      },
+      {
+        "id": "S4-AC-03",
+        "text": "System/E2E tests demonstrate complete journeys through frontend, API, database and deployed environment, including persistence and errors."
+      },
+      {
+        "id": "S4-AC-04",
+        "text": "All five Gamers complete independent 2.5-hour Client’s Chair UAT cards with evidence-backed Pass/Fail/Blocked findings."
+      },
+      {
+        "id": "S4-AC-05",
+        "text": "All confirmed defects have assigned dispositions and retests where fixed; no acceptance-blocking defect remains; CC explicitly approves any minor deferral."
+      },
+      {
+        "id": "S4-AC-06",
+        "text": "All 21 acceptance checks previously approved across Sprints 1–3 continue to pass regression."
+      },
+      {
+        "id": "S4-AC-07",
+        "text": "Final tested release is deployed, smoke-tested and formally accepted by CC after resolving or approving UAT findings; Key 4 decision recorded."
+      }
+    ]
+  },
+  "evidence": [
+    "Frozen cards and gates matched the handover checksum register.",
+    "CC draft, approval and load passed. Unapproved load and Gamer draft rejected.",
+    "All 20 saved cards match frozen IDs, hours, definitions, owners and dependencies.",
+    "The Tuesday through Thursday owners were blocked on Monday. Each owner started their own card on its assigned day. Another Gamer cannot start UAT-01.",
+    "Before prerequisite completion, UAT-05 was blocked and CC acceptance was rejected without all seven gates.",
+    "The Sprint 3 record was byte-identical after the run."
+  ],
+  "fridayEvidence": {
+    "sha256": "4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc",
+    "candidateUrl": "http://127.0.0.1:65224",
+    "restoredIds": [
+      "AL-QA-001",
+      "AL-QA-002",
+      "AL-QA-003",
+      "AL-QA-004",
+      "AL-QA-005",
+      "AL-QA-006",
+      "AL-QA-007",
+      "AL-QA-008",
+      "AL-QA-009",
+      "AL-QA-010",
+      "AL-QA-011",
+      "AL-QA-012",
+      "AL-QA-013",
+      "AL-QA-014",
+      "AL-QA-015",
+      "AL-QA-016",
+      "AL-QA-017",
+      "AL-QA-018",
+      "AL-QA-019",
+      "AL-QA-020"
+    ],
+    "http": [
+      {
+        "method": "GET",
+        "path": "/health",
+        "status": 200,
+        "ms": 159
+      },
+      {
+        "method": "GET",
+        "path": "/",
+        "status": 200,
+        "ms": 42
+      },
+      {
+        "method": "GET",
+        "path": "/app.js",
+        "status": 200,
+        "ms": 52
+      },
+      {
+        "method": "POST",
+        "path": "/api/login",
+        "status": 200,
+        "ms": 54
+      },
+      {
+        "method": "GET",
+        "path": "/api/alumni",
+        "status": 200,
+        "ms": 33
+      },
+      {
+        "method": "GET",
+        "path": "/health",
+        "status": 200,
+        "ms": 23
+      },
+      {
+        "method": "GET",
+        "path": "/",
+        "status": 200,
+        "ms": 19
+      },
+      {
+        "method": "GET",
+        "path": "/app.js",
+        "status": 200,
+        "ms": 25
+      },
+      {
+        "method": "POST",
+        "path": "/api/login",
+        "status": 200,
+        "ms": 20
+      },
+      {
+        "method": "GET",
+        "path": "/api/alumni",
+        "status": 200,
+        "ms": 23
+      },
+      {
+        "method": "GET",
+        "path": "/api/alumni/AL-QA-001",
+        "status": 200,
+        "ms": 22
+      },
+      {
+        "method": "POST",
+        "path": "/api/alumni",
+        "status": 201,
+        "ms": 24
+      },
+      {
+        "method": "PUT",
+        "path": "/api/alumni/AL-64997c3f-8c48-4200-8b9d-d537dcf19be9",
+        "status": 400,
+        "ms": 12
+      },
+      {
+        "method": "PUT",
+        "path": "/api/alumni/AL-64997c3f-8c48-4200-8b9d-d537dcf19be9",
+        "status": 200,
+        "ms": 29
+      },
+      {
+        "method": "POST",
+        "path": "/api/login",
+        "status": 200,
+        "ms": 13
+      },
+      {
+        "method": "GET",
+        "path": "/api/alumni/AL-64997c3f-8c48-4200-8b9d-d537dcf19be9",
+        "status": 200,
+        "ms": 9
+      },
+      {
+        "method": "POST",
+        "path": "/api/login",
+        "status": 200,
+        "ms": 13
+      },
+      {
+        "method": "GET",
+        "path": "/api/alumni/AL-QA-001",
+        "status": 200,
+        "ms": 11
+      },
+      {
+        "method": "GET",
+        "path": "/api/alumni/AL-64997c3f-8c48-4200-8b9d-d537dcf19be9",
+        "status": 403,
+        "ms": 7
+      },
+      {
+        "method": "PUT",
+        "path": "/api/alumni/AL-64997c3f-8c48-4200-8b9d-d537dcf19be9",
+        "status": 403,
+        "ms": 8
+      }
+    ],
+    "testRecord": {
+      "id": "AL-64997c3f-8c48-4200-8b9d-d537dcf19be9",
+      "city": "Friday QA City",
+      "createdAt": "2026-11-10T12:41:54.996Z",
+      "modifiedAt": "2026-11-10T12:41:55.029Z"
+    },
+    "handover": {
+      "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-13:612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:UAT-05:2026-12-01T11:00:00.000Z",
+      "readyAt": "2026-12-02T05:00:00.000Z"
+    },
+    "simulatedSession": {
+      "start": "2026-12-04T04:30:00.000Z",
+      "end": "2026-12-04T07:00:00.000Z",
+      "workingMinutes": 150
+    },
+    "cards": [
+      {
+        "code": "QA-13",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-13",
+        "owner": "pilot-g0",
+        "acceptedAt": "2026-11-30T07:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-13:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-13:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-13:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-13:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "BE-14",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-14",
+        "owner": "pilot-g3",
+        "acceptedAt": "2026-11-30T07:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-14:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-14:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-14:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-14:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "DB-14",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-14",
+        "owner": "pilot-g4",
+        "acceptedAt": "2026-11-30T07:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-14:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-14:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-14:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-14:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "QA-14",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-14",
+        "owner": "pilot-g0",
+        "acceptedAt": "2026-11-30T09:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-14:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-14:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-14:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-14:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "OP-14",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-14",
+        "owner": "pilot-g1",
+        "acceptedAt": "2026-11-30T09:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-14:STAGE:3",
+            "reviewer": "pilot-mc",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-14:STAGE:5",
+            "reviewer": "pilot-mc",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-14:STAGE:8",
+            "reviewer": "pilot-mc",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-14:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "OP-15",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-15",
+        "owner": "pilot-g1",
+        "acceptedAt": "2026-11-30T10:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-15:STAGE:3",
+            "reviewer": "pilot-mc",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-15:STAGE:5",
+            "reviewer": "pilot-mc",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-15:STAGE:8",
+            "reviewer": "pilot-mc",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-15:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "FE-14",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-14",
+        "owner": "pilot-g2",
+        "acceptedAt": "2026-11-30T10:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-14:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-14:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-14:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-14:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "FE-13",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-13",
+        "owner": "pilot-g1",
+        "acceptedAt": "2026-11-30T11:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-13:STAGE:3",
+            "reviewer": "pilot-mc",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-13:STAGE:5",
+            "reviewer": "pilot-mc",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-13:STAGE:8",
+            "reviewer": "pilot-mc",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-13:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "FE-15",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-15",
+        "owner": "pilot-g2",
+        "acceptedAt": "2026-12-01T05:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-15:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-15:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-15:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:FE-15:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "BE-13",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-13",
+        "owner": "pilot-g2",
+        "acceptedAt": "2026-12-01T06:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-13:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-13:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-13:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-13:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "BE-15",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-15",
+        "owner": "pilot-g3",
+        "acceptedAt": "2026-12-01T07:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-15:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-15:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-15:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:BE-15:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "DB-15",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-15",
+        "owner": "pilot-g4",
+        "acceptedAt": "2026-12-01T07:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-15:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-15:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-15:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-15:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "DB-13",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-13",
+        "owner": "pilot-g3",
+        "acceptedAt": "2026-12-01T09:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-13:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-13:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-13:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:DB-13:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "QA-15",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-15",
+        "owner": "pilot-g4",
+        "acceptedAt": "2026-12-01T10:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-15:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-15:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-15:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:QA-15:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Simulated prerequisite review to exercise the frozen dependency chain. Formal evidence and gate approval remain with CC."
+      },
+      {
+        "code": "OP-13",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-13",
+        "owner": "pilot-g0",
+        "acceptedAt": "2026-12-01T11:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-13:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-13:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-13:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:OP-13:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Disposable localhost release 4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc. Served HTML, compiled bundle, health, admin login and 20-record directory. Relaunch rollback restored the 20 pinned seed IDs. See workflow.json and sprint1-2-regression.log."
+      },
+      {
+        "code": "UAT-05",
+        "taskId": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:UAT-05",
+        "owner": "pilot-g4",
+        "acceptedAt": "2026-12-04T07:00:00.000Z",
+        "reviews": [
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:UAT-05:STAGE:3",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 0
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:UAT-05:STAGE:5",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 1
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:UAT-05:STAGE:8",
+            "reviewer": "pilot-g1",
+            "kind": "STAGE",
+            "index": 3
+          },
+          {
+            "id": "612e955e-e5ac-417f-9e5a-97f6cc102f12:pilot-team-0:UAT-05:FINAL:11",
+            "reviewer": "pilot-mc",
+            "kind": "FINAL"
+          }
+        ],
+        "summary": "Accelerated fictional Friday verdict PASS for restored login, valid Create/Edit, invalid postcode rejection, cross-session persistence and alumnus restrictions. This is a simulated workflow recommendation for CC review."
+      }
+    ],
+    "formalGateApprovals": 0
+  },
+  "cards": [
+    {
+      "id": "QA-13",
+      "ownerId": "pilot-g0",
+      "state": "Accepted"
+    },
+    {
+      "id": "QA-14",
+      "ownerId": "pilot-g0",
+      "state": "Accepted"
+    },
+    {
+      "id": "OP-13",
+      "ownerId": "pilot-g0",
+      "state": "Accepted"
+    },
+    {
+      "id": "OP-14",
+      "ownerId": "pilot-g1",
+      "state": "Accepted"
+    },
+    {
+      "id": "OP-15",
+      "ownerId": "pilot-g1",
+      "state": "Accepted"
+    },
+    {
+      "id": "FE-13",
+      "ownerId": "pilot-g1",
+      "state": "Accepted"
+    },
+    {
+      "id": "FE-14",
+      "ownerId": "pilot-g2",
+      "state": "Accepted"
+    },
+    {
+      "id": "FE-15",
+      "ownerId": "pilot-g2",
+      "state": "Accepted"
+    },
+    {
+      "id": "BE-13",
+      "ownerId": "pilot-g2",
+      "state": "Accepted"
+    },
+    {
+      "id": "BE-14",
+      "ownerId": "pilot-g3",
+      "state": "Accepted"
+    },
+    {
+      "id": "BE-15",
+      "ownerId": "pilot-g3",
+      "state": "Accepted"
+    },
+    {
+      "id": "DB-13",
+      "ownerId": "pilot-g3",
+      "state": "Accepted"
+    },
+    {
+      "id": "DB-14",
+      "ownerId": "pilot-g4",
+      "state": "Accepted"
+    },
+    {
+      "id": "DB-15",
+      "ownerId": "pilot-g4",
+      "state": "Accepted"
+    },
+    {
+      "id": "QA-15",
+      "ownerId": "pilot-g4",
+      "state": "Accepted"
+    },
+    {
+      "id": "UAT-05",
+      "ownerId": "pilot-g4",
+      "state": "Accepted"
+    },
+    {
+      "id": "UAT-01",
+      "ownerId": "pilot-g0",
+      "state": "Working"
+    },
+    {
+      "id": "UAT-02",
+      "ownerId": "pilot-g1",
+      "state": "Working"
+    },
+    {
+      "id": "UAT-03",
+      "ownerId": "pilot-g2",
+      "state": "Working"
+    },
+    {
+      "id": "UAT-04",
+      "ownerId": "pilot-g3",
+      "state": "Working"
+    }
+  ],
+  "key3": null,
+  "key4": null
+}

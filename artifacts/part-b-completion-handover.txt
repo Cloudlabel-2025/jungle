@@ -1,0 +1,69 @@
+PART B IMPLEMENTATION CLOSEOUT — 12 NOVEMBER 2026
+
+CURRENT REPORT UPDATE
+Automatic two-page Passport and one-page certificate generation is now implemented
+inside the app. Both PDFs are stored as private MongoDB binary records in the same
+transaction as their metadata. No Blob token, HTML printing or manual upload is
+required for generated reports. Actual private bytes/hash round trips, MC review,
+CC issue, correction/reissue, stale-source and access guards passed integration
+tests. The production browser completed generation, review, issuance and learner
+downloads and denied signed-out/unrelated access. Full suite: 149 passed, zero
+failed/skipped; production build and configured database transactional read passed.
+See part-b-pdf-browser-2026-11-12/ and part-b-pdf-verification.json. Old HTML-only and
+Blob-blocked statements below record earlier verification stages, now superseded
+for generated reports. Real learner content/evidence and signatures still require
+staff verification. Other evidence uploads retain the existing Blob requirement.
+
+Scope
+Changes extend the current Part A engine and existing Programme panels. The frozen cards, dependencies, acceptance checks, scoring dimensions, optional status, manual external AI workflow and student-app/operator boundary remain authoritative. No faults were injected into CODEWILD or real student applications. No live payments, external AI requests, real learner results or production credentials were used.
+
+Implemented in this change
+1. Full Thursday export data: linked team manifest and per-Gamer dossiers; thirteen approved criterion rows/maxima/evidence; explicit NOT_ASSESSED; source/staging references; known-defect dispositions; actual prior acceptance evidence; attributed task references; role history; approved observations; approved Week 1 baseline/readiness where recorded. Aliases and allowlisted fields exclude private coaching notes and account contacts. Source sanitisation confirmation is mandatory; URLs with credentials, queries or fragments are refused. Missing code is NOT_ASSESSABLE and cannot produce imported code findings.
+2. Human question governance: exactly Q1 common, Q2 personalised and Q3 reasoning, mapped criteria, answer expectations, evidence and equivalent alternates. Assigned MC review creates a new version, CC approves that version, and passing defence evidence names it. Stale edits revoke current approval, invalidate prior passing witness outcomes and remove gates 5–7. Historical versions/reasons remain auditable. AI never writes final marks or acceptance.
+3. Arena assessor access: the five qualified reviewers retain their existing MC/CC role families. A cross-team MC assessor sees only their assigned persona candidates/approved questions and may record that persona’s witnesses. No cross-team score or general task-board access is granted. CC retains independent final acceptance.
+4. Optional Administrator's Chair: voluntary ten-minute bookings, authorised reviewers, overlap protection, Friday arena/sprint timing, mandatory demo+private-defence prerequisite, completed session, five individually evidenced points, explicit isolated environment/target/baseline/rollback and accepted-release protection. Bonus equals earned points, stays outside core and is recorded once. CC validates the booked assessor’s findings. The platform records evidence; technical operators execute and verify actual code changes.
+5. Award evidence: frozen categories preserved, one criterion honour per Gamer, highest-marks specials computed from their original two approved criteria across the cohort, tied highest candidates preserved, explicit reasoned overrides with truthful announcement labels. Showcase selection is one evidenced finalist per persona and has no scoring effect.
+6. Reports: CC approves criterion/evidence profiles; unknown criteria remain NOT_ASSESSED. Private text-escaped print drafts include thirteen scores, four dimensions, separate bonuses, available baseline/readiness, five-sprint progression, contributions, evidenced strengths/development actions, persona/defence and verification footer. Certificate uses the exact frozen body, recipient, dates, stable unique ID and signature labels without scores. Staff print/save locally, verify PDF layout and upload through the existing private store. MC review explicitly confirms two pages, wording and evidence; CC issues after approved core, witness and Key 5. Authorised reopen/core corrections revoke old learner access and require review/reissue.
+
+How to operate
+- Programme setup: load the existing frozen content and actual cleared roster, resources and schedules. Existing records have no invented approvals.
+- Programme Sprint Work / Client acceptance: use the downloadable JSON formats to export safe Thursday evidence, import AI advisory, submit MC question review, approve as CC, publish the five-arena plan and book optional sessions.
+- Assigned persona arena: human assessor reads only the authorised candidate's questions and records private outcome/evidence. Keep candidates who are waiting out of graded question sessions.
+- Private Capability Passport and certificate: approve evidence profile as CC, prepare private HTML print drafts, save verified PDFs locally, upload, review as assigned MC and issue as CC. Generated files are DRAFTS until human verification and issuance.
+- Awards: select the original category, record evidence/reason and decision; use override=true only for an intentional non-highest special selection. The stored announcement distinguishes an override from a numerical highest scorer.
+
+Regression commands
+npm run test:partb
+node scripts/check-part-b.mjs --controls
+node scripts/check-part-b.mjs --all
+npm run build
+
+The runners create disposable MongoDB replica sets, do not load .env.local, clear Blob credentials and stop the replica sets on completion. Traces are saved under artifacts/part-b-*-regression.txt. The build follows the normal project command and its environment configuration. Build output is artifacts/part-b-completion-build.txt.
+
+Validation status
+Full disposable-database regression: 147 passed, 0 failed, 0 skipped (189 seconds). Production build passed. Focused final controls: 8 passed, 0 failed, 0 skipped. The five-team tests seed earlier accepted task/sprint outcomes to isolate Part B guards; they are not a complete six-week delivery or independent UAT. Evidence: part-b-full-regression.txt, part-b-controls-regression.txt and part-b-completion-build.txt.
+
+MANUAL / EXTERNAL VERIFICATION STILL REQUIRED
+A. Real student-app incidents: all four blueprint mappings, exactly one approved incident per team, preserved Sprint 2 baselines, safe injection, complaint-only Gamer views, actual symptoms, repair, rollback and 14-prior-check regression. Technical operator and CC must sign the original ten operator checks. The platform cannot inspect or patch unspecified student repositories.
+B. Independent UAT and release: witness the five protected 2.5-hour Client Chair sessions, genuine failure/retest evidence, defect dispositions, seven Sprint 4 gates, regression against 21 earlier checks and no forced passes. Confirm QA-15 fits three hours using reusable automation.
+C. Sprint 5: observe all five complete business personas and private five-minute defences in each real team application, positive/negative cases, persistence/auth boundaries, actual release/smoke/rollback, 28-prior-check regression, seven gates and CC Key 5. Confirm QA-18 fits four hours.
+D. Final Friday people/rooms: confirm five qualified assessors and real simultaneous rooms, private sequential candidates, comparable question difficulty, accessible communication, meaningful human approval and any staffed scheduling changes. The automated 25-volunteer/250-minute booking simulation proves the scheduling guards, not real reviewer availability or competence.
+E. External AI/source review: inspect all sanitised source snapshots for credentials/private data, run the approved external prompt with actual code and dossiers, test missing source and malicious README instructions in that external tool, check equivalence for learners with differing prior scores, and have MC/CC approve actual question content. No external AI was called by the automated suite.
+F. Optional Admin Chair: verify equivalent approved briefs, real isolated execution/config changes, cross-layer effects, positive/negative tests, rollback and independent human defence within ten minutes; sign all twelve original FF-ADV cases. A reference URL and declared environment cannot prove a code change was safely executed.
+G. Awards/showcase/Campfire: independently validate final source scores, ties, permitted overrides, criterion honour distribution, four team categories and GOAT; observe five showcase selections with no added marks. Campfire remains voluntary, accepts writing and has no speech/fluency marks.
+H. Private documents/storage: render actual learner PDFs, confirm exactly two Passport pages, accurate identity/evidence/dates, criterion maxima and dimension/core/bonus separation, respectful supported observations, exact minimal certificate wording, logo/layout and signatures. Perform real private Blob upload/download byte-hash and unauthorised-access checks with a dedicated test store. The suite uses simulated storage metadata, not a real object-store round trip.
+I. Optional Phase 2 student code: cross-team codebase governance, actual mock API/event registrations, hosted SANDBOX payment verification, duplicate/out-of-order webhook handling, final-seat concurrency, recovery and correct reconciliation counts require the real isolated student implementations. These are learner tasks, not payment features to add to CODEWILD.
+J. Programme readiness: accelerated end-to-end Weeks 1–6 with five teams/25 learners, independent student usability, real deployed/browser checks, measured non-functional targets supplied by CC and final human sign-off. Synthetic database tests do not certify production readiness.
+
+Case-level register
+artifacts/part-b-manual-verification.csv preserves the 121 frozen IDs/scenarios, existing historical outcomes, new automated coverage and the exact remaining human/external check category. It also lists the original 12 FF-ADV and 10 incident-operator checks. Historical acceptance rows are not silently rewritten as independent passes.
+
+Implementation limitations
+Print drafts are generated as private local HTML to be saved as PDF by an operator; final PDF layout remains a human review gate. Actual source-content sanitisation, equivalent questions, comparable briefs, staff qualifications, real repairs and observed learner ability remain human judgements. No live provider or student application has been invented to bypass these gates.
+
+Browser follow-up — 12 November 2026
+Executed the representative Gamer/MC/CC handoffs for Sprints 3–5, final question approval, witness/bonus/award/showcase controls, report draft downloads, persona-only assessor privacy and the Level 1 optional-card lifecycle. Fixed PB-BR-001 (stale global success visible with an upload error) and verified the correction in the rebuilt browser app. Post-fix Part B regression: 32 passed, zero failed/skipped; production build passed. Private Blob issuance remains blocked, and actual learner/app/room/source/PDF checks remain manual. See part-b-browser-2026-11-12/browser-verification.txt and browser-results.json; the register now has explicit browser coverage columns. This was a disposable one-team browser checkpoint run with seeded prior work, not a full six-week/25-person independent acceptance.
+
+Final local follow-up — 12 November 2026
+Added tests/pilot-part-b-phase2.test.mjs to execute all sixty optional cards across all three levels through normal Gamer submission and independent CC review actions. Each level exercises rework/resubmission and checks owner-only visibility for all 25 Gamers; working-calendar handovers are advanced explicitly. Only prior Key 5 eligibility is seeded, with no seeded Phase 2 completions. The focused controls passed 9 tests with zero failures/skips. The production build passed again and the fictional reference app's API/database regression passed with its approved candidate fingerprint unchanged. Updated all six source Phase 2 workflow rows in the 143-row register without changing historical independent outcomes. Current remaining inputs and manual work are listed in part-b-final-status.txt; the final full-suite trace is part-b-full-regression.txt.
+Final full-suite result: 148 passed, 0 failed, 0 skipped, fresh disposable database, 116.8 seconds. No further application defect was found by these checks.

@@ -121,15 +121,21 @@ test(
       const locked = await programSnapshot(gamers[0], at(1, -10));
       assert.equal(locked.days.length, 0);
       assert.ok(!JSON.stringify(locked).includes("Fixture-only official"));
+      await call(
+        cc,
+        "publish-rules",
+        {
+          text: "Approved fixture Rules: preserve evidence, respect peers, and ask MC for clarification when needed.",
+          reason: "Initial test-only Rules version for the isolated cohort.",
+        },
+        1,
+        -16,
+      );
       await control("open", 1, -15);
       await assert.rejects(
         call(cc, "settings", { settings: settingsFixture() }),
         (e) => e.status === 409,
       );
-      await call(cc, "publish-rules", {
-        text: "Approved fixture Rules: preserve evidence, respect peers, and ask MC for clarification when needed.",
-        reason: "Initial institution-approved Rules version for the cohort.",
-      });
       await call(mc, "showcase-groups", {
         groups: Array.from({ length: 5 }, (_, i) => ({
           members: gamers.slice(i * 5, i * 5 + 5).map((g) => g._id),

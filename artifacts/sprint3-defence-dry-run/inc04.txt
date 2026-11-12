@@ -1,0 +1,6 @@
+Clean baseline — Staging shell and React bundle served. Administrator login, directory of 20 and profile read passed.
+INC-04 reproduced — Staging HTML and bundle stayed reachable. Login and directory returned 404 through the incorrect API target while the app's direct login and directory returned 200.
+Root cause isolated — Only the disposable staging gateway's API target changed. The approved application process, source and MongoDB remained in place.
+Rollback verified — Restored the original API target. A fresh administrator session retrieved the identical 20-record directory and original profile from the same database.
+Restored staging journey — Create and edit persisted after fresh sign-in. Alumnus could read own profile and received 403 for another profile and an edit.
+Post-rollback regression — The existing Sprint 1 and 2 API verifier, compiled UI smoke, and clean-reset check passed on a fresh instance of the unchanged accepted release.

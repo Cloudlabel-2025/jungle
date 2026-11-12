@@ -4,26 +4,27 @@ import Link from "next/link";
 import {
   Tent,
   Users,
-  Flag,
-  Compass,
   Check,
   Footprints,
-  SquareTerminal,
   ListChecks,
-  Trophy,
   LifeBuoy,
   X,
   ChevronLeft,
   ChevronRight,
+  KeyRound,
 } from "lucide-react";
-import { projectState, starsLabel } from "./Projects";
-import LevelBriefing from "./LevelBriefing";
+import AlumniLevelBriefing from "./AlumniLevelBriefing";
 import { Modal, Receipt } from "./ui";
 import LevelEmblem from "./LevelEmblem";
-import { terrainPosition } from "@/lib/map-terrain.js";
+import { missionMapPoint, missionMapWidth } from "@/lib/mission-map.js";
+import LevelBriefing from "./LevelBriefing";
+import { projectState as missionState } from "./Projects";
+import { alumniLevels } from "@/lib/alumni-map.js";
+import WorkflowOverview from "./WorkflowOverview";
 
 export default function JungleGame({
   data,
+  now,
   act,
   camp,
   party,
@@ -47,10 +48,7 @@ export default function JungleGame({
     moved: false,
   });
   const [edges, setEdges] = useState({ left: true, right: false });
-  const chapters = Math.max(
-    1,
-    Math.ceil(Math.max(...data.projectLevels.map((l) => l.number), 1) / 10),
-  );
+  const chapters = 1;
   const measureEdges = () => {
     const el = viewport.current;
     if (el)
@@ -129,25 +127,72 @@ export default function JungleGame({
       document.removeEventListener("keydown", escape);
     };
   }, [panel]);
-  const modules = data.projectLevels;
-  const completed = data.projectAttempts
-    .filter((p) => p.teamId === data.user.teamId && p.status === "CLEARED")
-    .map((p) => p.levelId);
-  const next = modules.find((m) => !completed.includes(m._id));
-  const tasks = data.tasks.filter((t) => t.assigneeId === data.user._id);
+  const sprintLevels =
+    data.alumniMap ||
+    alumniLevels.map((level) => ({
+      ...level,
+      state: "WAITING_RELEASE",
+      statusLabel: "Waiting for Commander release",
+      tasks: [],
+      acceptance: [],
+      acceptedTasks: 0,
+    }));
+  const customMissions = (data.projectLevels || [])
+    .filter((level) => level.mapMission)
+    .map((level) => {
+      const { state } = missionState(data, level);
+      return {
+        ...level,
+        kind: "PROJECT",
+        sourceLevel: level,
+        state,
+        statusLabel:
+          {
+            AVAILABLE: "Ready to start",
+            ACTIVE: "Mission in progress",
+            REVIEW: "Awaiting review",
+            CLEARED: "Mission completed",
+            LOCKED: "Complete the previous mission",
+          }[state] || state,
+        tasks: data.tasks
+          .filter((t) => t.projectLevelId === level._id)
+          .map((t) => ({
+            ...t,
+            mine: t.assigneeId === data.user._id,
+            state: t.status === "Done" ? "Accepted" : t.status,
+          })),
+      };
+    });
+  const modules = [...sprintLevels, ...customMissions];
+  const positions = data.mapLayout?.positions || {};
+  const worldWidth = missionMapWidth(modules, positions);
+  const coreKeys = sprintLevels.filter(
+    (level) => level.state === "CLEARED",
+  ).length;
+  const completed = modules
+    .filter((level) => level.state === "CLEARED")
+    .map((level) => level._id);
+  const projectState = (_data, level) => ({ state: level.state });
+  const selectedLevel = modules.find((level) => level._id === selected?._id);
+  const next =
+    modules.find((m) => ["ACTIVE", "REWORK", "AVAILABLE"].includes(m.state)) ||
+    modules.find((m) => !completed.includes(m._id));
+  const workLevel = next || modules.at(-1);
+  const tasks = (workLevel?.tasks || []).filter((t) => t.mine);
   const rescue = data.rescues.some(
     (r) => r.userId === data.user._id && r.status !== "CLOSED",
   );
-  const ready =
-    completed.length === modules.length &&
-    tasks.every((t) => t.status === "Done") &&
-    data.user.hp > 0 &&
-    !rescue;
+  const ready = completed.length === modules.length;
   function locate() {
-    const stop = terrainPosition(next || modules.at(-1), {
-      ...mapSize,
-      chapters,
-    });
+    const target = next || modules.at(-1);
+    const stop =
+      target &&
+      missionMapPoint(
+        target,
+        positions,
+        modules.findIndex((m) => m._id === target._id),
+        mapSize.height,
+      );
     const el = viewport.current;
     if (!el || !stop) return;
     el.scrollTo({
@@ -160,7 +205,13 @@ export default function JungleGame({
   useEffect(() => {
     const frame = requestAnimationFrame(locate);
     return () => cancelAnimationFrame(frame);
-  }, [data.user._id, next?._id, mapSize.width, mapSize.height]);
+  }, [
+    data.user._id,
+    next?._id,
+    mapSize.width,
+    mapSize.height,
+    data.mapLayout?.revision,
+  ]);
   useEffect(() => {
     const el = viewport.current;
     function wheel(event) {
@@ -197,11 +248,12 @@ export default function JungleGame({
     });
   }
   const panels = {
+    nextSteps: "Your next steps",
     camp: "Base camp",
     party: "Your expedition party",
-    objectives: "Your objectives",
+    objectives: "My sprint work",
     extraction: "Expedition clearance",
-    encounters: "Team project levels",
+    encounters: "Alumni Connect levels",
     leaderboard: "Trophy leaderboard",
     support: "Help Desk & growth",
     discovery: "Day 1 discovery mission",
@@ -250,31 +302,14 @@ export default function JungleGame({
         }}
       >
         <div
-          className="game-world"
-          style={
-            chapters > 1
-              ? { width: `max(${6000 * chapters}px, ${900 * chapters}cqh)` }
-              : undefined
-          }
+          className="game-world mission-map-world"
+          style={{ width: `${worldWidth}px`, minWidth: "100%" }}
         >
-          {Array.from({ length: chapters }, (_, chapter) =>
-            ["west", "valley", "east"].map((region, index) => (
-              <div
-                className={`game-region region-${region}`}
-                aria-hidden="true"
-                key={`${chapter}-${region}`}
-                style={{
-                  left: `${((chapter * 3 + index) / (chapters * 3)) * 100}%`,
-                  width: `${100 / (chapters * 3)}%`,
-                }}
-              />
-            )),
-          )}
-          {modules.map((m) => {
-            const e = terrainPosition(m, { ...mapSize, chapters }),
+          {modules.map((m, index) => {
+            const e = missionMapPoint(m, positions, index, mapSize.height),
               clear = completed.includes(m._id),
               active = next?._id === m._id;
-            const { attempt, state } = projectState(data, m);
+            const { state } = projectState(data, m);
             return (
               <button
                 key={m._id}
@@ -286,7 +321,7 @@ export default function JungleGame({
                 data-label-placement={e.labelPlacement}
                 title={`Level ${m.number} · ${m.name}`}
                 onClick={() => setSelected(m)}
-                aria-label={`Level ${m.number}: ${m.name}, ${state}, ${attempt?.stars || 0} stars`}
+                aria-label={`Level ${m.number}: ${m.name}, ${m.statusLabel}`}
               >
                 <span className="game-stop-marker hazard-marker">
                   <LevelEmblem level={m} />
@@ -304,17 +339,7 @@ export default function JungleGame({
                     LEVEL {String(m.number).padStart(2, "0")}
                   </span>
                   <span className="hazard-title">{m.name}</span>
-                  <small>
-                    {clear
-                      ? starsLabel(attempt.stars)
-                      : active
-                        ? state === "AVAILABLE"
-                          ? "START TEAM PROJECT"
-                          : state === "REVIEW"
-                            ? "AWAITING REVIEW"
-                            : "TEAM PROJECT ACTIVE"
-                        : "LOCKED"}
-                  </small>
+                  <small>{m.statusLabel}</small>
                 </span>
               </button>
             );
@@ -343,21 +368,20 @@ export default function JungleGame({
       ))}
       <header className="game-map-heading">
         <span className="game-location">
-          <Compass size={20} />
           <span>
-            <small>CHAPTER I · TEAM MINI PROJECTS</small>
+            <small>ALUMNI CONNECT · {modules.length} LEVELS</small>
             <h1>The Verdant Wilds</h1>
           </span>
         </span>
         <button
           className="game-progress"
           onClick={() => setPanel("encounters")}
-          aria-label="Open team project levels"
+          aria-label="Open Alumni Connect levels"
         >
-          <Footprints size={18} />
+          <KeyRound size={18} />
           <span>
-            {completed.length}
-            <small> / {modules.length} CLEARED</small>
+            {coreKeys}
+            <small> / 5 KEYS</small>
           </span>
         </button>
       </header>
@@ -367,13 +391,13 @@ export default function JungleGame({
             ref={campTrigger}
             className="game-camp-trigger"
             onClick={() => setPanel(panel === "camp" ? null : "camp")}
-            aria-label="Open camp"
+            aria-label="Open daily check-in"
             aria-expanded={panel === "camp"}
             aria-controls="map-camp-panel"
-            title="Camp"
+            title="Daily check-in"
           >
             <Tent size={21} />
-            <span>Camp</span>
+            <span>Check-in</span>
           </button>
           {panel === "camp" && (
             <section
@@ -383,7 +407,7 @@ export default function JungleGame({
             >
               <header>
                 <span>
-                  <Tent size={17} /> Camp
+                  <Tent size={17} /> Daily check-in
                 </span>
                 <button
                   className="icon-btn"
@@ -401,12 +425,10 @@ export default function JungleGame({
           )}
         </div>
         {[
-          ...(discovery ? [["discovery", Compass, "Discovery"]] : []),
-          ["party", Users, "Party"],
-          ["leaderboard", Trophy, "Ranks"],
-          ["objectives", ListChecks, "Objectives"],
-          ["extraction", Flag, "Clearance"],
-          ["support", LifeBuoy, "Help Desk"],
+          ["nextSteps", Footprints, "Next steps"],
+          ["objectives", ListChecks, "My work"],
+          ["party", Users, "Team"],
+          ["support", LifeBuoy, "Help"],
         ].map(([key, Icon, label]) => (
           <button
             key={key}
@@ -418,14 +440,6 @@ export default function JungleGame({
             <span>{label}</span>
           </button>
         ))}
-        <Link
-          href="/gamer/ide"
-          title="Field workshop"
-          aria-label="Open field workshop"
-        >
-          <SquareTerminal size={21} />
-          <span>Code Lab</span>
-        </Link>
       </div>
       <div className="game-next">
         <button
@@ -439,18 +453,29 @@ export default function JungleGame({
             ? next.name
             : ready
               ? "Your personal clearance is complete"
-              : "All team projects cleared"}
+              : "All five Alumni Connect keys earned"}
         </span>
       </div>
-      {selected && (
+      {selectedLevel?.kind === "PROJECT" ? (
         <LevelBriefing
-          key={selected._id}
-          level={selected}
+          key={selectedLevel._id}
+          level={selectedLevel.sourceLevel}
           data={data}
           act={act}
           close={() => setSelected(null)}
           onQuest={onQuest}
         />
+      ) : (
+        selectedLevel && (
+          <AlumniLevelBriefing
+            key={selected._id}
+            level={selectedLevel}
+            data={data}
+            act={act}
+            close={() => setSelected(null)}
+            onQuest={onQuest}
+          />
+        )
       )}
       {panel && panel !== "camp" && (
         <Modal
@@ -458,6 +483,7 @@ export default function JungleGame({
           kicker="EXPEDITION / FIELD EQUIPMENT"
           close={() => setPanel(null)}
         >
+          {panel === "nextSteps" && <WorkflowOverview data={data} now={now} />}
           {panel === "party" && party}
           {panel === "support" && support}
           {panel === "discovery" && discovery}
@@ -491,34 +517,61 @@ export default function JungleGame({
           {panel === "objectives" && (
             <div className="game-objective-list">
               {tasks.length ? (
-                tasks.map((t) => (
-                  <button
-                    key={t._id}
-                    onClick={() => {
-                      setPanel(null);
-                      onQuest(t);
-                    }}
-                  >
-                    <span>
-                      <strong>{t.title}</strong>
-                      <small>
-                        {t.status} ·{" "}
-                        {t.projectAttemptId
-                          ? "Rewarded at team level completion"
-                          : `+${t.xp * 3} XP · +${t.xp * 2} trophies on approval`}
-                      </small>
-                    </span>
-                  </button>
-                ))
+                tasks.map((t) =>
+                  workLevel.kind === "PROJECT" ? (
+                    <button
+                      key={t._id}
+                      onClick={() => {
+                        setPanel(null);
+                        onQuest?.(
+                          data.tasks.find((task) => task._id === t._id) || t,
+                        );
+                      }}
+                    >
+                      <span>
+                        <strong>{t.title}</strong>
+                        <small>
+                          {t.state} · Mission {workLevel.number}
+                        </small>
+                      </span>
+                    </button>
+                  ) : (
+                    <Link
+                      key={t._id}
+                      className="btn"
+                      href={`/gamer/sprint-board?board=programme&sprint=${encodeURIComponent(workLevel.sprintId)}`}
+                    >
+                      <span>
+                        <strong>{t.title}</strong>
+                        <small>
+                          {t.state} · {t.code} · Sprint {workLevel.number}
+                        </small>
+                      </span>
+                    </Link>
+                  ),
+                )
               ) : (
                 <p className="lesson-copy">
-                  No objectives assigned. Your Guide will brief you at camp.
+                  No Alumni Connect work assigned yet. Preview the next level or
+                  check Week 1 & recovery while you wait for release.
                 </p>
               )}
-              <Link href="/gamer/sprint-board" className="btn">
-                Open squad objectives
+              <Link
+                href={
+                  workLevel.kind === "PROJECT"
+                    ? "/gamer/sprint-board"
+                    : "/gamer/sprint-board?board=programme"
+                }
+                className="btn"
+              >
+                Open my work board
               </Link>
-              {dailyWork&&<details><summary>My Day and weekly sprint work</summary>{dailyWork}</details>}
+              {dailyWork && (
+                <details>
+                  <summary>My Day and weekly sprint work</summary>
+                  {dailyWork}
+                </details>
+              )}
             </div>
           )}
           {panel === "encounters" && (
@@ -536,11 +589,7 @@ export default function JungleGame({
                     <strong>
                       {String(m.number).padStart(2, "0")} · {m.name}
                     </strong>
-                    <small>
-                      {completed.includes(m._id)
-                        ? starsLabel(projectState(data, m).attempt.stars)
-                        : projectState(data, m).state}
-                    </small>
+                    <small>{m.statusLabel}</small>
                   </span>
                   {completed.includes(m._id) && <Check size={17} />}
                 </button>
@@ -550,20 +599,19 @@ export default function JungleGame({
           {panel === "extraction" && (
             <>
               <p className="lesson-copy">
-                Programme clearance requires all ten team projects cleared,
-                approved objectives, positive health, and no open rescue case.
+                Complete Alumni Connect by earning all five client acceptance
+                keys. CC verifies each sprint and the final release,
+                demonstrations and individual defences.
               </p>
               <div className="extraction-checks">
                 <p>
-                  Team projects
-                  <strong>
-                    {completed.length}/{modules.length} cleared
-                  </strong>
+                  Alumni Connect keys
+                  <strong>{coreKeys}/5 earned</strong>
                 </p>
                 <p>
-                  Assigned objectives
+                  My sprint contributions
                   <strong>
-                    {tasks.filter((t) => t.status === "Done").length}/
+                    {tasks.filter((t) => t.state === "Accepted").length}/
                     {tasks.length} approved
                   </strong>
                 </p>
@@ -579,9 +627,17 @@ export default function JungleGame({
               </div>
               {ready && (
                 <Receipt>
-                  Your personal extraction requirements are met.
+                  Your team has completed the core Alumni Connect journey.
                 </Receipt>
               )}
+              <Link href="/gamer/week-one" className="btn">
+                Week 1 & recovery
+              </Link>
+              <p className="muted">
+                After Key 5, CC can release the optional Phase 2 branch: Events
+                & API Integration, Paid Events & Payment Links, and Payment
+                Reconciliation & Recovery.
+              </p>
             </>
           )}
         </Modal>

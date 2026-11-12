@@ -1,0 +1,663 @@
+{
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "url": "https://127.0.0.1:3193",
+  "startedAt": "2026-11-10T07:55:51.307Z",
+  "scope": "Accelerated fictional rehearsal. The assistant operated all five accounts. The CC assessor and formal decisions are pending.",
+  "sessions": [
+    {
+      "id": "S3-DEF-A",
+      "slot": "A",
+      "role": "admin",
+      "startedAt": "2026-11-10T07:55:51.311Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        "Restored the original API target. A fresh administrator session retrieved the identical 20-record directory and original profile from the same database.",
+        "Read fictional seed AL-QA-001. Compared the recorded recovery with the run-sheet prompt about when a data restore would be needed."
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.564Z",
+      "formalOutcome": "Pending"
+    },
+    {
+      "id": "S3-DEF-B",
+      "slot": "B",
+      "role": "admin",
+      "startedAt": "2026-11-10T07:55:51.565Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        "Staging HTML and bundle stayed reachable. Login and directory returned 404 through the incorrect API target while the app's direct login and directory returned 200.",
+        "Verified 14 PASS entries in the earlier restored-gateway index. The current directory also returned 200."
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.595Z",
+      "formalOutcome": "Pending"
+    },
+    {
+      "id": "S3-DEF-C",
+      "slot": "C",
+      "role": "admin",
+      "startedAt": "2026-11-10T07:55:51.595Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/health",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        "Only the disposable staging gateway's API target changed. The approved application process, source and MongoDB remained in place.",
+        "Restored the original API target. A fresh administrator session retrieved the identical 20-record directory and original profile from the same database.",
+        "Confirmed the earlier pinned baseline and sampled the current HTTPS health and profile endpoints."
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.622Z",
+      "formalOutcome": "Pending"
+    },
+    {
+      "id": "S3-DEF-D",
+      "slot": "D",
+      "role": "alumnus",
+      "startedAt": "2026-11-10T07:55:51.622Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni",
+          "expected": 403,
+          "status": 403
+        },
+        {
+          "method": "PUT",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 403,
+          "status": 403
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        "Compared earlier validation and UI evidence with server enforcement. The fictional alumnus could read their profile, while directory and edit returned 403."
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.646Z",
+      "formalOutcome": "Pending"
+    },
+    {
+      "id": "S3-DEF-E",
+      "slot": "E",
+      "role": "admin",
+      "startedAt": "2026-11-10T07:55:51.646Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        "Staging HTML and bundle stayed reachable. Login and directory returned 404 through the incorrect API target while the app's direct login and directory returned 200.",
+        "Create and edit persisted after fresh sign-in. Alumnus could read own profile and received 403 for another profile and an edit.",
+        "Compared the same seed profile in two current HTTPS sessions."
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.677Z",
+      "formalOutcome": "Pending"
+    },
+    {
+      "id": "UAT-01",
+      "slot": "A",
+      "role": "admin",
+      "startedAt": "2026-11-10T07:55:51.677Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 201,
+          "status": 201
+        },
+        {
+          "method": "PUT",
+          "path": "/api/alumni/AL-fc885864-f44e-4614-8066-212bb9c87a36",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-fc885864-f44e-4614-8066-212bb9c87a36",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        {
+          "recordId": "AL-fc885864-f44e-4614-8066-212bb9c87a36",
+          "createdCity": "Test City",
+          "reopenedCity": "Gamer A QA City"
+        }
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.738Z",
+      "formalOutcome": "Pending"
+    },
+    {
+      "id": "UAT-02",
+      "slot": "B",
+      "role": "admin",
+      "startedAt": "2026-11-10T07:55:51.738Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 400,
+          "status": 400
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 400,
+          "status": 400
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 201,
+          "status": 201
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 409,
+          "status": 409
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 409,
+          "status": 409
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        {
+          "correctedRecordId": "AL-5c67f39a-19fd-4e4e-b284-36f770c4e393",
+          "messages": [
+            "Enter a postcode valid for the selected country.",
+            "Employed alumni require a job title and organisation.",
+            "Email or registration number already exists.",
+            "Email or registration number already exists."
+          ]
+        }
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.810Z",
+      "formalOutcome": "Pending"
+    },
+    {
+      "id": "UAT-03",
+      "slot": "C",
+      "role": "admin",
+      "startedAt": "2026-11-10T07:55:51.810Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 201,
+          "status": 201
+        },
+        {
+          "method": "PUT",
+          "path": "/api/alumni/AL-19abf8b8-d02f-4592-b62c-517353b7cbbd",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        },
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-19abf8b8-d02f-4592-b62c-517353b7cbbd",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        {
+          "recordId": "AL-19abf8b8-d02f-4592-b62c-517353b7cbbd",
+          "createdAt": "2026-11-10T07:55:51.822Z",
+          "modifiedAt": "2026-11-10T07:55:51.828Z",
+          "city": "Gamer C QA City"
+        }
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.851Z",
+      "formalOutcome": "Pending"
+    },
+    {
+      "id": "UAT-04",
+      "slot": "D",
+      "role": "alumnus",
+      "startedAt": "2026-11-10T07:55:51.851Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni",
+          "expected": 403,
+          "status": 403
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-002",
+          "expected": 403,
+          "status": 403
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 403,
+          "status": 403
+        },
+        {
+          "method": "PUT",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 403,
+          "status": 403
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        {
+          "ownProfile": "AL-QA-001",
+          "unchangedAfterDeniedWrites": true,
+          "earlierUiEvidence": "restored-gateway-evidence/index.html"
+        }
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.883Z",
+      "formalOutcome": "Pending"
+    },
+    {
+      "id": "UAT-05",
+      "slot": "E",
+      "role": "admin",
+      "startedAt": "2026-11-10T07:55:51.883Z",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-QA-001",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 400,
+          "status": 400
+        },
+        {
+          "method": "POST",
+          "path": "/api/alumni",
+          "expected": 201,
+          "status": 201
+        },
+        {
+          "method": "PUT",
+          "path": "/api/alumni/AL-8048f910-8584-40b1-a2f3-a6cfd88d0568",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        },
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-8048f910-8584-40b1-a2f3-a6cfd88d0568",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/login",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/alumni/AL-8048f910-8584-40b1-a2f3-a6cfd88d0568",
+          "expected": 403,
+          "status": 403
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        },
+        {
+          "method": "POST",
+          "path": "/api/logout",
+          "expected": 200,
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/session",
+          "expected": 401,
+          "status": 401
+        }
+      ],
+      "observations": [
+        {
+          "recordId": "AL-8048f910-8584-40b1-a2f3-a6cfd88d0568",
+          "city": "Gamer E Friday QA City",
+          "rehearsalHandover": "9c6b0ab2-1800-4506-89bd-c75b4801b7ae:pilot-team-0:OP-13:9c6b0ab2-1800-4506-89bd-c75b4801b7ae:pilot-team-0:UAT-05:2026-12-01T11:00:00.000Z",
+          "readyAt": "2026-12-02T05:00:00.000Z",
+          "simulatedStart": "2026-12-04T04:30:00.000Z",
+          "recommendation": "Rehearsal cases passed. Formal acceptance remains pending."
+        }
+      ],
+      "rehearsal": "PASS",
+      "finishedAt": "2026-11-10T07:55:51.948Z",
+      "formalOutcome": "Pending"
+    }
+  ],
+  "finishedAt": "2026-11-10T07:55:51.948Z"
+}

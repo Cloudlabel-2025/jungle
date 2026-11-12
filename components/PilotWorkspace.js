@@ -1,6 +1,10 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
+import PlayerVitals from "./PlayerVitals";
 import { Panel, Modal, Form, Badge } from "./ui";
+import { sprint4Discipline } from "../lib/sprint4-help.js";
+import AlumniSprintHistory from "./AlumniSprintHistory";
 const field = (name, label, type = "textarea", optional = false) => ({
   name,
   label,
@@ -15,6 +19,7 @@ const choice = (name, label, values) => ({
   ),
 });
 const reason = field("reason", "Reason and supporting evidence");
+const boardStates = ["Ready", "Working", "In Review", "Rework", "Accepted"];
 const stamp = (d) =>
   d
     ? new Date(d).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
@@ -36,13 +41,28 @@ function Action({
   fields = [],
   label,
   convert = (x) => x,
+  inlineError = false,
 }) {
+  const [submissionError, setSubmissionError] = useState("");
   return (
     <Form
       fields={fields}
       submit={label || action}
-      onSubmit={(b) => run(action, { ...values, ...convert(b) })}
-    />
+      onSubmit={async (b) => {
+        if (inlineError) setSubmissionError("");
+        return await run(
+          action,
+          { ...values, ...convert(b) },
+          inlineError ? setSubmissionError : undefined,
+        );
+      }}
+    >
+      {submissionError && (
+        <p role="alert" className="danger-text">
+          {submissionError}
+        </p>
+      )}
+    </Form>
   );
 }
 function JsonAction({ run, action, label, example }) {
@@ -99,41 +119,45 @@ async function uploadFile(file, values) {
       ...values,
       filename: file.name,
       requestId: crypto.randomUUID(),
-    }),
-    sent = await fetch(intent.uploadUrl, {
-      method: "PUT",
-      headers: { "Content-Type": intent.contentType },
-      body: file,
     });
-  if (!sent.ok)
-    throw Error(
-      "Private storage did not accept the upload. Retry or contact CC.",
-    );
+  const count = intent.chunkSize ? Math.ceil(file.size / intent.chunkSize) : 1;
+  for (let part = 0; part < count; part++) {
+    const sent = await fetch(intent.uploadUrl, {
+      method: "PUT",
+      headers: { "Content-Type": intent.contentType,
+        ...(intent.chunkSize && { "X-Upload-Part": String(part), "X-Upload-Parts": String(count), "X-Upload-Size": String(file.size) }) },
+      body: intent.chunkSize ? file.slice(part * intent.chunkSize, (part + 1) * intent.chunkSize) : file,
+    });
+    if (!sent.ok) throw Error("Private storage did not accept the upload. Retry or contact CC.");
+  }
   await request({ action: "complete", evidenceId: intent.evidenceId });
   return intent.evidenceId;
 }
-function FileUpload({ taskId, batchId, refresh, onError }) {
+function FileUpload({ taskId, batchId, report, refresh, onError }) {
   const [busy, setBusy] = useState(false);
+  const label = report
+    ? `Upload private ${report.reportKind === "PASSPORT" ? "Capability Passport" : "certificate"} PDF`
+    : batchId ? "Return CSV or XLSX marks" : "Upload task evidence";
   return (
     <label className="btn">
       {busy
         ? "Uploading and verifying…"
-        : batchId
+        : report
+          ? label
+          : batchId
           ? "Return CSV/XLSX marks"
           : "Upload evidence (three slots, 5 MB each)"}
       <input
-        aria-label={
-          batchId ? "Return CSV or XLSX marks" : "Upload task evidence"
-        }
+        aria-label={label}
         disabled={busy}
         type="file"
-        accept={batchId ? ".csv,.xlsx" : ".pdf,.docx,.xlsx"}
+        accept={report ? ".pdf" : batchId ? ".csv,.xlsx" : ".pdf,.docx,.xlsx"}
         onChange={async (e) => {
           const f = e.target.files?.[0];
           if (!f) return;
           setBusy(true);
           try {
-            const id = await uploadFile(f, { taskId, batchId });
+            const id = await uploadFile(f, { taskId, batchId, ...report });
             if (batchId) {
               const r = await fetch("/api/pilot/marks", {
                   method: "POST",
@@ -159,53 +183,46 @@ function FileUpload({ taskId, batchId, refresh, onError }) {
     </label>
   );
 }
-export function PilotBoardSlot({ data, children }) {
-  const [show, setShow] = useState(false);
-  return (
-    <>
-      <div className="button-row" aria-label="Objective boards">
-        <button
-          className={`btn ${!show ? "primary" : ""}`}
-          onClick={() => setShow(false)}
-        >
-          Existing Objectives
-        </button>
-        <button
-          className={`btn ${show ? "primary" : ""}`}
-          onClick={() => setShow(true)}
-        >
-          Programme Sprint Work
-        </button>
-      </div>
-      {show ? <PilotWorkspace user={data.user} /> : children}
-    </>
-  );
-}
 export default function PilotWorkspace({ user, mode = "board" }) {
+  const params = useSearchParams();
+  const requestedSprint = mode === "board" ? params?.get("sprint") : null;
   const [data, setData] = useState(null),
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [selected, setSelected] = useState(null),
     [teamId, setTeamId] = useState(""),
+    [boardState, setBoardState] = useState(""),
     [mine, setMine] = useState(user.role === "GAMER");
+  const [updatedAt, setUpdatedAt] = useState(null);
   const refresh = useCallback(async () => {
     try {
-      const r = await fetch("/api/pilot", { cache: "no-store" }),
+      const r = await fetch(`/api/pilot${requestedSprint ? `?sprint=${encodeURIComponent(requestedSprint)}` : ""}`, { cache: "no-store" }),
         v = await r.json();
       if (!r.ok) throw Error(v.error);
       setData(v);
+      setUpdatedAt(new Date());
       setError("");
     } catch (e) {
       setError(e.message);
       setNotice("");
     }
-  }, []);
+  }, [requestedSprint]);
   useEffect(() => {
     refresh();
-    const t = setInterval(refresh, 60000);
-    return () => clearInterval(t);
+    const visibleRefresh = () => { if (!document.hidden) refresh(); };
+    const balanceChanged = (event) => { if (event.detail?.source !== "programme") visibleRefresh(); };
+    const t = setInterval(visibleRefresh, 60000);
+    document.addEventListener("visibilitychange", visibleRefresh);
+    window.addEventListener("codewild:balance-changed", balanceChanged);
+    window.addEventListener("focus", visibleRefresh);
+    return () => {
+      clearInterval(t);
+      document.removeEventListener("visibilitychange", visibleRefresh);
+      window.removeEventListener("codewild:balance-changed", balanceChanged);
+      window.removeEventListener("focus", visibleRefresh);
+    };
   }, [refresh]);
-  const run = async (action, b = {}) => {
+  const run = async (action, b = {}, reportError = setError) => {
     setError("");
     setNotice("");
     try {
@@ -231,9 +248,10 @@ export default function PilotWorkspace({ user, mode = "board" }) {
             : "Saved and verified by the server.",
       );
       await refresh();
+      window.dispatchEvent(new CustomEvent("codewild:balance-changed", { detail: { source: "programme" } }));
       return v;
     } catch (e) {
-      setError(e.message);
+      reportError(e.message);
       return false;
     }
   };
@@ -244,14 +262,25 @@ export default function PilotWorkspace({ user, mode = "board" }) {
     activeTeam = teams.find((t) => t.teamId === teamId) || teams[0],
     task = data?.tasks?.find((c) => c._id === selected),
     names = data?.names || {};
-  const opts = teams.map((t) => ({ value: t.teamId, label: t.teamId }));
+  const boardTasks = mode === "board" ? (data?.tasks || []).filter(card =>
+    card.teamId === activeTeam?.teamId &&
+    (!mine || card.userId === user._id || card.data.coGamerId === user._id),
+  ) : [];
+  const opts = teams.map((t) => ({ value: t.teamId, label: t.name || t.teamId }));
   if (!data && !error) return <p>Loading programme work…</p>;
   if (!data)
     return <p role="alert">{error || "Programme access is unavailable."}</p>;
-  const format = data.setup
+  if (requestedSprint && user.role === "GAMER" && (s?.state === "CLOSED" || s?.data.acceptances?.some(a => a.teamId === activeTeam?.teamId && a.decision === "ACCEPTED")))
+    return <AlumniSprintHistory data={data} user={user} />;
+  const setupNumber = s ? s.data.number + Number(s.state === "CLOSED") : 1;
+  const setupManifest = data.setup?.manifests.sprints.find(
+    (manifest) => manifest.number === setupNumber,
+  );
+  const format = setupManifest
     ? {
         config: {
-          number: s?.state === "CLOSED" ? s.data.number + 1 : 1,
+          number: setupNumber,
+          ...(setupNumber >= 3 && { contentApproval: "" }),
           calendar: {
             timeZone: "Asia/Kolkata",
             intervals: [
@@ -265,7 +294,7 @@ export default function PilotWorkspace({ user, mode = "board" }) {
           kickoffEnd: "",
           dueAt: "",
           resources: Object.fromEntries(
-            (data.setup.manifests.sprints[0]?.tasks || []).map((c) => [
+            setupManifest.tasks.map((c) => [
               c.id,
               { url: "", version: "", author: "CURRICULUM", approval: "" },
             ]),
@@ -275,7 +304,7 @@ export default function PilotWorkspace({ user, mode = "board" }) {
             members: t.members,
             commanderId: "",
             owners: Object.fromEntries(
-              data.setup.manifests.sprints[0].tasks.map((c) => [
+              setupManifest.tasks.map((c) => [
                 c.id,
                 t.members["ABCDE".indexOf(c.owner)] || "",
               ]),
@@ -288,12 +317,37 @@ export default function PilotWorkspace({ user, mode = "board" }) {
     : null;
   return (
     <section aria-label="Programme Sprint Work">
+      {user.role === "GAMER" && <PlayerVitals player={user} />}
+      <div className="workflow-status">
+        {updatedAt && <time dateTime={updatedAt.toISOString()}>Last checked {updatedAt.toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit" })} IST</time>}
+        <button className="btn small" type="button" onClick={refresh}>Refresh programme</button>
+      </div>
       {error && (
         <p role="alert" className="danger-text">
           {error}
         </p>
       )}
-      {notice && <p role="status">{notice}</p>}
+      {notice && !error && <p role="status">{notice}</p>}
+      {staff && data?.finalArena && (
+        <Panel title={`Assigned persona arena ${data.finalArena.arena} · ${data.finalArena.persona}`}>
+          <p>{stamp(data.finalArena.startAt)} – {stamp(data.finalArena.endAt)}. Keep each candidate’s five-minute defence private.</p>
+          {data.finalArena.candidates.map(candidate => (
+            <details key={candidate.taskId}>
+              <summary>{candidate.name || candidate.gamerId} · {candidate.teamId}</summary>
+              {!candidate.questions.length && <p>Awaiting an MC-reviewed, CC-approved question version.</p>}
+              {candidate.questions.map(question => <div key={question.id}>
+                <p><strong>{question.id}</strong> {question.question}</p>
+                <p>Expected evidence: {question.expected_answer_elements.join("; ")}</p>
+                <p>Equivalent alternate: {question.alternate_question}</p>
+              </div>)}
+              <Action run={run} action="final-demo-witness" label="Record this candidate’s private defence"
+                values={{ teamId: candidate.teamId, taskId: candidate.taskId, advisoryId: candidate.advisoryId, questionVersion: candidate.questionVersion }}
+                fields={[choice("decision", "Witness outcome", ["PASS", "FAIL", "BLOCKED"]),
+                  field("defenceMinutes", "Private defence minutes", "number"), field("evidence", "Demo and defence evidence", "url"), reason]} />
+            </details>
+          ))}
+        </Panel>
+      )}
       {mode === "setup" && cc && (
         <Panel
           title="Programme setup"
@@ -304,12 +358,14 @@ export default function PilotWorkspace({ user, mode = "board" }) {
             separate approved weekly sprint after Week 1 recovery teams are
             published. Current state: {s?.state || "NOT CONFIGURED"}.
           </p>
-          <JsonAction
-            run={run}
-            action="draft"
-            label="Stage approved sprint configuration"
-            example={format}
-          />
+          {format && (
+            <JsonAction
+              run={run}
+              action="draft"
+              label="Stage approved sprint configuration"
+              example={format}
+            />
+          )}
           <details>
             <summary>Frozen task manifests and configuration reference</summary>
             <button
@@ -321,13 +377,32 @@ export default function PilotWorkspace({ user, mode = "board" }) {
                 )
               }
             >
-              Download Sprint 1 and Sprint 2 definitions
+              Download Sprint 1–5 definitions
             </button>
+            {data.setup?.partB && (
+              <>
+                <button
+                  className="btn"
+                  onClick={() =>
+                    download(data.setup.partB.finalFriday, "final-friday-reference.json")
+                  }
+                >
+                  Download Final Friday reference
+                </button>
+                <button
+                  className="btn"
+                  onClick={() =>
+                    download(data.setup.partB.phase2, "phase-2-approved-catalogue.json")
+                  }
+                >
+                  Download optional Phase 2 catalogue
+                </button>
+              </>
+            )}
             <p>
               Replace dates, MC allocations and Curriculum resources with actual
-              approvals. Format dates are intentionally empty. After Sprint 1,
-              use the Sprint 2 task definitions and role assignments, not the
-              Sprint 1 owners.
+              approvals. The format uses the current sprint’s task definitions
+              and role assignments.
             </p>
           </details>
           {s?.state === "DRAFT" && (
@@ -582,50 +657,49 @@ export default function PilotWorkspace({ user, mode = "board" }) {
             )}
           {mode === "board" && (
             <>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={mine}
-                  onChange={(e) => setMine(e.target.checked)}
-                />{" "}
-                My assigned work
-              </label>
-              <div className="pilot-kanban">
-                {["Ready", "Working", "In Review", "Rework", "Accepted"].map(
-                  (state) => (
-                    <Panel title={state} key={state}>
-                      {data.tasks
-                        .filter(
-                          (c) =>
-                            c.teamId === activeTeam?.teamId &&
-                            c.state === state &&
-                            (!mine ||
-                              c.userId === user._id ||
-                              c.data.coGamerId === user._id),
-                        )
-                        .map((c) => (
+              <div className="pilot-board-controls">
+                <label className="pilot-board-mine">
+                  <input type="checkbox" checked={mine} onChange={(e) => setMine(e.target.checked)} />
+                  My assigned work
+                </label>
+                <label className="pilot-board-filter">
+                  Status
+                  <select value={boardState} onChange={(e) => setBoardState(e.target.value)}>
+                    <option value="">All statuses</option>
+                    {boardStates.map(state => <option key={state}>{state}</option>)}
+                  </select>
+                </label>
+                <p aria-live="polite" className="pilot-board-count">
+                  {boardTasks.filter(card => !boardState || card.state === boardState).length} tasks shown
+                </p>
+              </div>
+              <div className={boardState ? "pilot-kanban pilot-kanban-filtered" : "pilot-kanban"}>
+                {boardStates.filter(state => !boardState || state === boardState).map(state => {
+                  const cards = boardTasks.filter(card => card.state === state);
+                  return (
+                    <section className="pilot-board-column" key={state} aria-label={state}>
+                      <h3>{state} <span>{cards.length}</span></h3>
+                      {!cards.length && <p className="pilot-board-empty">No tasks</p>}
+                      {cards.map((c) => (
                           <button
                             className="quest-card"
                             key={c._id}
                             onClick={() => setSelected(c._id)}
                           >
-                            <strong>
-                              {c.data.code} · {c.data.title}
-                            </strong>
-                            <p>
-                              {c.data.tt} · {names[c.userId] || "MC Joker"} ·{" "}
-                              {c.data.hours || "Estimate awaiting approval"}{" "}
-                              {c.data.hours ? "working hours" : ""}
-                            </p>
-                            <small>
-                              {c.data.depends.join(", ") || "Independent start"}{" "}
-                              · due {stamp(c.data.dueAt)}
-                            </small>
+                            <strong>{c.data.code} · {c.data.title}</strong>
+                            <span className="pilot-card-meta">
+                              {names[c.userId] || "MC Joker"} · {c.data.tt}
+                              {c.data.hours ? ` · ${c.data.hours}h` : " · Estimate pending"}
+                            </span>
+                            <span className="pilot-card-date">Due {stamp(c.data.dueAt)}</span>
+                            {c.data.depends.length > 0 && (
+                              <small>Prerequisites: {c.data.depends.join(", ")}</small>
+                            )}
                           </button>
                         ))}
-                    </Panel>
-                  ),
-                )}
+                    </section>
+                  );
+                })}
               </div>
             </>
           )}
@@ -767,6 +841,7 @@ export default function PilotWorkspace({ user, mode = "board" }) {
                 <Action
                   run={run}
                   action="help"
+                  inlineError
                   values={{ teamId: activeTeam.teamId }}
                   fields={[
                     choice("package", "Help requested", [
@@ -774,6 +849,14 @@ export default function PilotWorkspace({ user, mode = "board" }) {
                       "MC_ONE_TO_ONE",
                       "GUIDE",
                       "AI_PROMPT",
+                      ...(data.sprint.data.number >= 4
+                        ? [
+                            {
+                              value: "EARNED_AI_PROMPT",
+                              label: "Redeem earned guided AI Help",
+                            },
+                          ]
+                        : []),
                     ]),
                     choice("category", "Support umbrella", [
                       "EXPERIENCE",
@@ -784,7 +867,12 @@ export default function PilotWorkspace({ user, mode = "board" }) {
                       ...choice("taskId", "Related task (optional)", [
                         { value: "", label: "General help" },
                         ...data.tasks
-                          .filter((t) => t.teamId === activeTeam.teamId)
+                          .filter(
+                            (t) =>
+                              t.teamId === activeTeam.teamId &&
+                              (t.userId === user._id ||
+                                t.data.coGamerId === user._id),
+                          )
                           .map((t) => ({ value: t._id, label: t.data.code })),
                       ]),
                       optional: true,
@@ -795,17 +883,108 @@ export default function PilotWorkspace({ user, mode = "board" }) {
                   label="Request help"
                 />
               )}
+              {user.role === "GAMER" && data.sprint.data.number >= 4 && (
+                <>
+                  <p>
+                    After using your three personal Help Passes, ask a teammate
+                    to sponsor one MC coaching request, or redeem guided AI Help
+                    earned through three verified Daily Discoveries or one
+                    successful Weekly Quest. You can earn one credit per week
+                    and carry one unused credit into the next week.
+                  </p>
+                  <p>
+                    Available guided AI Help credits:{" "}
+                    {
+                      data.ledgers.filter(
+                        (l) =>
+                          l.state === "EARNED_AI_HELP" &&
+                          l.userId === user._id &&
+                          !l.data.spentAt &&
+                          [
+                            data.sprint.data.number,
+                            data.sprint.data.number + 1,
+                          ].includes(l.data.week),
+                      ).length
+                    }
+                  </p>
+                  <Action
+                    run={run}
+                    action="help-sponsor-request"
+                    inlineError
+                    values={{ teamId: activeTeam.teamId }}
+                    fields={[
+                      choice(
+                        "donorId",
+                        "Sponsor",
+                        activeTeam.members
+                          .filter((id) => id !== user._id)
+                          .map((id) => ({ value: id, label: names[id] || id })),
+                      ),
+                      choice("category", "Support umbrella", [
+                        "EXPERIENCE",
+                        "COGNITION",
+                        "EXPERT_INTERVENTION_NEEDED",
+                      ]),
+                      {
+                        ...reason,
+                        label:
+                          "Coaching request shared with the selected teammate",
+                      },
+                    ]}
+                    label="Ask for sponsorship"
+                  />
+                  {data.ledgers
+                    .filter(
+                      (l) =>
+                        l.state === "HELP_SPONSOR_REQUEST" &&
+                        l.sprintId === data.sprint._id &&
+                        l.teamId === activeTeam.teamId,
+                    )
+                    .map((l) => (
+                      <div key={l._id}>
+                        <p>
+                          {names[l.userId] || l.userId} requested sponsorship
+                          from {names[l.data.donorId] || l.data.donorId}.{" "}
+                          {l.data.status}. {l.data.description}
+                        </p>
+                        {l.data.status === "PENDING" &&
+                          (l.userId === user._id
+                            ? [["CANCEL", "Cancel request"]]
+                            : [
+                                ["APPROVE", "Sponsor with one Help Pass"],
+                                ["DECLINE", "Decline request"],
+                              ]
+                          ).map(([decision, label]) => (
+                            <Action
+                              key={decision}
+                              run={run}
+                              action="help-sponsor-response"
+                              inlineError
+                              values={{
+                                teamId: activeTeam.teamId,
+                                sponsorshipId: l._id,
+                                decision,
+                              }}
+                              label={label}
+                            />
+                          ))}
+                      </div>
+                    ))}
+                </>
+              )}
               {data.ledgers
                 .filter(
                   (l) =>
                     l.userId === user._id &&
-                    l.state === "HELP_PASS" &&
+                    ["HELP_PASS", "EARNED_AI_HELP"].includes(l.state) &&
                     l.data.resource,
                 )
                 .map((l) => (
                   <p key={l._id}>
                     <a href={l.data.resource} target="_blank" rel="noreferrer">
-                      Open approved {l.data.package} resource
+                      {l.state === "EARNED_AI_HELP"
+                        ? "Open approved guided AI Help resource"
+                        : `Open approved ${l.data.package} resource`}
                     </a>
                   </p>
                 ))}
@@ -816,7 +995,7 @@ export default function PilotWorkspace({ user, mode = "board" }) {
               (r) => r.state === "PENDING" && r.data.reviewerId === user._id,
             )) &&
             ["board", "approvals", "setup"].includes(mode) && (
-              <details>
+              <details open={data.reviews.some((r) => r.state === "PENDING" && (r.data.reviewerId === user._id || (cc && r.data.reviewerRole === "CENTRE_COMMAND")))}>
                 <summary>Independent review queue and exceptions</summary>
                 {data.reviews
                   .filter(
@@ -901,6 +1080,184 @@ export default function PilotWorkspace({ user, mode = "board" }) {
                     {a.decision} · {a.key || "No acceptance key"}
                   </p>
                 ))}
+              {staff && s.data.number === 5 && (
+                <>
+                  {(data.policies || [])
+                    .filter((policy) => policy._id === s.data.finalFridayPlanId)
+                    .map((policy) => (
+                      <Panel key={policy._id} title="Final Friday arena plan">
+                        <p>
+                          {stamp(policy.data.value.startAt)} –{" "}
+                          {stamp(policy.data.value.endAt)}
+                        </p>
+                        {policy.data.value.arenas.map((arena) => (
+                          <p key={arena.arena}>
+                            {arena.persona} · {names[arena.assessor] || arena.assessor}
+                          </p>
+                        ))}
+                      </Panel>
+                    ))}
+                  {cc && (
+                    <JsonAction
+                      run={run}
+                      action="final-friday-plan"
+                      label="Publish the five-arena Final Friday plan"
+                      example={{ startAt: "", assessorIds: ["", "", "", "", ""], policyVersion: "", reason: "" }}
+                    />
+                  )}
+                  <JsonAction
+                    run={async (action, values) => {
+                      const result = await run(action, values);
+                      if (result?.export)
+                        download(result.export, "thursday-advisory-export.json");
+                      return result;
+                    }}
+                    action="final-friday-export"
+                    label="Download de-identified Thursday export"
+                    example={{ teamId: activeTeam.teamId, commit: "", sourceArtifactLink: "", deployedTestUrl: "", knownDefects: [], sanitised: false, reason: "" }}
+                  />
+                  <JsonAction
+                    run={run}
+                    action="final-friday-import"
+                    label="Import advisory questions for staff review"
+                    example={{ teamId: activeTeam.teamId, payload: {}, reason: "" }}
+                  />
+                  {(data.audit || [])
+                    .filter((row) =>
+                      row.teamId === activeTeam.teamId && row.state === "FINAL_FRIDAY_ADVISORY_IMPORTED",
+                    )
+                    .map((row) => (
+                      <details key={row._id}>
+                        <summary>Imported advisory · {row.data.status} · version {row.data.version}</summary>
+                        {(row.data.findings || []).map((finding, index) => (
+                          <p key={index}>{finding.id} · {finding.category} · {finding.summary} {finding.evidenceRef}</p>
+                        ))}
+                        {(row.data.provisionalAssessments || []).map((item, index) => (
+                          <p key={index}>{item.gamerId} · {item.criterion} · {item.rating} · {item.reason}</p>
+                        ))}
+                        {row.data.questions.map((set) => (
+                          <div key={set.gamerId}>
+                            <strong>{set.gamerId}</strong>
+                            {set.questions.map((item, index) => <p key={index}>{item.question}</p>)}
+                          </div>
+                        ))}
+                        {!cc && (
+                          <JsonAction run={run} action="final-question-review" label="Submit reviewed question version to CC"
+                            example={{ teamId: activeTeam.teamId, advisoryId: row._id, questionVersion: row.data.version,
+                              questionSets: row.data.questions.map(set => ({ gamer_id: set.gamerId, team_id: "T01", questions: set.questions })), reason: "" }} />
+                        )}
+                        {cc && row.data.status === "AWAITING_CC_APPROVAL" && (
+                          <Action run={run} action="final-question-approve" label="Approve this question version"
+                            values={{ teamId: activeTeam.teamId, advisoryId: row._id, questionVersion: row.data.version }} fields={[reason]} />
+                        )}
+                      </details>
+                    ))}
+                  <JsonAction
+                    run={run}
+                    action="final-friday-advisory"
+                    label="Record human-reviewed Thursday AI artifacts"
+                    example={{
+                      teamId: activeTeam.teamId,
+                      commit: "",
+                      codeManifest: "",
+                      individualDossiers: "",
+                      reviewedQuestions: "",
+                      reason: "",
+                    }}
+                  />
+                  {cc && (
+                    <JsonAction run={run} action="final-admin-booking" label="Book optional ten-minute reviewer slot"
+                      example={{ teamId: activeTeam.teamId, userId: "", voluntary: false, assessorId: "", startAt: "", reason: "" }} />
+                  )}
+                  {cc && (
+                    <JsonAction
+                      run={run}
+                      action="final-admin-chair"
+                      label="Record separate Administrator’s Chair bonus"
+                      example={{
+                        teamId: activeTeam.teamId,
+                        userId: "",
+                        voluntary: false,
+                        bonus: 0,
+                        durationMinutes: 10, environment: "ISOLATED_BRANCH", target: "", baseline: "", rollback: "",
+                        sharedReleaseUnchanged: false,
+                        assessorId: "",
+                        criteria: Object.fromEntries(["A", "B", "C", "D", "E"].map(id => [id, { earned: false, evidence: "" }])),
+                        evidence: "",
+                        reason: "",
+                      }}
+                    />
+                  )}
+                  <JsonAction
+                    run={run}
+                    action="final-award"
+                    label="Record Final Friday award evidence"
+                    example={{
+                      teamId: activeTeam.teamId,
+                      category: "",
+                      decision: "RECOMMEND",
+                      userId: "",
+                      evidence: "",
+                      reason: "",
+                      override: false,
+                    }}
+                  />
+                  {cc && <JsonAction run={run} action="final-showcase" label="Record persona showcase selection"
+                    example={{ teamId: activeTeam.teamId, userId: "", evidence: "", reason: "" }} />}
+                  {(data.daily || [])
+                    .filter(
+                      (record) =>
+                        record.state === "FINAL_AWARD" &&
+                        record.teamId === activeTeam.teamId,
+                    )
+                    .map((record) => (
+                      <p key={record._id}>
+                        {record.data.category} · {record.data.decision} ·{" "}
+                        {names[record.data.recipient] || record.data.recipient || "Withheld"}
+                      </p>
+                    ))}
+                  {(data.daily || [])
+                    .filter(
+                      (record) =>
+                        record.state === "FINAL_DEMO_WITNESS" &&
+                        record.teamId === activeTeam.teamId,
+                    )
+                    .map((record) => (
+                      <p key={record._id}>
+                        {record.data.code} · {names[record.userId]} ·{" "}
+                        {record.data.decision} · {record.data.defenceMinutes} minutes
+                      </p>
+                    ))}
+                  <Action
+                    run={run}
+                    action="final-demo-witness"
+                    values={{ teamId: activeTeam.teamId,
+                      advisoryId: s.data.approvedQuestions?.[activeTeam.teamId]?.advisoryId,
+                      questionVersion: s.data.approvedQuestions?.[activeTeam.teamId]?.version }}
+                    fields={[
+                      choice(
+                        "taskId",
+                        "Final persona demonstration",
+                        data.tasks
+                          .filter(
+                            (card) =>
+                              card.teamId === activeTeam.teamId &&
+                              card.data.technicalRole === "Business persona",
+                          )
+                          .map((card) => ({
+                            value: card._id,
+                            label: `${card.data.code} · ${card.data.title}`,
+                          })),
+                      ),
+                      choice("decision", "Witness outcome", ["PASS", "FAIL", "BLOCKED"]),
+                      field("defenceMinutes", "Private defence minutes", "number"),
+                      field("evidence", "Witnessed demo and defence evidence", "url"),
+                      reason,
+                    ]}
+                    label="Record private Final Friday witness evidence"
+                  />
+                </>
+              )}
               {cc && (
                 <>
                   <Action
@@ -913,7 +1270,7 @@ export default function PilotWorkspace({ user, mode = "board" }) {
                         "Client acceptance gate",
                         [1, 2, 3, 4, 5, 6, 7].map((i) => ({
                           value: String(i),
-                          label: `AC-${i}`,
+                          label: s.data.template.acceptance?.[i - 1]?.id || `AC-${i}`,
                         })),
                       ),
                       choice("decision", "Test finding", [
@@ -1267,15 +1624,16 @@ export default function PilotWorkspace({ user, mode = "board" }) {
                 Verified competency and separate programme ledgers
               </summary>
               <p>
-                Legacy map balances remain unchanged. Programme energy requires
-                an approved policy.
+                Your current lives and energy are shared across every page.
+                The entries below are historical records; energy adjustments require an approved policy.
               </p>
               {data.ledgers
                 .filter((l) => l.userId === user._id || staff)
                 .map((l) => (
                   <p key={l._id}>
-                    {names[l.userId] || l.userId} · {l.state} ·{" "}
-                    {l.data.human?.total ??
+                    {names[l.userId] || l.userId} ·{" "}
+                    {l.state === "ADMIN_CHAIR" ? "Administrator’s Chair bonus" : l.state} ·{" "}
+                    {l.state === "ENERGY" ? "Balance change recorded (history)" : l.data.human?.total ??
                       l.data.score ??
                       l.data.bonus ??
                       l.data.energy ??
@@ -1351,6 +1709,130 @@ export default function PilotWorkspace({ user, mode = "board" }) {
                   )}
                 </>
               )}
+            </details>
+          )}
+          {s.data.number === 5 && ["board", "setup"].includes(mode) && (
+            <details>
+              <summary>Optional Phase 2 cross-team work</summary>
+              {user.role === "MISSION_COMMANDER" && (
+                <JsonAction run={run} action="phase2-plan" label="Stage cross-team card assignments"
+                  example={{ levelId: "P2-S1", branch: "", owners: {}, reason: "" }} />
+              )}
+              {(data.phase2 || []).map((group) => (
+                <Panel key={group.levelId} title={group.levelId}>
+                  <p>{group.state} · <a href={group.branch}>Isolated work branch</a></p>
+                  {cc && group.state === "PHASE2_DRAFT" && (
+                    <Action run={run} action="phase2-approve" values={{ levelId: group.levelId }}
+                      fields={[reason]} label="Approve workgroup" />
+                  )}
+                  {cc && group.state === "PHASE2_COMPLETE" && (
+                    <Action run={run} action="phase2-bonus"
+                      values={{ levelId: group.levelId }}
+                      fields={[
+                        choice("userId", "Contributor", [...new Set(group.cards.map((card) => card.owner))]
+                          .map((id) => ({ value: id, label: names[id] || id }))),
+                        field("bonus", "Approved bonus", "number"),
+                        field("evidence", "Evidence URL", "url"),
+                        reason,
+                      ]}
+                      label="Record Phase 2 bonus" />
+                  )}
+                  {group.cards.map((card) => (
+                    <details key={card.id}>
+                      <summary>{card.id} · {card.title} · {card.status}</summary>
+                      <p>{card.instructions}</p>
+                      {card.depends.length > 0 && <p>Prerequisites {card.depends.join(", ")}</p>}
+                      {staff && <p>Owner {names[card.owner] || card.owner}</p>}
+                      {card.submission && <a href={card.submission.evidence}>Submitted evidence</a>}
+                      {!staff && group.state === "PHASE2_ACTIVE" && ["READY", "REWORK"].includes(card.status) && (
+                        <Action run={run} action="phase2-submit"
+                          values={{ levelId: group.levelId, cardId: card.id }}
+                          fields={[field("evidence", "Evidence URL", "url"), reason]} label="Submit optional work" />
+                      )}
+                      {cc && card.status === "SUBMITTED" && (
+                        <Action run={run} action="phase2-review"
+                          values={{ levelId: group.levelId, cardId: card.id }}
+                          fields={[choice("decision", "Outcome", ["ACCEPTED", "REWORK"]), reason]} label="Review optional work" />
+                      )}
+                    </details>
+                  ))}
+                </Panel>
+              ))}
+            </details>
+          )}
+          {s.data.number === 5 && ["rewards", "board", "reports", "setup"].includes(mode) && activeTeam && (
+            <details open={mode === "rewards"}>
+              <summary>Private Capability Passport and certificate</summary>
+              {(staff ? activeTeam.members : [user._id]).map((gamerId) => {
+                const record = (data.daily || []).find(
+                  (row) => row.userId === gamerId &&
+                    ["FINAL_REPORT_GENERATED", "FINAL_REPORT_STALE", "FINAL_REPORT_REVIEWED", "FINAL_REPORT_ISSUED"].includes(row.state),
+                );
+                return (
+                  <Panel key={gamerId} title={names[gamerId] || gamerId}>
+                    {cc && <JsonAction run={run} action="final-profile" label="Approve criterion evidence and development profile"
+                      example={{ teamId: activeTeam.teamId, userId: gamerId, rubricVersion: "", reason: "",
+                        criteria: (data.setup?.partB.finalFriday.passport.page1.criterion_scores || []).map(row => ({
+                          criterion_id: row.criterion_id, approved_score: null, evidence_refs: [] })), strengths: [], gaps: [] }} />}
+                    {record?.state === "FINAL_REPORT_ISSUED" && (
+                      <p>
+                        <a href={`/api/pilot/files/${record.data.passportId}`}>Private Capability Passport</a>
+                        {" · "}
+                        <a href={`/api/pilot/files/${record.data.certificateId}`}>Certificate of Assessed Completion</a>
+                      </p>
+                    )}
+                    {cc && record?.state === "FINAL_REPORT_ISSUED" && <Action run={run} action="final-report-reopen"
+                      values={{ teamId: activeTeam.teamId, userId: gamerId }} fields={[reason]} label="Reopen private documents for authorised correction" />}
+                    {!record && !staff && <p>Awaiting assessed completion and CC issuance.</p>}
+                    {staff && record?.state !== "FINAL_REPORT_ISSUED" && (
+                      <>
+                        <p>Generate a two-page Passport and one-page certificate from the current records. Both PDFs are saved privately. Download and inspect them before MC review; the learner receives access only after CC issuance.</p>
+                        {record && <p>Document status: {record.state.replaceAll("_", " ")}</p>}
+                        <Action run={run} action="final-report-generate"
+                          values={{ teamId: activeTeam.teamId, userId: gamerId }}
+                          fields={[field("course", "Course / programme", "text"), field("projectId", "Assessed project ID", "text"),
+                            field("commit", "Full assessed commit SHA", "text"),
+                            field("sourceArtifactLink", "Sanitised source reference", "url", true),
+                            field("deployedTestUrl", "Approved staging URL", "url", true),
+                            field("sanitised", "I confirm source references have been checked for private data and credentials", "checkbox"), reason]}
+                          convert={b => ({ ...b, sanitised: Object.hasOwn(b, "sanitised") })}
+                          label="Generate and save both private PDFs" />
+                        {(data.finalReportFiles || [])
+                          .filter((file) => file.userId === gamerId && file.teamId === activeTeam.teamId)
+                          .map((file) => (
+                            <p key={file.id}>
+                              <a href={`/api/pilot/files/${file.id}`}>{file.filename}</a>
+                              {" · "}{file.kind} · {file.id}
+                            </p>
+                          ))}
+                        {!cc && (
+                          <Action
+                            run={run}
+                            action="final-report-review"
+                            values={{ teamId: activeTeam.teamId, userId: gamerId, passportPages: 2 }}
+                            fields={[...[["passportId", "PASSPORT"], ["certificateId", "CERTIFICATE"]].map(([name, kind]) =>
+                              choice(name, kind === "PASSPORT" ? "Checked Passport PDF" : "Checked certificate PDF",
+                                (data.finalReportFiles || []).filter(file => file.userId === gamerId && file.teamId === activeTeam.teamId && file.kind === kind)
+                                  .map(file => ({ value: file.id, label: file.filename })))),
+                              field("verified", "I checked the two Passport pages, exact certificate wording and supporting evidence", "checkbox"), reason]}
+                            convert={b => ({ ...b, certificateWordingVerified: Object.hasOwn(b, "verified"), evidenceVerified: Object.hasOwn(b, "verified") })}
+                            label="Confirm assigned MC review of both PDFs"
+                          />
+                        )}
+                        {cc && record?.state === "FINAL_REPORT_REVIEWED" && (
+                          <Action
+                            run={run}
+                            action="final-report-issue"
+                            values={{ teamId: activeTeam.teamId, userId: gamerId }}
+                            fields={[reason]}
+                            label="Approve and issue the two private documents"
+                          />
+                        )}
+                      </>
+                    )}
+                  </Panel>
+                );
+              })}
             </details>
           )}
           {staff && ["board", "reports", "setup"].includes(mode) && (
@@ -1451,20 +1933,63 @@ export default function PilotWorkspace({ user, mode = "board" }) {
           close={() => setSelected(null)}
           wide
         >
-          <p>
-            {task.state} · Owner {names[task.userId] || "MC Joker"} ·{" "}
-            {task.data.tt}
-          </p>
-          <p>
-            Prerequisites: {task.data.depends.join(", ") || "None"} · Original
-            target {stamp(task.data.originalDueAt)} · Current target{" "}
-            {stamp(task.data.dueAt)}
-          </p>
+          <dl className="pilot-task-facts">
+            <div><dt>Status</dt><dd>{task.state} · Owner {names[task.userId] || "MC Joker"} · {task.data.tt}</dd></div>
+            <div><dt>Current target</dt><dd>{stamp(task.data.dueAt)}</dd></div>
+            <div><dt>Prerequisites</dt><dd>{task.data.depends.join(", ") || "None"}</dd></div>
+            <div><dt>Original target</dt><dd>{stamp(task.data.originalDueAt)}</dd></div>
+          </dl>
+          {task.data.instructions && <p>{task.data.instructions}</p>}
+          {task.data.uat && (
+            <p>
+              Planned Client’s Chair session: {task.data.uat.day} ·{" "}
+              {task.data.hours} protected hours · Independent recommendation
+            </p>
+          )}
+          {task.data.evidenceRequired && (
+            <p>Evidence: {task.data.evidenceRequired}</p>
+          )}
           <p>
             <a href={task.data.basic.url} target="_blank" rel="noreferrer">
               Free Curriculum basic clues · {task.data.basic.version}
             </a>
           </p>
+          {s?.data.number === 4 && sprint4Discipline(task.data.code) &&
+            user.role === "GAMER" &&
+            [task.userId, task.data.coGamerId].includes(user._id) && (
+              <section aria-label="Task-specific Sprint 4 help">
+                <h3>Task-specific Sprint 4 help</h3>
+                <p>Choose a Help Pass option for this card. Essential help remains available in the Help Desk.</p>
+                <Action
+                  run={run}
+                  action="help"
+                  inlineError
+                  values={{ taskId: task._id, teamId: task.teamId, category: "COGNITION", frozenGuide: true }}
+                  fields={[
+                    choice("package", "Task help option", [
+                      { value: "AI_PROMPT", label: "FIRE / STORY prompts" },
+                      { value: "GUIDE", label: "Detailed testing guide" },
+                      { value: "MC_ONE_TO_ONE", label: "MC 1:1 for this task" },
+                    ]),
+                    field("reason", "What help do you need for this task?"),
+                  ]}
+                  label="Request help for this task"
+                />
+                {data.ledgers.filter(l => l.userId === user._id && l.data.taskId === task._id &&
+                  (l.data.guidance || l.data.ticketId)).map(l => (
+                  l.data.guidance ? (
+                    <details key={l._id} open>
+                      <summary>{l.data.guidance.title} · {l.data.package === "GUIDE" ? "Detailed testing guide" : "FIRE / STORY prompts"}</summary>
+                      {l.data.guidance.sections.map(section => (
+                        <p key={section.name}><strong>{section.name}</strong> {section.text}</p>
+                      ))}
+                    </details>
+                  ) : (
+                    <p key={l._id}>MC 1:1 request saved for {task.data.code}. Help Desk ticket {l.data.ticketId}.</p>
+                  )
+                ))}
+              </section>
+            )}
           {task.data.evidence.map((e) => (
             <p key={e.id}>
               <a href={e.url} target="_blank" rel="noreferrer">

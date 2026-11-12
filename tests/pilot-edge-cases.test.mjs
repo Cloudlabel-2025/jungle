@@ -233,7 +233,7 @@ test(
           await call(g, "task", { taskId: c._id, next: "Working" });
           await call(cc, "settings", {
             policyVersion: "EDGE-ENERGY",
-            energy: { start: 5, max: 5, lives: 2, zeroMode: "AWAIT_RECOVERY" },
+            energy: { start: 3, max: 3, lives: 5, zeroMode: "AWAIT_RECOVERY" },
           });
           await call(mc, "energy-propose", {
             teamId: team.teamId,

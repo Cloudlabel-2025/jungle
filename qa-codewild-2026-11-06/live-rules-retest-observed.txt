@@ -1,0 +1,66 @@
+- button "Open expedition navigation":
+- banner:
+  - region "Player status":
+    - img "Aarav Patel as Zayn"
+    - strong: Aarav Patel
+    - generic: Zayn · Blaze · Full stack
+    - generic: Level 1
+    - progressbar "Experience toward next level"
+    - generic: 0 / 100 XP
+    - generic "3 of 5 lives":
+      - generic: Life
+      - generic: 3/5
+    - generic "5 of 5 energy":
+      - generic: Energy
+      - generic: 5/5
+  - generic "Player achievements":
+    - generic: Viper Syndicate
+    - strong: "16"
+    - generic: Week 1 trophies
+    - strong: "0"
+    - generic: Day streak
+  - button "Enable client alert sound":
+  - button "Sign out":
+- text: "Support alert: Aarav Patel reached three consecutive HP drops. A Commander check-in is needed."
+- main:
+  - text: EXPEDITION CONTROL / FIELD OPERATIONS
+  - heading "Game Rules" [level=1]
+  - paragraph: Week 1 · Discover, Explore, STORY, FIRE and Prove
+  - generic: G7 / CODEWILD EXPEDITION
+  - navigation "Week 1 programme":
+    - link "My Day":
+      - /url: /gamer/week-one
+    - link "Meeting Announcements":
+      - /url: /gamer/week-one-announcements
+    - link "My Games":
+      - /url: /gamer/week-one-games
+    - link "Ask MC":
+      - /url: /gamer/week-one-ask-mc
+    - link "Research Showcase":
+      - /url: /gamer/week-one-showcase
+    - link "Challenges & Rewards":
+      - /url: /gamer/week-one-challenges
+    - link "Game Rules":
+      - /url: /gamer/week-one-game-rules
+    - link "My Results":
+      - /url: /gamer/week-one-results
+  - heading "Game Rules" [level=2]
+  - generic: VERSION 1
+  - paragraph: "CODEWILD — Week 1 / Day 1: Discover 1. Read the released My Day agenda and use the schedule and cut-offs displayed for your cohort. Clock in and save your start-of-day and end-of-day reflections. 2. Choose a research genre, read its released question, acknowledge it and start your research. The displayed research timer persists through refresh and re-login. 3. Investigate the question, state assumptions and retain evidence for claims. Submit one HTTPS shareable external AI conversation-thread URL. Do not include passwords, API keys or other secrets. 4. Centre Command checks access and records the research ratings. A submission is not verified merely because a URL was saved. A revised URL requires a reason and fresh verification; prior revisions remain in the audit history. 5. Week 1 energy remains 5/5 with no deductions. Research baseline scores and rankings remain private; trophies are separate from research scores. Follow the reward evidence shown in My Games. 6. Ask MC through the Rules clarification or support flow if an instruction, deadline or reward is unclear. Preserve evidence and treat other explorers respectfully. 7. QA fixtures are synthetic workflow evidence only. They do not establish genuine AI-thread accessibility, research quality or learner capability. Existing synthetic fixture ratings must not be treated as learner assessment. This version documents the existing Day 1 workflow; it does not open additional days, alter schedules or change scoring rules."
+  - paragraph:
+    - text: Acknowledged 6 Nov, 08:08 pm. Clarification window ends 7 Nov, 08:08 pm.
+  - generic: Expedition field record
+  - generic: ✦
+  - generic: "01"
+  - generic: Need clarification?
+  - textbox "Need clarification?"
+  - button "Ask MC about the Rules":
+    - generic: Ask MC about the Rules
+  - paragraph: No clarification request is not proof of comprehension. Rules tickets are separate from the two daily class questions.
+  - heading "Shared Rules FAQ" [level=2]
+- contentinfo:
+  - text: CAMP RADIO CONNECTED
+  - text: ASIA / KOLKATA
+  - generic: EXPLORE. ADAPT. SURVIVE.
+  - generic: CODEWILD © 2026
+- alert

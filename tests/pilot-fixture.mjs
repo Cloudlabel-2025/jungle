@@ -3,7 +3,7 @@ import { blankProgram } from "../lib/week-one-program-rules.js";
 import { emptyRecovery } from "../lib/recovery-rules.js";
 import { rosterDigest } from "../lib/recovery.js";
 import manifests from "../lib/pilot-manifests.json" with { type: "json" };
-export async function pilotFixture() {
+export async function pilotFixture(teamCount = 5) {
   await connect();
   for (const m of Object.values(models)) await m.init();
   const cohortId = "alpha",
@@ -23,7 +23,7 @@ export async function pilotFixture() {
       role: "MISSION_COMMANDER",
     },
     otherMC = { ...mc, _id: "pilot-other-mc", email: "other-mc@pilot.invalid" },
-    gamers = Array.from({ length: 25 }, (_, i) => ({
+    gamers = Array.from({ length: 5 * teamCount }, (_, i) => ({
       _id: `pilot-g${i}`,
       name: `QA Gamer ${i}`,
       email: `g${i}@pilot.invalid`,
@@ -31,7 +31,7 @@ export async function pilotFixture() {
       role: "GAMER",
       teamId: `pilot-team-${Math.floor(i / 5)}`,
     })),
-    teams = Array.from({ length: 5 }, (_, i) => ({
+    teams = Array.from({ length: teamCount }, (_, i) => ({
       id: `pilot-team-${i}`,
       members: gamers.slice(i * 5, i * 5 + 5).map((g) => g._id),
     }));

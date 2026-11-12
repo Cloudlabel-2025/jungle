@@ -1,0 +1,297 @@
+{
+  "date": "2026-11-12",
+  "base": "http://localhost:3188",
+  "browser": "ChatGPT in-app browser",
+  "roles": [
+    "GAMER",
+    "MISSION_COMMANDER",
+    "CENTRE_COMMAND"
+  ],
+  "fixture": "Disposable one-team/five-Gamer database; prior sprint acceptances, prior technical cards and SDLC checkpoints seeded. Server-only virtual clock. External AI response synthetic. Observed state restored after rebuild; arena policy replayed through CC UI because the first snapshot omitted policies. No production data or provider credentials.",
+  "checks": [
+    {
+      "id": "BR-01",
+      "title": "Sprint 3 Gamer submission and independent MC review",
+      "cases": [],
+      "observation": "Gamer started DB-09, attached attributed evidence and submitted it; the MC accepted it. SDLC checkpoints and other technical cards were seeded.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s3-gamer-submitted.png",
+        "s3-mc-accepted.png",
+        "s3-browser-outcome.json"
+      ]
+    },
+    {
+      "id": "BR-02",
+      "title": "Sprint 3 CC gates and Key 3",
+      "cases": [
+        "PB-QA-020",
+        "PB-QA-021",
+        "PB-QA-022",
+        "PB-QA-023",
+        "PB-QA-024",
+        "PB-QA-025",
+        "PB-QA-026"
+      ],
+      "observation": "Early acceptance rejected with 'All seven latest client gates must pass.' Seven synthetic gate findings were entered in the UI; CC then recorded Key 3. Actual incident criteria remain unverified.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s3-cc-key3.png",
+        "s3-browser-outcome.json"
+      ]
+    },
+    {
+      "id": "BR-03",
+      "title": "Task-specific UAT guide",
+      "cases": [
+        "PB-QA-033"
+      ],
+      "observation": "Gamer requested the detailed UAT guide from UAT-01; Purpose, Steps, Example and Evidence appeared and the Help Pass debit persisted.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s4-gamer-uat-fail.png",
+        "s4-browser-outcome.json"
+      ]
+    },
+    {
+      "id": "BR-04",
+      "title": "UAT failure recommendation and independent task review",
+      "cases": [
+        "PB-QA-036"
+      ],
+      "observation": "Gamer submitted a FAIL recommendation; MC accepted completion of the testing task without converting the failure into release acceptance.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s4-gamer-uat-fail.png",
+        "s4-mc-reviews.png",
+        "s4-browser-outcome.json"
+      ]
+    },
+    {
+      "id": "BR-05",
+      "title": "Failed UAT gate blocks release",
+      "cases": [
+        "PB-QA-064"
+      ],
+      "observation": "AC-4 FAIL blocked CC acceptance; the browser showed the rejection. A new synthetic passing retest and CC disposition were required before acceptance.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s4-cc-failure-blocked.png",
+        "s4-cc-key4.png",
+        "s4-browser-outcome.json"
+      ]
+    },
+    {
+      "id": "BR-06",
+      "title": "Sprint 4 gates and Key 4",
+      "cases": [
+        "PB-QA-056",
+        "PB-QA-057",
+        "PB-QA-058",
+        "PB-QA-059",
+        "PB-QA-060",
+        "PB-QA-061",
+        "PB-QA-062"
+      ],
+      "observation": "All seven current gate records were entered through CC forms and Key 4 persisted. Other Gamers' cards were seeded; no real 2.5-hour student UAT is claimed.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s4-cc-key4.png",
+        "s4-browser-outcome.json"
+      ]
+    },
+    {
+      "id": "BR-07",
+      "title": "Final persona preparation Gamer-to-MC handoff",
+      "cases": [
+        "PB-QA-076"
+      ],
+      "observation": "Gamer started DEMO-01, attached persona-preparation evidence, submitted it and MC independently accepted it. Prior release and SDLC work were seeded.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s5-before-ui-fix.json"
+      ]
+    },
+    {
+      "id": "BR-08",
+      "title": "Thursday linked export download",
+      "cases": [],
+      "observation": "MC uploaded the export request through the actual file chooser and downloaded JSON containing five aliased dossiers and thirteen criterion rows each.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "thursday-advisory-export.json"
+      ]
+    },
+    {
+      "id": "BR-09",
+      "title": "Versioned MC review and CC approval",
+      "cases": [
+        "PB-QA-095"
+      ],
+      "observation": "Synthetic external advisory imported as AWAITING_HUMAN_REVIEW v1. MC review advanced it to AWAITING_CC_APPROVAL v2; CC approved v2. A preapproval passing-defence attempt was rejected.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s5-mc-question-review.png",
+        "s5-before-ui-fix.json"
+      ]
+    },
+    {
+      "id": "BR-10",
+      "title": "Five version-linked witness records and Key 5",
+      "cases": [
+        "PB-QA-065",
+        "PB-QA-066",
+        "PB-QA-067",
+        "PB-QA-068",
+        "PB-QA-069",
+        "PB-QA-070",
+        "PB-QA-071",
+        "PB-QA-072",
+        "PB-QA-073",
+        "PB-QA-074",
+        "PB-QA-078",
+        "PB-QA-079",
+        "PB-QA-080",
+        "PB-QA-081",
+        "PB-QA-082",
+        "PB-QA-083",
+        "PB-QA-084"
+      ],
+      "observation": "CC entered five fictional PASS/5-minute records linked to approved question version 2, seven gates and final acceptance. These verify recording/acceptance controls, not observed human understanding or real app journeys.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s5-cc-key5.png",
+        "s5-browser-final.json"
+      ]
+    },
+    {
+      "id": "BR-11",
+      "title": "Optional mandatory-defence prerequisite",
+      "cases": [
+        "FF-ADV-12"
+      ],
+      "observation": "An Administrator's Chair result attempted before the mandatory witness was rejected with the explicit persona/defence prerequisite message.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s5-before-ui-fix.json"
+      ]
+    },
+    {
+      "id": "BR-12",
+      "title": "Booked optional session and separate three-point result",
+      "cases": [
+        "FF-ADV-04",
+        "FF-ADV-09",
+        "PB-QA-108"
+      ],
+      "observation": "CC booked the reviewer slot and recorded exactly three evidenced criterion points; persistence shows core 100 and bonus +3 in separate ledger entries. Actual isolated code execution remains manual.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s5-browser-final.json",
+        "passport-private-draft.html"
+      ]
+    },
+    {
+      "id": "BR-13",
+      "title": "Award and showcase decision recording",
+      "cases": [
+        "PB-QA-091"
+      ],
+      "observation": "CC recorded Systems Thinker for Gamer 0 and one DEMO-01 showcase finalist; no core-score change resulted. This is not a five-finalist selection or all-category competition validation.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s5-browser-final.json"
+      ]
+    },
+    {
+      "id": "BR-14",
+      "title": "Private report draft downloads",
+      "cases": [
+        "PB-QA-107",
+        "PB-QA-109",
+        "PB-QA-110"
+      ],
+      "observation": "CC approved a fictional thirteen-criterion profile, downloaded Passport and certificate HTML, then downloaded a Passport with core100 and bonus+3. Two HTML page sections and the frozen certificate body were checked. Actual PDF layout/signatures remain manual.",
+      "status": "PARTIAL_RENDERED_PDF_STILL_MANUAL",
+      "evidence": [
+        "passport-private-draft.html",
+        "certificate-private-draft.html"
+      ]
+    },
+    {
+      "id": "BR-15",
+      "title": "Private storage and report issuance",
+      "cases": [
+        "PB-QA-107",
+        "PB-QA-110"
+      ],
+      "observation": "The real browser upload control returned 'Private file storage is not configured.' No upload, review, issuance or private-download round trip is claimed. A malformed header-only negative probe was used; storage rejected the intent before inspecting any file bytes.",
+      "status": "BLOCKED_EXTERNAL_STORAGE",
+      "evidence": [
+        "s5-storage-blocked.png",
+        "s5-storage-feedback-fixed.png"
+      ]
+    },
+    {
+      "id": "BR-16",
+      "title": "PB-BR-001 stale success message fix",
+      "cases": [],
+      "observation": "Reproduced old global success beside the upload error. After fixing notice rendering, repeated a successful profile save followed by a failed upload: errorVisible=true, staleSuccessCount=0.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "s5-storage-blocked.png",
+        "s5-storage-feedback-fixed.png"
+      ]
+    },
+    {
+      "id": "BR-17",
+      "title": "Phase 2 MC-to-CC-to-Gamer-to-CC handoff",
+      "cases": [
+        "PB-QA-111"
+      ],
+      "observation": "MC staged twenty Level1 cards, CC approved, assigned Gamer submitted EX1-01 and CC accepted it. Remaining nineteen Level1 cards and Levels2/3 were not executed in this browser session.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "phase2-gamer-submitted.png",
+        "phase2-cc-accepted.png",
+        "s5-browser-final.json"
+      ]
+    },
+    {
+      "id": "BR-18",
+      "title": "Assigned assessor scope",
+      "cases": [
+        "PB-QA-085",
+        "PB-QA-086",
+        "PB-QA-087",
+        "PB-QA-088",
+        "PB-QA-089"
+      ],
+      "observation": "An MC outside the general team assignment saw only arena4/Gamer3 approved questions and zero general team tasks. Scope rendering was checked; actual simultaneous rooms/staffing remain manual.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "assessor-scoped.png"
+      ]
+    },
+    {
+      "id": "BR-19",
+      "title": "Unrelated Gamer privacy",
+      "cases": [
+        "PB-QA-090"
+      ],
+      "observation": "Gamer1 saw their own pending report state, no staff question text and no Gamer0 optional cards. StaffQuestionTextCount=0; unassignedPhase2Cards=0. This is privacy rendering after synthetic acceptance, not a witnessed preassessment room test.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": [
+        "gamer-private-view.png",
+        "gamer-private-view.txt"
+      ]
+    }
+  ],
+  "validation": {
+    "partBTests": 32,
+    "failed": 0,
+    "skipped": 0,
+    "build": "PASS",
+    "finalConsole": []
+  }
+}

@@ -13,6 +13,7 @@ import { fixtureConfig } from "../tests/day-one-fixture.mjs";
 import {
   programFixture,
   settingsFixture,
+  publishFixtureRules,
 } from "../tests/week-one-program-fixture.mjs";
 import { localParts } from "../lib/day-one-rules.js";
 import { recoveryFixture } from "../tests/recovery-fixture.mjs";
@@ -63,6 +64,7 @@ try {
     time(-29),
   );
   await dayOneAction(cc, "release", { config, revision: 0 }, time(-29));
+  await publishFixtureRules(cc, time(-29));
   const control = async (action, day, when, extra = {}) =>
     weekOneAction(
       mc,
@@ -198,7 +200,12 @@ try {
     const release = await models.WeekOneRelease.findById("alpha");
     for (const day of release.days) {
       day.state = "CLOSED";
-      if(day.day>2){day.content=programFixture(day.day);day.contentVersion=1;day.officialStart=day.content.officialStart;day.scheduledEnd=day.content.closingCutoff;}
+      if (day.day > 2) {
+        day.content = programFixture(day.day);
+        day.contentVersion = 1;
+        day.officialStart = day.content.officialStart;
+        day.scheduledEnd = day.content.closingCutoff;
+      }
     }
     release.markModified("days");
     await release.save();

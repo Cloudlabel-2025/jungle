@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Fictional Team A restored gateway regression</title>
+<style>body{font:16px/1.5 system-ui;max-width:1040px;margin:2em auto;padding:0 1em;color:#18332d}table{border-collapse:collapse;width:100%}th,td{border:1px solid #b7c8c1;padding:.65em;text-align:left;vertical-align:top}th{background:#e8f2ee}code{overflow-wrap:anywhere}</style>
+<h1>Fictional Team A restored gateway regression</h1>
+<p>10 November 2026. All 14 QA gates passed on the approved localhost staging scope. Browser and API tests both targeted the same restored gateway, <code>http://127.0.0.1:55472/</code>. This was a disposable run and the URL was retired at the end of testing.</p>
+<p>Accepted source fingerprint <code>4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc</code>. The runner reproduced INC-04, restored the API target, and confirmed the same directory and sampled profile from the same database before running the full API verifier through the gateway. The verifier then reset the fictional data to 20 rows for the browser run at the same URL. See the <a href="../rehearse-inc04.mjs">reproducible runner</a>, <a href="../key-2-isolated-record.json">approved Key 2 record</a>, and <a href="../inc04-rehearsal-evidence.json">incident evidence</a>.</p>
+<table><thead><tr><th>Gate</th><th>Result</th><th>Observed result and evidence</th></tr></thead><tbody>
+<tr><td>S1-AC01</td><td>PASS</td><td>Administrator login established a session and showed the directory. <a href="02-admin-directory.jpg">Screenshot</a></td></tr>
+<tr><td>S1-AC02</td><td>PASS</td><td>Administrator API returned 20 fictional MongoDB records. Browser showed 20 rows on the clean seed. <a href="02-admin-directory.txt">Transcript</a></td></tr>
+<tr><td>S1-AC03</td><td>PASS</td><td>Opened Fictional Alumnus A from the directory and matched AL-QA-001 to the API result. <a href="03-admin-profile.jpg">Screenshot</a></td></tr>
+<tr><td>S1-AC04</td><td>PASS</td><td>Alumnus signed in and saw own profile AL-QA-001. API returned the same profile. <a href="10-alumnus-permissions.jpg">Screenshot</a></td></tr>
+<tr><td>S1-AC05</td><td>PASS</td><td>Alumnus view exposed no directory. The same-gateway API denied directory and other-profile reads with 403. <a href="10-alumnus-permissions.txt">Transcript</a></td></tr>
+<tr><td>S1-AC06</td><td>PASS</td><td>Wrong password produced the browser error. The API returned 401 for invalid credentials and unauthenticated reads. <a href="01-invalid-login.jpg">Screenshot</a></td></tr>
+<tr><td>S1-AC07</td><td>PASS</td><td>Restored localhost URL served HTML, compiled React, API, and database-backed profile journeys. <a href="02-admin-directory.jpg">Screenshot</a></td></tr>
+<tr><td>S2-AC01</td><td>PASS</td><td>Browser created Élodie D’Arcy-Smith. The server returned unique ID AL-4e90222b-f06c-4b4b-9217-e2b6c23dd2b4. The API verifier rejected edits to system fields. <a href="05-created-profile.txt">Transcript</a></td></tr>
+<tr><td>S2-AC02</td><td>PASS</td><td>Edited employment details, then signed out, refreshed, signed in, and reopened the record. ID and creation time held. Modified advanced from 05:12:23.534Z to 05:12:25.389Z. The API no-op save retained its timestamp. <a href="07-persisted-after-relogin.txt">Transcript</a></td></tr>
+<tr><td>S2-AC03</td><td>PASS</td><td>Browser rejected mixed-case duplicate email and normalized duplicate registration separately. API accepted multiple blank registrations. <a href="08-duplicate-email.jpg">Email</a> · <a href="09-duplicate-registration.jpg">Registration</a></td></tr>
+<tr><td>S2-AC04</td><td>PASS</td><td>Browser rejected mismatched postcode and incomplete employed status before accepting valid corrections. API verifier passed 16 negative cases and valid data for three configured countries. <a href="04-country-validation.jpg">Postcode</a> · <a href="06-employment-validation.jpg">Employment</a></td></tr>
+<tr><td>S2-AC05</td><td>PASS</td><td>Alumnus view had no Create or Edit controls. Direct API Create and Edit returned 403 and the profile remained unchanged. <a href="10-alumnus-permissions.jpg">Screenshot</a></td></tr>
+<tr><td>S2-AC06</td><td>PASS</td><td>All seven Sprint 1 gates above reran after rollback through the restored gateway.</td></tr>
+<tr><td>S2-AC07</td><td>PASS</td><td>Restored gateway passed smoke, same-gateway API regression and browser Create/Edit, refresh, re-login, and restrictions. <a href="07-persisted-after-relogin.jpg">Screenshot</a></td></tr>
+</tbody></table>
+<p>For Sprint 3, this closes the browser evidence gap for gate 6 and the browser smoke and end-to-end portion of gate 7. Gate 7 still needs five witnessed individual defences. CC retains the seven gate decisions and Key 3 approval. The live game was untouched.</p>
+<p><a href="../sprint3-cc-defence-checklists.html">Five individual CC defence checklists</a></p>
+</html>

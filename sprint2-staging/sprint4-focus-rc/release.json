@@ -1,0 +1,15 @@
+{
+  "candidate": "Sprint 4 focus-fix RC",
+  "team": "Fictional Team A",
+  "candidateSha256": "dfef38d57399aeb1785eb5f7e01fa4f3b561ec576943c958f70ea53e8f17a419",
+  "parentSha256": "4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc",
+  "sourceFiles": {
+    "fields.mjs": "3633c99f580cba4865d86ce05543b81c5cd46ce0a13b02cdcf0bff4f74a4990c",
+    "staging.mjs": "0fcfd328bf8a9e5bd730ef3bc17a716d9405580e6b92c55fd99601720a673ce7",
+    "ui.jsx": "05911405e7b1d5d274a1787da78c5ba851115105bb05c1db7ce774b90b59cded",
+    "verify.mjs": "e16e00f890b3bcd72102d83684d61c6b76dd01bae2a6dfa4c216bb2ab7e250ff",
+    "../package-lock.json": "c3a3930238ab7b99d956cbb614f851582c50b8ec027433f5b894ca1d1eb33cca"
+  },
+  "key3": null,
+  "key4": null
+}

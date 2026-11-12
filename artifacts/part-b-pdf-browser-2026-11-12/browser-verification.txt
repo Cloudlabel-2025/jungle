@@ -1,0 +1,61 @@
+AUTOMATIC PRIVATE PDF WORKFLOW - 12 NOVEMBER 2026
+
+Verified with the actual production-mode app in the ChatGPT in-app browser at
+localhost:3188. The test database was disposable. The prior one-team assessment
+checkpoint was fictional and restored to isolate document delivery; no actual
+student results, human qualifications, signatures or independent acceptance were
+created by this test. The test server was stopped after verification.
+
+Observed sequence
+1. Assigned MC signed in and opened Private Capability Passport and certificate.
+2. Entered the course, project ID, full assessed commit, sanitised reference and
+   staging URLs, sanitisation confirmation and a clearly fictional QA reason.
+3. Generated both PDFs using the application form. The status became FINAL REPORT
+   GENERATED. No manual print/save/upload or Blob credential was used.
+4. Downloaded both saved files through the actual UI links. Rendered all three
+   pages with Poppler and visually inspected the two-page Passport and one-page
+   certificate. Observed 13 criteria, approved core 100, separate +3, honest missing
+   observations, prior task references, exact minimal certificate and signature
+   lines. All content fitted without clipping or overlap.
+5. Submitted the assigned MC review using the app form and explicit verification
+   checkbox. The visible status became FINAL REPORT REVIEWED.
+6. Signed out and signed in as CC. Submitted the issuance reason and approved the
+   pair. The UI showed both issued links and the correction control. Persisted
+   actors are pilot-mc for review and pilot-cc for issue.
+7. Signed in as Gamer 0 and opened Programme Rewards. Both private document links
+   were visible. Downloaded both: hashes match the MC downloads exactly; see
+   download-hashes.json. Screenshot learner-issued-documents.png records the UI.
+8. Signed out and visited the exact observed Passport URL: Please sign in.
+   Signed in as Gamer 1 and revisited it: Outside your authorised scope.
+   Screenshot unrelated-learner-denied.png records the negative result.
+
+Browser defect corrected
+PDF-BR-DEF-001: shared Form submits checked boxes with an empty string value. The
+initial report form conversion expected the string on, so it incorrectly rejected
+the checked sanitisation confirmation. Both local report converters now check for
+the submitted checkbox field's presence. The updated production build passed the
+complete generation/review/issue/download sequence above. Unchecked required
+confirmations remain blocked by the form and server boolean validation.
+
+Additional technical checks
+tests/pilot-part-b-pdf.test.mjs uses actual PDF bytes and actual disposable MongoDB
+storage. It verifies exact page counts, SHA-256, binary-data exclusion from default
+queries, role/owner access, idempotent generation, independent approval, stale
+source rejection, generation mismatch, correction/reissue, old-file revocation,
+integrity failure, withdrawn Key 5, overflow rejection and unsupported-glyph errors.
+Correction/reissue was verified in that integration test, not replayed in this
+browser session. Full suite: 149 passed, zero failures/skips. Production build and
+read-only configured-database transaction check passed. Fonts are present in the
+production API trace. No real programme document was issued.
+Final focused controls after extending stale-source protection to college identity,
+baseline evidence and prior sprint history: 10 passed, zero failures/skips. The
+final production build passed. That extension changed source validation only;
+the browser sequence above verified the preceding build of the same delivery UI.
+
+Remaining human work
+Verify actual learner source records, names, dates, observations and evidence;
+conduct genuine assessments; and supply real authorised signatures where required.
+Generated signature lines are deliberately unsigned. Other uploaded programme
+evidence retains its existing private Blob requirement. Generated reports use the
+private MongoDB connection automatically and no longer have that configuration
+blocker. No production deployment was performed.

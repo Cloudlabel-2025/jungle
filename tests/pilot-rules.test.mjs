@@ -31,6 +31,18 @@ test("frozen manifests preserve exact task counts, ownership, 54 hours and separ
     ]),
   );
 });
+test("frozen Part B task IDs retain their original spelling and dependencies", () => {
+  assert.ok(
+    graph([
+      { id: "DB-09", depends: [] },
+      { id: "UAT-01", depends: ["DB-09"] },
+      { id: "DEMO-01", depends: ["UAT-01"] },
+      ...["EX1-01", "EX2-01", "EX3-01"].map((id) => ({ id, depends: [] })),
+    ]),
+  );
+  for (const id of ["EX4-01", "demo-01", "UAT-001", "UAT_01", "DEMO-01\n"])
+    assert.throws(() => graph([{ id, depends: [] }]), /Stable task codes/);
+});
 test("working calendar excludes lunch, holidays and weekends in both directions", () => {
   const c = {
     timeZone: "Asia/Kolkata",

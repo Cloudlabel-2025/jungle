@@ -1,0 +1,933 @@
+TAP version 13
+# Subtest: all 29 persona login addresses follow the requested unique name convention
+ok 1 - all 29 persona login addresses follow the requested unique name convention
+  ---
+  duration_ms: 1.9726
+  type: 'test'
+  ...
+# Subtest: the requested eight-character password policy still stores salted hashes
+ok 2 - the requested eight-character password policy still stores salted hashes
+  ---
+  duration_ms: 285.044
+  type: 'test'
+  ...
+# Subtest: Alumni map has five milestones across all three preserved terrain regions
+ok 3 - Alumni map has five milestones across all three preserved terrain regions
+  ---
+  duration_ms: 5.2357
+  type: 'test'
+  ...
+# Subtest: Keys require team-specific explicit acceptance; completing tasks alone cannot clear a level
+ok 4 - Keys require team-specific explicit acceptance; completing tasks alone cannot clear a level
+  ---
+  duration_ms: 2.4527
+  type: 'test'
+  ...
+# Subtest: Map distinguishes kickoff, rework and client checks, hides drafts and excludes optional cards
+ok 5 - Map distinguishes kickoff, rework and client checks, hides drafts and excludes optional cards
+  ---
+  duration_ms: 1.284
+  type: 'test'
+  ...
+# Subtest: Alumni map uses scoped sprint records and server release rejects missing previous team keys
+ok 6 - Alumni map uses scoped sprint records and server release rejects missing previous team keys
+  ---
+  duration_ms: 2926.6334
+  type: 'test'
+  ...
+# Subtest: all ten explorers are dimensional models with articulated arms and distinct variants
+ok 7 - all ten explorers are dimensional models with articulated arms and distinct variants
+  ---
+  duration_ms: 98.8401
+  type: 'test'
+  ...
+# Subtest: idle gestures continuously reposition joints instead of swapping images
+ok 8 - idle gestures continuously reposition joints instead of swapping images
+  ---
+  duration_ms: 2.9365
+  type: 'test'
+  ...
+# Subtest: greeting overrides the idle pose then returns to the independent idle cycle
+ok 9 - greeting overrides the idle pose then returns to the independent idle cycle
+  ---
+  duration_ms: 6.3983
+  type: 'test'
+  ...
+# Subtest: camp residents use only the active current team and each selected variant
+ok 10 - camp residents use only the active current team and each selected variant
+  ---
+  duration_ms: 24.5942
+  type: 'test'
+  ...
+# Subtest: tent placement stays stable across roster order and variant changes
+ok 11 - tent placement stays stable across roster order and variant changes
+  ---
+  duration_ms: 1.3674
+  type: 'test'
+  ...
+# Subtest: legacy duplicate character choices still receive separate tents
+ok 12 - legacy duplicate character choices still receive separate tents
+  ---
+  duration_ms: 0.7313
+  type: 'test'
+  ...
+# Subtest: camp vitals follow the same account balance even with historical Day 1 flags
+ok 13 - camp vitals follow the same account balance even with historical Day 1 flags
+  ---
+  duration_ms: 0.8903
+  type: 'test'
+  ...
+# Subtest: MongoDB: transactional XP, concurrency, rescue, deadline audit and recovery
+ok 14 - MongoDB: transactional XP, concurrency, rescue, deadline audit and recovery
+  ---
+  duration_ms: 4005.4955
+  type: 'test'
+  ...
+# Subtest: Day 1 MongoDB acceptance: 25 users, evidence, concurrency, privacy, revisions, CC marking and gated tied prize
+ok 15 - Day 1 MongoDB acceptance: 25 users, evidence, concurrency, privacy, revisions, CC marking and gated tied prize
+  ---
+  duration_ms: 6831.719
+  type: 'test'
+  ...
+# Subtest: Day 1 frozen weighted 50/50 assessment is out of 33 and rejects missing/unbounded ratings
+ok 16 - Day 1 frozen weighted 50/50 assessment is out of 33 and rejects missing/unbounded ratings
+  ---
+  duration_ms: 1.1326
+  type: 'test'
+  ...
+# Subtest: Day 1 30/60 acknowledgement windows include exact boundaries, skip weekends, holidays and nights
+ok 17 - Day 1 30/60 acknowledgement windows include exact boundaries, skip weekends, holidays and nights
+  ---
+  duration_ms: 99.2677
+  type: 'test'
+  ...
+# Subtest: Day 1 rewards: 20 maximum, pending and late verification, and no contribution to baseline
+ok 18 - Day 1 rewards: 20 maximum, pending and late verification, and no contribution to baseline
+  ---
+  duration_ms: 4.5898
+  type: 'test'
+  ...
+# Subtest: Day 1 projections never send scores, ranking, marking instructions or private prize to Gamer/MC
+ok 19 - Day 1 projections never send scores, ranking, marking instructions or private prize to Gamer/MC
+  ---
+  duration_ms: 2.3924
+  type: 'test'
+  ...
+# Subtest: Day 1 preparation requires final questions, protected rubric and explicit official start
+ok 20 - Day 1 preparation requires final questions, protected rubric and explicit official start
+  ---
+  duration_ms: 3.3563
+  type: 'test'
+  ...
+# Subtest: agenda trophies use the official 30-minute window independently of SOD
+ok 21 - agenda trophies use the official 30-minute window independently of SOD
+  ---
+  duration_ms: 0.63
+  type: 'test'
+  ...
+# Subtest: historical 34-mark assessments and old reward versions retain their rules
+ok 22 - historical 34-mark assessments and old reward versions retain their rules
+  ---
+  duration_ms: 0.2453
+  type: 'test'
+  ...
+# Subtest: launcher respects the selected app port and rejects invalid ports
+ok 23 - launcher respects the selected app port and rejects invalid ports
+  ---
+  duration_ms: 1.6292
+  type: 'test'
+  ...
+# Subtest: launcher prevents concurrent starts and recovers a stale owner record
+ok 24 - launcher prevents concurrent starts and recovers a stale owner record
+  ---
+  duration_ms: 11.3453
+  type: 'test'
+  ...
+# Subtest: launcher detects an occupied local port before starting a database
+ok 25 - launcher detects an occupied local port before starting a database
+  ---
+  duration_ms: 14.0094
+  type: 'test'
+  ...
+# Subtest: AT16: completed active effort includes failed investigation, excludes waiting, blocked, running and removed periods
+ok 26 - AT16: completed active effort includes failed investigation, excludes waiting, blocked, running and removed periods
+  ---
+  duration_ms: 1.3798
+  type: 'test'
+  ...
+# Subtest: AT17–19: signed verified totals include negatives and zero, exclude pending/rejected/unlinked
+ok 27 - AT17–19: signed verified totals include negatives and zero, exclude pending/rejected/unlinked
+  ---
+  duration_ms: 1.9456
+  type: 'test'
+  ...
+# Subtest: AT19: cross-ticket overlaps and open timers conflict; adjacent periods are allowed
+ok 28 - AT19: cross-ticket overlaps and open timers conflict; adjacent periods are allowed
+  ---
+  duration_ms: 0.2923
+  type: 'test'
+  ...
+# Subtest: ten full-stack projects assign five distinct end-to-end features and every layer to every player
+ok 29 - ten full-stack projects assign five distinct end-to-end features and every layer to every player
+  ---
+  duration_ms: 6.1427
+  type: 'test'
+  ...
+# Subtest: legacy attempts resolve their original definition when the published curriculum changes
+ok 30 - legacy attempts resolve their original definition when the published curriculum changes
+  ---
+  duration_ms: 0.254
+  type: 'test'
+  ...
+# Subtest: MongoDB: 25 evidence-backed tasks, protected character choices, averaged exactly-once rewards and authored feature publication
+ok 31 - MongoDB: 25 evidence-backed tasks, protected character choices, averaged exactly-once rewards and authored feature publication
+  ---
+  duration_ms: 4274.4903
+  type: 'test'
+  ...
+# Subtest: level definitions require five distinct role tasks, a real emblem, time budget and team audience
+ok 32 - level definitions require five distinct role tasks, a real emblem, time budget and team audience
+  ---
+  duration_ms: 2.5493
+  type: 'test'
+  ...
+# Subtest: team-specific sequences skip untargeted levels, while extended map chapters stay ordered
+ok 33 - team-specific sequences skip untargeted levels, while extended map chapters stay ordered
+  ---
+  duration_ms: 0.8577
+  type: 'test'
+  ...
+# Subtest: MongoDB: Council drafts, permissions, previews, publishing, role assignments and pinned live versions
+ok 34 - MongoDB: Council drafts, permissions, previews, publishing, role assignments and pinned live versions
+  ---
+  duration_ms: 2119.9088
+  type: 'test'
+  ...
+# Subtest: celebrations require committed clearance, valid stars and recorded rewards for the player team
+ok 35 - celebrations require committed clearance, valid stars and recorded rewards for the player team
+  ---
+  duration_ms: 3.5564
+  type: 'test'
+  ...
+# Subtest: acknowledgements are isolated per player and completion and prevent repeated celebrations
+ok 36 - acknowledgements are isolated per player and completion and prevent repeated celebrations
+  ---
+  duration_ms: 0.63
+  type: 'test'
+  ...
+# Subtest: every forest emblem has a generated scene, including variants and legacy attempts
+ok 37 - every forest emblem has a generated scene, including variants and legacy attempts
+  ---
+  duration_ms: 13.4003
+  type: 'test'
+  ...
+# Subtest: commanders can persist a library selection or use automatic emblem matching
+ok 38 - commanders can persist a library selection or use automatic emblem matching
+  ---
+  duration_ms: 1.9847
+  type: 'test'
+  ...
+# Subtest: map geometry spaces labels, expands for authored placements and preserves saved positions
+ok 39 - map geometry spaces labels, expands for authored placements and preserves saved positions
+  ---
+  duration_ms: 4.0465
+  type: 'test'
+  ...
+# Subtest: map rejects foreign IDs, nonfinite values and coordinates outside the playable area
+ok 40 - map rejects foreign IDs, nonfinite values and coordinates outside the playable area
+  ---
+  duration_ms: 1.7904
+  type: 'test'
+  ...
+# Subtest: map missions have their own task progression without legacy mini-project prerequisites
+ok 41 - map missions have their own task progression without legacy mini-project prerequisites
+  ---
+  duration_ms: 3.1807
+  type: 'test'
+  ...
+# Subtest: CC map authoring persists safely and a full map mission assigns, reviews and unlocks actual work
+ok 42 - CC map authoring persists safely and a full map mission assigns, reviews and unlocks actual work
+  ---
+  duration_ms: 4207.6498
+  type: 'test'
+  ...
+# Subtest: hot reload replaces a cached pre-V3 User schema without deleting data
+ok 43 - hot reload replaces a cached pre-V3 User schema without deleting data
+  ---
+  duration_ms: 26.4498
+  type: 'test'
+  ...
+# Subtest: changed field types and indexes also invalidate the cached model
+ok 44 - changed field types and indexes also invalidate the cached model
+  ---
+  duration_ms: 3.1725
+  type: 'test'
+  ...
+# Subtest: MongoDB: a cached legacy schema rejects effortLock, then reload allows updates without losing the learner
+ok 45 - MongoDB: a cached legacy schema rejects effortLock, then reload allows updates without losing the learner
+  ---
+  duration_ms: 239.3109
+  type: 'test'
+  ...
+# Subtest: monitoring notifications use the affected player, never a teammate's condition
+ok 46 - monitoring notifications use the affected player, never a teammate's condition
+  ---
+  duration_ms: 4.3706
+  type: 'test'
+  ...
+# Subtest: read status does not resolve monitoring; a later penalty produces a new notification
+ok 47 - read status does not resolve monitoring; a later penalty produces a new notification
+  ---
+  duration_ms: 0.9758
+  type: 'test'
+  ...
+# Subtest: sign-in notices are claimed once per session, and each real sign-in has a fresh identity
+ok 48 - sign-in notices are claimed once per session, and each real sign-in has a fresh identity
+  ---
+  duration_ms: 6.5824
+  type: 'test'
+  ...
+# Subtest: inbox combines announcements, own assignments, replies and scoped sprint notices without marks
+ok 49 - inbox combines announcements, own assignments, replies and scoped sprint notices without marks
+  ---
+  duration_ms: 1.2536
+  type: 'test'
+  ...
+# Subtest: MongoDB notification read receipts persist, remain private and never clear monitoring
+ok 50 - MongoDB notification read receipts persist, remain private and never clear monitoring
+  ---
+  duration_ms: 2488.9669
+  type: 'test'
+  ...
+# Subtest: pilot: five-team lifecycle, independent reviews, handovers, Spark, marking and 27 simultaneous actor writes
+ok 51 - pilot: five-team lifecycle, independent reviews, handovers, Spark, marking and 27 simultaneous actor writes
+  ---
+  duration_ms: 17532.0691
+  type: 'test'
+  ...
+# Subtest: pilot review edits, appeal evidence, energy freeze and contributor independence
+    # Subtest: a fresh programme returns empty collections before any sprint exists
+    ok 1 - a fresh programme returns empty collections before any sprint exists
+      ---
+      duration_ms: 44.5123
+      type: 'test'
+      ...
+    # Subtest: request replay is bound to its original authenticated actor
+    ok 2 - request replay is bound to its original authenticated actor
+      ---
+      duration_ms: 33.5174
+      type: 'test'
+      ...
+    # Subtest: MC exceptions remain private while the TL team EOD is visible to the team
+    ok 3 - MC exceptions remain private while the TL team EOD is visible to the team
+      ---
+      duration_ms: 58.2811
+      type: 'test'
+      ...
+    # Subtest: editing a checkpoint supersedes pending reviews rather than blocking sprint closure
+    ok 4 - editing a checkpoint supersedes pending reviews rather than blocking sprint closure
+      ---
+      duration_ms: 184.9172
+      type: 'test'
+      ...
+    # Subtest: a reassessment cannot accept revised work against an obsolete final finding
+    ok 5 - a reassessment cannot accept revised work against an obsolete final finding
+      ---
+      duration_ms: 764.3082
+      type: 'test'
+      ...
+    # Subtest: marks returned from external tools cannot forge the human sign-off field
+    ok 6 - marks returned from external tools cannot forge the human sign-off field
+      ---
+      duration_ms: 74.0875
+      type: 'test'
+      ...
+    # Subtest: zero energy freezes ongoing delivery while truthful blocker reporting remains available
+    ok 7 - zero energy freezes ongoing delivery while truthful blocker reporting remains available
+      ---
+      duration_ms: 318.3901
+      type: 'test'
+      ...
+    # Subtest: assigning a TL as contributor reroutes their pending review to an independent MC
+    ok 8 - assigning a TL as contributor reroutes their pending review to an independent MC
+      ---
+      duration_ms: 215.5957
+      type: 'test'
+      ...
+    # Subtest: scheduled reminders retain their first timestamp and worker failures are visible to staff
+    ok 9 - scheduled reminders retain their first timestamp and worker failures are visible to staff
+      ---
+      duration_ms: 2461.1036
+      type: 'test'
+      ...
+    1..9
+ok 52 - pilot review edits, appeal evidence, energy freeze and contributor independence
+  ---
+  duration_ms: 5458.0898
+  type: 'test'
+  ...
+# Subtest: programme workspace renders a successful no-sprint response for Gamer, MC and CC
+ok 53 - programme workspace renders a successful no-sprint response for Gamer, MC and CC
+  ---
+  duration_ms: 249.7048
+  type: 'test'
+  ...
+# Subtest: Sprint 4 Help Passes: sponsorship settlement, verified AI credit and carry-forward
+    # Subtest: PB-QA-050/051/055: consent, free support, reservation, completed MC session and one lifetime charge
+    ok 1 - PB-QA-050/051/055: consent, free support, reservation, completed MC session and one lifetime charge
+      ---
+      duration_ms: 1357.9405
+      type: 'test'
+      ...
+    # Subtest: PB-QA-052/053: verified challenges, task scope, one award per week and one use per credit
+    ok 2 - PB-QA-052/053: verified challenges, task scope, one award per week and one use per credit
+      ---
+      duration_ms: 1600.2123
+      type: 'test'
+      ...
+    # Subtest: PB-QA-054: one carry-forward plus the new week's earned credit, with approvals pending
+    ok 3 - PB-QA-054: one carry-forward plus the new week's earned credit, with approvals pending
+      ---
+      duration_ms: 946.198
+      type: 'test'
+      ...
+    1..3
+ok 54 - Sprint 4 Help Passes: sponsorship settlement, verified AI credit and carry-forward
+  ---
+  duration_ms: 5032.7874
+  type: 'test'
+  ...
+# Subtest: Part B final controls: five-team permissions, 25 bookings, evidence, question versions and report drafts
+    # Subtest: PB-QA-092/093: missing source stays unassessable, unsafe URLs and Gamer exports rejected
+    ok 1 - PB-QA-092/093: missing source stays unassessable, unsafe URLs and Gamer exports rejected
+      ---
+      duration_ms: 125.0703
+      type: 'test'
+      ...
+    # Subtest: PB-QA-095: three question purposes, MC edits, CC version approval and stale-witness invalidation
+    ok 2 - PB-QA-095: three question purposes, MC edits, CC version approval and stale-witness invalidation
+      ---
+      duration_ms: 294.3037
+      type: 'test'
+      ...
+    # Subtest: PB-QA-099: 25 voluntary ten-minute bookings fit; collisions, nonstaff and pre-arena slots rejected
+    ok 3 - PB-QA-099: 25 voluntary ten-minute bookings fit; collisions, nonstaff and pre-arena slots rejected
+      ---
+      duration_ms: 713.2468
+      type: 'test'
+      ...
+    # Subtest: FF-ADV-03/04/05/08/11/12: mandatory witness, isolation, five-point evidence and duplicate guards
+    ok 4 - FF-ADV-03/04/05/08/11/12: mandatory witness, isolation, five-point evidence and duplicate guards
+      ---
+      duration_ms: 93.3443
+      type: 'test'
+      ...
+    # Subtest: PB-QA-105/107/109: approved criterion evidence, real maxima, special calculations and overrides preserve marks
+    ok 5 - PB-QA-105/107/109: approved criterion evidence, real maxima, special calculations and overrides preserve marks
+      ---
+      duration_ms: 581.0973
+      type: 'test'
+      ...
+    # Subtest: PB-QA-091/107/110: showcase does not score; private printable report drafts escape source text
+    ok 6 - PB-QA-091/107/110: showcase does not score; private printable report drafts escape source text
+      ---
+      duration_ms: 65.5135
+      type: 'test'
+      ...
+    1..6
+ok 55 - Part B final controls: five-team permissions, 25 bookings, evidence, question versions and report drafts
+  ---
+  duration_ms: 2750.13
+  type: 'test'
+  ...
+# Subtest: Part B PDF: real private bytes, MC review, CC issue, learner download and correction without Blob
+ok 56 - Part B PDF: real private bytes, MC review, CC issue, learner download and correction without Blob
+  ---
+  duration_ms: 4305.4052
+  type: 'test'
+  ...
+# Actual PDF round trip verified without Blob credentials. Sample files contain fictional assessment records and unsigned signature lines.
+# Subtest: Part B Phase 2: all sixty cards progress through submission, rework and independent review
+ok 57 - Part B Phase 2: all sixty cards progress through submission, rework and independent review
+  ---
+  duration_ms: 11075.0318
+  type: 'test'
+  ...
+# P2-S1: all 20 cards accepted through normal actions; one rework/resubmission; owner-only visibility checked for 25 Gamers.
+# P2-S2: all 20 cards accepted through normal actions; one rework/resubmission; owner-only visibility checked for 25 Gamers.
+# P2-S3: all 20 cards accepted through normal actions; one rework/resubmission; owner-only visibility checked for 25 Gamers.
+# Prior Key 5 eligibility was synthetic. Actual APIs, sandbox payments, webhooks, concurrency and student code remain external verification.
+# Subtest: Part B private evidence: all 25 learners, five teams, immutable uploads, format/size/expiry and scoped downloads without Blob
+ok 58 - Part B private evidence: all 25 learners, five teams, immutable uploads, format/size/expiry and scoped downloads without Blob
+  ---
+  duration_ms: 5040.6326
+  type: 'test'
+  ...
+# 25 real PDF upload/completion/download round trips across five fictional teams; MC access and cross-team/unassigned access checked. CSV mark-return bytes preserved. No real learner work or external integrations certified.
+# Exact 5 MB transport payload assembled from bounded 1 MB parts, duplicate/out-of-order parts verified, download streamed and private-file/metadata logical restore checked. The limit payload tests transport, not PDF semantic validity or an operational backup policy.
+# Subtest: Frozen final sprint loads only after prior acceptance and requires private witnessed demos
+ok 59 - Frozen final sprint loads only after prior acceptance and requires private witnessed demos
+  ---
+  duration_ms: 3128.8139
+  type: 'test'
+  ...
+# PB-QA-077: verified loaded task split, five demos and four cards per Gamer
+# PB-QA-098: three CC assessors rejected; no arena plan recorded
+# PB-QA-096: proposed final marks did not create any assessment, award, or witnessed pass
+# P2-S1: verified catalogue shape and denied assignment before Key 5
+# P2-S2: verified catalogue shape and denied assignment before Key 5
+# P2-S3: verified catalogue shape and denied assignment before Key 5
+# PB-QA-076: Gamer could prepare before release; live witness recording required the accepted release
+# PB-QA-102: optional opt-out left the mandatory demo and core result intact
+# PB-QA-103: top repeat recipient rejected; next eligible recipient recorded without changing scores
+# PB-QA-108: 105 core rejected atomically; core, Admin Chair and Phase 2 awards remained separate
+# P2-S1: verified complete MC allocation after Key 5
+# P2-S2: verified complete MC allocation after Key 5
+# P2-S3: verified complete MC allocation after Key 5
+# Subtest: pilot: independent energy decisions, paid help, optional work, roster holds and real Phase 2 cards
+ok 60 - pilot: independent energy decisions, paid help, optional work, roster holds and real Phase 2 cards
+  ---
+  duration_ms: 2389.6
+  type: 'test'
+  ...
+# Subtest: frozen manifests preserve exact task counts, ownership, 54 hours and separate deployment gates
+ok 61 - frozen manifests preserve exact task counts, ownership, 54 hours and separate deployment gates
+  ---
+  duration_ms: 2.2812
+  type: 'test'
+  ...
+# Subtest: frozen Part B task IDs retain their original spelling and dependencies
+ok 62 - frozen Part B task IDs retain their original spelling and dependencies
+  ---
+  duration_ms: 0.4744
+  type: 'test'
+  ...
+# Subtest: working calendar excludes lunch, holidays and weekends in both directions
+ok 63 - working calendar excludes lunch, holidays and weekends in both directions
+  ---
+  duration_ms: 501.6601
+  type: 'test'
+  ...
+# Subtest: 82.0 versus 82.2 cap uses complete five-person core marks only
+ok 64 - 82.0 versus 82.2 cap uses complete five-person core marks only
+  ---
+  duration_ms: 2.1828
+  type: 'test'
+  ...
+# Subtest: CSV quotes and XLSX literals preserve values; formulas are rejected
+ok 65 - CSV quotes and XLSX literals preserve values; formulas are rejected
+  ---
+  duration_ms: 10.8
+  type: 'test'
+  ...
+# Subtest: marks workbooks reject self-closing formulas, duplicate cells and data beyond headers
+ok 66 - marks workbooks reject self-closing formulas, duplicate cells and data beyond headers
+  ---
+  duration_ms: 1.5996
+  type: 'test'
+  ...
+# Subtest: private evidence rejects forged types, oversize and expanding Office files; extracted text retains fidelity warning
+ok 67 - private evidence rejects forged types, oversize and expanding Office files; extracted text retains fidelity warning
+  ---
+  duration_ms: 145.0263
+  type: 'test'
+  ...
+# Subtest: player defaults and zero balances never inherit historical programme overrides
+ok 68 - player defaults and zero balances never inherit historical programme overrides
+  ---
+  duration_ms: 2.7043
+  type: 'test'
+  ...
+# Subtest: header and Day 1 rewards render the same current balance, including zero
+ok 69 - header and Day 1 rewards render the same current balance, including zero
+  ---
+  duration_ms: 205.7047
+  type: 'test'
+  ...
+# Subtest: MongoDB: map, Week 1, recovery and sprint snapshots share deductions, approvals and recovery
+ok 70 - MongoDB: map, Week 1, recovery and sprint snapshots share deductions, approvals and recovery
+  ---
+  duration_ms: 2001.6007
+  type: 'test'
+  ...
+# Subtest: beginner projects cover five role deliverables at each incremental level
+ok 71 - beginner projects cover five role deliverables at each incremental level
+  ---
+  duration_ms: 1.9204
+  type: 'test'
+  ...
+# Subtest: role assignment rejects missing, inactive, and duplicate holders without assigning substitutes
+ok 72 - role assignment rejects missing, inactive, and duplicate holders without assigning substitutes
+  ---
+  duration_ms: 0.7212
+  type: 'test'
+  ...
+# Subtest: eight-hour IST project days skip nights and weekends, including fractional budgets
+ok 73 - eight-hour IST project days skip nights and weekends, including fractional budgets
+  ---
+  duration_ms: 1.5472
+  type: 'test'
+  ...
+# Subtest: stars use accepted submission time with inclusive deadlines and a one-star passing floor
+ok 74 - stars use accepted submission time with inclusive deadlines and a one-star passing floor
+  ---
+  duration_ms: 0.1801
+  type: 'test'
+  ...
+# Subtest: review rubric and rewards are bounded and reflect individual contribution and team stars
+ok 75 - review rubric and rewards are bounded and reflect individual contribution and team stars
+  ---
+  duration_ms: 0.3717
+  type: 'test'
+  ...
+# Subtest: MongoDB: team progression, permission boundaries, evidence, reviews and exactly-once differentiated payouts
+ok 76 - MongoDB: team progression, permission boundaries, evidence, reviews and exactly-once differentiated payouts
+  ---
+  duration_ms: 2412.7676
+  type: 'test'
+  ...
+# Subtest: idle reconciliation avoids transactions while due deadlines and closed days still settle
+ok 77 - idle reconciliation avoids transactions while due deadlines and closed days still settle
+  ---
+  duration_ms: 963.3004
+  type: 'test'
+  ...
+# Subtest: Pack 3A full Friday-to-Saturday journey, privacy, exams, approvals, institution cases and team handoff
+ok 78 - Pack 3A full Friday-to-Saturday journey, privacy, exams, approvals, institution cases and team handoff
+  ---
+  duration_ms: 1783.7449
+  type: 'test'
+  ...
+# Subtest: Pack 3A exact 60 threshold, both exams and human boundaries
+ok 79 - Pack 3A exact 60 threshold, both exams and human boundaries
+  ---
+  duration_ms: 1.1615
+  type: 'test'
+  ...
+# Subtest: approved Saturday configuration requires two complete four-variant packs and explicit policies
+ok 80 - approved Saturday configuration requires two complete four-variant packs and explicit policies
+  ---
+  duration_ms: 22.3114
+  type: 'test'
+  ...
+# Subtest: all eligible counts produce unique balanced 3–5 crews and fixed support entitlements
+ok 81 - all eligible counts produce unique balanced 3–5 crews and fixed support entitlements
+  ---
+  duration_ms: 64.5175
+  type: 'test'
+  ...
+# Subtest: same-site login works with localhost, alternate ports and a stale configured origin
+ok 82 - same-site login works with localhost, alternate ports and a stale configured origin
+  ---
+  duration_ms: 23.5249
+  type: 'test'
+  ...
+# Subtest: deployed HTTPS and preview hosts work behind a TLS proxy
+ok 83 - deployed HTTPS and preview hosts work behind a TLS proxy
+  ---
+  duration_ms: 0.6311
+  type: 'test'
+  ...
+# Subtest: configured public origin supports proxies retaining an internal Host
+ok 84 - configured public origin supports proxies retaining an internal Host
+  ---
+  duration_ms: 0.2153
+  type: 'test'
+  ...
+# Subtest: unrelated origins, wrong ports, protocol downgrade and malformed origins stay blocked
+ok 85 - unrelated origins, wrong ports, protocol downgrade and malformed origins stay blocked
+  ---
+  duration_ms: 0.9232
+  type: 'test'
+  ...
+# Subtest: non-browser requests without Origin retain existing behavior
+ok 86 - non-browser requests without Origin retain existing behavior
+  ---
+  duration_ms: 0.1516
+  type: 'test'
+  ...
+# Subtest: normal rewards split into 3x experience and 2x trophies with separate caps
+ok 87 - normal rewards split into 3x experience and 2x trophies with separate caps
+  ---
+  duration_ms: 1.5851
+  type: 'test'
+  ...
+# Subtest: experience levels depend only on personal XP
+ok 88 - experience levels depend only on personal XP
+  ---
+  duration_ms: 0.1643
+  type: 'test'
+  ...
+# Subtest: leaderboard ranks trophies only, hides XP and treats trophy ties equally
+ok 89 - leaderboard ranks trophies only, hides XP and treats trophy ties equally
+  ---
+  duration_ms: 10.5497
+  type: 'test'
+  ...
+# Subtest: IST attendance boundaries are evaluated from server UTC timestamps
+ok 90 - IST attendance boundaries are evaluated from server UTC timestamps
+  ---
+  duration_ms: 21.4511
+  type: 'test'
+  ...
+# Subtest: daily trophy cap cannot be exceeded or become negative
+ok 91 - daily trophy cap cannot be exceeded or become negative
+  ---
+  duration_ms: 0.1632
+  type: 'test'
+  ...
+# Subtest: every third energy penalty costs one life and resets energy
+ok 92 - every third energy penalty costs one life and resets energy
+  ---
+  duration_ms: 0.9812
+  type: 'test'
+  ...
+# Subtest: finishing on time does not substitute for a pre-deadline report
+ok 93 - finishing on time does not substitute for a pre-deadline report
+  ---
+  duration_ms: 0.1575
+  type: 'test'
+  ...
+# Subtest: league thresholds match the brief
+ok 94 - league thresholds match the brief
+  ---
+  duration_ms: 0.1886
+  type: 'test'
+  ...
+# Subtest: AT05: 16:30 assignment rolls over to 09:30 next working day
+ok 95 - AT05: 16:30 assignment rolls over to 09:30 next working day
+  ---
+  duration_ms: 59.8067
+  type: 'test'
+  ...
+# Subtest: after hours, weekends, exact boundaries and seconds preserve working time
+ok 96 - after hours, weekends, exact boundaries and seconds preserve working time
+  ---
+  duration_ms: 47.4281
+  type: 'test'
+  ...
+# Subtest: cohort calendars support other timezones and shifts
+ok 97 - cohort calendars support other timezones and shifts
+  ---
+  duration_ms: 11.2491
+  type: 'test'
+  ...
+# Subtest: AT13: 40/20/25/15 rubric preserves unobserved dimensions
+ok 98 - AT13: 40/20/25/15 rubric preserves unobserved dimensions
+  ---
+  duration_ms: 0.2821
+  type: 'test'
+  ...
+# Subtest: individual credentials use salted hashes and reject incorrect passwords
+ok 99 - individual credentials use salted hashes and reject incorrect passwords
+  ---
+  duration_ms: 222.9394
+  type: 'test'
+  ...
+# Subtest: team member input limits, normalized unique usernames and distinct character slots are enforced
+ok 100 - team member input limits, normalized unique usernames and distinct character slots are enforced
+  ---
+  duration_ms: 1.5879
+  type: 'test'
+  ...
+# Subtest: each character has a distinct fixed support ability, identical across versions
+ok 101 - each character has a distinct fixed support ability, identical across versions
+  ---
+  duration_ms: 0.7549
+  type: 'test'
+  ...
+# Subtest: MongoDB: Council creates credentialed teams atomically, adds up to five, rejects collisions and concurrent sixth members
+ok 102 - MongoDB: Council creates credentialed teams atomically, adds up to five, rejects collisions and concurrent sixth members
+  ---
+  duration_ms: 1724.0805
+  type: 'test'
+  ...
+# Subtest: each target role resolves exactly one matching player in every team
+ok 103 - each target role resolves exactly one matching player in every team
+  ---
+  duration_ms: 1.5497
+  type: 'test'
+  ...
+# Subtest: multiple definitions produce independent per-team assignments
+ok 104 - multiple definitions produce independent per-team assignments
+  ---
+  duration_ms: 0.2225
+  type: 'test'
+  ...
+# Subtest: missing, inactive and duplicate role holders block all-team publication
+ok 105 - missing, inactive and duplicate role holders block all-team publication
+  ---
+  duration_ms: 0.4652
+  type: 'test'
+  ...
+# Subtest: legacy role labels resolve without confusing application permission roles
+ok 106 - legacy role labels resolve without confusing application permission roles
+  ---
+  duration_ms: 0.1835
+  type: 'test'
+  ...
+# Subtest: Week 1 release transactions, pending marking, frozen attempts and energy protection
+ok 107 - Week 1 release transactions, pending marking, frozen attempts and energy protection
+  ---
+  duration_ms: 1864.9858
+  type: 'test'
+  ...
+# Subtest: college notifications queue without configuration, require approved contacts and deliver idempotently with retry
+ok 108 - college notifications queue without configuration, require approved contacts and deliver idempotently with retry
+  ---
+  duration_ms: 1091.727
+  type: 'test'
+  ...
+# Subtest: complete 25-Gamer Week 1: releases, privacy, Rules, queries, games, AI batches, Showcase, readiness, publication and rescue
+ok 109 - complete 25-Gamer Week 1: releases, privacy, Rules, queries, games, AI batches, Showcase, readiness, publication and rescue
+  ---
+  duration_ms: 76055.2083
+  type: 'test'
+  ...
+# Subtest: Week 1 freezes 23 role views and 13 WILD6 criteria in the four 40/20/25/15 buckets
+ok 110 - Week 1 freezes 23 role views and 13 WILD6 criteria in the four 40/20/25/15 buckets
+  ---
+  duration_ms: 1.3458
+  type: 'test'
+  ...
+# Subtest: all approved day packs validate and Friday preserves original question versions
+ok 111 - all approved day packs validate and Friday preserves original question versions
+  ---
+  duration_ms: 17.3965
+  type: 'test'
+  ...
+# Subtest: public content projections never reveal reference answers, quiz keys or prepared drafts
+ok 112 - public content projections never reveal reference answers, quiz keys or prepared drafts
+  ---
+  duration_ms: 0.6895
+  type: 'test'
+  ...
+# Subtest: AI-first weighting and inclusive human review boundaries use unrounded percentages
+ok 113 - AI-first weighting and inclusive human review boundaries use unrounded percentages
+  ---
+  duration_ms: 0.5416
+  type: 'test'
+  ...
+# Subtest: STORY, FIRE and component ordering preserve partial evidence without fabricated answers
+ok 114 - STORY, FIRE and component ordering preserve partial evidence without fabricated answers
+  ---
+  duration_ms: 0.5774
+  type: 'test'
+  ...
+# Subtest: quiz grades keyed answers without negative marking and retains blank items
+ok 115 - quiz grades keyed answers without negative marking and retains blank items
+  ---
+  duration_ms: 0.4114
+  type: 'test'
+  ...
+# Subtest: professional penalties apply once per missing-agenda streak and do not duplicate Discovery inside the denominator
+ok 116 - professional penalties apply once per missing-agenda streak and do not duplicate Discovery inside the denominator
+  ---
+  duration_ms: 0.4892
+  type: 'test'
+  ...
+# Subtest: readiness preserves pending values and exact 70/92 boundaries
+ok 117 - readiness preserves pending values and exact 70/92 boundaries
+  ---
+  duration_ms: 0.7535
+  type: 'test'
+  ...
+# Subtest: unobserved capability criteria remain Not Assessed and matching task suggestions require >92
+ok 118 - unobserved capability criteria remain Not Assessed and matching task suggestions require >92
+  ---
+  duration_ms: 0.4627
+  type: 'test'
+  ...
+# Subtest: provisional teams contain only cleared learners in 1-high/3-middle/1-low groups where viable
+ok 119 - provisional teams contain only cleared learners in 1-high/3-middle/1-low groups where viable
+  ---
+  duration_ms: 0.8103
+  type: 'test'
+  ...
+# Subtest: rescue uses approved Saturday one-hour slots and explicitly flags insufficient capacity
+ok 120 - rescue uses approved Saturday one-hour slots and explicitly flags insufficient capacity
+  ---
+  duration_ms: 0.8929
+  type: 'test'
+  ...
+# Subtest: only an attributable published Game Rules version satisfies release readiness
+ok 121 - only an attributable published Game Rules version satisfies release readiness
+  ---
+  duration_ms: 0.6642
+  type: 'test'
+  ...
+# Subtest: day release requires preparation, sequential manual opening and explicit closure
+ok 122 - day release requires preparation, sequential manual opening and explicit closure
+  ---
+  duration_ms: 1.575
+  type: 'test'
+  ...
+# Subtest: prepared questions and schedules are hidden from Gamers; staff receive no private content in release summaries
+ok 123 - prepared questions and schedules are hidden from Gamers; staff receive no private content in release summaries
+  ---
+  duration_ms: 0.8043
+  type: 'test'
+  ...
+# Subtest: agenda publication requires an open day and its official start; publication is explicit and immutable
+ok 124 - agenda publication requires an open day and its official start; publication is explicit and immutable
+  ---
+  duration_ms: 0.5163
+  type: 'test'
+  ...
+# Subtest: guidance does not infer release or team publication from scores or draft teams
+ok 125 - guidance does not infer release or team publication from scores or draft teams
+  ---
+  duration_ms: 1.1223
+  type: 'test'
+  ...
+# Subtest: a running attempt takes precedence until its server deadline
+ok 126 - a running attempt takes precedence until its server deadline
+  ---
+  duration_ms: 0.254
+  type: 'test'
+  ...
+# Subtest: Gamer objective counts exclude teammates and completed or submitted tasks
+ok 127 - Gamer objective counts exclude teammates and completed or submitted tasks
+  ---
+  duration_ms: 0.1972
+  type: 'test'
+  ...
+# Subtest: current rules acknowledgement removes the corresponding next action
+ok 128 - current rules acknowledgement removes the corresponding next action
+  ---
+  duration_ms: 0.176
+  type: 'test'
+  ...
+# Subtest: all role guidance links resolve within that role's existing workspace
+ok 129 - all role guidance links resolve within that role's existing workspace
+  ---
+  duration_ms: 0.9118
+  type: 'test'
+  ...
+# Subtest: recovery follow-up remains private and cannot show another learner's status
+ok 130 - recovery follow-up remains private and cannot show another learner's status
+  ---
+  duration_ms: 0.2242
+  type: 'test'
+  ...
+# Subtest: original workspaces retain every page and add programme and notification entries
+ok 131 - original workspaces retain every page and add programme and notification entries
+  ---
+  duration_ms: 1.2563
+  type: 'test'
+  ...
+# Subtest: legacy player presentation preserves existing identity, team, balances and energy
+ok 132 - legacy player presentation preserves existing identity, team, balances and energy
+  ---
+  duration_ms: 0.141
+  type: 'test'
+  ...
+1..132
+# tests 150
+# suites 0
+# pass 150
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 201645.5497

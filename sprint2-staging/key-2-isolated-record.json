@@ -1,0 +1,85 @@
+{
+  "team": "Fictional Team A",
+  "teamId": "pilot-team-0",
+  "recordedAt": "2026-11-10T05:05:02.196Z",
+  "scope": "Disposable synthetic cohort. Engine timestamps use the simulated programme clock.",
+  "candidateSha256": "4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc",
+  "approvedTestUrl": "http://127.0.0.1:3112/",
+  "evidenceIndex": "acceptance-evidence/index.html",
+  "evidenceMapping": "Reserved example.invalid URLs satisfy the engine's HTTPS field. The evidence index is the actual local source.",
+  "sprintId": "576015fa-6203-4ea4-9438-80bc905e29fd",
+  "sprintNumber": 2,
+  "acceptance": {
+    "teamId": "pilot-team-0",
+    "decision": "ACCEPTED",
+    "key": "Key 2",
+    "by": "pilot-cc",
+    "at": "2026-11-16T07:00:00.000Z",
+    "reason": "CC sign-off supplied by the user in this chat for Fictional Team A at localhost. Approved candidate 4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc."
+  },
+  "gates": [
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-1",
+      "decision": "PASS",
+      "evidence": "https://example.invalid/isolated-evidence/sprint-2/gate-1",
+      "reason": "User approved localhost and signed off all 14 checks for Fictional Team A. Candidate SHA-256 4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc. Actual evidence: sprint2-staging/acceptance-evidence/index.html, S2-AC01.",
+      "by": "pilot-cc",
+      "at": "2026-11-16T07:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-2",
+      "decision": "PASS",
+      "evidence": "https://example.invalid/isolated-evidence/sprint-2/gate-2",
+      "reason": "User approved localhost and signed off all 14 checks for Fictional Team A. Candidate SHA-256 4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc. Actual evidence: sprint2-staging/acceptance-evidence/index.html, S2-AC02.",
+      "by": "pilot-cc",
+      "at": "2026-11-16T07:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-3",
+      "decision": "PASS",
+      "evidence": "https://example.invalid/isolated-evidence/sprint-2/gate-3",
+      "reason": "User approved localhost and signed off all 14 checks for Fictional Team A. Candidate SHA-256 4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc. Actual evidence: sprint2-staging/acceptance-evidence/index.html, S2-AC03.",
+      "by": "pilot-cc",
+      "at": "2026-11-16T07:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-4",
+      "decision": "PASS",
+      "evidence": "https://example.invalid/isolated-evidence/sprint-2/gate-4",
+      "reason": "User approved localhost and signed off all 14 checks for Fictional Team A. Candidate SHA-256 4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc. Actual evidence: sprint2-staging/acceptance-evidence/index.html, S2-AC04.",
+      "by": "pilot-cc",
+      "at": "2026-11-16T07:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-5",
+      "decision": "PASS",
+      "evidence": "https://example.invalid/isolated-evidence/sprint-2/gate-5",
+      "reason": "User approved localhost and signed off all 14 checks for Fictional Team A. Candidate SHA-256 4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc. Actual evidence: sprint2-staging/acceptance-evidence/index.html, S2-AC05.",
+      "by": "pilot-cc",
+      "at": "2026-11-16T07:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-6",
+      "decision": "PASS",
+      "evidence": "https://example.invalid/isolated-evidence/sprint-2/gate-6",
+      "reason": "User approved localhost and signed off all 14 checks for Fictional Team A. Candidate SHA-256 4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc. Actual evidence: sprint2-staging/acceptance-evidence/index.html, S2-AC06.",
+      "by": "pilot-cc",
+      "at": "2026-11-16T07:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-7",
+      "decision": "PASS",
+      "evidence": "https://example.invalid/isolated-evidence/sprint-2/gate-7",
+      "reason": "User approved localhost and signed off all 14 checks for Fictional Team A. Candidate SHA-256 4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc. Actual evidence: sprint2-staging/acceptance-evidence/index.html, S2-AC07.",
+      "by": "pilot-cc",
+      "at": "2026-11-16T07:00:00.000Z"
+    }
+  ]
+}

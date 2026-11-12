@@ -11,6 +11,7 @@ import {
 } from "../lib/week-one.js";
 import { prepareDay } from "../lib/week-one-rules.js";
 import { fixtureConfig } from "./day-one-fixture.mjs";
+import { publishFixtureRules } from "./week-one-program-fixture.mjs";
 
 test(
   "Week 1 release transactions, pending marking, frozen attempts and energy protection",
@@ -60,6 +61,28 @@ test(
           config.genres[0].question,
         ),
       );
+      const beforeRules = await weekOneSnapshot(mc);
+      assert.equal(beforeRules.rulesVersion, null);
+      await assert.rejects(
+        weekOneAction(
+          cc,
+          "open",
+          { day: 1, revision: beforeRules.revision },
+          now,
+        ),
+        (e) => e.status === 409 && /publish Game Rules/.test(e.message),
+      );
+      assert.equal((await weekOneSnapshot(mc)).days[0].state, "PREPARED");
+      assert.equal(
+        await models.WeekOneEvent.countDocuments({ kind: "OPEN" }),
+        0,
+      );
+      await assert.rejects(
+        publishFixtureRules(mc, now),
+        (e) => e.status === 403,
+      );
+      await publishFixtureRules(cc, now);
+      assert.equal((await weekOneSnapshot(gamer)).rulesVersion, 1);
       const revision = (await weekOneSnapshot(mc)).revision;
       const attempts = await Promise.allSettled(
         [mc, cc].map((actor) =>
@@ -67,6 +90,7 @@ test(
         ),
       );
       assert.equal(attempts.filter((r) => r.status === "fulfilled").length, 1);
+      assert.equal((await weekOneSnapshot(mc)).days[0].rulesVersion, 1);
       assert.equal(
         attempts.find((r) => r.status === "rejected").reason.status,
         409,
@@ -183,7 +207,9 @@ test(
         cohortId: "alpha",
       }).lean();
       assert.deepEqual(
-        events.map((e) => e.kind),
+        events
+          .filter((e) => e.kind !== "RULE_VERSION_PUBLISHED")
+          .map((e) => e.kind),
         ["PREPARE", "OPEN", "CLOSE", "OPEN"],
       );
       assert.equal(events[0].details.contentVersion, 1);

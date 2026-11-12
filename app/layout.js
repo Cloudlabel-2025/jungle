@@ -18,7 +18,13 @@ import "./campfire.css";
 import "./mobile-orientation.css";
 import "./camp-residents.css";
 import "./pilot.css";
-import { Smartphone, RotateCw } from "lucide-react";
+import "./workflow.css";
+import "./notifications.css";
+import "./alumni-map.css";
+import "./game-forms.css";
+import "./blended-header.css";
+import "./mission-map.css";
+import "./game-loading.css";
 export const metadata = {
   title: "CODEWILD · Escape the Wild",
   description:
@@ -29,24 +35,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="jungle-world">
         <div className="landscape-app-content">{children}</div>
-        <section
-          className="mobile-orientation-guard"
-          aria-label="Landscape orientation required"
-        >
-          <div className="orientation-device" aria-hidden="true">
-            <Smartphone size={56} strokeWidth={1.4} />
-            <RotateCw size={28} strokeWidth={1.6} />
-          </div>
-          <span className="orientation-brand">
-            CODEWILD / EXPEDITION ACCESS
-          </span>
-          <h1>Rotate your phone</h1>
-          <p>
-            Your expedition runs in landscape. Turn your phone sideways to enter
-            the jungle.
-          </p>
-          <small>The game opens automatically when you rotate.</small>
-        </section>
       </body>
     </html>
   );

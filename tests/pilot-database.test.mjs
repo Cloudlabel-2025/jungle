@@ -320,7 +320,7 @@ test(
       );
       await call(cc, "settings", {
         policyVersion: "CLIENT-ENERGY-QA",
-        energy: { start: 5, max: 5, lives: 2, zeroMode: "AWAIT_RECOVERY" },
+        energy: { start: 3, max: 3, lives: 5, zeroMode: "AWAIT_RECOVERY" },
       });
       const cl = ds.find((c) => c.teamId === teams[0].id);
       await call(gamers[0], "cl-work", { clientId: cl._id, next: "WORKING" });

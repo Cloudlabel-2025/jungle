@@ -186,9 +186,6 @@
   cursor: not-allowed;
   box-shadow: none;
 }
-.form-submit-arrow {
-  margin-left: 6px;
-}
 .jungle-world .field-form .challenge-definition {
   background: #0b2119;
   border: 1px solid #78815b;

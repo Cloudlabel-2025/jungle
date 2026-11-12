@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { Plus, Save, Eye, Send, Pencil, ChevronLeft } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Plus, Save, Eye, Send, Pencil } from "lucide-react";
 import { Panel, Badge } from "./ui";
 import LevelEmblem from "./LevelEmblem";
 import ProjectPreview from "./ProjectPreview";
@@ -29,11 +29,21 @@ const blank = (teams) => ({
   criteria: [""],
   teamIds: teams.map((t) => t._id),
 });
-export default function LevelManager({ data, act }) {
+export default function LevelManager({
+  data,
+  act,
+  mapMode = false,
+  autoCreate = false,
+  initialLevel = null,
+  onPublished,
+}) {
   const [editing, setEditing] = useState(false),
     [levelId, setLevelId] = useState(null),
     [version, setVersion] = useState(null);
-  const [form, setForm] = useState(() => blank(data.teams)),
+  const [form, setForm] = useState(() => ({
+      ...blank(data.teams),
+      ...(mapMode ? { mapMission: true } : {}),
+    })),
     [dirty, setDirty] = useState(false),
     [preview, setPreview] = useState(null),
     [busy, setBusy] = useState(false),
@@ -46,7 +56,10 @@ export default function LevelManager({ data, act }) {
         ...drafts.map((r) => ({ _id: r._id, ...(r.published || r.draft) })),
       ].map((l) => [l._id, l]),
     ).values(),
-  ];
+  ].filter((level) => !mapMode || level.mapMission);
+  useEffect(() => {
+    if (autoCreate || initialLevel) open(initialLevel);
+  }, [autoCreate, initialLevel?._id]);
   function open(level) {
     const record = drafts.find((r) => r._id === level?._id);
     const source = record?.draft || level;
@@ -62,7 +75,7 @@ export default function LevelManager({ data, act }) {
             tasks: source.tasks.map((t) => ({ ...t })),
             criteria: [...source.criteria],
           }
-        : blank(data.teams),
+        : { ...blank(data.teams), ...(mapMode ? { mapMission: true } : {}) },
     );
     setLevelId(level?._id || null);
     setVersion(record?.version || null);
@@ -158,6 +171,7 @@ export default function LevelManager({ data, act }) {
       if (result) {
         setEditing(false);
         setPreview(null);
+        onPublished?.(result);
       } else {
         setPreview(null);
         setError(
@@ -171,7 +185,7 @@ export default function LevelManager({ data, act }) {
   const builtin = levelId?.startsWith("project_");
   return (
     <Panel
-      title="Level workshop"
+      title={mapMode ? "Map mission workshop" : "Level workshop"}
       kicker="CENTRE COMMAND · BUILD THE EXPEDITION"
     >
       <div className="level-workshop-intro">
@@ -237,7 +251,7 @@ export default function LevelManager({ data, act }) {
             }}
             disabled={busy}
           >
-            <ChevronLeft size={15} /> Level library
+            Level library
           </button>
           <div className="level-editor-heading">
             <LevelEmblem
@@ -260,8 +274,8 @@ export default function LevelManager({ data, act }) {
             </div>
           </div>
           <p className="callout">
-            Published level positions are permanent. New levels extend the map
-            in sequence. Teams already working on a level keep their original
+            Published mission order stays fixed. CC can move its marker in the
+            map designer. Teams already working on a level keep their original
             instructions, deadline, emblem, and rewards.
           </p>
           <form

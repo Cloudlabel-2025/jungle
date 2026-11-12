@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Fictional Team A Sprint 2 acceptance evidence</title>
+<style>body{font:16px/1.5 system-ui;max-width:1100px;margin:2em auto;padding:0 1em;color:#18332d}table{border-collapse:collapse;width:100%}th,td{border:1px solid #bacac5;padding:.6em;text-align:left;vertical-align:top}th{background:#e8f2ee}code{overflow-wrap:anywhere}</style>
+<h1>Fictional Team A Sprint 2 acceptance evidence</h1>
+<p>10 November 2026. QA exercised all 14 gates on the isolated local candidate. Twelve passed outright and two passed locally subject to CC accepting localhost for the integrated and deployed test URL. CC sign-off and Key 2 are pending.</p>
+<p>Test URL <code>http://127.0.0.1:3112/</code>. Candidate SHA-256 <code>4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc</code>. The <a href="../verification.log">API and reset log</a> was independently rerun against the same source in a separate disposable database. Its browser-pending lines describe the API runner alone. The browser evidence below completes the local UI checks.</p>
+<table>
+<thead><tr><th>Gate</th><th>QA outcome</th><th>Observed evidence</th></tr></thead>
+<tbody>
+<tr><td>S1-AC01</td><td>PASS</td><td>Administrator signed in and reached the directory. <a href="02-admin-directory.jpg">Browser</a></td></tr>
+<tr><td>S1-AC02</td><td>PASS</td><td>Clean directory and authenticated API both returned 20 fictional records backed by MongoDB. <a href="02-admin-directory.txt">Browser transcript</a></td></tr>
+<tr><td>S1-AC03</td><td>PASS</td><td>Administrator opened Fictional Alumnus A from the list. Profile ID AL-QA-001 matched. <a href="03-admin-profile.jpg">Browser</a></td></tr>
+<tr><td>S1-AC04</td><td>PASS</td><td>Alumnus signed in and saw own profile AL-QA-001. <a href="10-alumnus-own-profile.jpg">Browser</a></td></tr>
+<tr><td>S1-AC05</td><td>PASS</td><td>Alumnus had no directory UI. API rejected directory and other-profile reads with 403. <a href="../verification.log">API log</a></td></tr>
+<tr><td>S1-AC06</td><td>PASS</td><td>Wrong password produced a clear browser error. API returned 401 for bad credentials and unsigned profile reads. <a href="01-invalid-login.jpg">Browser</a></td></tr>
+<tr><td>S1-AC07</td><td>LOCAL PASS</td><td>HTML, compiled React, API and database worked together at the loopback URL. CC must accept loopback or repeat the gate on an approved private shared URL. <a href="02-admin-directory.jpg">Browser</a></td></tr>
+<tr><td>S2-AC01</td><td>PASS</td><td>Created Élodie D’Arcy-Smith through the form. Unique server ID AL-3dabd474-5b83-433d-9275-128a77d6b1d1 appeared. API rejected edits to system fields. <a href="05-created-profile.txt">Browser transcript</a></td></tr>
+<tr><td>S2-AC02</td><td>PASS</td><td>Edited employment details, signed out, refreshed, signed in and reopened the record. ID and creation time were stable. Modified advanced from 05:02:42.473Z to 05:02:51.272Z. API no-op save retained its timestamp. <a href="07-edit-after-refresh-and-relogin.txt">Browser transcript</a></td></tr>
+<tr><td>S2-AC03</td><td>PASS</td><td>Browser rejected mixed-case duplicate email and normalized duplicate registration separately. API accepted multiple blank registration numbers. <a href="08-duplicate-email.jpg">Email</a> · <a href="09-duplicate-registration.jpg">Registration</a></td></tr>
+<tr><td>S2-AC04</td><td>PASS</td><td>Browser rejected UK postcode under India and missing employment details, then saved valid corrections. API exercised 16 invalid cases and three country formats. The exercise uses the candidate’s configured lists. <a href="04-invalid-postcode.jpg">Postcode</a> · <a href="06-employment-validation.jpg">Employment</a> · <a href="../verification.log">API log</a></td></tr>
+<tr><td>S2-AC05</td><td>PASS</td><td>Alumnus UI exposed neither Create nor Edit. Direct API create and edit returned 403 and profile was unchanged. <a href="10-alumnus-own-profile.txt">Browser transcript</a> · <a href="../verification.log">API log</a></td></tr>
+<tr><td>S2-AC06</td><td>PASS ON LOCAL REGRESSION</td><td>All seven Sprint 1 gates were re-exercised on the Sprint 2 candidate, with the same local-URL qualification as S1-AC07.</td></tr>
+<tr><td>S2-AC07</td><td>LOCAL PASS</td><td>Local browser Create/Edit, refresh, re-login and negative checks completed. API smoke and full local regression passed. Fresh launch restored the 20 original records. CC must accept this URL or repeat deployment smoke on an approved private shared URL. <a href="07-edit-after-refresh-and-relogin.jpg">Browser</a> · <a href="../verification.log">Reset log</a></td></tr>
+</tbody>
+</table>
+<p>CC can review the candidate for Key 2 now. Confirm the localhost staging scope and the configured country, course, skill and validation lists, then record the verdict, release hash, reviewer and evidence links. A private shared deployment is the remaining evidence requirement if CC requires one. The browser session was signed out and the disposable staging run ended. The live game was untouched.</p>
+</html>

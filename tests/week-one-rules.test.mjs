@@ -7,8 +7,31 @@ import {
   releaseProjection,
   publishAgenda,
   staffOnly,
+  publishedGameRules,
 } from "../lib/week-one-rules.js";
 import { fixtureConfig } from "./day-one-fixture.mjs";
+
+test("only an attributable published Game Rules version satisfies release readiness", () => {
+  const rule = {
+    version: 1,
+    text: "Published game rules for the cohort.",
+    publishedBy: "cc",
+    publishedAt: "2026-11-06T10:00:00Z",
+  };
+  assert.equal(publishedGameRules({ rules: [rule] }), rule);
+  for (const program of [
+    undefined,
+    {},
+    { rules: [] },
+    { rules: [{ ...rule, publishedBy: null }] },
+    { rules: [{ ...rule, publishedAt: "invalid" }] },
+    { rules: [{ ...rule, text: "" }] },
+    { rules: [{ ...rule, version: 0 }] },
+    { rules: [rule, { ...rule, version: 2, publishedBy: null }] },
+  ]) {
+    assert.equal(publishedGameRules(program), null);
+  }
+});
 
 test("day release requires preparation, sequential manual opening and explicit closure", () => {
   const release = { revision: 0, days: initialDays() };

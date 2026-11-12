@@ -1,0 +1,87 @@
+- button "Open expedition navigation":
+- banner:
+  - region "Player status":
+    - img "Aarav Patel as Zayn"
+    - strong: Aarav Patel
+    - generic: Zayn · Blaze · Full stack
+    - generic: Level 1
+    - progressbar "Experience toward next level"
+    - generic: 0 / 100 XP
+    - generic "3 of 5 lives":
+      - generic: Life
+      - generic: 3/5
+    - generic "5 of 5 energy":
+      - generic: Energy
+      - generic: 5/5
+  - generic "Player achievements":
+    - generic: Viper Syndicate
+    - strong: "16"
+    - generic: Week 1 trophies
+    - strong: "0"
+    - generic: Day streak
+  - button "Enable client alert sound":
+  - button "Sign out":
+- text: "Support alert: Aarav Patel reached three consecutive HP drops. A Commander check-in is needed."
+- main:
+  - text: EXPEDITION CONTROL / FIELD OPERATIONS
+  - heading "My Games" [level=1]
+  - paragraph: Week 1 · Discover, Explore, STORY, FIRE and Prove
+  - generic: G3 / CODEWILD EXPEDITION
+  - navigation "Week 1 programme":
+    - link "My Day":
+      - /url: /gamer/week-one
+    - link "Meeting Announcements":
+      - /url: /gamer/week-one-announcements
+    - link "My Games":
+      - /url: /gamer/week-one-games
+    - link "Ask MC":
+      - /url: /gamer/week-one-ask-mc
+    - link "Research Showcase":
+      - /url: /gamer/week-one-showcase
+    - link "Challenges & Rewards":
+      - /url: /gamer/week-one-challenges
+    - link "Game Rules":
+      - /url: /gamer/week-one-game-rules
+    - link "My Results":
+      - /url: /gamer/week-one-results
+  - generic: DAY 1 / EXTERNAL AI / 90 MINUTES
+  - heading "Individual discovery mission" [level=2]
+  - text: 00:00
+  - paragraph: Choose a genre, acknowledge the question, then begin your research. Your timer persists after refresh and re-login.
+  - generic: QUESTION V1
+  - heading "Nature" [level=3]
+  - paragraph: "[QA TEST 2026-11-05] Explain how urban trees reduce heat. State assumptions and verify one claim."
+  - paragraph:
+    - text: Acknowledged 05 Nov, 08:15 pm
+  - paragraph:
+    - text: Research began 05 Nov, 08:16 pm. The 90-minute window has ended; late work can still earn First Discovery after verification.
+  - paragraph: Use an external AI tool and submit one shareable conversation-thread URL. Centre Command checks access and enters ratings manually.
+  - text: External AI conversation-thread URL
+  - textbox "External AI conversation-thread URL": https://example.com/codewild-qa-test#qa-2026-11-06
+  - text: Reason for revising the link
+  - textbox "Reason for revising the link"
+  - status
+  - button "Save revised AI thread"
+  - paragraph:
+    - generic: VERIFIED
+    - link "View submitted AI thread":
+      - /url: https://example.com/codewild-qa-test#qa-2026-11-06
+  - paragraph: "[QA FIXTURE ONLY 2026-11-06 — USER AUTHORISED] Reusing existing synthetic fixture for workflow testing. Assume evidence loaded for downstream processing only. Genuine external AI-thread accessibility/content NOT EXECUTED; pending manual testing. MC reviewed revision and retained Timely SOD marker."
+  - generic "Submission revision history"
+  - generic: PERSONAL / SEPARATE FROM YOUR RESEARCH BASELINE
+  - heading "Day 1 discovery rewards" [level=2]
+  - generic: 16/20 TROPHIES
+  - generic: ENERGY 5/5 · NO DEDUCTIONS
+  - generic: FIRST DISCOVERY · EARNED
+  - text: RESEARCH CHAMPION · WEEK 1 REVEAL
+  - generic "Trophy evidence and amendment history"
+  - paragraph:
+    - text: Your research baseline and ranking remain private. Trophies never change your research score.
+  - button "Allow an approved anonymous summary of my Day 1 research":
+    - generic: Allow an approved anonymous summary of my Day 1 research
+- contentinfo:
+  - text: CAMP RADIO CONNECTED
+  - text: ASIA / KOLKATA
+  - generic: EXPLORE. ADAPT. SURVIVE.
+  - generic: CODEWILD © 2026
+- alert

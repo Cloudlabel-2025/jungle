@@ -9,7 +9,6 @@ import {
   Questions,
   Challenges,
   MyResults,
-  Notifications,
   PublishedRecognition,
 } from "./WeekOneLearner";
 import {
@@ -92,7 +91,6 @@ export default function WeekOneView({ screen, data, act, now }) {
         title={route[2]}
         subtitle="Week 1 · Discover, Explore, STORY, FIRE and Prove"
       />
-      {gamer && <Notifications data={data} act={act} />}
       <nav
         className="tabs"
         aria-label="Week 1 programme"

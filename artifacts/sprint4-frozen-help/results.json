@@ -1,0 +1,54 @@
+[
+  {
+    "id": 27,
+    "code": "QA-13",
+    "observed": "Chrome unlocked the exact frozen Functional testing prompts and guide and saved a Help Desk ticket scoped to this task and assigned to its MC. Three approved debits were recorded; help and ticket receipt persisted after reload.",
+    "screenshot": "27-QA-13-task.png",
+    "ticketId": "d8cbd7db-d2f8-4787-8a18-d710fe0bc104"
+  },
+  {
+    "id": 28,
+    "code": "QA-13",
+    "observed": "Chrome saved the expected/actual summary and link, preserved both after reload, and opened the synthetic evidence receipt. The task stayed Working.",
+    "screenshot": "28-QA-13-evidence.png"
+  },
+  {
+    "id": 29,
+    "code": "OP-15",
+    "observed": "Chrome unlocked the exact frozen Non-functional testing prompts and guide and saved a Help Desk ticket scoped to this task and assigned to its MC. Three approved debits were recorded; help and ticket receipt persisted after reload.",
+    "screenshot": "29-OP-15-task.png",
+    "ticketId": "9df7ef66-9c9a-4e65-be5f-c4a56c1a61a9"
+  },
+  {
+    "id": 30,
+    "code": "OP-15",
+    "observed": "Chrome saved the expected/actual summary and link, preserved both after reload, and opened the synthetic evidence receipt. The task stayed Working.",
+    "screenshot": "30-OP-15-evidence.png"
+  },
+  {
+    "id": 31,
+    "code": "QA-15",
+    "observed": "Chrome unlocked the exact frozen System / end-to-end testing prompts and guide and saved a Help Desk ticket scoped to this task and assigned to its MC. Three approved debits were recorded; help and ticket receipt persisted after reload.",
+    "screenshot": "31-QA-15-task.png",
+    "ticketId": "0ee8c35a-708d-4a36-97ab-80708ee6a328"
+  },
+  {
+    "id": 32,
+    "code": "QA-15",
+    "observed": "Chrome saved the expected/actual summary and link, preserved both after reload, and opened the synthetic evidence receipt. The task stayed Working.",
+    "screenshot": "32-QA-15-evidence.png"
+  },
+  {
+    "id": 33,
+    "code": "UAT-01",
+    "observed": "Chrome unlocked the exact frozen User Acceptance Testing (UAT) prompts and guide and saved a Help Desk ticket scoped to this task and assigned to its MC. Three approved debits were recorded; help and ticket receipt persisted after reload.",
+    "screenshot": "33-UAT-01-task.png",
+    "ticketId": "e67ebb24-633b-4afb-8540-f895d428c99b"
+  },
+  {
+    "id": 34,
+    "code": "UAT-01",
+    "observed": "Chrome saved the expected/actual summary and link, preserved both after reload, and opened the synthetic evidence receipt. The task stayed Working.",
+    "screenshot": "34-UAT-01-evidence.png"
+  }
+]

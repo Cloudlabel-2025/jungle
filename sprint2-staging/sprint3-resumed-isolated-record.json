@@ -1,0 +1,158 @@
+{
+  "recordedAt": "2026-11-10T05:05:02.196Z",
+  "team": "Fictional Team A",
+  "teamId": "pilot-team-0",
+  "candidateSha256": "4d872356e6cb8f439da2ce84b4599a70bdda9b61f63a847d7761b4019c69f6cc",
+  "prerequisiteRecord": "key-2-isolated-record.json",
+  "sprintId": "d5b19f2d-0286-4719-9fcf-868e173c8aa9",
+  "state": "CLIENT_REVIEW",
+  "teamTaskStates": [
+    {
+      "code": "QA-09",
+      "state": "Accepted"
+    },
+    {
+      "code": "OP-09",
+      "state": "Accepted"
+    },
+    {
+      "code": "DB-09",
+      "state": "Ready"
+    },
+    {
+      "code": "DB-10",
+      "state": "Ready"
+    },
+    {
+      "code": "DB-11",
+      "state": "Ready"
+    },
+    {
+      "code": "QA-12",
+      "state": "Ready"
+    },
+    {
+      "code": "QA-10",
+      "state": "Ready"
+    },
+    {
+      "code": "OP-12",
+      "state": "Ready"
+    },
+    {
+      "code": "OP-10",
+      "state": "Ready"
+    },
+    {
+      "code": "OP-11",
+      "state": "Ready"
+    },
+    {
+      "code": "FE-12",
+      "state": "Ready"
+    },
+    {
+      "code": "FE-09",
+      "state": "Ready"
+    },
+    {
+      "code": "FE-10",
+      "state": "Ready"
+    },
+    {
+      "code": "FE-11",
+      "state": "Ready"
+    },
+    {
+      "code": "BE-12",
+      "state": "Ready"
+    },
+    {
+      "code": "BE-09",
+      "state": "Ready"
+    },
+    {
+      "code": "BE-10",
+      "state": "Ready"
+    },
+    {
+      "code": "BE-11",
+      "state": "Ready"
+    },
+    {
+      "code": "DB-12",
+      "state": "Ready"
+    },
+    {
+      "code": "QA-11",
+      "state": "Working"
+    }
+  ],
+  "gates": [
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-1",
+      "decision": "BLOCKED",
+      "evidence": "https://example.invalid/sprint-3/platform-rehearsal",
+      "reason": "Sprint 2 baseline accepted. Sprint 3 incident selection and approval, execution, regression and live defence evidence are pending.",
+      "by": "pilot-cc",
+      "at": "2026-11-23T09:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-2",
+      "decision": "BLOCKED",
+      "evidence": "https://example.invalid/sprint-3/platform-rehearsal",
+      "reason": "Sprint 2 baseline accepted. Sprint 3 incident selection and approval, execution, regression and live defence evidence are pending.",
+      "by": "pilot-cc",
+      "at": "2026-11-23T09:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-3",
+      "decision": "BLOCKED",
+      "evidence": "https://example.invalid/sprint-3/platform-rehearsal",
+      "reason": "Sprint 2 baseline accepted. Sprint 3 incident selection and approval, execution, regression and live defence evidence are pending.",
+      "by": "pilot-cc",
+      "at": "2026-11-23T09:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-4",
+      "decision": "BLOCKED",
+      "evidence": "https://example.invalid/sprint-3/platform-rehearsal",
+      "reason": "Sprint 2 baseline accepted. Sprint 3 incident selection and approval, execution, regression and live defence evidence are pending.",
+      "by": "pilot-cc",
+      "at": "2026-11-23T09:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-5",
+      "decision": "BLOCKED",
+      "evidence": "https://example.invalid/sprint-3/platform-rehearsal",
+      "reason": "Sprint 2 baseline accepted. Sprint 3 incident selection and approval, execution, regression and live defence evidence are pending.",
+      "by": "pilot-cc",
+      "at": "2026-11-23T09:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-6",
+      "decision": "BLOCKED",
+      "evidence": "https://example.invalid/sprint-3/platform-rehearsal",
+      "reason": "Sprint 2 baseline accepted. Sprint 3 incident selection and approval, execution, regression and live defence evidence are pending.",
+      "by": "pilot-cc",
+      "at": "2026-11-23T09:00:00.000Z"
+    },
+    {
+      "teamId": "pilot-team-0",
+      "code": "AC-7",
+      "decision": "BLOCKED",
+      "evidence": "https://example.invalid/sprint-3/platform-rehearsal",
+      "reason": "Sprint 2 baseline accepted. Sprint 3 incident selection and approval, execution, regression and live defence evidence are pending.",
+      "by": "pilot-cc",
+      "at": "2026-11-23T09:00:00.000Z"
+    }
+  ],
+  "key3": null,
+  "next": "Record MC selection and CC approval for a team-specific incident and operator before the incident rehearsal."
+}

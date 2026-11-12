@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-12",
+  "fixture": "Fresh disposable MongoDB and production build; restored previously observed fictional one-team checkpoint. Prior assessments, Key 5 and other programme work were synthetic. No real learner certification or signature.",
+  "checks": [
+    {
+      "id": "PDF-BR-01",
+      "title": "Automatic two-page Passport and one-page certificate generation",
+      "cases": ["PB-QA-107", "PB-QA-109", "PB-QA-110"],
+      "observation": "Assigned MC completed the app form and generated both actual PDFs. Both downloaded through private authenticated endpoints. All three pages were rendered and inspected: thirteen criteria, core 100, separate Admin Chair +3, missing observations honestly marked, exact certificate body and unsigned signature lines. Production font packaging worked.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": ["mc-passport.pdf", "mc-certificate.pdf", "browser-verification.txt"]
+    },
+    {
+      "id": "PDF-BR-02",
+      "title": "Assigned MC review and independent CC issuance",
+      "cases": ["PB-QA-107", "PB-QA-110"],
+      "observation": "MC checked the downloaded PDFs and submitted the review form; visible status became FINAL REPORT REVIEWED. CC signed in separately and issued the pair; the UI showed the two issued links. Persisted review/issue actors are pilot-mc and pilot-cc.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": ["browser-verification.txt", "../part-b-browser-2026-11-12/pdf-browser-final.json"]
+    },
+    {
+      "id": "PDF-BR-03",
+      "title": "Learner downloads the exact privately stored PDF bytes",
+      "cases": ["PB-QA-107", "PB-QA-110"],
+      "observation": "Gamer 0 signed in and downloaded both documents from Programme Rewards after issuance. Passport and certificate SHA-256 hashes match the MC downloads exactly.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": ["learner-issued-documents.png", "download-hashes.json"]
+    },
+    {
+      "id": "PDF-BR-04",
+      "title": "Signed-out and unrelated learner downloads denied",
+      "cases": ["PB-QA-107"],
+      "observation": "The exact observed Passport URL returned Please sign in after logout. After signing in as Gamer 1, that URL returned Outside your authorised scope. No PDF bytes were downloaded for these attempts.",
+      "status": "SYNTHETIC_BROWSER_CONTROL_VERIFIED",
+      "evidence": ["unrelated-learner-denied.png", "browser-verification.txt"]
+    }
+  ]
+}

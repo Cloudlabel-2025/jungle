@@ -1,0 +1,37 @@
+{
+  "calendar": {
+    "timeZone": "Asia/Kolkata",
+    "intervals": [
+      {
+        "startMinute": 600,
+        "endMinute": 780
+      },
+      {
+        "startMinute": 840,
+        "endMinute": 1020
+      }
+    ],
+    "weekdays": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "holidays": []
+  },
+  "result": [
+    {
+      "scenario": "Planned Thursday send",
+      "sent": "2026-12-03T15:30:00+05:30",
+      "eligible": "2026-12-03T16:30:00+05:30",
+      "eligibleByFridayStart": true
+    },
+    {
+      "scenario": "Late Thursday send",
+      "sent": "2026-12-03T16:30:00+05:30",
+      "eligible": "2026-12-04T10:30:00+05:30",
+      "eligibleByFridayStart": false
+    }
+  ]
+}

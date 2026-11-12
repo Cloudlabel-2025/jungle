@@ -1,0 +1,45 @@
+{
+  "base": "http://localhost:3188",
+  "stage": 5,
+  "sprintId": "browser-sprint-5",
+  "teamId": "pilot-team-0",
+  "accounts": [
+    {
+      "id": "pilot-cc",
+      "email": "cc@pilot.invalid",
+      "role": "CENTRE_COMMAND"
+    },
+    {
+      "id": "pilot-mc",
+      "email": "mc@pilot.invalid",
+      "role": "MISSION_COMMANDER"
+    },
+    {
+      "id": "pilot-g0",
+      "email": "g0@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g1",
+      "email": "g1@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g2",
+      "email": "g2@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g3",
+      "email": "g3@pilot.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "pilot-g4",
+      "email": "g4@pilot.invalid",
+      "role": "GAMER"
+    }
+  ],
+  "seeded": "Prior sprint acceptances, prior technical cards and completed SDLC checkpoints are synthetic fixture setup. Browser actions are separately evidenced; no actual student apps or provider credentials.",
+  "clock": "2026-12-11T08:00:00Z"
+}

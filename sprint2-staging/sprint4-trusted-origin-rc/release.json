@@ -1,0 +1,15 @@
+{
+  "candidate": "Sprint 4 trusted staging origin RC",
+  "team": "Fictional Team A",
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "parentSha256": "b602dff875bad2e5c0c867ec86313d72627ab972e818fdd78725b5b785570953",
+  "sourceFiles": {
+    "fields.mjs": "3633c99f580cba4865d86ce05543b81c5cd46ce0a13b02cdcf0bff4f74a4990c",
+    "staging.mjs": "3b443b1a1e2548eafc166c503340dda92927305a8575c093e4e3d7e55b9fcafc",
+    "ui.jsx": "05911405e7b1d5d274a1787da78c5ba851115105bb05c1db7ce774b90b59cded",
+    "verify.mjs": "e16e00f890b3bcd72102d83684d61c6b76dd01bae2a6dfa4c216bb2ab7e250ff",
+    "../package-lock.json": "c3a3930238ab7b99d956cbb614f851582c50b8ec027433f5b894ca1d1eb33cca"
+  },
+  "key3": null,
+  "key4": null
+}

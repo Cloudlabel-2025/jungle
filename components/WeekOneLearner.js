@@ -1,4 +1,5 @@
 "use client";
+import PlayerVitals from "./PlayerVitals";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Badge, Receipt, Form } from "./ui";
@@ -165,7 +166,7 @@ export function MyDay({ data, act }) {
           {weekTime(day.scheduledEnd)}.
         </p>
         <div className="button-row">
-          <Badge tone="lime">ENERGY 5/5</Badge>
+          <PlayerVitals player={data.user} />
           <Badge tone="amber">
             {data.user.weekOneTrophies || 0} / 140 WEEK 1 TROPHIES
           </Badge>
@@ -901,7 +902,8 @@ export function Challenges({ data, act, now }) {
       </WeekPanel>
       <DayOneRewards data={data} />
       <WeekPanel title="Week 1 trophy evidence">
-        <Badge>MAXIMUM 140 · ENERGY 5/5</Badge>
+        <Badge>MAXIMUM 140 TROPHIES</Badge>
+        <PlayerVitals player={data.user} />
         {(p.learners[0]?.data.ledger || []).map((e) => (
           <p key={e.id}>
             Day {e.day} · {e.rule}: {e.amount > 0 ? "+" : ""}

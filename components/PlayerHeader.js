@@ -1,6 +1,6 @@
-import { Heart, Flame, Trophy, Zap } from "lucide-react";
+import { Flame, Trophy } from "lucide-react";
 import { XP_PER_LEVEL, experienceLevel } from "@/lib/rewards";
-import { playerEnergy } from "@/lib/rules";
+import PlayerVitals from "./PlayerVitals";
 import { characterFor } from "@/lib/characters";
 import { Avatar } from "./ui";
 
@@ -20,9 +20,9 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
               0}
           </strong>
           <small>
-            {player.weekOneEnergy
+            {player.weekOneTrophies != null
               ? "Week 1 trophies"
-              : player.dayOneEnergy
+              : player.dayOneTrophies != null
                 ? "Day 1 trophies"
                 : "Trophies"}
           </small>
@@ -34,9 +34,6 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
         </span>
       </div>
     );
-  const energy =
-    player.weekOneEnergy ?? player.dayOneEnergy ?? playerEnergy(player);
-  const energyMax = player.weekOneEnergy || player.dayOneEnergy ? 5 : 3;
   const progress = (player.xp || 0) % XP_PER_LEVEL;
   const character = characterFor(player);
   const role = character
@@ -67,42 +64,7 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
           {progress} / {XP_PER_LEVEL} XP
         </small>
       </div>
-      <div className="player-vitals">
-        <span className="life-counter" aria-label={`${player.hp} of 5 lives`}>
-          <span>Life</span>
-          {Array.from({ length: 5 }, (_, i) => (
-            <Heart
-              aria-hidden="true"
-              size={13}
-              key={i}
-              className={i < player.hp ? "vital-filled" : "vital-empty"}
-            />
-          ))}
-          <small>{player.hp}/5</small>
-        </span>
-        <span
-          className="energy-counter"
-          aria-label={`${energy} of ${energyMax} energy`}
-          title={
-            player.weekOneEnergy || player.dayOneEnergy
-              ? "Week 1 energy remains 5/5. No deductions apply."
-              : "Every third energy lost costs one life. Energy refills to 3 while lives remain."
-          }
-        >
-          <span>Energy</span>
-          {Array.from({ length: energyMax }, (_, i) => (
-            <Zap
-              aria-hidden="true"
-              size={13}
-              key={i}
-              className={i < energy ? "vital-filled" : "vital-empty"}
-            />
-          ))}
-          <small>
-            {energy}/{energyMax}
-          </small>
-        </span>
-      </div>
+      <PlayerVitals player={player} />
     </section>
   );
 }

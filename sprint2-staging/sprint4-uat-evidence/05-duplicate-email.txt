@@ -1,0 +1,68 @@
+- main:
+  - heading "Alumni Connect" [level=1]
+  - paragraph: Sprint 2 staging candidate · Fictional Team A · CC acceptance pending
+  - alert: Email or registration number already exists.
+  - paragraph: Signed in as Administrator
+  - button "Sign out"
+  - heading "Edit profile" [level=2]
+  - text: First name
+  - textbox "First name": Anika
+  - text: Last name
+  - textbox "Last name": Rao
+  - text: Date of birth
+  - textbox "Date of birth": 2000-02-29
+  - text: Email
+  - textbox "Email": <redacted>
+  - text: Mobile
+  - textbox "Mobile": <redacted>
+  - text: Address line 1
+  - textbox "Address line 1": 4 Fictional Lane
+  - text: Address line 2
+  - textbox "Address line 2"
+  - text: City
+  - textbox "City": UAT City
+  - text: State
+  - textbox "State": Test State
+  - text: Country
+  - combobox "Country":
+    - option "Select…"
+    - option "India" [selected]
+    - option "United States"
+    - option "United Kingdom"
+  - text: Postal/PIN code
+  - textbox "Postal/PIN code": "560001"
+  - text: Course / Degree
+  - combobox "Course / Degree":
+    - option "Select…"
+    - option "BSc Computer Science"
+    - option "BTech" [selected]
+    - option "MCA"
+  - text: Graduation year
+  - textbox "Graduation year": "2022"
+  - text: Student registration number
+  - textbox "Student registration number": S4-UAT-01
+  - text: Employment status
+  - combobox "Employment status":
+    - option "Select…"
+    - option "Employed" [selected]
+    - option "Self-employed"
+    - option "Seeking work"
+    - option "Higher studies"
+  - text: Primary skill
+  - combobox "Primary skill":
+    - option "Select…"
+    - option "Java"
+    - option "Python"
+    - option "React"
+    - option "Node.js"
+    - option "SQL"
+    - option "Testing" [selected]
+    - option "Cloud"
+  - text: Current job title
+  - textbox "Current job title": QA Engineer
+  - text: Current organisation
+  - textbox "Current organisation": Fictional Company
+  - text: LinkedIn URL
+  - textbox "LinkedIn URL"
+  - button "Save profile"
+  - button "Cancel"

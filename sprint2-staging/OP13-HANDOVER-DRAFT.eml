@@ -1,0 +1,25 @@
+X-Unsent: 1
+To: Kabir Khan <kabir.khan@gmail.com>
+Subject: CODEWILD OP-13 handover | Friday UAT-05, 4 December
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Hi Kabir,
+
+I accepted OP-13 for Fictional Team A’s isolated Sprint 4 release at [acceptance time, IST]. Your UAT-05 session is Friday, 4 December 2026, 10:00 a.m.–12:30 p.m. IST on the staging computer.
+
+Please reply “Handover received” at or after [eligible receipt time, IST], once one working hour has elapsed from the actual handover time. If I send it at 3:30 p.m. IST on Thursday, 3 December, you can acknowledge it at 4:30 p.m. IST that day. Please acknowledge before starting Friday’s retest.
+
+On Friday, I’ll confirm the staging smoke checks and share your temporary credentials privately. Use https://127.0.0.1:3193/ on the staging computer. Confirm the release fingerprint is 52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde.
+
+1. Sign in as the fictional administrator. Create a uniquely tagged fictional profile, edit it, and record its generated ID and saved value.
+2. Enter an invalid postcode. Capture the validation message and verify the invalid value was rejected and the previous value stayed saved.
+3. Sign out, sign back in, and reopen the profile. Confirm the ID and saved value are unchanged.
+4. Sign in with the fictional alumnus account and verify that an admin-only action is denied.
+5. Record your actual start and finish times, expected and observed results, evidence, any defects, and your independent acceptance recommendation. Keep passwords and session values out of the evidence.
+
+If the fingerprint differs, Friday smoke fails, or the timed handover is incomplete, mark UAT-05 BLOCKED and contact me before proceeding.
+
+Thanks,
+Karun

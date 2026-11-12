@@ -7,6 +7,7 @@ import { localParts } from "../lib/day-one-rules.js";
 import { dayOneAction, dayOneSnapshot, dayOneSignIn } from "../lib/day-one.js";
 import { fixtureConfig } from "./day-one-fixture.mjs";
 import { weekOneAction, weekOneSnapshot } from "../lib/week-one.js";
+import { publishFixtureRules } from "./week-one-program-fixture.mjs";
 
 test(
   "Day 1 MongoDB acceptance: 25 users, evidence, concurrency, privacy, revisions, CC marking and gated tied prize",
@@ -77,6 +78,7 @@ test(
         control(gamers[0], "open", 1, "2026-11-02T03:00:00Z"),
         (e) => e.status === 403,
       );
+      await publishFixtureRules(cc, new Date("2026-11-02T02:59:00Z"));
       await control(mc, "open", 1, "2026-11-02T03:00:00Z");
       await control(mc, "publish-agenda", 1, config.officialStart, {
         text: "Independent research, classroom orientation, Showcase and reflection.",
@@ -127,7 +129,7 @@ test(
       let p = (await dayOneSnapshot(gamers[0])).records[0];
       assert.equal(p.trophies, 14);
       assert.equal(p.badge, false);
-      assert.equal(p.energy, 5);
+      assert.equal(p.energy, 3);
       assert.equal(p.eod.mode, "VOICE");
       assert.equal(p.startedAt, "2026-11-02T03:34:00.000Z");
       assert.equal((await dayOneSnapshot(gamers[0])).records.length, 1);
@@ -271,11 +273,12 @@ test(
         { _id: "alpha" },
         { $set: { "days.4.state": "CLOSED" } },
       );
-      await models.WeekOneProgram.create({
-        _id: "alpha",
-        version: 1,
-        data: { locked: true, publications: [{ version: 1 }] },
-      });
+      await models.WeekOneProgram.updateOne(
+        { _id: "alpha" },
+        {
+          $set: { "data.locked": true, "data.publications": [{ version: 1 }] },
+        },
+      );
       await call(
         cc,
         "reveal-champion",
@@ -316,6 +319,7 @@ test(
         };
       await models.User.insertMany([other, otherCC]);
       await call(otherCC, "release", { config, revision: 0 });
+      await publishFixtureRules(otherCC, new Date("2026-11-02T02:59:00Z"));
       await control(otherCC, "open", 1, "2026-11-02T03:00:00Z");
       await call(other, "clock", {}, "2026-11-02T03:29:00Z");
       await call(
@@ -413,9 +417,13 @@ test(
       );
       assert.equal(await models.Energy.countDocuments(), 3);
       assert.equal(
-        await models.DayOneRecord.countDocuments({ energy: { $ne: 5 } }),
+        await models.DayOneRecord.countDocuments({ energy: { $ne: 3 } }),
         0,
       );
+      const balance = await models.User.findById(other._id).lean();
+      const visibleBalance = (await dayOneSnapshot(other)).user;
+      assert.equal(visibleBalance.energy, balance.energy);
+      assert.equal(visibleBalance.hp, balance.hp);
     } finally {
       await mongoose.connection.dropDatabase();
       await mongoose.disconnect();

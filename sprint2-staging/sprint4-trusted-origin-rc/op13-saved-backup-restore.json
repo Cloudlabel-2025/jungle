@@ -1,0 +1,84 @@
+{
+  "candidateSha256": "52360d59589e80d6c7fc7f5db6fef1497666918bc60cc2c4cd97f7d2c33d2dde",
+  "snapshot": {
+    "file": "sprint2-staging/sprint4-trusted-origin-rc/batch-20261110/exact-https-retained-backup.ejson",
+    "sha256": "6a61b9653be0cdbb29102e2a243daa0185b47863880ba81c4b83e8e3a5012e03",
+    "bytes": 11259,
+    "capturedAt": "2026-11-10T08:46:52.219Z"
+  },
+  "transport": "Certificate-validated in-process HTTPS to a fresh loopback listener",
+  "startedAt": "2026-11-10T09:41:26.909Z",
+  "smoke": [
+    {
+      "name": "HTTPS health",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Sign-in shell",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Compiled React bundle",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Unsigned directory rejected",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "name": "Fictional administrator sign-in",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Administrator directory",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Reopen retained profile",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Reopen edited seed",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Administrator sign-out",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "Signed-out session rejected",
+      "expected": 401,
+      "actual": 401
+    }
+  ],
+  "isolatedUrl": "https://127.0.0.1:62246",
+  "applyMs": 5,
+  "restore": {
+    "startingSeedCount": 20,
+    "restoredRecords": 21,
+    "allDocumentsMatch": true,
+    "indexes": [
+      "_id_",
+      "email_1",
+      "registration_1"
+    ],
+    "retainedEditsVerified": true,
+    "postSnapshotEditExcluded": true
+  },
+  "secureSessionControls": true,
+  "freshLaunchThroughSmokeMs": 976,
+  "finishedAt": "2026-11-10T09:41:27.924Z",
+  "disposableInstanceStopped": true,
+  "op13Approved": false,
+  "key3": null,
+  "key4": null
+}

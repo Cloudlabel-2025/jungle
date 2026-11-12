@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   Flame,
   Trophy,
@@ -27,7 +28,7 @@ import {
   Hexagon,
   CheckCircle2,
 } from "lucide-react";
-import { Panel, Badge, HP, Avatar, Modal, Empty, Form, Receipt } from "./ui";
+import { Panel, Badge, HP, Avatar, Modal, Empty, Form, Receipt, Busy } from "./ui";
 import { EncounterGrid } from "./Expedition";
 import JungleGame from "./JungleGame";
 import ProjectBoard, { ProjectTaskDetails } from "./Projects";
@@ -40,20 +41,24 @@ import ChallengeManager, {
   ChallengeTaskDetails,
 } from "./Challenges";
 import LevelManager from "./LevelManager";
+import MapDesigner from "./MapDesigner";
 import TeamManager from "./TeamManager";
-import PilotWorkspace,{PilotBoardSlot} from './PilotWorkspace';
+import PilotBoardSlot from "./PilotBoardSlot";
+import ProgrammePanel from "./ProgrammePanel";
 import { DiscoveryMission } from "./DayOneFeatures";
 import { teamRoles, playerRole } from "@/lib/team-roles.js";
-import WeekOneView, { hasWeekOneView } from "./WeekOneViews";
 import {
   programmeScreen,
   legacyWorkspaceData,
+  validProgrammeScreen,
 } from "@/lib/workspace-navigation.js";
 import {
   characters,
   characterFor,
   projectTaskLabel,
 } from "@/lib/characters.js";
+const PilotWorkspace = dynamic(() => import("./PilotWorkspace"), { loading: () => <Busy label="Opening programme work…" /> });
+const WeekOneView = dynamic(() => import("./WeekOneViews"), { loading: () => <Busy label="Opening Week 1 and recovery…" /> });
 import { ist, league } from "@/lib/rules.js";
 const fmt = (date) =>
   new Date(date).toLocaleString("en-IN", {
@@ -552,14 +557,19 @@ export function GamerView(props) {
   if (
     props.data.weekOneProgram &&
     moduleScreen &&
-    hasWeekOneView(props.data.user.role, moduleScreen)
+    validProgrammeScreen(props.data.user.role, props.screen)
   )
     return <WeekOneView {...props} screen={moduleScreen} />;
   props = { ...props, data: legacyWorkspaceData(props.data) };
   return (
     <>
       <GamerCore {...props} />
-      {['team-room','daily-journal','rewards'].includes(props.screen)&&<details><summary>Weekly programme work</summary><PilotWorkspace user={props.data.user} mode={props.screen==='rewards'?'rewards':props.screen==='daily-journal'?'journal':'help'}/></details>}
+      {['team-room','daily-journal','rewards'].includes(props.screen) && (
+        <ProgrammePanel user={props.data.user}
+          mode={props.screen === 'rewards' ? 'rewards' : props.screen === 'daily-journal' ? 'journal' : 'help'}
+          title="Weekly programme work"
+          description={props.screen === 'rewards' ? 'Programme rewards and final documents' : props.screen === 'daily-journal' ? 'Sprint reflections and attributed daily records' : 'Sprint assistance, blockers and help resources'} />
+      )}
       {!["dashboard", "team-room"].includes(props.screen) && (
         <SupportConsole {...props} />
       )}
@@ -573,6 +583,7 @@ function GamerCore({ screen, data, act, now }) {
       <>
         <JungleGame
           data={data}
+          now={now}
           dailyWork={<PilotWorkspace user={data.user} mode="daily"/>}
           act={act}
           camp={<PunchIn data={data} now={now} act={act} />}
@@ -1238,13 +1249,18 @@ export function StaffView(props) {
   if (
     props.data.weekOneProgram &&
     moduleScreen &&
-    hasWeekOneView(props.data.user.role, moduleScreen)
+    validProgrammeScreen(props.data.user.role, props.screen)
   )
     return <WeekOneView {...props} screen={moduleScreen} />;
   return (
     <>
       <StaffCore {...props} />
-      {['dashboard','rules-approvals','client-control','reports','awards','coaching'].includes(props.screen)&&<details><summary>Weekly programme operations</summary><PilotWorkspace user={props.data.user} mode={props.screen==='reports'?'reports':props.screen==='rules-approvals'?'approvals':'board'}/></details>}
+      {['dashboard','rules-approvals','client-control','reports','awards','coaching'].includes(props.screen) && (
+        <ProgrammePanel user={props.data.user}
+          mode={props.screen === 'reports' ? 'reports' : props.screen === 'rules-approvals' ? 'approvals' : 'board'}
+          title="Weekly programme operations"
+          description="Sprint tasks, independent reviews, acceptance and operational follow-up" />
+      )}
       <SupportConsole {...props} />
     </>
   );
@@ -1274,8 +1290,10 @@ function StaffCore({ screen, data, act, now }) {
     return (
       <>
         <Setup data={data} act={act} />
-          <details><summary>Weekly sprint setup and permissions</summary><PilotWorkspace user={data.user} mode="setup"/></details>
-        <LevelManager data={data} act={act} />
+        <ProgrammePanel user={data.user} mode="setup" title="Weekly sprint setup and permissions"
+          description="Approved packages, owners, calendars, resources and kickoff" />
+        <MapDesigner data={data} act={act} />
+        <details><summary>Other project definitions</summary><LevelManager data={data} act={act} /></details>
         <ChallengeManager data={data} act={act} />
       </>
     );

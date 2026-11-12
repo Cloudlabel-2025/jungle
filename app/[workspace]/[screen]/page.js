@@ -1,12 +1,13 @@
 import { notFound, redirect } from "next/navigation";
-import { currentUser, demoEnabled } from "@/lib/auth.js";
+import { currentUser } from "@/lib/auth.js";
 import { navigation, prefix } from "@/lib/catalog.js";
 import { weekOneNavigation } from "@/lib/week-one-catalog.js";
 import {
   validProgrammeScreen,
   programmePath,
+  isWorkspaceScreen,
 } from "@/lib/workspace-navigation.js";
-import Arena from "@/components/Arena";
+import WorkspaceScreen from "@/components/WorkspaceScreen";
 export const dynamic = "force-dynamic";
 export default async function Page({ params }) {
   const { workspace, screen } = await params;
@@ -14,7 +15,7 @@ export default async function Page({ params }) {
   if (
     !role ||
     !(
-      navigation[role].some((n) => n[1] === screen) ||
+      isWorkspaceScreen(role, screen) ||
       validProgrammeScreen(role, screen) ||
       weekOneNavigation[role].some((n) => n[1] === screen)
     )
@@ -22,18 +23,7 @@ export default async function Page({ params }) {
     notFound();
   const user = await currentUser();
   if (user && user.role !== role) redirect(`/${prefix(user.role)}/dashboard`);
-  if (
-    !navigation[role].some((n) => n[1] === screen) &&
-    !validProgrammeScreen(role, screen)
-  )
+  if (!isWorkspaceScreen(role, screen) && !validProgrammeScreen(role, screen))
     redirect(programmePath(role, screen));
-  return (
-    <Arena
-      screen={screen}
-      workspace={workspace}
-      initialUser={user ? JSON.parse(JSON.stringify(user)) : null}
-      initialTime={new Date().toISOString()}
-      demo={demoEnabled()}
-    />
-  );
+  return <WorkspaceScreen key={screen} screen={screen} />;
 }

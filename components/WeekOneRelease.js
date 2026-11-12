@@ -1,6 +1,8 @@
 "use client";
 
 import { Panel, Badge, Form } from "./ui";
+import Link from "next/link";
+import { programmePath } from "@/lib/workspace-navigation.js";
 
 export default function WeekOneRelease({ data, act, now }) {
   const release = data.weekOne;
@@ -19,6 +21,23 @@ export default function WeekOneRelease({ data, act, now }) {
         Prepare each day, then open it here. Close the current day after its
         scheduled activities end. Assessment reviews can remain pending.
       </p>
+      {!release.rulesVersion && (
+        <p role="status">
+          Centre Command must publish Game Rules before opening a day.
+          {current &&
+            " This open day is missing its published Game Rules."}{" "}
+          <Link
+            href={programmePath(
+              data.user.role,
+              data.user.role === "CENTRE_COMMAND"
+                ? "rules-approvals"
+                : "behaviour",
+            )}
+          >
+            Review Game Rules
+          </Link>
+        </p>
+      )}
       <div className="table-scroll">
         <table>
           <thead>
@@ -43,7 +62,11 @@ export default function WeekOneRelease({ data, act, now }) {
                   {day.state === "PREPARED" && (
                     <button
                       className="btn small primary"
-                      disabled={Boolean(current) || next?.day !== day.day}
+                      disabled={
+                        !release.rulesVersion ||
+                        Boolean(current) ||
+                        next?.day !== day.day
+                      }
                       onClick={() => run("open", day.day)}
                     >
                       Open Day {day.day}

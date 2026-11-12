@@ -1,0 +1,44 @@
+{
+  "candidateSha256": "dfef38d57399aeb1785eb5f7e01fa4f3b561ec576943c958f70ea53e8f17a419",
+  "focus": {
+    "narrow": {
+      "open": {
+        "name": null,
+        "tag": "H2",
+        "text": "Create alumni"
+      },
+      "nextTab": {
+        "name": "firstName",
+        "tag": "INPUT",
+        "text": ""
+      },
+      "cancel": {
+        "name": null,
+        "tag": "BUTTON",
+        "text": "Create alumni"
+      },
+      "layout": {
+        "content": 305,
+        "fields": 19,
+        "labels": 19,
+        "viewport": 305
+      }
+    },
+    "defaultViewport": {
+      "open": {
+        "name": null,
+        "tag": "H2",
+        "text": "Create alumni"
+      },
+      "cancel": "Create alumni"
+    },
+    "result": "PASS"
+  },
+  "uat05": {
+    "invalidPostcode": "Enter a postcode valid for the selected country.",
+    "recordId": "AL-aae619e3-67dd-4edf-878d-1f197a12cbca",
+    "city": "Release QA City",
+    "reopenedAfterReloadAndLogin": true,
+    "result": "PASS"
+  }
+}
