@@ -30,6 +30,9 @@ import {
   Volume2,
   VolumeX,
   Bell,
+  Compass,
+  UserRound,
+  Clock3,
 } from "lucide-react";
 import { navigation, prefix, personas } from "@/lib/catalog.js";
 import { weekOneNavigation } from "@/lib/week-one-catalog.js";
@@ -42,6 +45,8 @@ import { roleNames } from "@/lib/expedition";
 import { league } from "@/lib/rules.js";
 import { Avatar, Modal, HP, Badge, Form } from "./ui";
 import PlayerHeader from "./PlayerHeader";
+import PlayerProfile from "./PlayerProfile";
+import AttendancePrompt from "./AttendancePrompt";
 import { WorkspaceContext } from "./WorkspaceContext";
 import TeamCompletionAnnouncements from "./LevelCompletion";
 import CharacterPicker from "./CharacterPicker";
@@ -49,6 +54,7 @@ import { characterFor } from "@/lib/characters";
 import { monitoringRequired, claimSignInNotice } from "@/lib/notifications.js";
 import GameLoadingScreen, { useGameEntryLoading } from "./GameLoadingScreen";
 const icons = {
+  Compass,
   LayoutDashboard,
   BookOpen,
   Columns3,
@@ -86,6 +92,9 @@ export default function Arena({
     [switching, setSwitching] = useState(false),
     [soundEnabled, setSoundEnabled] = useState(false);
   const [characterPicker, setCharacterPicker] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [attendanceOpen,setAttendanceOpen]=useState(false);
+  useEffect(()=>{setProfileOpen(false);setAttendanceOpen(false);},[user?._id]);
   const offset = useRef(0),
     busy = useRef(null),
     sessionGeneration = useRef(0),
@@ -98,7 +107,11 @@ export default function Arena({
   const evaluatedSignIn = useRef(null);
   const role = user?.role || "GAMER";
   const playerMode = role === "GAMER";
+  const flightMode = playerMode && (data?.story?.flight ?? user?.story?.flight ?? true);
   const showEntryLoading = useGameEntryLoading(user?._id, Boolean(data), error);
+  useEffect(()=>{
+    if(data?.story?.characterSelectionRequired&&!flightMode&&!profileOpen&&!launcher)setCharacterPicker(true);
+  },[data?.user?._id,data?.story?.characterSelectionRequired,flightMode,profileOpen,launcher]);
   const playerNavigation = useRef(null);
   const playerNavigationTrigger = useRef(null);
   useEffect(() => {
@@ -133,7 +146,11 @@ export default function Arena({
       playerNavigationTrigger.current?.focus();
     };
   }, [playerMode, mobile, user?._id]);
-  const nav = workspaceNavigation(role);
+  const nav = flightMode ? [
+    ["F0", "dashboard", "Sky journey", "Compass"],
+    ...(data?.story?.introComplete ? weekOneNavigation.GAMER.map(([code, page, label, icon]) => [code, page === "dashboard" ? "week-one" : `week-one-${page}`, label, icon]) : [["F1", "week-one-ask-mc", "Ask for help", "Radio"]]),
+    ["N1", "notifications", "Notifications", "Bell"],
+  ] : workspaceNavigation(role);
   const weekOneMode = programmeScreen(screen) !== null;
   const current = weekOneMode
     ? weekOneNavigation[role].find((n) => n[1] === programmeScreen(screen)) ||
@@ -462,12 +479,12 @@ export default function Arena({
                   className="persona-row"
                   key={p._id}
                 >
-                  <Avatar name={p.name} player={p} />
+                  <Avatar name={p.name} player={p.role === "GAMER" ? { ...p, characterHidden: true } : p} />
                   <span>
                     <strong>{p.name}</strong>
                     <small>
                       {p.role === "GAMER"
-                        ? `${characterFor(p)?.name || "Explorer"} · ${characterFor(p)?.label || "Full stack"}`
+                        ? "Player · Character unknown until your expedition begins"
                         : p.assignment}
                     </small>
                   </span>
@@ -548,13 +565,13 @@ export default function Arena({
       </div>
     );
   const squad = data?.teams.find((t) => t._id === user.teamId);
-  const headerPlayer = data ? legacyWorkspaceData(data).user : user;
+  const headerPlayer = data ? (flightMode ? data.user : legacyWorkspaceData(data).user) : user;
   return (
     <WorkspaceContext.Provider
       value={{ data, user, act, clock, notify, error, refresh }}
     >
       <div
-        className={`arena ${role === "GAMER" ? "player-arena" : ""} ${!(role === "GAMER" && screen === "dashboard") ? "field-mode" : ""} ${screen === "ide" ? "lab-mode" : ""} ${role === "GAMER" && screen === "dashboard" ? "expedition-mode" : ""}`}
+        className={`arena ${role === "GAMER" ? "player-arena" : ""} ${flightMode ? "flight-arena" : ""} ${flightMode && ["dashboard", "week-one-games"].includes(screen) ? "sky-map-mode" : ""} ${flightMode || !(role === "GAMER" && screen === "dashboard") ? "field-mode" : ""} ${screen === "ide" ? "lab-mode" : ""} ${!flightMode && role === "GAMER" && screen === "dashboard" ? "expedition-mode" : ""}`}
         inert={showEntryLoading ? true : undefined}
       >
         {mobile && (
@@ -643,7 +660,7 @@ export default function Arena({
               );
             })}
           </nav>
-          {playerMode && data && (
+          {playerMode && data && !flightMode && (
             <button
               className="btn character-nav-button"
               onClick={() => {
@@ -727,6 +744,8 @@ export default function Arena({
                   teamName={squad?.name}
                 />
               )}
+              {playerMode && <button className="icon-btn profile-trigger" aria-label="Open my profile" title="My profile" onClick={()=>setProfileOpen(true)}><UserRound size={18}/></button>}
+              {playerMode && <button className="icon-btn attendance-trigger" aria-label="Open clock-in and clock-out" title={data?.playSession?.state === "ACTIVE" ? "Clocked in · manage session" : "Clock in"} onClick={()=>setAttendanceOpen(true)}><Clock3 size={18}/></button>}
               {role !== "GAMER" && (
                 <span className="server-clock">
                   <span className="status-dot" />
@@ -793,7 +812,7 @@ export default function Arena({
                   aria-label={`Switch persona · ${user.name}`}
                   onClick={() => setLauncher(true)}
                 >
-                  <Avatar name={user.name} player={data?.user || user} small />
+                  <Avatar name={user.name} player={flightMode ? { ...(data?.user || user), characterHidden: true } : data?.user || user} small />
                   <span>
                     {user.name}
                     <small>{role.replaceAll("_", " ")}</small>
@@ -838,14 +857,16 @@ export default function Arena({
             {launcherContent}
           </Modal>
         )}
-        {characterPicker && data && (
+        {characterPicker && data && !flightMode && (
           <CharacterPicker
             data={data}
             act={act}
             close={() => setCharacterPicker(false)}
           />
         )}
-        {data && !launcher && !characterPicker && (
+        {profileOpen && data && <PlayerProfile data={data} close={()=>setProfileOpen(false)} onChooseCharacter={()=>{setProfileOpen(false);setCharacterPicker(true);}}/>}
+        {playerMode && data && !launcher && <AttendancePrompt key={data.user._id} data={data} act={act} now={clock} open={attendanceOpen} close={()=>setAttendanceOpen(false)}/>}
+        {data && !launcher && !characterPicker && !flightMode && (
           <TeamCompletionAnnouncements
             key={`${data.user._id}:${data.user.teamId}`}
             data={data}
@@ -887,7 +908,7 @@ export default function Arena({
           </div>
         )}
       </div>
-      {showEntryLoading && <GameLoadingScreen onCancel={logout} />}
+      {showEntryLoading && <GameLoadingScreen onCancel={logout} flight={flightMode} />}
     </WorkspaceContext.Provider>
   );
 }

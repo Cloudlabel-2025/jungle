@@ -1,0 +1,518 @@
+{
+  "_id": "alpha",
+  "days": [
+    {
+      "day": 1,
+      "title": "Discover",
+      "state": "CLOSED",
+      "contentVersion": 2,
+      "officialStart": "2026-11-13T10:37:00.000Z",
+      "scheduledEnd": "2026-11-13T18:29:00.000Z",
+      "content": {
+        "name": "Alpha Cohort 2026",
+        "timeZone": "Asia/Kolkata",
+        "day": "2026-11-13",
+        "startTime": "16:07",
+        "endTime": "23:59",
+        "availableAt": "2026-11-13T10:37:00.000Z",
+        "officialStart": "2026-11-13T10:37:00.000Z",
+        "clockCutoff": "2026-11-13T11:07:00.000Z",
+        "closingCutoff": "2026-11-13T18:29:00.000Z",
+        "revealAfter": "2026-11-20T18:29:00.000Z",
+        "weekdays": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "holidays": [],
+        "durationMinutes": 90,
+        "genres": [
+          {
+            "id": "travel-1",
+            "genreId": "travel",
+            "name": "Travel · Waterfall weekend",
+            "question": "You have ₹1,000 for a solo trip from Madurai, leaving Friday evening and returning Sunday evening. Find three waterfall destinations. Plan travel, food and accommodation. Choose the best option and explain why. If the budget cannot cover it, show what needs to change.",
+            "version": 2
+          },
+          {
+            "id": "travel-2",
+            "genreId": "travel",
+            "name": "Travel · Hills with friends",
+            "question": "Four friends want a weekend at a hill station from Madurai. One wants adventure, one wants photos, one dislikes crowds and one gets travel sickness. Compare three hill stations. Pick one and plan a trip that gives everyone something they enjoy.",
+            "version": 2
+          },
+          {
+            "id": "travel-3",
+            "genreId": "travel",
+            "name": "Travel · Save the hill-station trip",
+            "question": "You reach a hill station and discover that the main attraction is closed. Pick a real hill station and find three alternative activities nearby. Build a replacement day with food stops and realistic travel times. Keep one backup for rain.",
+            "version": 2
+          },
+          {
+            "id": "food-1",
+            "genreId": "food",
+            "name": "Food · Kettle dinner",
+            "question": "Three hostel friends need dinner. You have only an electric kettle rated for boiling water, bowls and spoons. One avoids dairy, one dislikes spicy food and everyone wants a filling meal. Suggest three meals using hot water or ready-to-eat ingredients. Choose one and explain how to prepare it.",
+            "version": 2
+          },
+          {
+            "id": "food-2",
+            "genreId": "food",
+            "name": "Food · Worth the hype?",
+            "question": "Pick three popular food spots in your nearest city. Look beyond influencer reels to compare food, prices, queues and vegetarian choices. Choose one for an outing with friends. What did you discover that the reels didn’t tell you?",
+            "version": 2
+          },
+          {
+            "id": "food-3",
+            "genreId": "food",
+            "name": "Food · College food stall",
+            "question": "Your friends want to run a college-fest food stall. Compare three foods students might buy. Choose one based on appeal, ease of serving and leftover waste. Then twice as many customers arrive as expected—how will you manage?",
+            "version": 2
+          },
+          {
+            "id": "gaming-1",
+            "genreId": "gaming",
+            "name": "Gaming · What can we play together?",
+            "question": "Five friends want to play together. Two use basic Android phones, two use laptops and one can use either. Nobody wants to pay. Find three games and check whether all five can actually join the same match. Pick the best one. What if one friend has weak internet?",
+            "version": 2
+          },
+          {
+            "id": "gaming-2",
+            "genreId": "gaming",
+            "name": "Gaming · College gaming tournament",
+            "question": "You have 24 students and three hours for a gaming tournament. Some are beginners; others play regularly. Compare three games and choose one. Explain simply: who plays whom, how many chances each person gets and how the winner is decided. What happens if someone loses their connection?",
+            "version": 2
+          },
+          {
+            "id": "gaming-3",
+            "genreId": "gaming",
+            "name": "Gaming · Fix game night",
+            "question": "Your friends want a new game. One likes competition, one likes stories and one hates getting knocked out early. Find three options and choose one for a two-hour game night. How could you check that it suits everyone before they all download it?",
+            "version": 2
+          },
+          {
+            "id": "music-1",
+            "genreId": "music",
+            "name": "Music · Road-trip playlist",
+            "question": "Five friends like Tamil songs, Hindi songs, K-pop, indie music and older hits. Build a 90-minute road-trip playlist that gives everyone something to enjoy. Explain the order. Then change the last 20 minutes to suit a quiet drive home.",
+            "version": 2
+          },
+          {
+            "id": "music-2",
+            "genreId": "music",
+            "name": "Music · Find your next favourite",
+            "question": "Give AI three songs you already love and say what you like about each—such as the beat, voice or mood. Ask it for five songs you haven’t heard. Listen to them, tell AI which ones worked and which didn’t, then ask for a better shortlist of three.",
+            "version": 2
+          },
+          {
+            "id": "music-3",
+            "genreId": "music",
+            "name": "Music · Guess the song",
+            "question": "Plan a 20-minute “Guess the Song” game for classmates who know different languages. Decide how to choose songs, give clues and award points so everyone has a chance. Try five sample questions on a friend, then improve anything too easy or confusing.",
+            "version": 2
+          },
+          {
+            "id": "movies-1",
+            "genreId": "movies",
+            "name": "Movies · One movie, four opinions",
+            "question": "Four friends want a movie night. One wants comedy, one wants suspense, one dislikes violence and one refuses anything longer than three hours. Find three movies, check where they can watch them and choose one. Explain the compromise.",
+            "version": 2
+          },
+          {
+            "id": "movies-2",
+            "genreId": "movies",
+            "name": "Movies · Can you trust the trailer?",
+            "question": "Pick a movie whose trailer looks exciting. Without spoiling the story, compare what the trailer promises with what different reviews say. Decide which kind of viewer would enjoy it. Would you choose it for a movie night with friends?",
+            "version": 2
+          },
+          {
+            "id": "movies-3",
+            "genreId": "movies",
+            "name": "Movies · The remake challenge",
+            "question": "Choose a film you know and imagine its story happening in your college today. Decide which characters, situations and conflicts need to change for it to make sense. Use AI to question your version, then fix three weak points.",
+            "version": 2
+          },
+          {
+            "id": "fashion-1",
+            "genreId": "fashion",
+            "name": "Fashion · One item, three looks",
+            "question": "Pick one item you already own. Create three outfits around it: college, a celebration and an interview. Use mostly clothes you already have. Explain each choice, then replace any suggestion that would feel uncomfortable to wear.",
+            "version": 2
+          },
+          {
+            "id": "fashion-2",
+            "genreId": "fashion",
+            "name": "Fashion · The online-shopping detective",
+            "question": "Find three online listings for a similar item of clothing. Compare fabric details, customer photos, sizing, delivery and return conditions. Choose the one you would buy and explain what could still make you reject it.",
+            "version": 2
+          },
+          {
+            "id": "fashion-3",
+            "genreId": "fashion",
+            "name": "Fashion · College-fest outfit",
+            "question": "Plan an outfit for a college fest with daytime heat, plenty of walking and an evening event. Compare three looks. Choose one that works throughout the day, then adapt it for unexpected rain.",
+            "version": 2
+          },
+          {
+            "id": "room-design-1",
+            "genreId": "room-design",
+            "name": "Room Design · Fix my hostel corner",
+            "question": "Two students share a small hostel room. One studies late; the other sleeps early. You cannot drill walls or replace furniture. Compare three ways to rearrange the space. Choose one and explain how both students benefit.",
+            "version": 2
+          },
+          {
+            "id": "room-design-2",
+            "genreId": "room-design",
+            "name": "Room Design · Looks good, works badly",
+            "question": "Find a room setup online that you like. Check whether it would work in a small Indian bedroom with heat, dust and limited plug points. Identify three impractical ideas and replace them with workable alternatives.",
+            "version": 2
+          },
+          {
+            "id": "room-design-3",
+            "genreId": "room-design",
+            "name": "Room Design · Make space without buying storage",
+            "question": "Your room has a bed, desk, cupboard and belongings piled on the floor. You cannot buy new furniture. Develop three ways to free up space using what you have. Choose one and show where everything will go—including things you use every day.",
+            "version": 2
+          },
+          {
+            "id": "technology-1",
+            "genreId": "technology",
+            "name": "Technology · Which phone would you buy?",
+            "question": "You have ₹18,000. You want good gaming, your friend recommends a better camera and your parents say it should last three years. Compare three phones and choose one. Check whether user reviews support the advertised claims.",
+            "version": 2
+          },
+          {
+            "id": "technology-2",
+            "genreId": "technology",
+            "name": "Technology · Rescue the slow laptop",
+            "question": "Your laptop takes ages to start and struggles with multiple tabs. You need it for college work but cannot immediately replace it. Find possible causes and decide what to check first. Compare fixing it, upgrading it and buying a refurbished replacement. Explain what you need to know before spending money.",
+            "version": 2
+          },
+          {
+            "id": "technology-3",
+            "genreId": "technology",
+            "name": "Technology · Is the smartwatch worth it?",
+            "question": "You already carry your phone everywhere but want a smartwatch. Compare three things you would actually use it for. Research a budget watch, a more expensive watch and using your phone alone. Decide whether buying one makes sense for you.",
+            "version": 2
+          },
+          {
+            "id": "social-media-1",
+            "genreId": "social-media",
+            "name": "Social Media · Is this place real?",
+            "question": "Choose a reel showing a place that looks too incredible to be real. Research whether the place exists, whether the footage actually shows it and whether visitors can go there. Find what the reel leaves out. Would you still recommend visiting?",
+            "version": 2
+          },
+          {
+            "id": "social-media-2",
+            "genreId": "social-media",
+            "name": "Social Media · Make something worth watching",
+            "question": "Your college club needs a 30-second video to attract new members. You have a phone, three friends and one afternoon. Compare three video ideas and choose one. Write the shots and captions, then ask someone unfamiliar with the club what they understood. Improve the confusing parts.",
+            "version": 2
+          },
+          {
+            "id": "social-media-3",
+            "genreId": "social-media",
+            "name": "Social Media · Your feed needs a reset",
+            "question": "Imagine your feed keeps showing content you no longer enjoy. You want more music, useful college content and local things to do. Research how one platform’s recommendations work. Make a practical reset plan, checking which popular “algorithm hacks” have evidence behind them.",
+            "version": 2
+          },
+          {
+            "id": "mysteries-1",
+            "genreId": "mysteries",
+            "name": "Mysteries · Bermuda Triangle",
+            "question": "Why do people say ships and planes disappear here? Research three famous incidents and check what actually happened. Compare the mysterious explanations with the available evidence. Which claims would you keep—and which would you challenge?",
+            "version": 2
+          },
+          {
+            "id": "mysteries-2",
+            "genreId": "mysteries",
+            "name": "Mysteries · What’s behind Area 51?",
+            "question": "Why do people connect Area 51 with aliens? Research where the stories began and compare three popular claims with available evidence. Explain what is confirmed, what is speculation and what remains unknown. Did your research change your first impression?",
+            "version": 2
+          },
+          {
+            "id": "mysteries-3",
+            "genreId": "mysteries",
+            "name": "Mysteries · The lake of skeletons",
+            "question": "Research Roopkund Lake in India. How did human skeletons end up there? Compare local stories, early explanations and later scientific findings. Explain what researchers have established, what changed as new evidence emerged and what remains unanswered.",
+            "version": 2
+          },
+          {
+            "id": "fitness-1",
+            "genreId": "fitness",
+            "name": "Fitness · Find a workout you’ll actually do",
+            "question": "You get bored exercising alone, dislike running and have 30 minutes after college. Compare three ways to stay active without joining a gym. Choose one and build a weekly plan. Then your friend drops out—adapt it so you’ll still want to continue.",
+            "version": 2
+          },
+          {
+            "id": "fitness-2",
+            "genreId": "fitness",
+            "name": "Fitness · Does this fitness reel make sense?",
+            "question": "Find a reel promising a dramatic fitness result in a short time. Check the claim against reliable evidence. What information does it leave out? Rewrite its advice into something realistic for a college beginner.",
+            "version": 2
+          },
+          {
+            "id": "fitness-3",
+            "genreId": "fitness",
+            "name": "Fitness · The sport nobody knows",
+            "question": "Six friends want to try a sport none of them has played. Compare three options available locally, considering equipment, learning time and everyone’s chance to participate. Plan the first session. What will you change if two friends find it too difficult?",
+            "version": 2
+          },
+          {
+            "id": "money-1",
+            "genreId": "money",
+            "name": "Money · Make your pocket money last",
+            "question": "You get ₹1,000 pocket money a month. Explain what you would spend it on and research whether your estimated costs are realistic. Compare three ways to divide the money and choose one. Then you need ₹300 for an unexpected college expense—revise your plan.",
+            "version": 2
+          },
+          {
+            "id": "money-2",
+            "genreId": "money",
+            "name": "Money · Is that discount real?",
+            "question": "Find the same product on three shopping sites. Compare the final checkout price, delivery, warranty and return conditions. Check whether the biggest advertised discount is actually the best deal. Choose where you would buy it—or explain why you would wait.",
+            "version": 2
+          },
+          {
+            "id": "money-3",
+            "genreId": "money",
+            "name": "Money · Split the trip bill",
+            "question": "Five friends take a trip. One pays for the hotel, another books tickets and two pay for meals. One friend joins a day late; another skips a paid activity. Create sample expenses and work out a fair split. Explain your rules, then check that everyone’s payments add up.",
+            "version": 2
+          },
+          {
+            "id": "business-1",
+            "genreId": "business",
+            "name": "Business · Open something students actually want",
+            "question": "A small shop space outside your college is empty. Research three businesses that could work there, considering what students need and what nearby shops already offer. Choose one and explain why students would use it. Then discover that a similar shop is opening nearby—would you change your idea or give students a reason to choose yours?",
+            "version": 2
+          },
+          {
+            "id": "business-2",
+            "genreId": "business",
+            "name": "Business · Why is nobody buying?",
+            "question": "Your college T-shirt page gets likes but no orders. Similar pages seem to sell well. Research possible reasons and compare three changes you could make. Choose what to test first and explain how you would know whether it worked.",
+            "version": 2
+          },
+          {
+            "id": "business-3",
+            "genreId": "business",
+            "name": "Business · The order you might regret",
+            "question": "You sell customised gift boxes. Someone asks for 30 boxes in three days, but you have only made five at a time before. Research costs, supplies and preparation time. Compare accepting, reducing or declining the order. Decide what you would promise the customer and why.",
+            "version": 2
+          },
+          {
+            "id": "sports-1",
+            "genreId": "sports",
+            "name": "Sports · Watch your first match",
+            "question": "Your friend loves cricket, but you find it boring. Research three other sports you could watch together. Compare how easy they are to follow, match length and excitement. Pick one upcoming match and create a simple guide for a first-time viewer.",
+            "version": 2
+          },
+          {
+            "id": "sports-2",
+            "genreId": "sports",
+            "name": "Sports · Pick your college team",
+            "question": "Ten classmates want to enter a five-a-side football tournament. Some are experienced; others are beginners. Research what makes a balanced team. Explain how you would choose players and give substitutes a fair chance. Then your strongest player becomes unavailable—revise the team.",
+            "version": 2
+          },
+          {
+            "id": "sports-3",
+            "genreId": "sports",
+            "name": "Sports · Is the star worth it?",
+            "question": "Pick a famous player whose recent performance has divided fans. Compare the praise and criticism with their actual results. Decide whether you would select them for the next match. What evidence would make you change your mind?",
+            "version": 2
+          },
+          {
+            "id": "relationships-1",
+            "genreId": "relationships",
+            "name": "Relationships · A birthday with mixed signals",
+            "question": "You like your close friend, but neither of you has said whether it is romantic. She dislikes surprises and public attention. Research three birthday ideas that feel special without putting pressure on her. Choose one. Then another friend brings a cake without asking, and she gets upset. How will you handle this while respecting her feelings and your friend’s intentions?",
+            "version": 2
+          },
+          {
+            "id": "relationships-2",
+            "genreId": "relationships",
+            "name": "Relationships · Love across cities",
+            "question": "You and your partner will move to different cities after college. One wants daily calls; the other needs more space. Both care, but arguments keep ending with “You’ve changed.” Research practical ways to handle this. Compare three arrangements and suggest one to try. Then a planned visit gets cancelled—how would you discuss the disappointment?",
+            "version": 2
+          },
+          {
+            "id": "relationships-3",
+            "genreId": "relationships",
+            "name": "Relationships · Your ex wants another chance",
+            "question": "Your ex wants to get back together after previously breaking your trust. You still have feelings, but you have also started liking someone new. Use AI to explore your choices without letting it decide for you. What would you need to ask, and what actions would matter more than promises? Explain your next step and what remains uncertain.",
+            "version": 2
+          },
+          {
+            "id": "events-1",
+            "genreId": "events",
+            "name": "Events · A farewell worth remembering",
+            "question": "Plan a farewell for classmates who have very different ideas of fun. Some want games, some want memories and others hate being called on stage. Compare three concepts and choose one that includes everyone. Then your event time is cut in half—decide what stays.",
+            "version": 2
+          },
+          {
+            "id": "events-2",
+            "genreId": "events",
+            "name": "Events · What else belongs at the fest?",
+            "question": "Singing and dancing are already part of your college fest. Your class gets another one-hour slot. Research three different activities that would attract students without expensive equipment. Choose one and explain how it runs. What changes if only ten people turn up instead of fifty?",
+            "version": 2
+          },
+          {
+            "id": "events-3",
+            "genreId": "events",
+            "name": "Events · Rain ruined the plan",
+            "question": "You planned an outdoor farewell for 30 classmates. Rain is forecast, and you can only use an empty classroom. Find three ways to recreate the experience indoors. Choose one and plan the space, activities and food without overcrowding the room.",
+            "version": 2
+          },
+          {
+            "id": "sustainability-1",
+            "genreId": "sustainability",
+            "name": "Sustainability · Save your local lake",
+            "question": "A lake near your college is full of rubbish. Some people suggest a clean-up; others say the rubbish will return within weeks. Pick a real lake and research what is damaging it. Compare three actions students could realistically take. Choose one and explain how you would check whether it made a lasting difference.",
+            "version": 2
+          },
+          {
+            "id": "sustainability-2",
+            "genreId": "sustainability",
+            "name": "Sustainability · Are electric vehicles really greener?",
+            "question": "Your friend says electric scooters cause just as much pollution because of batteries and electricity generation. Investigate both sides using an electric and a petrol scooter available in India. Consider how they are made, used and disposed of. When does the electric option make more environmental sense—and what could change your conclusion?",
+            "version": 2
+          },
+          {
+            "id": "sustainability-3",
+            "genreId": "sustainability",
+            "name": "Sustainability · Trees or a playground?",
+            "question": "Imagine your neighbourhood’s only open ground has mature trees, but young people want a proper sports area. One proposal removes the trees; another bans development completely. Research ways other places have handled similar conflicts. Develop a third option, explain its compromises and respond to objections from both groups.",
+            "version": 2
+          }
+        ],
+        "rubric": [
+          {
+            "key": "framing",
+            "name": "Problem framing",
+            "max": 6
+          },
+          {
+            "key": "reasoning",
+            "name": "Investigation & reasoning",
+            "max": 7
+          },
+          {
+            "key": "verification",
+            "name": "Experimentation & verification",
+            "max": 7
+          },
+          {
+            "key": "communication",
+            "name": "Requirements communication",
+            "max": 8
+          },
+          {
+            "key": "adaptability",
+            "name": "Initiative & adaptability",
+            "max": 5
+          }
+        ],
+        "rubricVersion": "wild6-day1-v2-33",
+        "rewardVersion": "day1-v1.2",
+        "markingInstructions": "[QA TEST] Evaluate the five listed Day 1 criteria using evidence only, rate each 0–4 and explain supporting evidence. Human review required.",
+        "championPrompt": "[QA TEST] Ask the Gamer to explain one verified claim and one limitation without assistance.",
+        "inaccessiblePolicy": "Allow a corrected link; retain every revision and reverify before assessment.",
+        "version": 2,
+        "releasedAt": "2026-11-13T10:38:05.019Z",
+        "selectionMode": "research-2026-11-12",
+        "researchGroups": [
+          {
+            "id": "research-1",
+            "members": [
+              "usr_g01",
+              "usr_g11",
+              "usr_g04",
+              "usr_g08",
+              "usr_g17"
+            ]
+          },
+          {
+            "id": "research-2",
+            "members": [
+              "usr_g07",
+              "usr_g23",
+              "usr_g25",
+              "usr_g06",
+              "usr_g05"
+            ]
+          },
+          {
+            "id": "research-3",
+            "members": [
+              "usr_g21",
+              "usr_g12",
+              "usr_g19",
+              "usr_g14",
+              "usr_g24"
+            ]
+          },
+          {
+            "id": "research-4",
+            "members": [
+              "usr_g15",
+              "usr_g20",
+              "usr_g02",
+              "usr_g18",
+              "usr_g03"
+            ]
+          },
+          {
+            "id": "research-5",
+            "members": [
+              "usr_g22",
+              "usr_g13",
+              "usr_g09",
+              "usr_g16",
+              "usr_g10"
+            ]
+          }
+        ],
+        "bankApproval": "Centre Command confirmed review of all 51 supplied research questions, including Movies, Social Media and Relationships, for this cohort.",
+        "questionSelection": "PLAYER_CHOICE",
+        "bankVersion": "2026-11-12-v1",
+        "researchRoundId": "alpha:day1:1"
+      },
+      "preparedAt": "2026-11-13T08:11:41.370Z",
+      "preparedBy": "usr_cc02",
+      "openedAt": "2026-11-13T10:38:05.019Z",
+      "openedBy": "operator:user-request",
+      "rulesVersion": 1,
+      "agenda": {
+        "text": "Day 1: Clock in, record your start-of-day focus, select a research genre and question, investigate with AI and attach your researched chat. Review your saved work by date and complete your end-of-day reflection.",
+        "publishedAt": "2026-11-13T10:38:05.019Z",
+        "publishedBy": "operator:user-request",
+        "version": 1
+      },
+      "closedAt": "2026-11-14T06:22:03.334Z",
+      "closedBy": "usr_cc02"
+    },
+    {
+      "day": 2,
+      "title": "Explore",
+      "state": "DRAFT"
+    },
+    {
+      "day": 3,
+      "title": "STORY IT!",
+      "state": "DRAFT"
+    },
+    {
+      "day": 4,
+      "title": "FIRE IT!",
+      "state": "DRAFT"
+    },
+    {
+      "day": 5,
+      "title": "Prove",
+      "state": "DRAFT"
+    }
+  ],
+  "revision": 1122
+}

@@ -1,0 +1,302 @@
+.week-star-guide-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border: 1px solid #e1ce7277;
+  border-radius: 20px;
+  color: #f2dc8d;
+  background: #343d1bd9;
+  font:
+    600 14px/1.2 "Rajdhani",
+    sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.week-level-rewards {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 24px;
+  padding: 14px 20px;
+  border: 1px solid #d1ca7455;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #143e2ee8, #132a20f5);
+  color: #e8e8bd;
+  font-family: "Rajdhani", sans-serif;
+}
+.week-level-rewards > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.week-level-rewards > div:first-child {
+  gap: 16px;
+}
+.week-level-rewards > p {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+}
+.week-level-rewards .mission-stars {
+  margin: 0;
+}
+.week-level-rewards .mission-star {
+  width: 28px;
+  height: 28px;
+}
+.week-star-eyebrow {
+  color: #c4d18b;
+  font:
+    8px/1.3 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.12em;
+}
+.week-star-briefing {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 28px;
+  padding: 20px 24px;
+  color: #e7ebc9;
+  font-family: "Rajdhani", sans-serif;
+}
+.week-star-briefing aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 12px;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 50% 30%, #a7bd4838, transparent 70%), #0b2c20;
+}
+.week-star-briefing aside > span {
+  color: #d7d68f;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.14em;
+}
+.week-star-briefing aside img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px #0008);
+  animation: pip-hover 4s ease-in-out infinite;
+}
+.week-star-briefing aside p {
+  font-size: 19px;
+  line-height: 1.4;
+  margin: 0;
+  text-align: center;
+}
+.week-star-briefing small {
+  color: #b6c8a5;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.week-star-briefing main {
+  min-width: 0;
+}
+.week-star-briefing h2 {
+  font:
+    700 30px/1.1 "Rajdhani",
+    sans-serif;
+  color: #f4e3a3;
+  margin: 5px 0;
+}
+.week-star-briefing main > p {
+  font-size: 16px;
+  line-height: 1.35;
+}
+.week-star-targets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+.week-star-targets button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 6px;
+  border: 1px solid #92a76255;
+  border-radius: 12px;
+  background: #173b2d;
+  color: #d5dcaf;
+  cursor: pointer;
+}
+.week-star-targets button[aria-pressed="true"] {
+  border-color: #f1d97f;
+  box-shadow:
+    0 0 20px #e0cb6c22,
+    inset 0 1px #f5e5a455;
+  background: #395333;
+}
+.week-star-targets .mission-star {
+  width: 25px;
+  height: 25px;
+}
+.week-star-targets strong {
+  font:
+    700 15px "Rajdhani",
+    sans-serif;
+}
+.week-star-objectives {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 15px 0;
+}
+.week-star-objectives li {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 11px 13px;
+  border: 1px solid #a9bf7338;
+  border-radius: 12px;
+  background: #0d3025;
+}
+.week-star-objectives li > svg {
+  flex-shrink: 0;
+  color: #dfd892;
+  margin-top: 2px;
+}
+.week-star-objectives strong {
+  font-size: 17px;
+  color: #f0e5b6;
+}
+.week-star-objectives p {
+  margin: 3px 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #bfcfad;
+}
+.week-star-prize {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e2d08255;
+  border-radius: 10px;
+  color: #f1dc91;
+  background: #b1a34018;
+  margin-bottom: 12px;
+}
+.week-star-feedback {
+  padding: 10px;
+  border-radius: 10px;
+  background: #728d4030;
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .week-level-rewards {
+    padding: 6px 10px;
+    gap: 7px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+  .week-level-rewards .mission-star {
+    width: 20px;
+    height: 20px;
+  }
+  .week-star-guide-button {
+    padding: 6px 9px;
+    font-size: 11px;
+  }
+  .week-star-briefing {
+    grid-template-columns: 140px minmax(0, 1fr);
+    gap: 15px;
+    padding: 12px;
+  }
+  .week-star-briefing aside {
+    padding: 12px 8px;
+    gap: 10px;
+  }
+  .week-star-briefing aside img {
+    max-height: 120px;
+  }
+  .week-star-briefing aside p {
+    font-size: 14px;
+  }
+  .week-star-briefing h2 {
+    font-size: 24px;
+  }
+  .week-star-objectives {
+    gap: 7px;
+  }
+  .week-star-objectives li {
+    padding: 8px 10px;
+  }
+  .week-star-objectives p {
+    font-size: 12px;
+  }
+  .week-star-targets {
+    margin: 10px 0;
+  }
+  .week-star-targets .mission-star {
+    width: 18px;
+    height: 18px;
+  }
+  .week-star-targets strong {
+    font-size: 12px;
+  }
+}
+
+.week-level-rewards .sky-station-stars,
+.week-star-targets .sky-station-stars {
+  position: relative;
+  inset: auto;
+  transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  height: 32px;
+}
+.week-level-rewards .sky-reward-star,
+.week-star-targets .sky-reward-star {
+  width: 26px;
+  height: 30px;
+}
+.week-level-rewards .sky-reward-star:nth-child(2),
+.week-star-targets .sky-reward-star:nth-child(2) {
+  width: 30px;
+  height: 34px;
+  transform: translateY(-2px);
+}
+.level-two-scene > .week-level-rewards {
+  flex-shrink: 0;
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .week-level-rewards .sky-station-stars,
+  .week-star-targets .sky-station-stars {
+    height: 22px;
+  }
+  .week-level-rewards .sky-reward-star,
+  .week-star-targets .sky-reward-star {
+    width: 18px;
+    height: 20px;
+  }
+  .week-level-rewards .sky-reward-star:nth-child(2),
+  .week-star-targets .sky-reward-star:nth-child(2) {
+    width: 22px;
+    height: 24px;
+  }
+  .level-two-scene > .week-level-rewards .week-star-eyebrow {
+    display: none;
+  }
+}
+
+.week-star-briefing {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  align-items: start;
+}

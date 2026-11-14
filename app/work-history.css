@@ -1,0 +1,120 @@
+.player-work-history {
+  display: grid;
+  gap: 22px;
+  line-height: 1.6;
+  min-width: 0;
+}
+.work-history-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 18px;
+  justify-content: space-between;
+}
+.work-history-controls label {
+  display: grid;
+  gap: 6px;
+}
+.work-history-controls input {
+  background: #102b1e;
+  color: #e1ebcf;
+  border: 1px solid #829b68;
+  border-radius: 5px;
+  padding: 10px 12px;
+  color-scheme: dark;
+  min-height: 44px;
+}
+.work-history-attendance {
+  border-top: 1px solid #6c805960;
+  border-bottom: 1px solid #6c805960;
+  padding: 18px 0;
+}
+.player-work-history h3 {
+  margin: 0 0 12px;
+  font-size: 23px;
+}
+.player-work-history p {
+  margin: 0 0 12px;
+}
+.work-history-attendance ol {
+  padding-left: 24px;
+  margin: 16px 0 0;
+}
+.work-history-attendance li {
+  padding: 8px 0;
+}
+.work-history-attendance li span,
+.work-history-attendance li small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.work-history-attendance li small,
+.work-entry-time {
+  color: #b1c3a2;
+  font-size: 12px;
+}
+.work-history-timeline {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+.work-history-timeline > li {
+  padding: 18px 0;
+  border-bottom: 1px solid #6c805960;
+}
+.work-history-entry-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+}
+.work-history-entry-heading strong {
+  font-size: 17px;
+}
+.work-save-state {
+  flex-shrink: 0;
+  border: 1px solid #839b61;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  color: #d1e7a9;
+}
+.work-save-state.is-draft {
+  color: #f3d39b;
+  border-color: #a58d59;
+}
+.work-history-timeline details {
+  margin: 12px 0;
+}
+.work-history-timeline dt {
+  font-weight: 600;
+  margin-top: 12px;
+}
+.work-history-timeline dd {
+  margin: 4px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #d2dfc5;
+}
+.work-history-timeline .text-link {
+  display: block;
+  margin-top: 10px;
+}
+.player-profile-card > .btn {
+  margin-top: 18px;
+}
+@media (max-width: 600px) {
+  .work-history-entry-heading {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .work-history-controls {
+    align-items: stretch;
+  }
+  .work-history-controls label {
+    width: 100%;
+  }
+  .work-history-attendance li {
+    padding: 12px 0;
+  }
+}

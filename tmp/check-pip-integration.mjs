@@ -1,0 +1,17 @@
+import { build } from 'esbuild';
+import { resolve } from 'node:path';
+import { createRequire } from 'node:module';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import assert from 'node:assert/strict';
+await build({ entryPoints: ['components/SkyFlightMap.js', 'components/AttendancePrompt.js'], bundle: true, platform: 'browser', packages: 'external', alias: { '@': resolve('.') }, loader: { '.js': 'jsx' }, jsx: 'automatic', outdir: 'tmp/pip-build-check', write: false });
+await build({ entryPoints: ['app/pip.css'], bundle: true, write: false });
+await build({ entryPoints: ['components/PipGuide.js'], bundle: true, platform: 'node', packages: 'external', alias: { '@': resolve('.') }, loader: { '.js': 'jsx' }, jsx: 'automatic', format: 'cjs', outfile: 'tmp/pip-render.cjs' });
+const { default: Guide, PipArrival } = createRequire(import.meta.url)('./pip-render.cjs');
+const data = { user: { _id: 'me', role: 'GAMER' }, story: { flight: true, introComplete: true }, playSession: { state: 'ACTIVE' }, dayOne: { state: 'OPEN', records: [{ _id: 'r', userId: 'me', submissions: [] }] } };
+const html = renderToStaticMarkup(React.createElement(Guide, { data, missionOpen: true }));
+assert.match(html, /Choose your world/);
+assert.match(html, /Pip tutorial companion/);
+assert.match(html, /pip-drone/);
+assert.match(renderToStaticMarkup(React.createElement(PipArrival)), /Hit Clock in/);
+console.log('PASS: Sky map, attendance and CSS compile; Pip and first-arrival companion render on the server.');

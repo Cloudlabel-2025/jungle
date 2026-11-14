@@ -1,0 +1,765 @@
+.jungle-world .sky-map-mode .workspace {
+  background: linear-gradient(165deg, #0b2014, #153820 65%, #385037);
+}
+.jungle-world .sky-map-mode .main-content {
+  padding: 14px 20px;
+}
+.sky-map-mode .workspace-footer {
+  background: #102719;
+}
+.sky-journey {
+  --sky-ink: #e8f1df;
+  color: var(--sky-ink);
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.sky-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 4px 6px 20px;
+}
+.sky-eyebrow {
+  font: 10px var(--mono);
+  letter-spacing: 0.13em;
+  color: #b5d1c5;
+}
+.sky-heading h1 {
+  font-size: clamp(32px, 3vw, 42px);
+  line-height: 1;
+  margin: 7px 0;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.sky-heading p {
+  color: #bfd1c6;
+  font-size: 16px;
+  margin: 0;
+}
+.sky-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #d3e4d5;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 12px 0;
+}
+.sky-world {
+  position: relative;
+  border: 1px solid #92b9b47a;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  background: linear-gradient(
+    165deg,
+    #243e25 0%,
+    #667d4b 42%,
+    #9ca87c 76%,
+    #475e36 100%
+  );
+}
+.sky-map-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #e8e3bd66 #1b351d;
+}
+.sky-map-canvas {
+  width: 1400px;
+  min-width: 100%;
+  height: clamp(460px, calc(100dvh - 330px), 590px);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.sky-chart {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -4;
+}
+.sky-sun {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  top: 40px;
+  left: 190px;
+  background: #f9eed9;
+  opacity: 0.42;
+  box-shadow: 0 0 90px 45px #fff3ce44;
+  z-index: -3;
+}
+.sky-cloudbank {
+  position: absolute;
+  height: 180px;
+  left: -5%;
+  right: -5%;
+  bottom: -70px;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 10% 90%, #e2e9d6 0 16%, transparent 16.3%),
+    radial-gradient(ellipse at 40% 90%, #e2e9d6 0 28%, transparent 28.3%),
+    radial-gradient(ellipse at 80% 85%, #d5e1d1 0 24%, transparent 24.3%);
+  z-index: -2;
+}
+.sky-cloudbank-back {
+  bottom: -10px;
+  opacity: 0.35;
+  transform: scale(1.5, 0.8);
+}
+.sky-compass {
+  position: absolute;
+  top: 23px;
+  right: 23px;
+  display: grid;
+  place-items: center;
+  color: #e8f0db90;
+  pointer-events: none;
+  z-index: 2;
+}
+.sky-compass span {
+  font: 9px var(--mono);
+  margin-top: 5px;
+}
+.sky-aircraft-position {
+  position: absolute;
+  width: 150px;
+  height: 100px;
+  pointer-events: none;
+  transition: left 1s ease;
+}
+.sky-aircraft-position .flight-aircraft {
+  width: 150px;
+  height: 100px;
+  top: 0;
+  right: auto;
+  left: 0;
+  filter: drop-shadow(4px 15px 6px #08200b80);
+  animation: sky-hover 5s ease-in-out infinite;
+}
+.sky-aircraft-position > span {
+  position: absolute;
+  top: -16px;
+  left: 15px;
+  border: 1px solid #cad7b3;
+  padding: 5px 8px;
+  border-radius: 3px;
+  background: #18361d;
+  color: #f3edc9;
+  font: 8px var(--mono);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.sky-station {
+  position: absolute;
+  transform: translate(-50%, -42px);
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  background: none;
+  border: 0;
+  color: #f9f1cb;
+  cursor: pointer;
+  padding: 6px 12px;
+  width: 190px;
+  text-align: center;
+}
+.sky-station:before {
+  content: "";
+  position: absolute;
+  width: 145px;
+  height: 28px;
+  top: 59px;
+  border-radius: 50%;
+  background: #162a1636;
+  filter: blur(5px);
+  z-index: -1;
+}
+.sky-station-ring {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border: 2px solid #c8d9c3;
+  border-radius: 50%;
+  background: linear-gradient(150deg, #4e6938, #17351d);
+  box-shadow:
+    0 0 0 7px #152b1538,
+    inset 0 0 0 5px #c3d9c122,
+    0 10px 18px #152b1555;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.sky-station-ring b {
+  font: 600 28px var(--mono);
+}
+.sky-station-label {
+  display: grid;
+  gap: 4px;
+  padding: 9px 12px;
+  width: 100%;
+  border-radius: 5px;
+  background: #102b1bea;
+  border: 1px solid #b8d0c04d;
+  box-shadow: 0 5px 15px #102a1c26;
+}
+.sky-station-label small {
+  font: 8px var(--mono);
+  letter-spacing: 0.15em;
+  color: #b7cbbd;
+}
+.sky-station-label strong {
+  font-size: 19px;
+  line-height: 1.1;
+  font-weight: 600;
+}
+.sky-station-label em {
+  font-style: normal;
+  color: #bacdc3;
+  font-size: 12px;
+}
+.sky-station.is-active .sky-station-ring {
+  background: linear-gradient(150deg, #eee7ad, #aabb81);
+  color: #283b1d;
+  border-color: #fff5c3;
+  box-shadow:
+    0 0 0 8px #fff4bc26,
+    0 0 0 15px #fff4bc12,
+    0 7px 18px #22351c55;
+}
+.sky-station.is-active .sky-station-label {
+  border-color: #eee7ad;
+}
+.sky-station.is-verified .sky-station-ring {
+  background: #add4a4;
+  color: #1c483b;
+}
+.sky-station.is-completed .sky-station-label em {
+  color: #d8edaa;
+  font-weight: 700;
+}
+.sky-station-stars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  height: 48px;
+  margin-top: -9px;
+  pointer-events: none;
+}
+.sky-reward-star {
+  position: relative;
+  display: block;
+  width: 34px;
+  height: 40px;
+  transform: rotate(-12deg);
+}
+.sky-reward-star:nth-child(2) {
+  width: 42px;
+  height: 48px;
+  transform: translateY(-6px);
+}
+.sky-reward-star:nth-child(3) { transform: rotate(12deg); }
+.sky-reward-star svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.sky-star-depth { fill: #152a21; stroke: #071810; stroke-width: 2; }
+.sky-star-face { fill: #33503d; stroke: #8fa17a; stroke-width: 1.5; }
+.sky-star-facet { fill: #ffffff0c; }
+.sky-reward-star.is-earned {
+  animation: sky-star-pop .65s cubic-bezier(.16,1.5,.4,1) backwards;
+  animation-delay: calc(var(--star-index) * 140ms);
+}
+.sky-reward-star.is-earned svg {
+  filter: drop-shadow(0 3px 1px #5b330c) drop-shadow(0 0 9px #ffd76b80);
+}
+.is-earned .sky-star-depth { fill: #995619; stroke: #603b16; }
+.is-earned .sky-star-face { stroke: #fff0ad; }
+.is-earned .sky-star-facet { fill: #fff9cb45; }
+.sky-star-spark {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: #fff6c2;
+  clip-path: polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
+  filter: drop-shadow(0 0 3px #ffd058);
+  animation: sky-star-twinkle 2.8s ease-in-out infinite;
+}
+.sky-star-spark.spark-one { top: -2px; right: -3px; animation-delay: calc(var(--star-index) * .35s); }
+.sky-star-spark.spark-two { bottom: 6px; left: -5px; width: 6px; height: 6px; animation-delay: calc(1.3s + var(--star-index) * .35s); }
+@keyframes sky-star-pop {
+  from { opacity: 0; scale: .25; translate: 0 12px; }
+  to { opacity: 1; scale: 1; translate: 0 0; }
+}
+@keyframes sky-star-twinkle {
+  0%, 100% { opacity: 0; scale: .3; rotate: 0deg; }
+  35%, 55% { opacity: 1; scale: 1; rotate: 35deg; }
+}
+.sky-station.is-locked {
+  color: #c7d8d0;
+}
+.sky-station.is-locked .sky-station-ring {
+  background: #293d26;
+  border-color: #bdd0c080;
+}
+.sky-station:hover .sky-station-ring {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 0 9px #fff3c52b,
+    0 12px 24px #102a1c55;
+}
+.sky-station:focus-visible {
+  outline: 3px solid #fff2b2;
+  outline-offset: 7px;
+  border-radius: 8px;
+}
+.sky-map-controls {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #0e271be8;
+  padding: 5px;
+  border: 1px solid #b9cec15e;
+  border-radius: 30px;
+}
+.sky-map-controls span {
+  color: #d1e0d1;
+  font: 8px var(--mono);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+.sky-map-controls button {
+  border: 0;
+  background: #3e5931;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: #fff3cf;
+  cursor: pointer;
+}
+.sky-map-controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.sky-mission-dock {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 26px;
+  background: #102a1c;
+  border: 1px solid #829e9170;
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+}
+.sky-dock-icon {
+  display: grid;
+  place-items: center;
+  width: 53px;
+  height: 53px;
+  border: 1px solid #a0ba9b;
+  border-radius: 50%;
+  color: #d2dcae;
+}
+.sky-mission-dock h2 {
+  margin: 5px 0 0;
+  font-size: 26px;
+  font-weight: 600;
+}
+.sky-mission-dock p {
+  margin: 3px 0 0;
+  color: #bfd1c6;
+  font-size: 14px;
+}
+.sky-enter {
+  margin-left: auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  border: 1px solid #eee4b2;
+  border-radius: 5px;
+  background: #e1dfa8;
+  color: #20331a;
+  padding: 15px 22px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 48px;
+  white-space: nowrap;
+}
+.sky-enter:hover {
+  background: #fff1bb;
+}
+.sky-enter:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.sky-flight-note {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #aec8bc;
+  padding: 16px 5px;
+}
+.sky-flight-note p {
+  font-size: 12px;
+  margin: 0;
+}
+.sky-flight-note > svg {
+  flex-shrink: 0;
+}
+.sky-flight-note a {
+  margin-left: auto;
+  color: #d6dfc5;
+  white-space: nowrap;
+  font-size: 13px;
+}
+.sky-mission {
+  min-width: 0;
+}
+.sky-checkpoints {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0 0 22px;
+  padding: 0;
+  gap: 12px;
+}
+.sky-checkpoints li {
+  display: grid;
+  grid-template-columns: 25px 1fr;
+  gap: 4px 8px;
+  padding: 12px;
+  background: #16351e;
+  border: 1px solid #7c9b9755;
+  border-radius: 5px;
+  align-items: center;
+}
+.sky-checkpoints li > span {
+  border: 1px solid #8facaa;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  font: 10px var(--mono);
+}
+.sky-checkpoints strong {
+  color: #dbe8d8;
+  font-size: 15px;
+  font-weight: 600;
+}
+.sky-checkpoints small {
+  grid-column: 2;
+  color: #99b1ab;
+  font: 9px var(--mono);
+}
+.sky-checkpoints .is-complete {
+  border-color: #b3c891;
+}
+.sky-checkpoints .is-complete > svg {
+  color: #c4df9d;
+}
+.sky-onboarding {
+  text-align: center;
+  padding: 25px 15px 40px;
+  max-width: 570px;
+  margin: auto;
+}
+.sky-onboarding > svg {
+  color: #cbdba3;
+}
+.sky-onboarding h3 {
+  font-size: 31px;
+  margin: 18px 0 10px;
+}
+.sky-onboarding p {
+  color: #bccfc0;
+  font-size: 18px;
+  line-height: 1.6;
+}
+.sky-onboarding .sky-enter {
+  margin: 16px 0 0;
+}
+.sky-mission-instruction {
+  font-size: 16px;
+  color: #bccfc0;
+  margin: 0 0 20px;
+}
+.sky-mission .research-selection-heading {
+  margin-bottom: 18px;
+}
+.sky-mission .research-selection-heading h3 {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.sky-mission .research-selection-heading p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+.sky-mission .research-genre-card {
+  min-height: 155px;
+}
+.sky-submission-status {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: #244635;
+  border: 1px solid #9fbe80;
+  border-radius: 5px;
+  padding: 18px;
+  margin-top: 20px;
+}
+.sky-submission-status p {
+  font-size: 14px;
+  margin: 6px 0 0;
+  color: #c0d0bd;
+}
+.sky-return {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 22px;
+  background: transparent;
+  color: #e3e8ce;
+  border: 0;
+  padding: 12px 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+.sky-journey button:focus-visible,
+.sky-journey a:focus-visible,
+.sky-map-viewport:focus-visible {
+  outline: 3px solid #fff1ad;
+  outline-offset: 3px;
+}
+@keyframes sky-hover {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(1deg);
+  }
+}
+@media (max-width: 700px) {
+  .sky-heading {
+    align-items: flex-start;
+  }
+  .sky-heading h1 {
+    font-size: 35px;
+  }
+  .sky-heading p {
+    font-size: 14px;
+    max-width: 210px;
+  }
+  .sky-radio {
+    font-size: 0;
+    padding: 8px;
+    border: 1px solid #a0ba9b66;
+    border-radius: 50%;
+  }
+  .sky-radio svg {
+    width: 22px;
+    height: 22px;
+  }
+  .sky-mission-dock {
+    flex-wrap: wrap;
+    padding: 18px;
+    gap: 12px;
+  }
+  .sky-dock-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .sky-mission-dock > div:nth-child(2) {
+    flex: 1;
+    min-width: 170px;
+  }
+  .sky-enter {
+    width: 100%;
+    padding: 13px 18px;
+  }
+  .sky-mission-dock h2 {
+    font-size: 24px;
+  }
+  .sky-flight-note {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .sky-flight-note p {
+    flex: 1;
+  }
+  .sky-flight-note a {
+    margin-left: 24px;
+  }
+  .sky-checkpoints {
+    gap: 6px;
+  }
+  .sky-checkpoints li {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 9px 5px;
+    gap: 6px;
+  }
+  .sky-checkpoints strong {
+    font-size: 12px;
+  }
+  .sky-checkpoints small {
+    font-size: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky-aircraft-position .flight-aircraft {
+    animation: none;
+  }
+  .sky-aircraft-position,
+  .sky-station-ring {
+    transition: none;
+  }
+}
+
+/* The same immersive canvas and forest palette as the expedition map. */
+.jungle-world .sky-map-mode .workspace { height:100dvh; background:#0b2013; }
+.jungle-world .sky-map-mode .main-content { display:flex; padding:12px; max-width:none; min-height:0; }
+.sky-map-mode .workspace-footer { display:none; }
+.sky-journey { position:relative; isolation:isolate; width:100%; height:100%; max-width:none; min-height:520px; }
+.sky-world { height:100%; border-radius:8px; border-color:#526744; background:#142916; }
+.sky-map-viewport { height:100%; scrollbar-width:none; }
+.sky-map-viewport::-webkit-scrollbar { display:none; }
+.sky-map-canvas { height:100%; min-height:520px; background:linear-gradient(180deg,#172b1733,transparent 45%,#13271633),url('/images/flight-aerial-clouds.png') center/cover; }
+.sky-map-canvas::before { content:""; position:absolute; inset:0; z-index:-3; pointer-events:none; background:linear-gradient(180deg,#142b15d9,transparent 32%,transparent 72%,#07190cbb); box-shadow:inset 0 0 100px 25px #07190c99; }
+.sky-chart { z-index:-1; filter:drop-shadow(0 3px 3px #091d09); }
+.sky-sun { display:none; }
+.sky-cloudbank { height:100%; bottom:0; left:0; right:0; z-index:-2; opacity:.35; background:radial-gradient(ellipse at 20% 15%,#c4d0ad99,transparent 50%),radial-gradient(ellipse at 75% 40%,#c4d0ad88,transparent 40%); }
+.sky-cloudbank-back { transform:none; bottom:0; opacity:.28; }
+.sky-heading { position:absolute; top:22px; left:26px; right:26px; z-index:3; align-items:flex-start; padding:0; pointer-events:none; text-shadow:0 2px 6px #051808; }
+.sky-heading h1 { font-size:32px; }
+.sky-heading p { font-size:14px; color:#d5dfc1; }
+.sky-heading a { pointer-events:auto; background:#0b241acc; padding:10px 14px; border:1px solid #82966a66; border-radius:5px; }
+.sky-compass { top:104px; right:27px; }
+.sky-aircraft-position .flight-aircraft { filter:drop-shadow(0 12px 8px #031006bb); }
+.sky-aircraft-position > span { display:none; }
+.sky-station-ring { width:80px; height:80px; border-color:#a3b77c; box-shadow:0 0 0 5px #102a1c99,inset 0 0 0 5px #8b9f6533,0 10px 25px #04140799; }
+.sky-station.is-active .sky-station-ring { background:radial-gradient(circle at 35% 25%,#e5edb8,#9fbb67); box-shadow:0 0 0 7px #a0bd5255,0 0 38px 10px #b1d47555,0 10px 25px #04140799; }
+.sky-station-label { background:#0d291ae8; border-color:#69824f99; }
+.sky-map-controls { top:auto; bottom:133px; left:26px; }
+.sky-mission-dock { position:absolute; z-index:3; bottom:24px; left:26px; right:26px; background:#0a2318ed; border:1px solid #688151; border-radius:7px; padding:16px 20px; box-shadow:0 10px 30px #03150766; }
+.sky-mission-dock h2 { font-size:25px; }
+.sky-enter { background:linear-gradient(#dceba6,#a9c56d); border-color:#d7e7a7; }
+.sky-flight-note { position:absolute; z-index:3; top:112px; left:26px; padding:0; font-size:11px; gap:8px; color:#d5dfc1; }
+.sky-flight-note p { display:none; }
+.sky-flight-note a { margin:0; text-shadow:0 2px 5px #031808; }
+@media(max-width:700px) {
+  .jungle-world .sky-map-mode .main-content { padding:8px; }
+  .sky-heading { top:18px; left:18px; right:18px; }
+  .sky-heading h1 { font-size:28px; }
+  .sky-heading p { max-width:200px; font-size:13px; }
+  .sky-heading a { padding:10px; }
+  .sky-flight-note { top:118px; left:18px; }
+  .sky-compass { top:122px; right:18px; }
+  .sky-map-controls { left:18px; bottom:190px; }
+  .sky-mission-dock { left:12px; right:12px; bottom:12px; padding:13px; gap:8px; }
+  .sky-mission-dock h2 { font-size:22px; }
+  .sky-mission-dock p { font-size:12px; }
+  .sky-dock-icon { display:none; }
+  .sky-mission-dock > div:nth-child(2) { min-width:0; }
+  .sky-mission-dock .sky-enter { padding:10px 14px; min-height:44px; }
+}
+
+/* Match the forest map: scene runs edge to edge behind the player HUD. */
+.jungle-world .player-arena.sky-map-mode .workspace { height:100dvh; min-height:100dvh; }
+.jungle-world .player-arena.sky-map-mode .workspace > .player-topbar { position:absolute; inset:0 0 auto; z-index:12; background:linear-gradient(180deg,#03130dc9,#03130d55 65%,transparent); }
+.jungle-world .player-arena.sky-map-mode .main-content { padding:0; flex:1; min-height:0; }
+.sky-journey { height:100dvh; min-height:100dvh; }
+.sky-world { border:0; border-radius:0; }
+.sky-map-canvas { min-height:100%; }
+.sky-heading { top:108px; left:92px; right:26px; }
+.sky-flight-note { top:82px; left:92px; }
+.sky-compass { top:184px; }
+.sky-mission-dock { left:92px; }
+.sky-map-controls { left:92px; }
+.sky-aircraft-position { width:230px; height:115px; margin-top:32px; transform:translateX(-25px); }
+.sky-helicopter-sprite { display:block; width:100%; height:auto; object-fit:contain; filter:drop-shadow(0 14px 9px #12200d66); animation:sky-hover 5s ease-in-out infinite; }
+@media(max-width:700px) {
+  .sky-heading { top:104px; left:24px; right:18px; }
+  .sky-heading h1 { font-size:27px; }
+  .sky-flight-note { top:82px; left:24px; }
+  .sky-compass { top:202px; right:18px; }
+  .sky-mission-dock { left:72px; right:12px; }
+  .sky-map-controls { left:72px; }
+  .sky-aircraft-position { width:210px; }
+}
+@media(prefers-reduced-motion:reduce) { .sky-helicopter-sprite { animation:none; } }
+
+/* Position and camera are advanced together by the flight controller. */
+.sky-aircraft-position { transition:none; }
+.is-flying .sky-map-viewport { overflow-x:hidden; touch-action:none; }
+.is-flying .sky-helicopter-sprite { animation:none; }
+/* Flight animations run automatically; travel itself is driven by the controller. */
+.sky-journey:not(.is-flying) .sky-helicopter-sprite { animation:sky-hover 5s ease-in-out infinite !important; }
+.sky-station:disabled { cursor:wait; }
+.sky-cancel-flight { background:transparent; border:1px solid #a3b77c; border-radius:4px; color:#e5edc7; padding:12px; cursor:pointer; white-space:nowrap; }
+
+/* Shared jungle-map equipment: side arrows and bottom action rail. */
+.sky-side-arrow.map-scroll-left { left:76px; }
+.sky-side-arrow.map-scroll-right { right:14px; }
+.sky-map-viewport { cursor:grab; touch-action:pan-x; }
+.sky-map-viewport.is-dragging { cursor:grabbing; user-select:none; }
+.is-flying .sky-map-viewport { cursor:default; }
+.sky-journey .sky-action-rail { top:auto; bottom:12px; left:50%; transform:translateX(-50%); display:flex; gap:8px; align-items:stretch; padding:8px; width:max-content; max-width:calc(100% - 32px); border:1px solid #7d8e6080; border-radius:12px; background:#092119e8; box-shadow:0 6px 28px #0006; }
+.sky-header-tools { display:flex; align-items:flex-start; gap:8px; pointer-events:auto; }
+.sky-header-tools { flex-shrink:0; }
+.sky-heading > div:first-child { min-width:0; }
+.sky-header-tools button { display:flex; align-items:center; justify-content:center; gap:8px; background:#0b241ae8; color:#e2e9ca; border:1px solid #82966a88; border-radius:5px; padding:10px 12px; min-height:44px; cursor:pointer; font-size:14px; }
+.sky-progress > span { display:grid; gap:3px; font:15px var(--mono); white-space:nowrap; }
+.sky-progress small { font:8px var(--mono); letter-spacing:.06em; }
+.sky-mission-dock { left:auto; right:24px; bottom:94px; max-width:430px; width:calc(100% - 116px); padding:12px 16px; gap:12px; }
+.sky-mission-dock .sky-dock-icon { display:none; }
+.sky-mission-dock > div:nth-child(2) { flex:1; min-width:0; }
+.sky-mission-dock h2 { font-size:22px; }
+.sky-mission-dock p { font-size:12px; line-height:1.35; }
+.sky-mission-dock .sky-enter { padding:12px 16px; gap:12px; font-size:15px; }
+.sky-mission-dock:has(.sky-cancel-flight) { flex-wrap:wrap; }
+.sky-mission-dock .sky-cancel-flight { margin-left:auto; }
+.sky-flight-note button { background:transparent; border:0; color:#d6dfc5; font-size:13px; padding:0; cursor:pointer; text-shadow:0 2px 5px #031808; }
+.sky-equipment-panel { display:grid; gap:18px; min-width:0; color:#d4dfc5; }
+.sky-equipment-panel > p { margin:0; line-height:1.6; }
+.sky-level-list { display:grid; gap:10px; }
+.sky-level-row { display:flex; gap:12px; align-items:center; border:1px solid #647e4d80; background:#0d291b; border-radius:6px; padding:14px; }
+.sky-level-row > span { color:#b6c991; flex-shrink:0; }
+.sky-level-row > div { flex:1; min-width:0; }
+.sky-level-row strong { font-size:18px; }
+.sky-level-row p { margin:5px 0 0; color:#b9c6ac; font-size:13px; }
+.sky-level-row button { flex-shrink:0; }
+.sky-next-checklist { margin:0; padding:0; list-style:none; display:grid; gap:10px; }
+.sky-next-checklist li { display:flex; gap:10px; align-items:center; }
+@media(max-width:767px) {
+  .sky-heading .sky-eyebrow { font-size:8px; letter-spacing:.08em; }
+  .sky-journey .sky-action-rail { left:12px; right:12px; bottom:12px; width:auto; max-width:none; transform:none; gap:4px; padding:6px; border-radius:9px; }
+  .sky-journey .sky-action-rail > button { flex:1 1 0; width:auto; min-width:0; min-height:46px; gap:5px; padding:4px 1px; }
+  .sky-action-rail > button span { font-size:7px; letter-spacing:0; }
+  .sky-action-rail > button svg { width:18px; height:18px; }
+  .sky-header-tools button { padding:9px; min-width:38px; }
+  .sky-header-tools .sky-radio { font-size:0; }
+  .sky-header-tools .sky-progress { gap:5px; }
+  .sky-progress > span { font-size:12px; }
+  .sky-progress small { display:none; }
+  .sky-mission-dock { left:72px; right:12px; bottom:88px; width:auto; max-width:none; }
+  .sky-mission-dock .sky-enter { width:100%; min-height:44px; }
+  .sky-side-arrow { width:34px; height:52px; }
+  .sky-side-arrow.map-scroll-left { left:72px; }
+  .sky-side-arrow.map-scroll-right { right:8px; }
+  .sky-level-row { flex-wrap:wrap; padding:12px; }
+  .sky-level-row > div { min-width:145px; }
+}

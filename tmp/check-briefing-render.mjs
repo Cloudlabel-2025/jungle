@@ -1,0 +1,18 @@
+import {build} from 'esbuild';
+import {resolve} from 'node:path';
+import {createRequire} from 'node:module';
+import React from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import assert from 'node:assert/strict';
+await build({entryPoints:['components/FlightMissionBriefing.js'],bundle:true,platform:'node',packages:'external',alias:{'@':resolve('.')},loader:{'.js':'jsx'},jsx:'automatic',format:'cjs',outfile:'tmp/briefing-render.cjs'});
+const Component=createRequire(import.meta.url)('./briefing-render.cjs').default;
+const record={submissions:[],researchAssignment:{questionId:'fitness-3',genreName:'Fitness'}};
+const props={record,question:{id:'fitness-3',name:'Fitness · The sport nobody knows',question:'Six friends want to learn a new sport. Compare three options and plan the first session.'},timer:'89:59',remaining:5399000,onAction:()=>{},formatDate:()=>'',children:React.createElement('span',null,'TRANSMISSION_TEST_CONTENT')};
+const render=r=>renderToStaticMarkup(React.createElement(Component,{...props,record:r}));
+let html=render(record);assert.match(html,/Accept mission/);assert.doesNotMatch(html,/TRANSMISSION_TEST_CONTENT/);assert.match(html,/STARTS AT LAUNCH/);
+html=render({...record,acknowledgedAt:'2026-11-14T06:00:00Z'});assert.match(html,/Begin research/);assert.match(html,/STARTS AT LAUNCH/);assert.doesNotMatch(html,/TRANSMISSION_TEST_CONTENT/);
+html=render({...record,acknowledgedAt:'a',startedAt:'s'});assert.match(html,/89:59/);assert.match(html,/TRANSMISSION_TEST_CONTENT/);
+const submitted={...record,acknowledgedAt:'a',startedAt:'s',submissions:[{id:'one',url:'https://example.org/shared-chat',at:'2026-11-14T06:00:00Z'}],verification:{status:'PENDING'}};
+html=render(submitted);assert.match(html,/Signal received/);assert.match(html,/Transmission log/);assert.doesNotMatch(html,/Evidence verified/);assert.doesNotMatch(html,/TRANSMISSION_TEST_CONTENT/);
+html=render({...submitted,verification:{status:'VERIFIED'}});assert.match(html,/Evidence verified/);assert.match(html,/next level opens when it is released/);
+console.log('Five mission states render correctly; accept/start separation and evidence review gates preserved.');

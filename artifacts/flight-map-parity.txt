@@ -1,0 +1,28 @@
+FLIGHT / JUNGLE MAP FEATURE COMPARISON — 13 NOVEMBER 2026
+
+Jungle map feature -> Flight map implementation
+Left/right side arrows -> same map-scroll-arrow styling on opposite sides, with edge disabling and click/press-and-hold behavior.
+Mouse dragging -> pointer capture on map background, grab cursor, release/cancel cleanup.
+Wheel and horizontal touch panning -> wheel-to-horizontal conversion and native touch pan.
+Keyboard navigation -> ArrowLeft/ArrowRight plus Home/End, with controls suspended during helicopter travel.
+Daily check-in -> Check-in action panel reuses MyDay for the actual Day 1 or later-day clock and SOD/EOD forms.
+Next steps -> flight-specific next actions and saved discovery checkpoints, with links to briefing/rules/check-in.
+My work -> released flight missions, saved progress and flight-to-entry actions; future missions stay locked.
+Team -> adapted to the existing Week 1 Research Showcase, respecting its published groups and consent. No final-team roster, character assignment or project data is exposed during flight.
+Help Desk -> existing Questions/Ask MC interface, game rules and notifications.
+Level overview -> five actual release states with available Fly here buttons; no invented completion/clearance counts.
+Trophies/leaderboard -> own rewards and private released results; rankings remain paused during Week 1.
+Current objective -> compact mission dock with helicopter travel, arrival, cancel and lock feedback.
+HUD/navigation -> existing player header, notifications and drawer remain available over the full-screen image.
+
+No later-stage project work, keys, repair items, character controls or clearance spoilers were added. Flight snapshot privacy and backend stage restrictions remain unchanged. Before boarding, panels that write learning data direct players through Level 1 onboarding. Help remains accessible.
+
+Implementation: components/useFlightMapNavigation.js, components/SkyMapPanels.js, components/SkyFlightMap.js and app/sky-journey.css.
+Validation logs: tmp/sky-map-controls-tests.log and tmp/sky-map-controls-build.log. Browser verification and limitations are recorded in the final response and follow-up below.
+
+Final verification
+38 regression tests passed with zero failures/skips. Final production build passed (tmp/sky-map-controls-build-final.log).
+Browser: Home/End reached both map edges with appropriate disabled arrows; a short click moved 580 px; a 650 ms hold moved about 262 px without an extra release jump; background dragging moved exactly 300 px and cleared capture; vertical wheel panned horizontally while page scroll stayed zero. Controls and action rail disabled during travel.
+All seven equipment panels rendered: check-in, next steps, work, Showcase, help, levels and rewards; rules opened from Help. A synthetic SOD reflection saved and a fixture rules acknowledgement succeeded from the panels. My Work's Fly here action still opened no dialog during flight, then revealed seven genres on arrival. Four future destinations stayed disabled in the level list.
+Fresh final fixture verified rules are readable but acknowledgements disabled before boarding. After boarding, mobile controls at 390x844 and next-steps dialog had no horizontal overflow. The level counter fits on one line. Desktop map remained full-screen at 1280x720, with exactly two side arrows, six bottom-rail actions and no story-spoiler text.
+Screenshots: artifacts/flight-jungle-controls-desktop.jpg and artifacts/flight-jungle-controls-mobile.jpg. Preview remains at http://127.0.0.1:3101/gamer/dashboard with Aarav boarded, full motion enabled, and no research choice committed. Earlier synthetic reflection/acknowledgement writes were discarded when the fixture restarted. All verification used disposable data; native touch behavior still needs real-device UAT.

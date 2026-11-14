@@ -1,0 +1,19 @@
+HELICOPTER TRAVEL — 13 NOVEMBER 2026
+
+Selecting an available level or the mission-dock button starts one visual flight. The helicopter follows a curved arc and the camera follows from its departure position to the destination. The mission dialog mounts only on arrival. Repeated inputs and map panning are blocked while travelling. Cancel flight leaves the helicopter at its current position and never opens a delayed dialog. Closing a mission or cancelling returns keyboard focus to its level marker. Refresh does not auto-open a mission or award progress.
+
+Locked markers retain their lock icon and aria-disabled state. Activation gives a status message, with no departure and no mission dialog. Availability is checked before departure, every frame and immediately before arrival, using the latest authenticated snapshot. A revoked target cancels travel. Existing server day/stage guards remain authoritative; no backend access, question locks, evidence or timer behavior was changed. Previously released CLOSED days remain available for their existing read-only views.
+
+Motion defaults to the system reduced-motion preference. Reduced mode uses a short static transition; the wind control lets players explicitly enable full flight motion or reduce it again. Cancelling/unmounting clears animation callbacks. Switching personas or leaving the page cannot open an old mission later.
+
+Validation
+38 Day 1/flight/research regression tests passed, with zero failures/skips, using disposable MongoDB (tmp/sky-travel-tests.log). Five new controller tests cover delayed/exactly-once arrival, duplicate starts, locked departure, mid-flight and arrival-time revocation, cancellation/retry and reduced motion. Existing tests cover actual backend guards, question locking, concurrent research claims, evidence and Friday reuse.
+Production build passed (tmp/sky-travel-build-final.log). Browser checks with a separate disposable Day 2 fixture verified: no dialog during flight, controls disabled against duplicate input, exactly one dialog on arrival, travel between released levels, correct selected-destination dock, read-only closed Day 1, cancellation without a delayed dialog, and reduced-motion arrival. A real mouse click on locked Level 3 showed only the lock message; aircraft position stayed unchanged and no dialog opened. No Day 2 evidence was submitted; that fixture's pre-started attempt was synthetic and was stopped after verification.
+Final Day 1 browser check at 390x844 verified flight before entry, accessible Cancel flight button, no page overflow and exactly seven genre cards after arrival/boarding. Fresh preview remains at http://127.0.0.1:3101/gamer/dashboard with Aarav boarded, no research choice committed, and full flight animation enabled for this page session. The wind control can opt in again after a refresh if the system prefers reduced motion. Screenshots: artifacts/helicopter-in-flight.jpg and artifacts/helicopter-travel-ready.jpg.
+
+Code
+lib/sky-flight.js: single-flight controller, animation progression, cancellation and arrival eligibility.
+components/SkyFlightMap.js: selected destination, aircraft/camera positions, live eligibility, travel/lock messages, motion control and delayed mission entry.
+app/sky-journey.css: in-flight controls and aircraft presentation.
+
+Preview uses disposable synthetic data, not the application database. Developer verification does not replace independent player/MC/CC UAT.

@@ -1,0 +1,39 @@
+Day 1 setup simplification — 13 November 2026
+
+CC route: /centre-command/week-one-setup, Day 1 setup.
+Main fields: date, start time, finish time, research game.
+Research groups are displayed by name with a five-player count; Edit groups
+reveals one group selector per player. Raw group JSON is no longer required.
+Question-bank review remains an explicit confirmation before preparation.
+Legacy four-question editing is retained in a collapsed section.
+
+Save draft does not open the game. Prepare Day 1 validates the setup, then
+Open Day 1 appears on the same page. Changed or unsaved prepared settings
+must be prepared again before the opening action is offered. Opening still
+uses the existing server release authority and published-Game-Rules gate.
+Opened/closed releases are read-only. Staff-only preparedConfig is projected
+only to CC so the page can distinguish a saved draft from prepared content.
+
+Times are interpreted in the saved cohort zone, not the browser's zone.
+The chosen start is both challenge availability and official start; clock-in
+closes 30 minutes later; submission/reflection closing follows the finish.
+The chosen day is included in the working calendar. Research remains 90
+minutes; allow at least 90 minutes in the selected schedule. A future saved
+Champion reveal is retained; otherwise its earliest date is seven days later.
+Existing marking instructions, private verification prompt, correction policy
+and the fixed rubric/reward rules are retained. New setups use standard
+instructions when those values have never been configured.
+
+Validation: 46 focused tests passed, zero failed/skipped, including real
+disposable MongoDB save/prepare/open and seven-card research; timezone/DST
+handling, legacy questions, incomplete drafts, invalid groups and approval.
+Browser QA used a separate disposable game: edited times survived save and
+refresh, uneven groups and missing bank review blocked preparation, prepare
+revealed Open Day 1, opening showed LIVE and locked the released controls.
+Desktop and 390px mobile layouts were inspected, including all five groups.
+Final production build and git diff --check passed.
+Screenshots: day-one-setup-desktop.jpg, day-one-setup-mobile.jpg,
+day-one-groups-mobile.jpg.
+
+The configured main game's release and all player progress were not advanced
+by these UI tests. Temporary test preview was stopped after QA.

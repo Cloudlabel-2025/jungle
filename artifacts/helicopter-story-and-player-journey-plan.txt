@@ -1,0 +1,114 @@
+CODEWILD — CONFIRMED HELICOPTER STORY AND PLAYER JOURNEY PLAN
+Recorded 12 November 2026; updated after the interactive research selection unit. Later story units remain planned.
+
+AUTHORITATIVE USER DECISIONS
+1. The Player's opening experience is travelling in a helicopter, not the jungle map.
+2. The Player must not be shown all the existing modules on arrival.
+3. On the first day, the Player has no character. The character space remains unknown.
+4. Show seven random genres as interactive selectable cards. The latest user instruction replaces spinning with a selection game.
+5. Player selects and explicitly locks a genre, then chooses and confirms ONE of its THREE questions, researches and submits the result.
+6. Week 1 AI learning happens in the flight chapter. The helicopter crashes and the jungle map appears only AFTER Week 1 clearance AND final-team approval.
+7. Replace the Player-facing key objective with collecting parts/tools used to repair the crashed helicopter.
+
+These decisions supersede the five-card genre picker and automatic random-question assignment for FUTURE story-mode releases. Historical assignments, questions, evidence, marks and accepted project outcomes must remain pinned and readable.
+
+STORY ORDER
+Sign in -> helicopter arrival/prologue -> unknown character -> Day 1 briefing -> seven interactive genre cards -> one committed genre -> choose one of three questions -> research/evidence submission -> remaining Week 1 flight learning -> approved results/recovery if applicable -> approved/published final-team membership -> crash sequence -> jungle map -> accepted project milestones earn helicopter repair parts/tools -> final repair/extraction conclusion.
+
+Do not imply that selecting a genre, submitting one question, reaching Friday's date or merely viewing a cutscene clears Week 1. Existing authoritative assessment, recovery, team-publication, sprint approval/loading and kickoff controls remain the gates for actual project work.
+
+PLAYER EXPERIENCE BY STAGE
+
+A. ARRIVAL / FLIGHT
+Primary view: interactive sky map with a helicopter, connected flight levels and a visible Level 1 entry. The latest user correction puts boarding and research inside the map mission, rather than a standalone prologue followed by software pages.
+Header: real learner name, an unknown/silhouette character slot, Help and Sign out. Do not display a fallback character, team role or ability.
+Visible work: current flight/Week 1 task, required rules, agenda, relevant support and own receipts. Keep the larger module catalogue, Alumni project map, future sprints and character picker out of this stage.
+Intro is skippable, accessible by keyboard and has a reduced-motion/static equivalent. Skipping animation never skips learning or approval gates.
+
+B. DAY 1 — SELECT AND CHOOSE
+1. Present the Day 1 purpose, instructions and availability after the existing required release/check-in flow.
+2. Persist seven unique randomly offered available genres from the approved bank. No question previews before the genre is committed. Keep the separate five-person research groups for genre exclusivity; these are not final teams.
+3. Player selects a card and explicitly locks it. Server validates current active user, cohort, open release, pinned research group and saved offer, then atomically commits that selected available genre.
+4. Show the saved reservation and its three questions. Selecting a card alone does not commit it. Disable duplicate clicks. Reload/network retries return the same committed genre.
+5. Reveal that genre's three approved questions. Player selects one. Explain that confirmation locks the question, then save it permanently for the round.
+6. Show the selected prompt, acknowledgement and explicit Start research action. Preserve the existing 90-minute timer, draft/evidence submission, verification, revisions and assessment flow.
+7. Show a clear submission receipt and next flight task/waiting state. Submission does not reveal the jungle or start the Alumni Portal project.
+If a teammate claims an offered genre before confirmation commits, refresh only affected cards and return an understandable retry state. Never show a successful reservation for a claim that failed to save.
+If the Player disconnects after the genre is saved but before choosing a question, resume the same genre and show its three questions; do not offer another genre.
+Friday Fitness and the aligned Day 1 comparison must use the Player's CHOSEN question ID/text/version.
+
+C. REMAINING WEEK 1 — FLIGHT LEARNING CHAPTER
+Day 2 Explore, Day 3 STORY, Day 4 FIRE and Day 5 Prove remain the existing learning/assessment activities. Present them as current flight chapter tasks through one guided entry, not as a simultaneous catalogue of all modules.
+Rules, announcements, Showcase, questions/support, Discovery, reflections and results remain available when needed, with a clear next action and return path.
+Recovery participants retain their approved Saturday journey and private status. Show an explicit waiting/recovery instruction rather than an empty map or a premature crash.
+
+D. CLEARANCE / TEAM GATE
+Server checks the current published result and any approved recovery outcome, plus current approved/published final-team membership and valid programme state. No client flag, timestamp or animation completion may substitute for those records.
+Only an eligible Player in the approved final roster can proceed into the crash chapter. Changes/corrections that invalidate eligibility must be handled explicitly; viewing the crash previously must not bypass revoked access.
+
+E. CRASH / JUNGLE REVEAL
+Play an accessible, skippable crash story sequence with a persistent completion receipt. Reload resumes safely and does not replay the full sequence on every login.
+Then reveal the jungle map and the objective: work together to recover tools and parts, repair the helicopter and leave the jungle.
+Proposed character reveal: open character selection/reveal at this stage, after final-team approval. Continue using existing character uniqueness rules within the approved team. First-day and flight-stage character selection endpoints must reject early access, not merely hide the button.
+Keep narrative transition and project-work eligibility distinct: the map can explain that staff still need to approve/load a sprint or finish kickoff. Do not label a waiting sprint as playable.
+Proposed default: the crash is a story event, not a learner failure or automatic life/energy penalty.
+
+F. REPAIR PROGRESSION
+Keep the five Alumni Portal milestones and their assessment/acceptance requirements. Award one distinct repair item for each accepted milestone, rather than a Player-facing Key 1–5.
+Proposed illustrative item set (names/art can be refined): replacement cog, spanner/tool kit, wiring kit, fuel-system component, rotor component.
+Award items only on authoritative team acceptance. Completing cards alone is not enough. Repeated acceptance/retries must not duplicate inventory. Reopened/revoked acceptance must have an explicit inventory/progression policy.
+Display repair progress, collected items and the next needed component on the post-crash map. Finishing the required accepted milestones leads to a repair/extraction conclusion.
+Keep assessment totals separate from story inventory. Preserve historical key-based outcomes and add a stable accepted-milestone-to-repair-item mapping; do not blindly replace every occurrence of the word “key” in source, keyboard guidance or database IDs.
+
+MC AND CC EXPERIENCE
+CC: configure story-mode release, seven-genre offer policy, approved question bank, separate five-person research groups and normal content/policies. Review assessment/publication/recovery/team gates. Configure the milestone-to-repair-item mapping and explicit transition status.
+MC: deliver Week 1 flight learning, publish agendas/recaps, manage questions/Showcase/assessment reviews, record signoffs and monitor blocked learners. After approved team formation, conduct normal project kickoff and reviews.
+Staff need a stage/status view showing the exact missing gate, responsible role and direct action. Avoid a manual “force crash/pass” switch that bypasses assessments or team approvals.
+
+IMPLEMENTATION UNITS / ORDER
+
+S01 — STORY STATE AND ACCESS CONTRACT
+Define durable Player story progress and derive access from current cohort/release/results/team/sprint records. Distinguish offered genres, committed genre, chosen question, evidence status, crash receipt and repair inventory.
+Version the new release mode. Historical four-question releases and the existing five-card research mode remain readable without reassignment.
+Pass: direct URLs and forged API requests cannot open post-flight content/character selection early; MC/CC retain their permitted workspaces.
+
+S02 — FIRST-LOGIN FLIGHT SHELL
+Implement the helicopter sky map, unknown character slot and a minimal stage-aware navigation shell. Remove fallback character display for ineligible Players across header, account menu, profile and other Player surfaces. The sky map is the Week 1 home; the post-crash jungle/project map remains gated.
+Pass: a genuinely fresh Player sees only the flight journey and relevant next task; refresh/login restores stage; no character is inferred automatically.
+
+S03 — SEVEN-GENRE SELECTION GAME
+Extend the existing durable selection engine to save seven offered genres and one atomic player-confirmed genre per round/Player. Build interactive cards as an accessible interaction with reduced-motion behaviour and robust pending/error states.
+Pass: seven distinct cards, one permanent outcome, safe double click/retry, group conflicts resolved in MongoDB, no question previews before reservation.
+
+S04 — THREE-QUESTION CHOICE AND RESEARCH
+Split genre commitment from final question choice. Expose only the committed genre's three questions. Persist one confirmed question. Connect the existing acknowledgement/timer/thread/evidence/assessment receipts to that selected question.
+Pass: disconnect between steps resumes correctly; no question swapping after confirmation; Friday resolves the same chosen question; existing evidence/private score protections remain intact.
+
+S05 — WEEK 1 GUIDED TASKS
+Route Day 2–5 and recovery through the flight chapter with the correct current action, submitted receipt or waiting message. Preserve optional/essential support and curriculum workflows without a full module catalogue.
+Pass: Player, MC and CC can complete each daily handoff using visible instructions; upcoming project screens stay inaccessible.
+
+S06 — APPROVED TRANSITION AND CRASH
+Connect the authoritative clearance/final-team gate to a persistent, accessible crash sequence and post-crash map reveal. Add character reveal/choice eligibility here, including server checks.
+Pass: uncleared, recovery-pending, unpublished or unallocated Players cannot transition; approved Players can resume/reload without duplicate transition side effects; sprint kickoff rules still apply.
+
+S07 — REPAIR ITEMS AND MAP LANGUAGE
+Introduce accepted-milestone repair-item inventory/projection, update Player map/HUD/progression labels and add a final repair conclusion. Preserve historical key evidence and existing acceptance guards.
+Pass: no reward before acceptance, no duplicate items, correct team scoping, explicit amendment/revocation behaviour and no accidental changes to keyboard/API/database keys.
+
+S08 — INDEPENDENT STORY UAT
+Run the complete fresh Player -> MC -> CC journey in small checkpoints, then a five-team/25-Player rehearsal. Include first login, no character, seven-card selection, genre contention, choice of question, refresh/logout, expired sessions, timer/submission, privacy, Week 1 publication, recovery, team gate, crash accessibility, character reveal and repair-item awards.
+Production decision remains separate from implementation/build success. No existing synthetic preview or passing engine test counts as independent story acceptance.
+
+MAIN CODE AREAS TO CHANGE LATER
+components/Arena.js — Player shell/navigation/account character entry.
+components/PlayerHeader.js, CharacterPicker.js; lib/characters.js, character-actions.js — unknown identity, fallback suppression and reveal permissions.
+components/WorkspaceScreen.js, Views.js, WorkflowOverview.js; lib/workflow-guidance.js, workspace-navigation.js — stage-aware home/navigation/next action.
+components/ResearchGenrePicker.js, DayOneFeatures.js; lib/research-engine.js, research.js, day-one.js, day-one-rules.js — seven offers, player-confirmed reservation, three-question choice, question pinning and projections.
+lib/db.js — versioned story/selection/repair persistence where needed.
+lib/week-one-activities.js, week-one-assessments.js, week-one-outcomes.js; lib/recovery.js — authoritative question/result/recovery/team handoff.
+components/JungleGame.js, PilotWorkspace.js; lib/alumni-map.js, alumni-map-store.js, pilot-engine.js — post-crash map and accepted repair rewards.
+API handlers and older project-start routes — enforce the same pre/post-flight access policy; hiding navigation alone is insufficient.
+
+CURRENT ACTION
+The user has authorised the first implementation unit: helicopter opening, unknown identity, Week 1 navigation and backend stage restrictions. See artifacts/flight-opening-handover.txt for implementation/verification status. The interactive seven-card/three-question choice unit is now implemented; see artifacts/research-choice-handover.txt. Crash and repair-item units remain planned and require their own implementation and UAT. Existing assignments and historical evidence are retained.

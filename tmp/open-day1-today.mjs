@@ -1,0 +1,43 @@
+import mongoose from 'mongoose';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {randomUUID} from 'node:crypto';
+import {models,connect,transaction} from '../lib/db.js';
+import {localParts,validateSetup} from '../lib/day-one-rules.js';
+import {scheduleInstant} from '../lib/day-one-setup.js';
+import {publishAgenda,publishedGameRules} from '../lib/week-one-rules.js';
+await connect();
+try {
+ const oldSetup=await models.DayOneSetup.findById('alpha').lean();
+ const oldRelease=await models.WeekOneRelease.findById('alpha').lean();
+ const backup=`.data/backups/day1-schedule-${Date.now()}.json`;
+ await mkdir('.data/backups',{recursive:true});
+ await writeFile(backup,JSON.stringify({setup:oldSetup,release:oldRelease},null,2));
+ const result=await transaction(async session=>{
+  const release=await models.WeekOneRelease.findOneAndUpdate({_id:'alpha',revision:oldRelease.revision},{$inc:{revision:1}},{new:true,session});
+  const setup=await models.DayOneSetup.findOneAndUpdate({_id:'alpha',revision:oldSetup.revision},{$inc:{revision:1,editVersion:1}},{new:true,session});
+  if(!release||!setup)throw Error('Configuration changed; inspect again before updating.');
+  if(await models.DayOneRecord.countDocuments({cohortId:'alpha'}).session(session))throw Error('Player attempts now exist; schedule update stopped.');
+  if(setup.champion?.releasedAt || release.days.slice(1).some(d=>d.state!=='DRAFT'))throw Error('Programme advanced; schedule update stopped.');
+  const program=await models.WeekOneProgram.findById('alpha').session(session).lean();
+  if(!publishedGameRules(program?.data))throw Error('Published rules required.');
+  const day=release.days[0];
+  if(day.state!=='OPEN')throw Error('Expected the existing OPEN Day 1.');
+  const now=new Date(), zone=day.content.timeZone, local=localParts(now,zone);
+  const start=new Date(now.getTime()-60000);start.setUTCSeconds(0,0);
+  const end=scheduleInstant(local.day,'23:59',zone);
+  if(Date.parse(end)-start.getTime()<90*60000)throw Error('Insufficient time left today for the research activity.');
+  const before=structuredClone(day);
+  const config={...structuredClone(day.content),day:local.day,startTime:localParts(start,zone).time,endTime:'23:59',availableAt:start.toISOString(),officialStart:start.toISOString(),clockCutoff:new Date(start.getTime()+30*60000).toISOString(),closingCutoff:end,revealAfter:new Date(Date.parse(end)+7*86400000).toISOString(),weekdays:[...new Set([...day.content.weekdays,local.weekday])],holidays:day.content.holidays.filter(d=>d!==local.day),version:(setup.released.version||0)+1,releasedAt:now.toISOString()};
+  config.genres=config.genres.map(g=>({...g,version:config.version}));
+  validateSetup(config);
+  day.content=config;day.contentVersion=config.version;day.officialStart=config.officialStart;day.scheduledEnd=end;
+  day.openedAt=now.toISOString();day.openedBy='operator:user-request';
+  if(!day.agenda)publishAgenda(day,'Day 1: Clock in, record your start-of-day focus, select a research genre and question, investigate with AI and attach your researched chat. Review your saved work by date and complete your end-of-day reflection.','operator:user-request',now);
+  setup.released=config;setup.draft=structuredClone(config);setup.versions.push(config);
+  setup.markModified('released');setup.markModified('draft');release.markModified('days');
+  await setup.save({session});await release.save({session});
+  await models.WeekOneEvent.create([{_id:randomUUID(),cohortId:'alpha',actorId:'operator:user-request',kind:'SCHEDULE_AMENDED',createdAt:now,details:{day:1,reason:'User requested Day 1 moved to today and open for clock-in, activities and saved-work testing.',before,after:structuredClone(day),backup}}],{session});
+  return {day:local.day,timeZone:zone,state:day.state,startTime:config.startTime,clockCutoff:localParts(config.clockCutoff,zone).time,endTime:config.endTime,agendaPublished:!!day.agenda,backup};
+ });
+ console.log(JSON.stringify(result,null,2));
+} finally {await mongoose.disconnect();}

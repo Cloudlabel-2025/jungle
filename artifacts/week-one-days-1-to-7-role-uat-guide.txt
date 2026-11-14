@@ -1,0 +1,298 @@
+CODEWILD: GAME START, DAYS 1–7, ROLE/PAGE MAP AND SMALL-UNIT UAT
+Prepared 12 November 2026 from the current application source.
+
+READ THIS FIRST
+Verdict: not signed off as production-ready. Passing automated tests and a production build establish tested technical behaviour, not an independently playable experience. The user's reported inability to play is an unresolved release blocker. This document maps current behaviour; it does not claim that the UI/UX or independent UAT has passed.
+
+Scope: first programme week, from an empty cohort to Friday results, Saturday recovery and published teams. Later five-sprint project gameplay is a separate journey and needs its own UAT. Treat Day 1–5 as programme teaching days. Day 6 means the configured Saturday recovery session. Day 7 has no separate implemented game or day-release record. Calendar dates, official start, closing times and recovery windows must be configured; they are not supplied by this guide.
+
+Terms
+Player = GAMER. MC = MISSION_COMMANDER. CC = CENTRE_COMMAND.
+Research groups: separate groups of five used only to make Day 1 genre claims exclusive.
+Showcase groups: five temporary presentation/voting groups of five; independently configured.
+Final teams: formed after verified Friday/recovery outcomes; normally three to five members with published membership.
+These are three different rosters. Research selection must not silently create final teams or permanent team leaders.
+
+CURRENT PREVIEW LIMIT
+The --research preview starts with synthetic accounts, five research groups, Day 1 already OPEN and all 25 Gamers already clocked in. It is useful for selection testing. It does not test account provisioning, pre-release visibility, opening Day 1, first clock-in or a genuine fresh start. It uses disposable MongoDB; restarting the launcher creates a fresh fixture. Do not use that fixture as the production system or as evidence that the whole week is playable.
+
+01. HOW THE GAME BEGINS: BEFORE ANY PLAYER STARTS
+
+CC owns initial setup:
+1. Provision the intended cohort, 25 Gamer accounts and the assigned MC. Confirm real password login and correct role/cohort access; persona switching is a simulation tool.
+2. Configure working calendar/time zone, scoring policy and approved content. Explicitly activate the intended Pack 3A recovery policy; do not confuse current 60% clearance with historical 70% cohorts.
+3. Publish Game Rules. No day can open without a published rules version.
+4. Configure Day 1 times, research mode, all five-person research groups, the approved 51-question bank reference, assessment instructions, link-correction policy and private Champion prompt.
+5. Save a draft, then validate/prepare. PREPARED is hidden from Gamers. Preparation does not open the day.
+6. Configure the separate Showcase groups, consent/evidence workflow and presenter arrangements.
+7. Prepare Day 2–5 scenario/reference packs, Friday's quiz key, three Compass questions and award rules. Friday Fitness requires reviewed references for every possible pinned Day 1 question: 51 with the new research bank, four in historical mode.
+8. Configure and approve genuine Saturday recovery content/schedule before inviting learners; this can be completed later, but must precede release.
+
+MC/CC explicitly opens Day 1 in the Week 1 day-release panel. Opening does not happen automatically at midnight. MC/CC publishes the day's agenda at or after official start. Player signs in, finds Week 1 & Recovery, reads rules, opens My Day and clocks in.
+
+Day state machine: DRAFT -> PREPARED -> OPEN -> CLOSED.
+Only one teaching day is OPEN. The preceding day must be CLOSED before the next opens. Closing is blocked before the scheduled end. Opened content is version-locked. Pending assessment may remain pending when the next day opens; pending is not a zero mark.
+
+02. DAYS 1–7: WHAT EACH ROLE DOES
+
+DAY 1 — DISCOVER / RESEARCH BASELINE
+Player:
+- Read/acknowledge Game Rules; ask a clarification if needed.
+- Clock in in My Day and record a start-of-day plan.
+- Open Meeting Announcements, read the actual agenda and acknowledge it. Opening and acknowledgement are separate recorded events.
+- Open My Games / Individual discovery mission. View five genre names without question previews. Pick one genre; receive one random question. The choice is permanent for the round and exclusive within the separate research group.
+- Read and acknowledge the assigned question, then explicitly start the 90-minute research timer.
+- Use an external AI tool. Submit the shareable conversation-thread URL through the existing evidence form. Correct inaccessible links using the supported revision flow.
+- Give Showcase consent if willing. Read safe anonymous summaries, vote without self-voting and present if selected.
+- Record applicable class/orientation attendance, useful workplace response and end-of-day reflection through the existing Day 1 daily flow.
+MC:
+- Open/release the prepared day if authorised, publish agenda, facilitate class/research, answer questions and help with access issues.
+- Manage Showcase groups, safe summaries, ballots, presenter decisions and observed presentation assessment.
+- Monitor submissions and behaviour. MC can record permitted factual markers/extensions; Day 1 private baseline rating entry and approval are CC-owned.
+CC:
+- Own bank/group/content configuration. Verify submitted Day 1 thread access, enter AI and human ratings, approve the private baseline, and record the private Research Champion decision after closure when eligible.
+- Resolve authorised exceptions; do not publish private baseline scores or Champion details prematurely.
+Exit: evidence and operational receipts retained; scheduled day closes. Marking can continue later. No reset of shared lives/energy.
+
+DAY 2 — EXPLORE
+Player:
+- Daily clock-in, SOD, agenda read/acknowledgement, two teaching sessions and their separately opened/acknowledged recaps.
+- D2-G01 The Conflicting Instructions: submit three findings, two clarification questions and a stakeholder message.
+- D2-G02 The Vanishing Alumni: explain suspected cause, evidence, two diagnostic checks and a short MC update.
+- Each game has a 60-minute server timer from actual Start, autosaved draft and structured submission.
+- Participate in Showcase, attempt Daily Discovery, ask permitted questions, and complete EOD.
+MC:
+- Publish agenda; record class completion before publishing each recap; respond to questions and group safe classroom answers.
+- Run Showcase and review learning evidence; approve anonymised evidence for external-AI marking, import the correctly matched return and perform required human verification.
+CC:
+- Supply/prepare the approved day pack and private references; oversee exceptions/assessment controls and policy.
+Exit: receipts and submissions persist; MC/CC closes Day 2 after scheduled end before Day 3 opens.
+
+DAY 3 — STORY IT!
+Player:
+- Repeat daily clock/SOD/agenda/classes/recaps/Discovery/Showcase/EOD obligations.
+- D3-G01 The Clue That Does Not Fit: structured STORY explanation, evidence and uncertainty.
+- D3-G02 Follow That Click!: order components, explain the STORY, component roles, failure point and analogy limits.
+- Two 60-minute games; refresh must preserve timer/draft.
+MC: deliver classes/recaps, support STORY reasoning, run ballots/presentations, review evidence and assessments.
+CC: prepare the approved scenarios, component cards and private references; resolve authorised exceptions.
+Exit: close Day 3; preserve evidence and question/rubric versions.
+
+DAY 4 — FIRE IT!
+Player:
+- Repeat daily obligations.
+- D4-G01 The Impossible Claim: Frame, Integrate, Reason, Experiment, evidence and uncertainty.
+- D4-G02 The Wrong Door: FIRE reasoning about access/identity, affected layer, two checks, safe remediation and an MC update.
+- Two 60-minute games.
+MC: deliver classes/recaps, support investigation, run Showcase, review genuine evidence and required human assessment checks.
+CC: prepare approved scenarios/reference packs, oversee access/privacy and factual exceptions.
+Exit: close Day 4 before opening Friday.
+
+DAY 5 — PROVE / FRIDAY
+Player:
+- Repeat daily obligations and complete the weekly three-question Compass Check.
+- D5-F01 Day 1 Research Revisited: 90 minutes, exact original Day 1 assigned question/version, a fresh external-AI thread, STORY/FIRE/evidence and self-comparison.
+- D5-Q01 Full-Stack Understanding Quiz: 15 questions, 30 minutes, one attempt; saved answers seal at expiry and there is no negative marking.
+- Finish the week's Showcase/Discovery/EOD requirements. View only own results after official publication.
+MC:
+- Complete outstanding assessment/human-review queues, the separate aligned Day 1 reassessment, presentation coverage and factual exceptions.
+- Ensure all 25 distinct learners have presented once and each day's general/technical presentation mix is valid.
+- Close all teaching days when permitted, check Compass completion and record final MC signoff.
+CC:
+- Supply approved references/quiz/Compass and awards content.
+- Approve required recognition: 13 awards to distinct recipients, three learning examples and private Day 1 Champion decision. Publish only against current MC signoff and complete gates.
+- Publish the immutable result revision; corrections require authorisation and renewed signoff/publication.
+Readiness weights: Fitness 50 + General 15 + Technical 12 + Quiz 3 + Showcase 10 + Professional consistency 10 = 100.
+Current Pack 3A clearance is unrounded >=60; distinction >=92. Historical policies remain versioned. Day 1's original 33-mark baseline is separate; the aligned four-criterion comparison must not overwrite it. Trophies are separate from readiness.
+Important: “Friday” does not mean results appear automatically at a clock time. Missing evidence, assessment, presenter coverage, recognition or signoff blocks publication.
+
+DAY 6 — CONFIGURED SATURDAY RECOVERY
+Who: verified below-clearance learners after the approved Friday publication; not the entire cohort by default.
+Player:
+- See private invitation/schedule in My Results. Choose Continue or Request Leave before the configured response deadline.
+- Attend the recovery class. The approved programme is 90-minute class + 20-minute break + two 30-minute exams (Technology and Fun), total 170 minutes.
+- Start only released exams, retain drafts through refresh, submit both genuine attempts and view the separately approved recovery result.
+- Friday-cleared learners do not repeat recovery exams; they await published team/Week 2 instructions.
+MC:
+- Author the proposed session/exam content, deliver the class, record actual session progress/attendance, open exams after the break, review imported evidence and required human checks, then sign off.
+- Review proposed final teams or submit a reasoned override request.
+CC:
+- Approve the immutable recovery configuration, reconcile eligible invitations and resolve institution/leave decisions.
+- Approve/lock recovery outcomes. Lock the eligible population, generate/review/approve team proposals, lock and publish the whole roster.
+Rules: both assessable exams and attendance are required. Exactly 60 clears under current policy. No response, absence, failed recovery or unresolved withdrawal remains an institution decision rather than an invented pass. Recovery does not rewrite Friday score/rank/prizes.
+Pages: recovery panels appear in existing My Day, My Games and My Results after Friday closes; staff panels are embedded in their existing programme screens. There is no separate day-6 teaching tab.
+
+DAY 7 — NO IMPLEMENTED DAY-7 GAME
+Current system: the teaching-day engine creates only Days 1–5. Recovery is separately scheduled. No automatic Sunday lesson, exam or new daily release is implemented.
+Player: view published personal outcome and final team information, or an explicit pending status. No invented mandatory task.
+MC/CC: finish legitimate pending review/institution/team decisions and issue approved Monday instructions through available announcements/communication flows.
+Decision required from programme owner: rest day, preparation day, make-up window or another activity? If Day 7 should contain mandatory gameplay, that is a missing requirement/feature. Team publication is gated by verification; it is not guaranteed to happen on Sunday.
+
+03. PAGE INVENTORY: USE THESE ROUTES FOR UAT
+
+PLAYER: prefix /gamer
+G1 /gamer/week-one — My Day: active day, clock-in, SOD/EOD, daily status, Friday Compass; recovery daily panel when applicable.
+G2 /gamer/week-one-announcements — Meeting Announcements: agenda read/acknowledgement and class recaps.
+G3 /gamer/week-one-games — My Games: Day 1 research selection/timer/thread; Days 2–4 games; Friday Fitness/quiz; recovery exams when released.
+G4 /gamer/week-one-ask-mc — Ask MC: ordinary questions, rules/access/essential support and replies. Ordinary questions capped at two per day; essential support is separate.
+G5 /gamer/week-one-showcase — Research Showcase: consent, safe summaries, secret ballot, selection and presentation instructions.
+G6 /gamer/week-one-challenges — Challenges & Rewards: Daily Discovery, optional challenges, verified rewards and published recognition.
+G7 /gamer/week-one-game-rules — Game Rules: current version, acknowledgement, clarification and shared FAQ.
+G8 /gamer/week-one-results — My Results: private published marks, recovery response/status and published team outcome.
+
+MC: prefix /commander (not /mission-commander)
+M1 /commander/week-one — Mission Control: cohort delivery state, day release/closure and queues.
+M2 /commander/week-one-announcements — Classes & Announcements: agenda, class completion, recap publication, recovery content/session controls.
+M3 /commander/week-one-assessments — Games & Assessments: evidence review, approved anonymised batch exchange, human verification and comparison preparation.
+M4 /commander/week-one-questions — Questions & Tickets: replies, escalations, grouped safe questions and answers.
+M5 /commander/week-one-showcase — Research Showcase: groups, summaries, ballots, presenter handling and evidence-backed presentation marks.
+M6 /commander/week-one-challenges — Challenges & Rewards: genuine Discovery/challenge evidence review and reward workflow.
+M7 /commander/week-one-behaviour — Rules & Behaviour: rules/FAQ, behaviour and factual exceptions, protected audit.
+M8 /commander/week-one-results — Results & Teams: readiness review, final MC signoff, recovery signoff and final-team review.
+
+CC: prefix /centre-command
+C1 /centre-command/week-one — Command Centre: cohort overview, release state and administrative queues.
+C2 /centre-command/week-one-setup — Game Configuration: accounts, organisation/calendar/policy, Day 1 research mode/group JSON/bank approval, Days 2–5 content, recovery policy/configuration/approval.
+C3 /centre-command/week-one-assessments — Assessment Control: private Day 1 verification/ratings/approval, assessment controls, comparison and review queues.
+C4 /centre-command/week-one-questions — Questions & Escalations: escalated questions/access issues and staff follow-up.
+C5 /centre-command/week-one-rewards — Showcases & Rewards: Showcase controls, Discovery/challenge controls and recognition.
+C6 /centre-command/week-one-rules-approvals — Rules & Audit: publish rules, approvals, factual exception decisions and protected audit.
+C7 /centre-command/week-one-results — Final Results & Allocation: result publication/corrections, recovery approvals/institution decisions and final team approval/publication.
+
+Pages outside this first-week journey:
+/gamer/dashboard is the expedition/project map, not My Day.
+/gamer/sprint-board contains the original objectives plus Programme Sprint Work; later sprint work must not be mistaken for today's Week 1 task.
+/gamer/daily-journal is the original journal with additional programme content; it is not the canonical Week 1 Meeting Announcements page.
+/gamer/rewards is the original rewards area with later programme rewards/documents; it is different from Week 1 Challenges & Rewards and My Results.
+/centre-command/setup is the original expedition/sprint setup, different from /centre-command/week-one-setup.
+Notifications exist at each role prefix + /notifications. Notification access does not itself complete an acknowledgement or assessment.
+
+04. BREAK THE UAT INTO SMALL UNITS
+
+All units below start NOT RUN for independent human UAT. Existing automated checks are supporting evidence only. Do not carry an automatic PASS into this record. For every case record tester, role/account, cohort/fixture, build, starting state, clicks, expected result, actual result, screenshot, defect and retest.
+
+U00 — ENTRY AND ROLE NAVIGATION
+Start: new provisioned accounts, no learner progress.
+CC/MC/Player: sign in independently; follow visible navigation to their first relevant programme action without being given a hidden URL.
+Pass: correct role, correct cohort, one clear starting instruction, no access to another role or learner's private data.
+Negative: wrong password, expired session, inactive account, direct staff URL as Player, second cohort.
+Block release if: a tester needs developer help merely to find the right programme page.
+
+U01 — EMPTY COHORT TO PREPARED DAY
+CC: configure accounts/rules/calendar/content/research groups; save draft; review validation; prepare.
+MC: see preparation state and what is missing without accessing CC-only private content.
+Player: see a clear waiting state; no hidden questions, future packs or scoring keys.
+Pass: plain-language validation identifies the exact missing input; data survives reload; every Gamer is assigned once to a five-person research group.
+Negative: four/six members, duplicate member, missing Gamer, outside/inactive member, unapproved bank and wrong time zone/date.
+
+U02 — OPEN DAY, RULES, CLOCK AND AGENDA
+MC/CC: open prepared Day 1; publish agenda at valid time.
+Player: read rules, clock in, SOD, open agenda, acknowledge.
+Pass: receipts persist; reads and acknowledgements are distinct; no hidden dependency guessed by the tester.
+Negative: open before preparation/rules, Player opening day, early agenda publication, acknowledge without opening, reload/double click.
+
+U03 — GENRE SELECTION ONLY
+Start: Day 1 open, Gamer clocked in and unassigned.
+Player: see five genre names, pick, refresh, log out/in.
+MC/CC: inspect own permitted delivery/group state, without editing an opened roster.
+Pass: one persistent assignment; no preview/reroll; five group members obtain distinct genres; another research group can reuse a genre.
+Negative: two concurrent claims, stale card, forged user/group/round IDs, network retry, inactive membership.
+
+U04 — RESEARCH TIMER AND EVIDENCE
+Player: acknowledge, start 90 minutes, draft, refresh, submit a shareable thread, correct an inaccessible link.
+CC: verify the actual current submission revision and record baseline ratings/approval privately.
+MC: perform only permitted support/extension/marker actions.
+Pass: original question/deadline persists; no lost work; pending/inaccessible/verified are distinguishable; no private scores leak.
+Negative: start before acknowledgement, expired timer, bad URL, stale revision and duplicate submission.
+
+U05 — DAY 1 SHOWCASE AND CLOSE
+MC: set separate Showcase groups, collect consent, publish safe anonymous summaries, run ballot, handle tie/unavailability, record presenter evidence.
+Player: read summaries, vote, present if selected, finish EOD.
+CC: review private baseline/Champion decision when permitted; close day at valid time.
+Pass: consent respected, no self-votes or ballot-identity leakage, clear presenter instructions and retained daily receipts.
+Negative: no consent, repeat voting, tied ballot, missing presentation, closing before scheduled end.
+
+U06 — ONE DAY-2 GAME BEFORE COPYING THE PATTERN
+CC: prepare Day 2 after correct schedule checks. MC: open it and deliver agenda/classes/recaps. Player: complete only D2-G01 initially.
+Pass: start/draft/save/submit/review are understandable, timer is durable, receipt is visible and errors preserve the form.
+Then test D2-G02, including its technical evidence fields.
+Negative: future day access, missing reference pack, recap before class completion, expired draft and unsaved navigation.
+
+U07 — DAY 3 AND DAY 4 STRUCTURED FORMS
+Test each game separately: D3-G01, D3-G02, D4-G01, D4-G02.
+Player: understand each required field and component-order interaction without facilitator interpretation.
+MC/CC: review the same stored evidence with its pinned reference/rubric.
+Pass: labels explain the requested answer; validation points to the field; refresh retains work; empty/incomplete evidence is not silently accepted as assessed.
+
+U08 — DAILY OBLIGATIONS AND PRESENTATION COVERAGE
+Run across five days, not just one representative day.
+Player: clock/SOD, agenda, class recaps on Days 2–5, questions, genuine Discovery and EOD; Friday Compass.
+MC: two completed classes before recaps; 25 distinct presenters across the week; daily mix of five general on Day 1, then two general/three technical per day.
+CC: review factual exceptions and approved reward behaviour.
+Pass: tester can see today's remaining obligations; one action is not mistaken for a different receipt; trophies never alter readiness.
+
+U09 — FRIDAY FITNESS AND QUIZ
+Player: reopen exact original research question, start fresh thread, complete Fitness and quiz, check refresh/expiry.
+MC/CC: supply matching question references, perform aligned Day 1 comparison and review actual evidence.
+Pass: 51-question mode and historical four-question mode both work; comparison retains the original baseline; quiz saves/seals answers and cannot be retaken.
+Negative: wrong original question, changed version, missing reference, duplicate quiz start, expiry during connectivity failure.
+
+U10 — MARKING TO PRIVATE PUBLICATION
+MC: approve anonymised evidence, export/import the exact batch, perform human verification, resolve queues and sign off.
+CC: approve required recognition/Champion and publish against current signoff.
+Player: view only own published results and a clear pending status beforehand.
+Pass: published totals reconcile with source evidence, correct 60/92 boundaries apply, missing evidence is pending, and every blocked publication lists what is missing and who can resolve it.
+Negative: duplicate/missing anonymous IDs, stale evidence, out-of-range ratings, missing presenter/Compass/award, changed evidence after signoff, correction after publication.
+
+U11 — SATURDAY RECOVERY
+Use three independent paths: below-clearance Continue, below-clearance Request Leave/no response, and Friday-cleared learner.
+MC: class/attendance/break/exams/evidence review/signoff. CC: approve configuration, invitations, institution decisions and recovery result.
+Pass: only eligible learners enter; 90+20+30+30 sequencing works; both attempts/attendance are required; pending/institution decisions remain explicit; Friday results remain unchanged.
+Negative: early exam, wrong exam order, missing attendance, expiry/extension, only one attempt and exactly 60 boundary.
+
+U12 — FINAL TEAMS, DAY-7 STATUS AND MONDAY HANDOFF
+CC: lock verified eligible population, generate teams, review MC feedback, approve/lock/publish roster.
+MC: review and submit any reasoned override request. Player: see only published outcome/team and next instruction.
+Pass: proposed memberships are private, unresolved/withdrawn users are excluded correctly, research/Showcase rosters remain independent, and amendments create a new reviewed publication.
+Day-7 acceptance: either an explicit approved rest/waiting state with Monday instructions, or a separately approved new Day-7 feature. An unexplained empty screen fails usability acceptance.
+
+05. RELEASE GATES AND UI/UX FIX CANDIDATES
+
+Confirmed design/coverage limitations, not newly reproduced functional defects:
+- The root map, original workspace and Week 1 tabs coexist. A new tester can encounter similarly named setup, rewards, journal and dashboard areas. Test discoverability before changing more business rules.
+- Research-group configuration currently requires JSON and internal user IDs. A staff-facing five-slot roster picker with names, duplicate prevention and immediate validation is a proposed UX improvement, not implemented by this guide.
+- Opened configuration remains visible in an editable form, while the server locks re-preparation. The UI should explain draft-versus-active changes and clearly indicate that the active roster is locked.
+- New research mode requires 51 Friday reference packs. Content readiness and staff workload need explicit validation; a populated question bank does not provide the required approved reference answers.
+- Long mixed-purpose staff forms and many publication gates need a visible missing-items list, responsible role and direct action for every blocker.
+- The current local preview bypasses the initial journey. Fresh, in-progress, expired, blocked and published UAT fixtures are needed for each small unit.
+- No Day-7 gameplay exists. The intended Sunday/Monday handoff needs programme-owner agreement.
+- Previous full Week 1 automation exercised synthetic data and controlled time. It is not evidence of an independent seven-calendar-day browser journey or deployed non-functional performance.
+
+Production decision: NO-GO pending evidence, not a claim that every backend action is broken.
+Required evidence before GO:
+1. Independent Player, MC and CC testers complete U00–U12 using visible UI instructions. Record and retest every blocking defect.
+2. Real content/rubrics/resources, all research groups and separate Showcase groups are approved; no synthetic scenario is presented as genuine institutional approval.
+3. Deployed password login, cohort/role boundaries, session expiry, private evidence access and hidden answer keys are verified with real role accounts. Production persona access is disabled.
+4. Deployed MongoDB transactions/private file persistence are verified, including restore of the relevant assessment/evidence/research collections.
+5. Production scheduler, notification delivery/retry, failure monitoring, operational ownership and rollback are actually exercised as applicable. Local fixtures do not prove these services work.
+6. CC supplies measurable performance/concurrency/accessibility/browser targets; the deployed build meets them with the expected 25 learners and staff.
+7. An accountable programme owner, MC, CC and independent QA reviewer sign the release decision. Build/test success alone is insufficient.
+
+Recommended fix order: U00/U01 entry and setup -> U02 day launch -> U03 selection -> U04 evidence -> U05 Showcase -> U06 one repeatable game -> U07/U08 daily pattern -> U09 Friday -> U10 publication -> U11 recovery -> U12 teams/handoff. Do not rewrite all screens at once. Finish one unit's navigation, labels, validation, error/retry states and cross-role handoff, then rerun that unit before moving on.
+
+06. EVIDENCE AND SOURCE MAP
+
+Current research technical checks (previous implementation turn): full regression 152 passed; final focused Day 1 regression 22 passed; production build passed; authenticated research HTTP checks covered 25 Gamers/five groups and 27 scoped reads. These are technical results, not independent UAT signoff.
+artifacts/research-implementation-handover.txt and tmp/research-full-tests-final.log contain the supporting scope/results.
+
+Source files:
+lib/week-one-catalog.js — five teaching-day activities, durations, 23 role views.
+lib/week-one-rules.js and components/WeekOneRelease.js — preparation/open/close gates.
+lib/day-one.js, lib/day-one-rules.js, lib/research.js — Day 1 selection, timing, baseline and research rosters.
+components/WeekOneViews.js, WeekOneLearner.js, WeekOneAdmin.js, WeekOneShowcase.js — role-page composition and controls.
+lib/week-one-program-rules.js, week-one-assessments.js, week-one-outcomes.js — assessment, references, readiness/signoff/publication.
+lib/recovery.js and recovery-rules.js; components/Recovery.js — Saturday session, exams, decisions and final-team gates.
+lib/workspace-navigation.js; components/WorkspaceScreen.js; lib/workflow-guidance.js — original versus programme route/navigation behaviour.
+docs/vercel-deployment.md — deployment procedure, not proof of a deployed production acceptance.
+
+No application behaviour or production data was changed while preparing this guide.

@@ -1,0 +1,19 @@
+INTERACTIVE RESEARCH SELECTION — 12 NOVEMBER 2026
+
+Scope completed
+The user's latest correction replaces spinning with a seven-card selection game in My Games during the flight chapter. Seven randomly offered genres persist per player/release. Selecting a card is a local preview; explicit confirmation reserves its genre permanently within the separate five-person research group. The server then reveals exactly that genre's three questions. A second explicit confirmation locks one question. Acknowledgement and Begin research remain separate; browsing/selecting never starts the timer.
+
+Refresh/re-login resume a pending genre reservation or final question. Concurrent teammates cannot claim the same genre; even pending question selection reserves it. Retries return the original claim/choice. Different subsequent choices, forged identities and staff/player role violations are rejected. Only the selected prompt remains exposed after final confirmation. Friday Fitness and aligned comparison use that exact original chosen question/version.
+
+Configuration
+CC -> Day 1 discovery configuration -> 17 genres / seven cards / choose one of three questions. Supply the approved bank reference and separate researchGroups JSON containing every active Gamer exactly once in groups of five. Prepare and open with the existing release controls. New research releases default to PLAYER_CHOICE. Historical releases without this policy retain five offers/random assignment and existing pinned evidence; no migration or reroll is performed.
+
+Validation
+Full disposable-database regression: 168 passed, 0 failed/skipped. Includes historical flows, stage gates, seven offers, reservations, concurrent genre/question claims, idempotent retries, privacy, all 25 learners/five groups, research evidence and exact Friday reuse.
+Authenticated disposable-preview HTTP: all 25 learners/five groups passed seven offers, three-question reveal, permanent locks, concurrent claims, reconnect/retry, forged choice rejection, scoped reads and staff boundaries.
+Browser: desktop seven cards; keyboard confirmations; three questions; refresh/logout/re-login between steps; final choice persists after refresh; acknowledgement, timer start and synthetic thread submission produce PENDING receipt. Mobile 390x844: seven cards, readable question cards and no horizontal overflow. New choice does not expose a character or unlock projects.
+Production compilation passed. Logs: tmp/choice-full-tests.log, tmp/choice-http.log, tmp/choice-build-final.log.
+
+Preview and limits
+After build, node scripts/preview-day-one.mjs --research runs disposable synthetic data at http://127.0.0.1:3101. It pre-opens Day 1/check-in; production data is not connected. Run node scripts/check-research-choice-http.mjs against it for 25-player checks. Historical preview: --research --research-random with scripts/check-research-http.mjs.
+This is developer verification, not independent player/MC/CC UAT or production certification. No real external AI conversation/link verification was performed. Crash, map reveal and repair inventory remain later units. No production rollout or historical-release conversion was performed.

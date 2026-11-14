@@ -18,6 +18,7 @@ import {
 import { initialFiles } from "@/lib/lab-project.js";
 import { labDocument } from "@/lib/lab-runtime.js";
 import { Badge, Modal } from "./ui";
+import useSavedWork from "./useSavedWork";
 const widths = { Desktop: "100%", Tablet: "768px", Mobile: "375px" };
 function highlight(source) {
   return source
@@ -98,6 +99,19 @@ export default function CodeLab({ data, act, notify }) {
   currentFiles.current = files;
   const dirty = JSON.stringify(files) !== JSON.stringify(baseline);
   const unsaved = JSON.stringify(files) !== JSON.stringify(savedFiles);
+  const work = useSavedWork({
+    value: { files },
+    initialValue: { files: initialFiles },
+    enabled: ready,
+    ownerId: data.user._id,
+    endpoint: "/api/gamer/lab",
+    buildBody: (value, version) => ({
+      files: value.files,
+      ownerId: data.user._id,
+      expectedVersion: version,
+    }),
+    onSaved: (value) => setSavedFiles(value.files),
+  });
   const append = (text, type = "") =>
     setOutput((o) => [...o.slice(-199), { text, type }]);
   useEffect(() => {
@@ -120,6 +134,10 @@ export default function CodeLab({ data, act, notify }) {
       .then(([js, saved]) => {
         if (!live) return;
         setRuntime(js);
+        work.restore(
+          { files: saved.files || initialFiles },
+          saved.version || 0,
+        );
         if (saved.files) {
           if (
             !Object.keys(initialFiles).every(
@@ -329,14 +347,11 @@ export default function CodeLab({ data, act, notify }) {
     setSaving(true);
     const snapshot = { ...files };
     try {
-      if (
-        await act(
-          "gamer/lab",
-          { files: snapshot },
-          "Virtual project saved to your MongoDB workspace.",
-        )
-      )
-        setSavedFiles(snapshot);
+      await work.flush({ files: snapshot });
+      setSavedFiles(snapshot);
+      notify("Virtual project saved to your account.");
+    } catch (error) {
+      notify(error.message, "error");
     } finally {
       if (mounted.current) setSaving(false);
     }
@@ -506,6 +521,11 @@ export default function CodeLab({ data, act, notify }) {
           <Badge tone={unsaved ? "amber" : "lime"}>
             {unsaved ? "UNSAVED CHANGES" : "PROJECT SAVED"}
           </Badge>
+        )}
+        {ready && (
+          <small role="status">
+            {work.status || "Project changes save automatically."}
+          </small>
         )}
       </div>
       <div className="lab-mission">
@@ -780,9 +800,9 @@ export default function CodeLab({ data, act, notify }) {
       {resetOpen && (
         <Modal title="Reset virtual project?" close={() => setResetOpen(false)}>
           <p className="muted">
-            This replaces the three in-memory files with the original Apex
-            banking project. Saved MongoDB files are only replaced when you
-            choose Save project.
+            This replaces and automatically saves the three editor files with
+            the original Apex banking project. Earlier dated workspace
+            checkpoints remain available in your saved work history.
           </p>
           <button
             className="btn primary"

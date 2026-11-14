@@ -13,8 +13,10 @@ import {
   Mail,
   LockKeyhole,
   AlertTriangle,
+  UserRound,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { characterFor } from "@/lib/characters";
 export function Badge({ children, tone = "" }) {
   return <span className={`badge ${tone}`}>{children}</span>;
@@ -49,6 +51,8 @@ export function Modal({
   close,
   wide = false,
   variant,
+  portal = false,
+  companion,
 }) {
   const root = useRef(null),
     closeRef = useRef(close);
@@ -95,37 +99,60 @@ export function Modal({
       previous?.focus();
     };
   }, []);
-  return (
+  const panel = (
+    <section
+      ref={companion ? undefined : root}
+      role={companion ? undefined : "dialog"}
+      aria-modal={companion ? undefined : "true"}
+      aria-label={companion ? undefined : title}
+      className={`modal ${!variant ? "modal-dialog" : ""} ${wide ? "wide" : ""} ${variant === "flight-mission" ? "flight-mission-window" : ""} ${variant === "level-drawer" ? "level-drawer" : ""} ${variant === "level-completion" ? "level-completion-modal" : ""} ${variant === "star-guide" ? "star-guide-window" : ""}`}
+    >
+      <div className="panel-heading">
+        <div>
+          <span className="eyebrow">
+            {kicker || "CODEWILD / FIELD CONSOLE"}
+          </span>
+          <h2>{title}</h2>
+        </div>
+        <button className="icon-btn" aria-label="Close dialog" onClick={close}>
+          <X size={20} />
+        </button>
+      </div>
+      {!variant ? <div className="modal-content">{children}</div> : children}
+    </section>
+  );
+  const dialog = (
     <div
-      className={`modal-backdrop ${variant === "level-drawer" ? "level-drawer-backdrop" : ""} ${variant === "level-completion" ? "level-completion-backdrop" : ""}`}
+      className={`modal-backdrop ${portal ? "priority-modal-backdrop" : ""} ${variant === "flight-mission" ? "flight-mission-backdrop" : ""} ${variant === "level-drawer" ? "level-drawer-backdrop" : ""} ${variant === "level-completion" ? "level-completion-backdrop" : ""}`}
       onClick={(e) => e.target === e.currentTarget && close()}
     >
-      <section
-        ref={root}
-        role="dialog"
-        aria-modal="true"
-        aria-label={title}
-        className={`modal ${!variant ? "modal-dialog" : ""} ${wide ? "wide" : ""} ${variant === "level-drawer" ? "level-drawer" : ""} ${variant === "level-completion" ? "level-completion-modal" : ""}`}
-      >
-        <div className="panel-heading">
-          <div>
-            <span className="eyebrow">
-              {kicker || "CODEWILD / FIELD CONSOLE"}
-            </span>
-            <h2>{title}</h2>
-          </div>
-          <button
-            className="icon-btn"
-            aria-label="Close dialog"
-            onClick={close}
+      {companion ? (
+        <div
+          ref={root}
+          role="dialog"
+          aria-modal="true"
+          aria-label={title}
+          className="modal-companion-layout"
+        >
+          <aside
+            className="modal-companion"
+            aria-label="Pip, your flight companion"
           >
-            <X size={20} />
-          </button>
+            {companion}
+          </aside>
+          {panel}
         </div>
-        {!variant ? <div className="modal-content">{children}</div> : children}
-      </section>
+      ) : (
+        panel
+      )}
     </div>
   );
+  // The map is a stacking context below the player HUD. Mission scenes must
+  // escape that context so the HUD cannot cover the title or close button.
+  return (portal || variant === "flight-mission") &&
+    typeof document !== "undefined"
+    ? createPortal(dialog, document.body)
+    : dialog;
 }
 export function HP({ value = 5 }) {
   return (
@@ -145,7 +172,9 @@ export function Avatar({ name = "", player, small = false }) {
     <span
       className={`avatar ${small ? "small" : ""}${portrait ? " character-avatar" : ""}`}
     >
-      {portrait ? (
+      {player?.characterHidden ? (
+        <UserRound aria-label="Unknown character" size={small ? 20 : 32} />
+      ) : portrait ? (
         <img
           src={character.image}
           alt={`${displayName ? `${displayName} as ` : ""}${character.name}`}
@@ -170,12 +199,19 @@ export function Form({
   submit = "Confirm",
   initial = {},
   children,
+  onDraftChange,
 }) {
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const pending = useRef(false);
   return (
     <form
+      onInput={
+        onDraftChange
+          ? (e) =>
+              onDraftChange(Object.fromEntries(new FormData(e.currentTarget)))
+          : undefined
+      }
       className="field-form"
       data-has-fields={fields.length > 0 ? "true" : "false"}
       data-feedback={
@@ -330,7 +366,8 @@ export function Busy({ label = "Loading your workspace…" }) {
     const timer = setTimeout(() => setVisible(true), 250);
     return () => clearTimeout(timer);
   }, []);
-  if (!visible) return <div className="page-pending-placeholder" aria-hidden="true" />;
+  if (!visible)
+    return <div className="page-pending-placeholder" aria-hidden="true" />;
   return (
     <div
       className="page-pending"

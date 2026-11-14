@@ -1,0 +1,28 @@
+Day 1 research assignment — implementation and verification, 12 November 2026
+
+Location
+Learners: existing Individual discovery mission in My Games (/gamer/week-one-games), also reused by the map.
+Centre Command: existing Day 1 discovery configuration in /centre-command/week-one-setup.
+
+Behaviour
+17 genres / 51 questions; five persisted genre-only offers; one random permanent server assignment; exclusive genre claims within a separately configured five-person research group. MongoDB transactions use primary reads and majority commit acknowledgement. Offers and the existing Day 1 record update in the same transaction. Simultaneous claims, stale retries and double clicks cannot reroll a committed assignment.
+
+ResearchSelection documents are separate from Showcase and final programme teams. Every active cohort Gamer must appear exactly once in the release's research groups. Existing roster/role/release checks apply on every command. Unassigned questions and other groups' memberships are excluded from learner responses. Existing acknowledgement, timer, thread evidence, trophies, marking and publication workflows are retained. Friday Fitness and aligned comparison resolve the exact original question ID, text and release version. Historical four-question releases remain supported.
+
+Activation
+Review the downloadable 51-question bank, record the approved content reference, enter separate research groups in the existing Day 1 configuration, select the new research mode, prepare, then open Day 1 using the existing control. The three previously unconfirmed genres (Movies, Social Media, Relationships) are explicitly included in the approval field. Opened cohorts remain pinned; no existing learner data was migrated or reassigned. Friday requires reviewed reference packs for all 51 possible questions; the editor supplies their IDs and question text. No AI API, new credential or deployment is required.
+
+Verification
+Full disposable-database regression: 152 passed, 0 failed/cancelled/skipped (tmp/research-full-tests-final.log). The first unrestricted run had two resource-related timeouts and found a comparison-response privacy defect. The defect was fixed; the full rerun with two workers passed, including the complete existing 25-Gamer Week 1 journey.
+Reference selection-engine suite: seven passed, including team/round isolation, no-preview offers, conflict replacement and double-click behaviour.
+Final focused Day 1 regression, including both new research test files: 22 passed, 0 failed/skipped (tmp/research-day1-final.log).
+Final production build: passed (tmp/research-build-final.log). Supplied bank prompt samples were absent from generated browser chunks.
+Authenticated HTTP fixture: passed for 25 Gamers / five independent research groups, concurrent picks, stable retries, 27 scoped reads, no question-bank leakage, forged request rejection, staff/player role restrictions and cross-origin rejection (tmp/research-http.log).
+Browser fixture: five genre-name cards; committed assignment; identical question after reload; no change/reroll selector; acknowledgement; 90-minute timer and existing evidence form; mobile question layout at 390px with no horizontal overflow; no browser console errors. Centre Command configuration showed all five separate rosters, and its content-review download contained 51 questions. Synthetic fixture only; no production database or external notification service was used. The local fixture was stopped after verification.
+
+Reproduction
+node scripts/check-day-one.mjs --all --test-concurrency=2
+npm run build
+node scripts/preview-day-one.mjs --research
+node scripts/check-research-http.mjs
+Stop the preview before rebuilding. Include ResearchSelection in the normal application-database backup/retention policy.

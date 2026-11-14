@@ -1,0 +1,1905 @@
+/* Airborne adventure scene. Scoped to Level 1; other player/staff dialogs retain their layout. */
+.priority-modal-backdrop {
+  z-index: 120;
+}
+.jungle-world .player-arena.sky-map-mode .workspace > .player-topbar {
+  border: 0;
+  box-shadow: none;
+}
+.sky-map-tabpanel {
+  position: absolute;
+  inset: 0;
+}
+.sky-map-tabpanel[hidden],
+.flight-mission-tab-content[hidden] {
+  display: none !important;
+}
+.flight-page-tabs {
+  position: absolute;
+  top: 100px;
+  left: 92px;
+  right: 24px;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  border-bottom: 0;
+}
+.flight-page-tabs > button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  min-height: 40px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 4px 4px 0 0;
+  background: #0b281cc9;
+  color: #bdcdae;
+  font:
+    600 16px/1.1 "Rajdhani",
+    sans-serif;
+  cursor: pointer;
+}
+.flight-page-tabs > button[aria-selected="true"] {
+  color: #edf5cf;
+  border-bottom-color: #d2e69f;
+  background: #21402de6;
+}
+.flight-page-tabs > button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.flight-page-tabs > button:focus-visible {
+  outline: 2px solid #e4f2b3;
+  outline-offset: 3px;
+}
+.flight-page-tabs > #flight-map-tab {
+  margin-left: auto;
+  border: 1px solid #c2d59088;
+  border-radius: 10px;
+  background: #143526e6;
+  box-shadow: 0 4px 15px #061b1644;
+}
+.flight-page-tabs > #flight-map-tab:hover { background: #2c4c30; color: #f2e8b8; }
+.flight-mission-tab-content {
+  position: absolute;
+  inset: 148px 0 0;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.flight-mission-tab-content:focus-visible {
+  outline: 2px solid #bfdc96;
+  outline-offset: -2px;
+}
+.flight-tab-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.has-flight-tabs .sky-heading {
+  top: 158px;
+}
+.has-flight-tabs .sky-flight-note {
+  display: none;
+}
+.sky-journey.is-mission-tab {
+  background:
+    linear-gradient(180deg, #061b1255, transparent 45%, #061b1233),
+    url("/images/flight-mission-ground-v2.png") center/cover;
+}
+.jungle-world
+  .player-arena.sky-map-mode:has(.is-mission-tab)
+  .workspace
+  > .player-topbar {
+  background: linear-gradient(180deg, #03130d55, transparent);
+}
+.is-mission-tab .flight-page-tabs {
+  border-bottom-color: transparent;
+}
+.is-mission-tab .flight-research-scene {
+  background: transparent;
+}
+.is-mission-tab .flight-research-scene::before {
+  background: none;
+}
+.player-arena:has(.is-mission-tab) .map-nav-toggle:not(.is-open) {
+  top: 102px;
+  left: 24px;
+  transform: none;
+  width: 36px;
+  height: 36px;
+}
+.player-arena:has(.is-mission-tab) .map-nav-toggle:not(.is-open) > svg {
+  width: 20px;
+  height: 20px;
+}
+@media (max-width: 700px) {
+  .flight-page-tabs {
+    top: 86px;
+    left: 52px;
+    right: 18px;
+  }
+  .flight-page-tabs > button {
+    padding: 10px 12px;
+    font-size: 14px;
+    gap: 6px;
+  }
+  .flight-mission-tab-content {
+    top: 132px;
+  }
+  .has-flight-tabs .sky-heading {
+    top: 146px;
+  }
+  .player-arena:has(.is-mission-tab) .map-nav-toggle:not(.is-open) {
+    top: 88px;
+    left: 10px;
+    width: 32px;
+    height: 36px;
+  }
+}
+.jungle-world .flight-mission-backdrop {
+  padding: 12px;
+  background: #06180f;
+  backdrop-filter: none;
+}
+.jungle-world .modal.flight-mission-window {
+  width: 100%;
+  max-width: none;
+  height: calc(100dvh - 24px);
+  max-height: none;
+  border: 1px solid #829d66;
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  background: #102b1d;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 70px #020b07;
+}
+.flight-mission-window > .panel-heading {
+  margin: 0;
+  padding: 16px 30px;
+  min-height: 80px;
+  flex-shrink: 0;
+  background: #0a2018;
+  border-bottom: 1px solid #a6bd6e44;
+}
+.jungle-world .modal.flight-mission-window > .panel-heading h2 {
+  font:
+    600 25px/1.15 "Rajdhani",
+    sans-serif;
+  letter-spacing: 0.015em;
+}
+.flight-mission-window > .panel-heading .eyebrow {
+  color: #c2d39d;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  margin-bottom: 5px;
+}
+.flight-mission-window .sky-mission {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.flight-mission-window .sky-checkpoints {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 170px));
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 8px;
+  background: transparent;
+  border: 0;
+  margin: 0;
+  padding: 8px 24px;
+}
+.flight-mission-window .sky-checkpoints li {
+  display: grid;
+  grid-template-columns: 23px minmax(0, 1fr);
+  align-items: center;
+  border: 1px solid #adc28a66;
+  border-radius: 8px;
+  padding: 7px 10px;
+  min-height: 44px;
+  background: #102e22b8;
+  gap: 3px 9px;
+  opacity: 0.65;
+  box-shadow: 0 4px 18px #071c1233;
+}
+.flight-mission-window .sky-checkpoints li.is-current,
+.flight-mission-window .sky-checkpoints li.is-complete {
+  opacity: 1;
+}
+.flight-mission-window .sky-checkpoints li.is-current {
+  border-color: #e1f5b2;
+  background: #25472cc9;
+  box-shadow:
+    0 0 0 1px #d4f2a044,
+    0 0 24px #cfef9255,
+    inset 0 1px 0 #f5ffd333;
+}
+.flight-mission-window .sky-checkpoints li.is-complete {
+  border-color: #a4c78f;
+}
+.flight-mission-window .sky-checkpoints li > span,
+.flight-mission-window .sky-checkpoints li > svg {
+  grid-row: 1;
+  width: 23px;
+  height: 23px;
+  color: #d5dfc8;
+  flex-shrink: 0;
+}
+.flight-mission-window .sky-checkpoints li > svg {
+  border: 1px solid #b8d895;
+  border-radius: 50%;
+  padding: 5px;
+  background: #33543a;
+}
+.flight-mission-window .sky-checkpoints li.is-current > span {
+  background: #c5dfa0;
+  border-color: #e0f1c5;
+  color: #123021;
+  box-shadow: 0 0 18px #c1df8b33;
+}
+.flight-mission-window .sky-checkpoints strong {
+  font-size: 13px;
+  line-height: 1.15;
+  align-self: center;
+}
+.flight-mission-window .sky-checkpoints small {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  grid-column: 2;
+  color: #bfccac;
+  font:
+    8px/1.4 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.06em;
+  align-self: start;
+}
+.flight-mission-window .sky-checkpoints .is-current small {
+  color: #e6f8ba;
+}
+.flight-discovery-fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  flex: 1;
+  display: flex;
+}
+.flight-research-scene {
+  color: #eef1dc;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  min-height: 570px;
+  flex: 1;
+  background:
+    linear-gradient(90deg, #10261b3d, #1c382c33),
+    url("/images/flight-mission-ground-v2.png") center/cover;
+}
+.flight-research-scene::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #0a211ae8 0%,
+    #0c27193d 45%,
+    #0a211aaa 100%
+  );
+  pointer-events: none;
+}
+.flight-world {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 570px;
+  padding: 30px 32px 20px;
+}
+.flight-overline {
+  font:
+    10px/1.6 "JetBrains Mono",
+    monospace;
+  color: #d1dfab;
+  letter-spacing: 0.16em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flight-scene-heading {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+.flight-scene-heading h3 {
+  font:
+    600 clamp(30px, 3vw, 47px)/1.05 "Rajdhani",
+    sans-serif;
+  max-width: 650px;
+  margin: 10px 0;
+  text-shadow: 0 2px 12px #061b13;
+}
+.flight-scene-heading p {
+  margin: 0;
+  color: #d1dcc4;
+  font-size: 17px;
+  text-shadow: 0 2px 6px #061b13;
+}
+.flight-world-beacons {
+  position: relative;
+  flex: 1;
+  min-height: 380px;
+  margin: 0 -12px;
+}
+.flight-world-beacon {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 132px;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: 0;
+  padding: 5px;
+  color: #f1f2dd;
+  cursor: pointer;
+  text-shadow:
+    0 2px 5px #03150b,
+    0 0 18px #03150b;
+  transition: color 0.2s;
+}
+.flight-beacon-ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  border: 1px solid #d5e7ab;
+  border-radius: 50%;
+  background: #173d2be8;
+  box-shadow:
+    0 0 0 6px #132f2766,
+    0 0 0 7px #b6d28c55,
+    0 9px 22px #03180bbb;
+  transition:
+    transform 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+.flight-beacon-ring::before {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #d9edab;
+  top: -12px;
+  box-shadow: 0 0 12px #d9edab;
+}
+.flight-beacon-symbol {
+  display: grid;
+  place-items: center;
+  color: #e5edc4;
+  filter: drop-shadow(0 3px 5px #071d16aa);
+  animation: beacon-float 4.8s ease-in-out var(--beacon-delay, 0s) infinite;
+}
+.flight-beacon-charm,
+.flight-beacon-accent {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #e2e9b3;
+  border-radius: 50%;
+  background: #bccc85;
+  color: #16382a;
+  box-shadow: 0 3px 8px #071d16aa;
+}
+.flight-beacon-charm {
+  right: -8px;
+  top: -5px;
+  transform: rotate(12deg);
+}
+.flight-beacon-accent {
+  width: 21px;
+  height: 21px;
+  left: -7px;
+  bottom: 1px;
+  background: #214b37;
+  color: #e5eab4;
+  transform: rotate(-12deg);
+}
+.flight-beacon-ring::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border: 1px solid #d8eab0;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+.flight-world-beacon.is-selected .flight-beacon-symbol {
+  color: #1b3928;
+  filter: none;
+}
+.flight-world-beacon.is-selected .flight-beacon-ring::after {
+  animation: beacon-ripple 3s ease-out infinite;
+}
+.flight-world-beacon:hover .flight-beacon-charm,
+.flight-world-beacon:focus-visible .flight-beacon-charm {
+  animation: beacon-charm 1.4s ease-in-out infinite;
+}
+.flight-world-beacon[data-genre="gaming"] .flight-beacon-symbol > svg,
+.flight-world-beacon[data-genre="music"] .flight-beacon-symbol > svg {
+  animation: beacon-tilt 4.8s ease-in-out var(--beacon-delay, 0s) infinite;
+}
+.flight-world-beacon[data-genre="fitness"] .flight-beacon-symbol > svg {
+  animation: beacon-breathe 3s ease-in-out var(--beacon-delay, 0s) infinite;
+}
+@media (min-width: 1500px) {
+  .flight-beacon-symbol > svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+@keyframes beacon-float {
+  0%,
+  100% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes beacon-tilt {
+  0%,
+  75%,
+  100% {
+    transform: rotate(0);
+  }
+  82% {
+    transform: rotate(-7deg);
+  }
+  90% {
+    transform: rotate(6deg);
+  }
+}
+@keyframes beacon-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+@keyframes beacon-charm {
+  0%,
+  100% {
+    transform: rotate(12deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-8deg) translateY(-2px);
+  }
+}
+@keyframes beacon-ripple {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.5;
+  }
+  85%,
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+/* This scene always animates as requested. Keep this override scoped to the
+   genre scene so it does not change motion preferences elsewhere in the app. */
+.flight-research-scene[data-motion="on"] .flight-beacon-symbol {
+  animation: beacon-float 4.8s ease-in-out var(--beacon-delay, 0s) infinite !important;
+}
+.flight-research-scene[data-motion="on"]
+  .flight-world-beacon[data-genre="gaming"]
+  .flight-beacon-symbol
+  > svg,
+.flight-research-scene[data-motion="on"]
+  .flight-world-beacon[data-genre="music"]
+  .flight-beacon-symbol
+  > svg {
+  animation: beacon-tilt 4.8s ease-in-out var(--beacon-delay, 0s) infinite !important;
+}
+.flight-research-scene[data-motion="on"]
+  .flight-world-beacon[data-genre="fitness"]
+  .flight-beacon-symbol
+  > svg {
+  animation: beacon-breathe 3s ease-in-out var(--beacon-delay, 0s) infinite !important;
+}
+.flight-research-scene[data-motion="on"]
+  .flight-world-beacon.is-selected
+  .flight-beacon-ring::after {
+  animation: beacon-ripple 3s ease-out infinite !important;
+}
+.flight-research-scene[data-motion="on"]
+  .flight-world-beacon:hover
+  .flight-beacon-charm,
+.flight-research-scene[data-motion="on"]
+  .flight-world-beacon:focus-visible
+  .flight-beacon-charm {
+  animation: beacon-charm 1.4s ease-in-out infinite !important;
+}
+.flight-research-scene[data-motion="on"] .flight-scout {
+  transition:
+    left 0.7s ease,
+    top 0.7s ease !important;
+}
+.flight-world-beacon strong {
+  margin-top: 13px;
+  padding: 3px 10px;
+  background: #0b271cdb;
+  border-radius: 3px;
+  font-size: 19px;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  font-family: "Rajdhani", sans-serif;
+}
+.flight-world-beacon small {
+  font:
+    7px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.12em;
+  margin-top: 6px;
+  color: #dae7c7;
+}
+.flight-world-beacon:hover .flight-beacon-ring,
+.flight-world-beacon:focus-visible .flight-beacon-ring {
+  transform: translateY(-5px);
+  background: #34593a;
+  box-shadow:
+    0 0 0 8px #bbd99033,
+    0 0 0 9px #d1e6a1aa,
+    0 12px 25px #03180baa;
+}
+.flight-world-beacon.is-selected .flight-beacon-ring {
+  background: #dae7b5;
+  color: #1b3928;
+  border-color: #fbffe9;
+  box-shadow:
+    0 0 0 7px #d0e4a544,
+    0 0 0 8px #e6f3ba,
+    0 0 35px #d5e69855;
+  transform: translateY(-4px);
+}
+.flight-world-beacon.is-selected strong {
+  color: #edffc6;
+}
+.flight-beacon-check {
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  display: grid;
+  place-items: center;
+  background: #1c422c;
+  color: #f1ffd3;
+  border: 1px solid #deedbc;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+}
+.flight-world-beacon:focus-visible,
+.flight-quest:has(input:focus-visible) {
+  outline: 2px solid #efffc2;
+  outline-offset: 8px;
+  border-radius: 10px;
+}
+.flight-compass-rose {
+  position: absolute;
+  left: 48%;
+  top: 49%;
+  transform: translate(-50%, -50%);
+  color: #e9f0c730;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.flight-compass-rose > span {
+  font:
+    10px "JetBrains Mono",
+    monospace;
+  margin-bottom: 8px;
+}
+.flight-scout {
+  position: absolute;
+  width: 125px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition:
+    left 0.7s ease,
+    top 0.7s ease;
+  text-align: center;
+  z-index: 1;
+}
+.flight-scout img {
+  display: block;
+  width: 100%;
+  height: 85px;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 12px #03170dbb);
+}
+.flight-scout > span {
+  display: inline-block;
+  font:
+    7px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.15em;
+  background: #0b281ce6;
+  padding: 4px 6px;
+  color: #d9e5b9;
+  border-radius: 2px;
+}
+.flight-scene-footnote {
+  color: #d7e1c6;
+  font-size: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 12px;
+  text-shadow: 0 2px 6px #061b13;
+}
+.flight-radio-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 26px 26px 22px;
+  border-left: 1px solid #c1d59a66;
+  background: linear-gradient(150deg, #153a2aee, #071e17f7);
+  min-width: 0;
+  box-shadow: -20px 0 50px #08221655;
+}
+.flight-radio-channel {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #e0ebc6;
+  font:
+    10px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid #abc48644;
+  padding-bottom: 20px;
+}
+.flight-radio-channel small {
+  display: block;
+  font-size: 7px;
+  color: #a8c195;
+  letter-spacing: 0.12em;
+  margin-top: 6px;
+}
+.flight-radio-channel > i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c5e896;
+  box-shadow: 0 0 10px #b9e88666;
+  margin-left: auto;
+}
+.flight-radio-emblem {
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  color: #d4e6a7;
+  border: 1px solid #b5c78b77;
+  outline: 1px solid #b5c78b22;
+  outline-offset: 6px;
+  border-radius: 50%;
+  margin: 36px 0 28px;
+  background: #8da55b0d;
+}
+.flight-radio-panel h4 {
+  font:
+    600 32px/1.1 "Rajdhani",
+    sans-serif;
+  margin: 13px 0 16px;
+  color: #f2f2dd;
+  overflow-wrap: anywhere;
+}
+.flight-radio-copy {
+  color: #d0dbc1;
+  font-size: 17px;
+  line-height: 1.5;
+  margin: 0 0 24px;
+}
+.flight-radio-rule {
+  display: flex;
+  gap: 11px;
+  color: #bccba8;
+  border-top: 1px solid #abc48633;
+  padding: 18px 0;
+  margin-top: auto;
+}
+.flight-radio-rule svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.flight-radio-rule p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+.flight-mission-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 18px;
+  min-height: 54px;
+  border: 1px solid #f0f5ca;
+  border-radius: 3px;
+  color: #173323;
+  background: #d3e5a5;
+  font:
+    700 18px/1.15 "Rajdhani",
+    sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #6d864b;
+}
+.flight-mission-action:hover:not(:disabled) {
+  background: #edf5cb;
+}
+.flight-mission-action:focus-visible {
+  outline: 3px solid #f2ffd0;
+  outline-offset: 5px;
+}
+.flight-mission-action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.flight-radio-save {
+  text-align: center;
+  color: #afc199;
+  font-size: 12px;
+  margin-top: 15px;
+  line-height: 1.5;
+}
+.flight-radio-error {
+  color: #ffe0ba;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.flight-signal-loading {
+  margin: auto;
+  text-align: center;
+}
+.flight-quest-choices {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 18px;
+  margin: 35px 0 18px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.flight-quest {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 335px;
+  padding: 24px 20px 18px;
+  color: #e1e8cc;
+  border-top: 3px solid #94ac6e;
+  border-bottom: 1px solid #c1d59a66;
+  background: linear-gradient(155deg, #183c2bef, #0b241ce8);
+  box-shadow: 0 12px 30px #081b1255;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+.flight-quest:nth-of-type(2) {
+  margin-top: 22px;
+}
+.flight-quest input {
+  position: absolute;
+  right: 16px;
+  top: 18px;
+  width: 17px;
+  height: 17px;
+  accent-color: #d3e5a5;
+}
+.flight-quest-seal {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #a7c08099;
+  border-radius: 50%;
+  font:
+    18px "JetBrains Mono",
+    monospace;
+  color: #d9eab3;
+  margin-bottom: 22px;
+}
+.flight-quest strong {
+  font:
+    600 24px/1.1 "Rajdhani",
+    sans-serif;
+  margin: 12px 0 16px;
+}
+.flight-quest-prompt {
+  font-size: 16px;
+  line-height: 1.45;
+  color: #d0dbc3;
+}
+.flight-quest-select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-top: 1px solid #afc68d44;
+  padding-top: 15px;
+  margin-top: 22px;
+  color: #d4e6aa;
+  font-size: 14px;
+}
+.flight-quest.is-selected {
+  border-top-color: #edffbb;
+  background: linear-gradient(155deg, #365136f5, #132f22f2);
+  box-shadow:
+    0 0 0 1px #d5e6a9,
+    0 10px 30px #041c12aa;
+}
+.flight-quest:hover {
+  transform: translateY(-4px);
+}
+.flight-research-scene .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.flight-mission-objective {
+  justify-content: space-between;
+}
+.flight-objective-scroll {
+  max-width: 760px;
+  margin: 36px auto;
+  padding: 32px;
+  border-top: 2px solid #ccdaaa;
+  border-bottom: 1px solid #b3c89266;
+  background: #102d22ed;
+  box-shadow: 0 15px 50px #09201866;
+}
+.flight-objective-seal {
+  float: right;
+  margin: 0 0 15px 20px;
+  color: #ccdda8;
+}
+.flight-objective-scroll > p {
+  font-size: clamp(21px, 2vw, 28px);
+  line-height: 1.55;
+  margin: 20px 0 28px;
+}
+.flight-objective-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b9cba4;
+  font-size: 13px;
+  border-top: 1px solid #b3c89244;
+  padding-top: 15px;
+}
+.flight-research-timer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 20px;
+  color: #e5edc3;
+}
+.flight-research-timer strong {
+  font:
+    30px "JetBrains Mono",
+    monospace;
+}
+.flight-research-timer span {
+  font:
+    8px/1.6 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.1em;
+}
+.jungle-world .flight-radio-panel .field-form {
+  margin: 0;
+  padding: 0;
+  gap: 12px;
+}
+.flight-radio-panel .field-form label {
+  color: #e1e8cd;
+}
+.flight-radio-panel .field-form .btn.primary {
+  width: 100%;
+  min-height: 48px;
+  font-size: 17px;
+  background: #d3e5a5;
+  color: #173323;
+}
+.flight-radio-panel .field-form input {
+  min-width: 0;
+  width: 100%;
+}
+.flight-submission-history {
+  color: #bdcda9;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.flight-submission-history a {
+  color: #e0efb8;
+}
+.flight-active-mission .flight-radio-emblem {
+  width: 62px;
+  height: 62px;
+  margin: 26px 0;
+}
+.flight-mission-window .sky-onboarding {
+  background: #0f3025eb;
+  border-top: 1px solid #9dbb79;
+  margin: auto;
+}
+@media (min-width: 1500px) {
+  .flight-research-scene {
+    grid-template-columns: minmax(0, 1fr) 380px;
+  }
+  .flight-radio-panel {
+    padding: 32px;
+  }
+  .flight-world {
+    padding: 40px 48px 24px;
+  }
+  .flight-beacon-ring {
+    width: 84px;
+    height: 84px;
+  }
+  .flight-world-beacon strong {
+    font-size: 23px;
+  }
+  .flight-world-beacon small {
+    font-size: 8px;
+  }
+  .flight-scout {
+    width: 165px;
+  }
+  .flight-scout img {
+    height: 110px;
+  }
+  .flight-quest {
+    padding: 30px;
+  }
+}
+@media (max-width: 1050px) {
+  .flight-research-scene {
+    grid-template-columns: minmax(0, 1fr) 290px;
+  }
+  .flight-world {
+    padding: 26px 22px 20px;
+  }
+  .flight-radio-panel {
+    padding: 22px;
+  }
+  .flight-quest-choices {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 25px 0;
+  }
+  .flight-quest {
+    min-height: 0;
+    padding: 18px 20px;
+  }
+  .flight-quest:nth-of-type(2) {
+    margin-top: 0;
+  }
+  .flight-quest-seal {
+    display: none;
+  }
+  .flight-quest strong {
+    margin: 8px 0 10px;
+  }
+  .flight-quest-select {
+    margin-top: 14px;
+  }
+  .flight-world-beacon {
+    width: 106px;
+  }
+  .flight-beacon-ring {
+    width: 58px;
+    height: 58px;
+  }
+  .flight-world-beacon strong {
+    font-size: 17px;
+  }
+  .flight-world-beacon small {
+    font-size: 6px;
+  }
+  .flight-scout {
+    width: 100px;
+  }
+}
+@media (max-width: 700px) {
+  .jungle-world .flight-mission-backdrop {
+    padding: 0;
+  }
+  .jungle-world .modal.flight-mission-window {
+    height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+  .flight-mission-window > .panel-heading {
+    padding: 14px 18px;
+    min-height: 75px;
+  }
+  .flight-mission-window > .panel-heading h2 {
+    font-size: 23px;
+  }
+  .flight-mission-window .sky-checkpoints {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 14px 12px;
+  }
+  .flight-mission-window .sky-checkpoints li {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: 10px 6px;
+    min-height: 100px;
+  }
+  .flight-mission-window .sky-checkpoints strong {
+    font-size: 13px;
+    max-width: 96px;
+    line-height: 1.2;
+    align-self: center;
+  }
+  .flight-mission-window .sky-checkpoints li > span,
+  .flight-mission-window .sky-checkpoints li > svg {
+    grid-row: auto;
+    width: 27px;
+    height: 27px;
+  }
+  .flight-mission-window .sky-checkpoints li > svg {
+    padding: 5px;
+  }
+  .flight-mission-window .sky-checkpoints small {
+    grid-column: 1;
+    font-size: 7px;
+    letter-spacing: 0;
+  }
+  .flight-research-scene {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .flight-world {
+    padding: 25px 20px 18px;
+    min-height: 570px;
+  }
+  .flight-scene-heading h3 {
+    font-size: 34px;
+  }
+  .flight-scene-heading p {
+    font-size: 16px;
+  }
+  .flight-world-beacons {
+    min-height: 370px;
+  }
+  .flight-world-beacon {
+    width: 100px;
+  }
+  .flight-beacon-ring {
+    width: 53px;
+    height: 53px;
+  }
+  .flight-beacon-symbol > svg {
+    width: 25px;
+  }
+  .flight-beacon-charm {
+    width: 20px;
+    height: 20px;
+    right: -6px;
+    top: -4px;
+  }
+  .flight-beacon-accent {
+    width: 17px;
+    height: 17px;
+    left: -5px;
+  }
+  .flight-beacon-charm svg,
+  .flight-beacon-accent svg {
+    width: 11px;
+    height: 11px;
+  }
+  .flight-scene-footnote {
+    flex-wrap: wrap;
+  }
+  .flight-world-beacon strong {
+    font-size: 17px;
+    margin-top: 12px;
+    padding: 3px 6px;
+  }
+  .flight-scout {
+    width: 84px;
+  }
+  .flight-scout img {
+    height: 60px;
+  }
+  .flight-compass-rose svg {
+    width: 115px;
+  }
+  .flight-world-beacon small {
+    font-size: 6px;
+  }
+  .flight-radio-panel {
+    padding: 24px;
+    border-left: 0;
+    border-top: 1px solid #c1d59a66;
+  }
+  .flight-radio-emblem {
+    width: 60px;
+    height: 60px;
+    margin: 26px 0;
+  }
+  .flight-radio-panel h4 {
+    font-size: 31px;
+  }
+  .flight-radio-rule {
+    margin-top: 0;
+  }
+  .flight-scene-footnote {
+    font-size: 11px;
+    text-align: center;
+  }
+  .flight-quest-choices {
+    grid-template-columns: 1fr;
+  }
+  .flight-objective-scroll {
+    margin: 30px 0;
+    padding: 24px;
+  }
+  .flight-objective-scroll > p {
+    font-size: 22px;
+  }
+  .flight-mission-objective {
+    min-height: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flight-research-scene:not([data-motion="on"]) .flight-beacon-symbol,
+  .flight-research-scene:not([data-motion="on"]) .flight-beacon-symbol > svg,
+  .flight-research-scene:not([data-motion="on"]) .flight-beacon-charm,
+  .flight-research-scene:not([data-motion="on"])
+    .flight-world-beacon.is-selected
+    .flight-beacon-ring::after {
+    animation: none !important;
+  }
+  .flight-scout,
+  .flight-beacon-ring,
+  .flight-world-beacon,
+  .flight-quest {
+    transition: none;
+  }
+}
+
+/* Keep the world selection in view on laptop displays. Long questions and
+   evidence forms retain their normal scrollable mission layout. */
+@media (min-width: 701px) {
+  .flight-mission-window .sky-mission:has(.flight-world-beacons) {
+    overflow: hidden;
+  }
+  .flight-discovery-fieldset:has(.flight-world-beacons) {
+    min-height: 0;
+  }
+  .flight-research-scene:has(.flight-world-beacons) {
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .flight-research-scene:has(.flight-world-beacons) .flight-world {
+    min-height: 0;
+  }
+  .flight-world-beacons {
+    min-height: 0;
+  }
+  .flight-research-scene:has(.flight-world-beacons) .flight-radio-panel {
+    min-height: 0;
+    overflow: auto;
+  }
+  .flight-mission-window .sky-return {
+    flex-shrink: 0;
+    margin: 0;
+    padding: 8px 24px;
+    min-height: 36px;
+    border-top: 1px solid #afc68d33;
+    background: #10291e;
+  }
+}
+
+/* One uninterrupted flight scene, with a floating radio rather than a sidebar. */
+.is-mission-tab .flight-research-scene {
+  gap: 28px;
+  padding: 20px 28px 24px;
+  grid-template-columns: minmax(0, 1fr) 310px;
+}
+.is-mission-tab .flight-world {
+  position: static;
+  padding: 0;
+}
+.is-mission-tab .flight-scene-heading {
+  position: fixed;
+  top: 104px;
+  left: 430px;
+  right: 340px;
+  text-align: center;
+}
+.is-mission-tab .flight-world-beacons {
+  flex: 0 0 auto;
+  height: min(500px, calc(100dvh - 250px));
+}
+.is-mission-tab .flight-scene-heading .flight-overline {
+  display: none;
+}
+.is-mission-tab .flight-scene-heading h3 {
+  max-width: none;
+  margin: 0 0 6px;
+  font-size: 23px;
+  font-weight: 700;
+  color: #d1dcc4;
+}
+.is-mission-tab .flight-scene-heading p {
+  font-size: 13px;
+  color: #bfcdb5;
+}
+.is-mission-tab .flight-research-scene .flight-radio-panel {
+  position: fixed;
+  top: 50%;
+  right: 28px;
+  width: 310px;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 22px;
+  border: 1px solid #c1d59a55;
+  border-radius: 22px;
+  background: linear-gradient(150deg, #153a2ae8, #071e17ed);
+  box-shadow: 0 16px 44px #08221655;
+  max-height: none;
+  overflow: visible;
+}
+.is-mission-tab .flight-radio-emblem {
+  width: 54px;
+  height: 54px;
+  margin: 22px 0;
+}
+.is-mission-tab .flight-radio-panel h4 {
+  font-size: 28px;
+  margin: 10px 0 14px;
+}
+.is-mission-tab .flight-radio-copy {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+.is-mission-tab .flight-radio-channel {
+  padding-bottom: 14px;
+}
+.is-mission-tab .flight-radio-rule {
+  padding: 14px 0;
+}
+@media (max-width: 1050px) and (min-width: 701px) {
+  .is-mission-tab .flight-research-scene {
+    grid-template-columns: minmax(0, 1fr) 270px;
+    gap: 20px;
+    padding-inline: 22px;
+  }
+  .is-mission-tab .flight-research-scene .flight-radio-panel {
+    right: 22px;
+    width: 270px;
+  }
+}
+@media (max-width: 700px) {
+  .flight-mission-window .sky-checkpoints {
+    padding: 10px 12px;
+    gap: 7px;
+  }
+  .flight-mission-window .sky-checkpoints li {
+    min-height: 62px;
+    padding: 7px 5px;
+  }
+  .flight-mission-window .sky-checkpoints strong {
+    font-size: 11px;
+  }
+  .is-mission-tab .flight-research-scene {
+    padding: 16px 16px 24px;
+    gap: 24px;
+  }
+  .is-mission-tab .flight-world {
+    padding: 0;
+  }
+  .is-mission-tab .flight-scene-heading {
+    position: relative;
+    inset: auto;
+  }
+  .is-mission-tab .flight-scene-heading h3 {
+    font-size: 21px;
+  }
+  .is-mission-tab .flight-overline {
+    font-size: 8px;
+  }
+  .is-mission-tab .flight-research-scene .flight-radio-panel {
+    position: static;
+    transform: none;
+    width: auto;
+    align-self: stretch;
+    margin: 0;
+    max-height: none;
+    overflow: visible;
+  }
+}
+@media (min-width: 701px) and (max-height: 800px) {
+  .flight-world {
+    padding-top: 22px;
+  }
+  .flight-radio-emblem {
+    width: 55px;
+    height: 55px;
+    margin: 24px 0;
+  }
+  .flight-radio-emblem svg {
+    width: 30px;
+  }
+  .flight-radio-panel h4 {
+    font-size: 28px;
+    margin: 10px 0 12px;
+  }
+  .flight-radio-copy {
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+  .flight-radio-channel {
+    padding-bottom: 14px;
+  }
+  .flight-radio-rule {
+    padding: 14px 0;
+  }
+}
+
+/* Phone landscape keeps the game board and radio in view together. */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 1024px) {
+  .is-mission-tab .is-question-stage {
+    padding-block: 4px;
+  }
+  .jungle-world .flight-arena .workspace > .player-topbar {
+    min-height: 36px;
+    padding: 3px 14px;
+    flex-wrap: nowrap;
+  }
+  .flight-arena .player-topbar .player-identity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .flight-arena .player-topbar .player-profile-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .flight-arena .player-topbar .player-name-line strong {
+    font-size: 12px;
+  }
+  .flight-arena .player-topbar .player-name-line > span,
+  .flight-arena .player-topbar .player-experience {
+    display: none;
+  }
+  .flight-arena .player-topbar .player-vitals {
+    gap: 8px;
+    font-size: 10px;
+  }
+  .flight-arena .player-topbar .player-vitals svg {
+    width: 9px;
+    height: 9px;
+  }
+  .flight-arena .player-topbar .player-vitals > span > span {
+    display: none;
+  }
+  .flight-arena .player-topbar .player-profile-heading > .avatar {
+    width: 28px;
+    height: 30px;
+  }
+  .flight-arena .player-topbar .player-profile-heading > .avatar svg {
+    width: 22px;
+    height: 22px;
+  }
+  .flight-arena .player-topbar .topbar-right {
+    gap: 8px;
+    width: auto;
+    max-width: none;
+    flex-wrap: nowrap;
+  }
+  .flight-arena .player-topbar .icon-btn,
+  .flight-arena .player-topbar .persona-trigger {
+    min-width: 28px;
+    width: 28px;
+    height: 28px;
+    padding: 4px;
+  }
+  .flight-arena .player-topbar .player-character-label,
+  .flight-arena .player-topbar .player-honours small {
+    display: none;
+  }
+  .is-mission-tab .flight-page-tabs {
+    top: 40px;
+    left: 60px;
+    min-height: 28px;
+  }
+  .is-mission-tab .flight-page-tabs > button {
+    min-height: 28px;
+    padding: 5px 10px;
+    font-size: 12px;
+    gap: 6px;
+  }
+  .player-arena:has(.is-mission-tab) .map-nav-toggle:not(.is-open) {
+    top: 40px;
+    left: 16px;
+    width: 28px;
+    height: 28px;
+  }
+  .flight-mission-tab-content {
+    top: 72px;
+  }
+  .flight-mission-window .sky-checkpoints {
+    grid-template-columns: repeat(3, minmax(0, 150px));
+    justify-content: start;
+    padding: 4px 16px;
+  }
+  .flight-mission-window .sky-checkpoints li {
+    min-height: 30px;
+    padding: 3px 8px;
+    grid-template-columns: 18px minmax(0, 1fr);
+    gap: 6px;
+  }
+  .flight-mission-window .sky-checkpoints li > span,
+  .flight-mission-window .sky-checkpoints li > svg {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+  }
+  .flight-mission-window .sky-checkpoints strong {
+    font-size: 11px;
+  }
+  .is-mission-tab .flight-scene-heading {
+    position: fixed;
+    top: 40px;
+    left: 430px;
+    right: 16px;
+  }
+  .is-mission-tab .flight-scene-heading h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #edf5d4;
+  }
+  .is-mission-tab .flight-scene-heading p {
+    display: none;
+  }
+  .is-mission-tab .flight-research-scene {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 20px;
+    padding: 8px 16px;
+  }
+  .is-mission-tab .flight-world-beacons {
+    min-height: 0;
+    height: calc(100dvh - 130px);
+  }
+  .is-mission-tab .flight-world {
+    min-height: 0;
+  }
+  .is-mission-tab .flight-beacon-ring {
+    width: 54px;
+    height: 54px;
+  }
+  .is-mission-tab .flight-beacon-symbol > svg {
+    width: 32px;
+    height: 32px;
+  }
+  .is-mission-tab .flight-world-beacon strong {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  .is-mission-tab .flight-world-beacon small,
+  .is-mission-tab .flight-scene-footnote {
+    display: none;
+  }
+  .is-mission-tab .flight-beacon-charm {
+    width: 18px;
+    height: 18px;
+  }
+  .is-mission-tab .flight-beacon-accent {
+    width: 15px;
+    height: 15px;
+  }
+  .is-mission-tab .flight-scout {
+    width: 88px;
+  }
+  .is-mission-tab .flight-scout img {
+    height: 54px;
+  }
+  .is-mission-tab .flight-research-scene .flight-radio-panel {
+    position: fixed;
+    transform: translateY(-50%);
+    top: calc(50% + 24px);
+    right: 16px;
+    width: 220px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+  .is-mission-tab .flight-radio-emblem {
+    display: none;
+  }
+  .is-mission-tab .flight-radio-channel {
+    padding-bottom: 10px;
+    font-size: 9px;
+  }
+  .is-mission-tab .flight-radio-panel > .flight-overline {
+    display: none;
+  }
+  .is-mission-tab .flight-radio-panel h4 {
+    font-size: 21px;
+    margin: 10px 0;
+  }
+  .is-mission-tab .flight-radio-copy {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .is-mission-tab .flight-radio-rule {
+    padding: 10px 0;
+  }
+  .is-mission-tab .flight-radio-rule p {
+    font-size: 11px;
+  }
+  .is-mission-tab .flight-mission-action {
+    font-size: 14px;
+    min-height: 40px;
+    padding: 9px 12px;
+  }
+  .is-mission-tab .flight-radio-save {
+    font-size: 10px;
+    margin-top: 10px;
+  }
+}
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 700px) {
+  .is-mission-tab .is-question-stage {
+    grid-template-columns: minmax(0, 1fr) 170px;
+    gap: 14px;
+  }
+  .is-mission-tab .is-question-stage .flight-radio-panel {
+    width: 170px;
+    padding: 12px;
+  }
+  .is-mission-tab .is-question-stage .flight-radio-panel h4 {
+    font-size: 17px;
+    margin-block: 8px;
+  }
+  .is-mission-tab .is-question-stage .flight-radio-copy {
+    font-size: 10.5px;
+    line-height: 1.25;
+  }
+  .is-mission-tab .is-question-stage .flight-radio-rule p {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  .is-mission-tab .is-question-stage .flight-radio-save {
+    font-size: 9px;
+    margin-top: 8px;
+  }
+  .is-mission-tab .is-question-stage .flight-radio-rule {
+    padding-block: 8px;
+  }
+  .is-mission-tab .is-question-stage .flight-mission-action {
+    min-height: 36px;
+    padding: 7px 10px;
+  }
+  .flight-mission-window .sky-checkpoints {
+    grid-template-columns: repeat(3, minmax(0, 125px));
+  }
+  .flight-arena .player-topbar .topbar-right {
+    gap: 4px;
+  }
+}
+
+/* Question selection uses the same mission deck at every landscape size. */
+.flight-mission-tab-content:has(.is-question-stage) {
+  top: 138px;
+}
+.flight-mission-tab-content:has(.is-question-stage) .sky-mission {
+  overflow: hidden;
+}
+.is-mission-tab .is-question-stage {
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr);
+  padding-block: 8px;
+}
+.is-mission-tab .is-question-stage .flight-world {
+  min-height: 0;
+}
+.is-mission-tab .is-question-stage .flight-scene-footnote {
+  display: none;
+}
+.is-mission-tab .is-question-stage .flight-scene-heading {
+  top: 96px;
+}
+.is-mission-tab .is-question-stage .flight-quest-choices {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(10px, 1.5vw, 22px);
+  flex: 0 0 auto;
+  margin: 8px 0;
+}
+.is-mission-tab .is-question-stage .flight-quest {
+  margin: 0;
+  padding: 18px;
+  min-height: 0;
+  border: 1px solid #b5cd8377;
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      180deg,
+      #071b1010 0%,
+      #071b1044 18%,
+      #071b10db 36%,
+      #071b10f5 68%
+    ),
+    var(--mission-background) center top / cover,
+    #102d22;
+  box-shadow: 0 14px 32px #061b1255;
+  overflow: hidden;
+}
+.is-mission-tab .is-question-stage .flight-quest input {
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.flight-quest-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: clamp(56px, 10dvh, 90px);
+  margin-bottom: 12px;
+  color: #deedb4;
+  background: transparent;
+}
+.flight-quest-orbit {
+  position: absolute;
+  width: clamp(48px, 8dvh, 72px);
+  height: clamp(48px, 8dvh, 72px);
+  border: 1px solid #c5df9566;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 9px #b3d78c0a,
+    0 0 0 10px #b3d78c22;
+}
+.flight-quest-art > svg {
+  filter: drop-shadow(0 0 14px #c5e69c44);
+}
+.is-mission-tab .is-question-stage .flight-quest-seal {
+  display: grid;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  font-size: 11px;
+  background: #102d22;
+}
+.flight-quest-kicker {
+  color: #bcd291;
+  font:
+    9px/1.5 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.is-mission-tab .is-question-stage .flight-quest strong {
+  margin: 8px 0 12px;
+  font-size: clamp(20px, 2vw, 26px);
+}
+.is-mission-tab .is-question-stage .flight-quest-prompt {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.is-mission-tab .is-question-stage .flight-quest-select {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 0;
+  color: #e0efb5;
+  font:
+    600 16px "Rajdhani",
+    sans-serif;
+}
+.is-mission-tab .is-question-stage .flight-quest-prompt + .flight-quest-select {
+  padding-top: 16px;
+}
+.is-mission-tab .is-question-stage .flight-quest.is-selected {
+  border-color: #e4f6b7;
+  background:
+    linear-gradient(
+      180deg,
+      #173b2705 0%,
+      #102d2233 18%,
+      #102d22dc 36%,
+      #102d22f5 68%
+    ),
+    var(--mission-background) center top / cover,
+    #102d22;
+  box-shadow:
+    0 0 0 1px #d3e8a5,
+    0 0 28px #c4e38a33,
+    0 14px 32px #061b1266;
+}
+.is-mission-tab .is-question-stage .flight-quest:hover {
+  border-color: #d4e9ab;
+}
+.is-mission-tab .is-question-stage .flight-quest strong,
+.is-mission-tab .is-question-stage .flight-quest-prompt,
+.is-mission-tab .is-question-stage .flight-quest-kicker {
+  text-shadow:
+    0 1px 4px #031108,
+    0 2px 12px #031108aa;
+}
+.is-mission-tab .is-question-stage .mission-image-window .flight-quest-seal {
+  background: #102d22d9;
+}
+.is-mission-tab .is-question-stage .flight-quest:has(input:disabled) {
+  cursor: wait;
+  opacity: 0.7;
+}
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 1024px) {
+  .flight-mission-tab-content:has(.is-question-stage) {
+    top: 66px;
+  }
+  .is-mission-tab .is-question-stage .flight-scene-heading {
+    top: 34px;
+  }
+  .is-mission-tab .is-question-stage .flight-world {
+    padding: 0;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-choices {
+    margin: 0;
+    gap: 9px;
+  }
+  .is-mission-tab .is-question-stage .flight-quest {
+    min-height: 0;
+    padding: 8px;
+    border-radius: 12px;
+  }
+  .flight-quest-art {
+    height: 20px;
+    margin-bottom: 6px;
+  }
+  .flight-quest-orbit {
+    width: 24px;
+    height: 24px;
+    box-shadow: 0 0 0 5px #b3d78c15;
+  }
+  .flight-quest-art > svg {
+    width: 18px;
+    height: 18px;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-seal {
+    width: 20px;
+    height: 20px;
+    font-size: 8px;
+  }
+  .flight-quest-kicker {
+    font-size: 7px;
+    letter-spacing: 0;
+  }
+  .is-mission-tab .is-question-stage .flight-quest strong {
+    font-size: 14px;
+    margin: 4px 0 6px;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-prompt {
+    font-size: 10.5px;
+    line-height: 1.18;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-select {
+    font-size: 12px;
+  }
+  .is-mission-tab
+    .is-question-stage
+    .flight-quest-prompt
+    + .flight-quest-select {
+    padding-top: 8px;
+  }
+}
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 700px) {
+  .is-mission-tab .is-question-stage .flight-quest {
+    padding: 6px 8px;
+  }
+  .is-mission-tab .is-question-stage {
+    padding-block: 0;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-choices {
+    margin-block: 0;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-art {
+    display: grid;
+    position: absolute;
+    top: 7px;
+    right: 9px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-kicker {
+    padding-right: 0;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-art .flight-quest-seal,
+  .is-mission-tab .is-question-stage .flight-quest-orbit {
+    display: none;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-orbit {
+    width: 24px;
+    height: 24px;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-art > svg {
+    width: 18px;
+    height: 18px;
+  }
+  .is-mission-tab .is-question-stage .flight-quest strong {
+    font-size: 13px;
+    margin: 4px 0 5px;
+  }
+  .is-mission-tab .is-question-stage .flight-quest-prompt {
+    font-size: 10.5px;
+    line-height: 1.12;
+  }
+  .is-mission-tab
+    .is-question-stage
+    .flight-quest-prompt
+    + .flight-quest-select {
+    padding-top: 6px;
+  }
+}

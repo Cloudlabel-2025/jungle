@@ -2,9 +2,11 @@ import mongoose from "mongoose";
 import { randomUUID } from "node:crypto";
 import { models, connect } from "../lib/db.js";
 import { pilotAction } from "../lib/pilot-engine.js";
+import { syncAttendance } from "../lib/attendance.js";
 export async function processPilot() {
   await connect();
   const results = [];
+  results.push({ attendance: await syncAttendance() });
   for (const s of await models.PilotSprint.find({
     state: { $in: ["PREVIEW", "ACTIVE", "CLIENT_REVIEW", "ACCEPTED"] },
   }).lean()) {

@@ -1,0 +1,414 @@
+.jungle-world .modal.star-guide-window {
+  display: flex;
+  flex-direction: column;
+  width: min(1060px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  height: min(650px, calc(100dvh - 32px));
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #bfba7888;
+  border-radius: 20px;
+  background: #0b211b;
+  box-shadow:
+    0 30px 100px #0009,
+    inset 0 0 0 4px #cbd7890b;
+}
+.jungle-world .star-guide-window > .panel-heading {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 14px 20px;
+  border-bottom: 1px solid #b8c17a33;
+  background: #071b16;
+}
+.jungle-world .star-guide-window > .panel-heading h2 {
+  margin: 3px 0 0;
+  color: #e8e6bb;
+  font:
+    700 23px/1.1 "Rajdhani",
+    sans-serif;
+}
+.jungle-world .star-guide-window > .panel-heading .eyebrow {
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: #aebe8c;
+}
+.jungle-world .star-guide-window > .panel-heading .icon-btn {
+  border: 1px solid #b5c67a55;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  background: #29412a;
+}
+.level-star-guide.star-hunt-briefing {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 0;
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  color: #e6edd0;
+  font-family: "Rajdhani", sans-serif;
+  background:
+    radial-gradient(ellipse at 80% 0, #9fbd5b16, transparent 70%), #102a20;
+}
+.star-hunt-companion {
+  display: flex;
+  position: relative;
+  isolation: isolate;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 34px 18px 20px;
+  background:
+    linear-gradient(#0b211c66, #0b211cee),
+    url("/images/flight-mission-ground-v2.png") 20% center/cover;
+  border-right: 1px solid #a9bf722b;
+}
+.star-hunt-flight-code {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  color: #c3cc99;
+  letter-spacing: 0.12em;
+}
+.star-hunt-pip {
+  display: block;
+  width: 245px;
+  max-width: 125%;
+  height: auto;
+  margin: -15px -20px -28px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 16px #0008);
+  animation: star-hunt-hover 4s ease-in-out infinite;
+  z-index: 1;
+}
+.star-hunt-speech {
+  width: 100%;
+  padding: 22px 14px 14px;
+  border: 1px solid #cad08b55;
+  border-radius: 18px;
+  background: #102c22e8;
+  box-shadow: 0 10px 25px #0004;
+}
+.star-hunt-speech > span {
+  color: #e2d497;
+  font:
+    7px/1.6 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.08em;
+}
+.star-hunt-speech p {
+  margin: 9px 0 14px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #e1e8cb;
+}
+.star-hunt-speech button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 0 0;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid #bbcb7b33;
+  color: #ded18d;
+  text-align: left;
+  font:
+    600 13px "Rajdhani",
+    sans-serif;
+  cursor: pointer;
+}
+.star-hunt-speech button:focus-visible,
+.star-hunt-rewards button:focus-visible {
+  outline: 2px solid #f0d98f;
+  outline-offset: 3px;
+}
+.star-hunt-main {
+  min-width: 0;
+  padding: 20px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.star-hunt-goal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.star-hunt-goal > div {
+  min-width: 0;
+}
+.star-hunt-goal > div > span {
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.14em;
+  color: #bacb8a;
+}
+.star-hunt-goal h3 {
+  font:
+    700 35px/1.05 "Rajdhani",
+    sans-serif;
+  color: #f3e6b6;
+  margin: 5px 0;
+}
+.star-hunt-goal p {
+  margin: 0;
+  color: #bdcfad;
+  font-size: 15px;
+}
+.star-hunt-goal > .sky-station-stars {
+  margin: 0;
+  flex-shrink: 0;
+}
+.star-hunt-objectives {
+  display: grid;
+  align-content: start;
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.star-hunt-objectives > li {
+  display: grid;
+  grid-template-columns: 24px 22px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #b5c87a26;
+}
+.star-hunt-number {
+  color: #aabd7c;
+  font:
+    11px/22px "JetBrains Mono",
+    monospace;
+}
+.star-hunt-objectives > li > svg {
+  color: #d3df9f;
+  margin-top: 2px;
+}
+.star-hunt-objectives strong {
+  display: block;
+  font-size: 17px;
+  line-height: 1.2;
+  color: #e8edd2;
+}
+.star-hunt-objectives p {
+  margin: 3px 0 0;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #bdcdb3;
+}
+.star-hunt-rewards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.star-hunt-rewards button {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 5px;
+  min-height: 58px;
+  padding: 9px 7px;
+  border: 1px solid #879e5c55;
+  border-radius: 10px;
+  background: #0a2119;
+  color: #a7bb97;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.star-hunt-rewards button:hover {
+  border-color: #e8cf83;
+}
+.star-hunt-rewards button.is-selected {
+  --xp-icon-color: #594378;
+  background: linear-gradient(135deg, #eddda0, #bac777);
+  color: #183121;
+  border-color: #f5eab6;
+  box-shadow:
+    0 0 18px #cbd78622,
+    inset 0 1px #fff9;
+}
+.star-hunt-rewards strong {
+  font:
+    700 10px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.07em;
+}
+.star-hunt-rewards button > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.star-hunt-timer {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  color: #cad7b1;
+}
+.star-hunt-timer > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #d5cf8b;
+}
+.star-hunt-timer strong {
+  font-size: 13px;
+}
+.star-hunt-timer p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #b1c49f;
+}
+.star-hunt-timer.is-expired strong {
+  color: #e4cb89;
+}
+.star-hunt-footnote {
+  margin: 0;
+  color: #91aa8b;
+  font-size: 11px;
+  line-height: 1.35;
+}
+@keyframes star-hunt-hover {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(2deg);
+  }
+}
+@media (max-width: 620px) and (orientation: portrait) {
+  .level-star-guide.star-hunt-briefing {
+    grid-template-columns: 1fr;
+  }
+  .star-hunt-companion {
+    display: none;
+  }
+  .star-hunt-main {
+    padding: 16px;
+  }
+  .star-hunt-goal h3 {
+    font-size: 27px;
+  }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .jungle-world .modal.star-guide-window {
+    width: calc(100vw - 24px);
+    max-height: calc(100dvh - 16px);
+    height: calc(100dvh - 16px);
+    border-radius: 14px;
+  }
+  .jungle-world .star-guide-window > .panel-heading {
+    padding: 8px 14px;
+  }
+  .jungle-world .star-guide-window > .panel-heading .eyebrow {
+    display: none;
+  }
+  .jungle-world .star-guide-window > .panel-heading h2 {
+    font-size: 19px;
+    margin: 0;
+  }
+  .jungle-world .star-guide-window > .panel-heading .icon-btn {
+    width: 28px;
+    height: 28px;
+  }
+  .level-star-guide.star-hunt-briefing {
+    grid-template-columns: 170px minmax(0, 1fr);
+  }
+  .star-hunt-companion {
+    padding: 24px 10px 10px;
+  }
+  .star-hunt-flight-code {
+    top: 8px;
+    left: 12px;
+    font-size: 7px;
+  }
+  .star-hunt-pip {
+    width: 150px;
+    margin-bottom: -20px;
+  }
+  .star-hunt-speech {
+    padding: 18px 10px 10px;
+    border-radius: 12px;
+  }
+  .star-hunt-speech > span {
+    font-size: 6px;
+  }
+  .star-hunt-speech p {
+    font-size: 13px;
+    margin: 6px 0 9px;
+  }
+  .star-hunt-speech button {
+    font-size: 11px;
+  }
+  .star-hunt-main {
+    padding: 10px 16px;
+    gap: 8px;
+  }
+  .star-hunt-goal h3 {
+    font-size: 25px;
+    margin: 3px 0;
+  }
+  .star-hunt-goal p {
+    font-size: 12px;
+  }
+  .star-hunt-goal > .sky-station-stars {
+    transform: scale(0.8);
+    transform-origin: right center;
+  }
+  .star-hunt-objectives > li {
+    padding: 5px 0;
+    gap: 7px;
+    grid-template-columns: 20px 18px minmax(0, 1fr);
+  }
+  .star-hunt-objectives strong {
+    font-size: 14px;
+  }
+  .star-hunt-objectives p {
+    font-size: 12px;
+    line-height: 1.25;
+    margin-top: 2px;
+  }
+  .star-hunt-objectives > li > svg {
+    width: 16px;
+    height: 16px;
+  }
+  .star-hunt-rewards button {
+    min-height: 42px;
+    gap: 3px;
+    padding: 5px;
+  }
+  .star-hunt-rewards strong {
+    font-size: 8px;
+  }
+  .star-hunt-rewards button > span {
+    font-size: 12px;
+  }
+  .star-hunt-timer strong {
+    font-size: 11px;
+  }
+  .star-hunt-timer p {
+    font-size: 10px;
+    margin-top: 1px;
+  }
+  .star-hunt-footnote {
+    font-size: 10px;
+  }
+}

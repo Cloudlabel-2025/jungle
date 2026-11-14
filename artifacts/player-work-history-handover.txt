@@ -1,0 +1,46 @@
+PLAYER WORK SAVING
+
+Open the running game at http://127.0.0.1:3000. As a Player, use the profile
+icon in the header, then View work by date.
+
+Saved records belong to the signed-in player and cohort. Dates and times use
+the cohort's time zone. The view shows clock-in/out sessions, manual versus
+automatic clock-out, saved research selections/links, reflection drafts,
+submitted reflections and activity work, and later expedition work.
+Drafts do not submit work, award completion or bypass stage restrictions.
+No assessment notes, reference answers or other players' work are exposed.
+
+Research links, SOD/EOD reflections, Week 1 activity attempts and Code Lab
+edits autosave after a short pause. Wait for the saved confirmation. Failed
+saves are visibly labelled Not saved. Manual clock-out flushes pending work;
+automatic clock-out retains all confirmed database saves. Drafts restore
+when the editor is reopened. Concurrent stale drafts cannot overwrite a
+newer saved revision. Persona changes cannot transfer a pending save to
+another player.
+
+Code Lab keeps the latest workspace checkpoint per date and attendance
+session, with a downloadable JSON file. Later dates/sessions retain earlier
+checkpoints. Saves without a confirmed active session are explicitly marked.
+It is not a keystroke recorder. Old records that never stored a draft or
+clock-out timestamp cannot be reconstructed; missing history is not invented.
+
+Validation: 187 regression tests passed, zero failures or skips. The added
+work-history tests cover own-player privacy, role/stage restrictions,
+time-zone and millisecond session boundaries, timeout preservation, stale
+versions, draft/final separation, stable pagination and dated code recovery.
+Browser QA in a disposable database verified unsubmitted SOD/EOD autosave,
+manual clock-out, return/refresh, restored draft text and correct session
+assignment in Profile > View work by date. Desktop/mobile screenshots are
+saved beside this handover. The configured main game was not reset or
+rescheduled for testing.
+
+Final production build passed. Further browser QA verified Code Lab edits
+survived refresh, the workspace download contained the exact saved code,
+and the date filter switched between today's checkpoint and an empty prior
+day. All browser mutations used disposable fixtures, not main-game progress.
+
+The main database ping and transactional read also passed without changes.
+The configured main player's new history view loaded successfully. Day 1
+remains scheduled for 2026-11-05; MC/CC must correct the release schedule to
+allow clock-in on another date. No schedule changes were made in this task.
+The attendance worker was restarted with network access and is running.

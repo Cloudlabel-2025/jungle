@@ -1,0 +1,21 @@
+LEVEL 1 / INLINE TABS
+
+Replaced the Level 1 modal with a tab panel in the flight page. A compact
+Sky map / Level 1 tab strip replaces the large mission title bar and close
+button. Removed the bottom Return to sky map section from Level 1. The player
+HUD remains visible. Other day mission dialogs keep their existing behavior.
+
+The first Play action still flies to the checkpoint before opening Level 1.
+The Level 1 tab becomes resumable after arrival. Switching to Sky map hides
+the mission without unmounting it, preserving local previews and pending
+drafts. Locked releases remain locked. The tab strip supports keyboard
+arrows, Home and End. The menu button sits beside the tabs on mobile.
+
+Validation: 7 flight/checkpoint tests passed. Browser checks confirmed zero
+dialogs and no Return to sky map button on Level 1, keyboard tab navigation,
+preserved unconfirmed genre preview after switching tabs, visible player HUD,
+and a 390px mobile panel with no horizontal overflow. No genre/question was
+confirmed and no player progress was reset during the checks.
+
+Screenshots: flight-tabs-desktop.jpg and flight-tabs-mobile.jpg.
+Final production build passed, and git diff --check reported no whitespace errors.

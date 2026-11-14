@@ -1,0 +1,35 @@
+.profile-stat-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:22px 0; }
+.profile-stat-grid > div { background:#112d1e; border:1px solid #8fa56b66; border-radius:6px; padding:16px; }
+.profile-stat-grid dt { color:#b8c9a5; font-size:13px; }
+.profile-stat-grid dd { margin:6px 0 0; font:600 29px var(--body); color:#e6efc3; }
+.player-profile-card .player-identity { width:100%; }
+.profile-character-state { border-left:3px solid #a6bd73; padding:12px 16px; background:#132f21; color:#d3dfbc; line-height:1.6; }
+.crash-arrival { position:relative; isolation:isolate; overflow:hidden; min-height:calc(100dvh - 130px); display:flex; align-items:flex-end; padding:clamp(24px,6vw,80px); border-radius:8px; background:linear-gradient(#0a1e1580,#0a1e15dd),url('/images/flight-aerial-clouds.png') center/cover; }
+.crash-arrival.has-landed { background:linear-gradient(#0a1e1566,#0a1e15ee),url('/images/verdant-wilds.webp') center/cover; }
+.crash-story-copy { position:relative; z-index:2; max-width:650px; }
+.crash-story-copy h1 { font-size:clamp(38px,6vw,70px); margin:20px 0; }
+.crash-story-copy > p:not(.eyebrow) { font-size:19px; line-height:1.6; color:#d3dfc4; }
+.crash-aircraft { position:absolute; top:10%; left:35%; width:min(430px,55vw); animation:crash-descent 4s ease-in forwards; }
+.has-landed .crash-aircraft { animation:none; top:26%; left:50%; transform:rotate(14deg); opacity:.6; }
+@keyframes crash-descent { from{transform:translate(0,-30px) rotate(0);} to{transform:translate(15vw,25vh) rotate(18deg) scale(.75);opacity:.25;} }
+@media(prefers-reduced-motion:reduce){.crash-aircraft{animation:none;}}
+@media(max-width:600px) {
+  .flight-arena .player-topbar .topbar-right { width:98px; max-width:98px; gap:6px; }
+  .flight-arena .player-topbar .player-identity { grid-template-columns:40px minmax(0,1fr); gap:2px 8px; }
+  .flight-arena .player-topbar .player-profile-heading > .avatar { width:40px; height:48px; }
+  .flight-arena .player-topbar .player-experience { flex-wrap:nowrap; gap:4px; }
+  .flight-arena .player-topbar .player-experience > span:first-child { font-size:9px; }
+  .flight-arena .player-topbar .player-xp-bar { flex:1; min-width:16px; width:auto; }
+  .flight-arena .player-topbar .player-experience small { font-size:8px; }
+  .flight-arena .player-topbar .player-vitals { flex-wrap:nowrap; gap:10px; }
+  .flight-arena .player-topbar .player-vitals > span > span { display:none; }
+  .flight-arena .player-topbar .player-vitals svg { width:9px; }
+  .flight-arena .player-topbar .player-honours { display:flex; flex:0 0 auto; border:0; padding:0; gap:0; }
+  .flight-arena .player-honours .player-streak-count { display:none; }
+  .flight-arena .player-trophy-count { display:flex; gap:4px; }
+  .flight-arena .player-trophy-count small { display:none; }
+  .flight-arena .topbar-right .icon-btn,.flight-arena .topbar-right .persona-trigger { min-width:26px; width:26px; height:26px; padding:4px; }
+  .profile-stat-grid { gap:8px; }
+  .profile-stat-grid > div { padding:12px; }
+  .crash-aircraft { width:70vw; left:15%; }
+}

@@ -1,4 +1,6 @@
 const config = {
+  // Isolated verification builds leave the running development app untouched.
+  ...(process.env.CODEWILD_BUILD_CHECK === "1" ? { distDir: ".next/level-one-check" } : {}),
   experimental: { cpus: 1 },
   serverExternalPackages: ["mongoose"],
   outputFileTracingIncludes: {

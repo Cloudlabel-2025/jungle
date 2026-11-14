@@ -1,0 +1,36 @@
+LEVEL 1 / AIRBORNE DISCOVERY SCENE
+
+Direction: Zelda-inspired exploration and quest discovery, using CODEWILD's
+existing aerial artwork and green expedition palette. No third-party game
+art, characters or copied screens are included.
+
+Level 1 opens a full-screen mission scene. Seven world beacons replace the
+genre-card grid. Selecting a beacon moves the helicopter and updates the
+flight-radio briefing. Explicit confirmation reserves the genre. Three
+question missions appear next; explicit confirmation locks the question.
+The locked objective, acceptance, persistent timer and research-chat delivery
+continue in the same scene. Accepting does not start the timer.
+
+All reservations, five-person groups, question locks, deadlines, saved drafts,
+review states and future-level release restrictions still use the existing
+server APIs. Only presentation changed. No main-game player choices were
+made or reset during testing. Attendance dialogs use a priority portal so
+they remain above the full-screen scene. Other dialogs retain their layout.
+
+Validation: 50 Day 1/research/attendance/saved-work regression tests passed,
+zero skipped or failed. Isolated browser QA verified seven world choices,
+selection feedback, genre reservation, three questions, explicit question
+locking, no timer before Begin research, timer persistence, chat draft
+autosave and restore after refresh, delivery awaiting review, and Level 2
+remaining disabled. The attendance dialog was verified outside the map's
+stacking context at its priority layer. Desktop and mobile were inspected;
+final spacing and full-screen mobile fixes followed the initial review.
+
+Final production build passed. The configured main game's Level 1 was opened
+with its existing player progress and no genre/question reservation made.
+The final mobile dialog measured 390 x 844 at x=0, y=0 with no horizontal
+overflow. Final screenshots: flight-worlds-desktop.jpg and
+flight-worlds-mobile.jpg. The main-game mission tab remains open for review.
+
+Open http://127.0.0.1:3000/gamer/dashboard and enter Level 1. Returning players
+resume their already locked question or research rather than selecting again.

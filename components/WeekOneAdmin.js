@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Badge, Form, Receipt } from "./ui";
 import { DayOneGameSetup, DayOneCohort } from "./DayOneFeatures";
 import WeekOneRelease from "./WeekOneRelease";
+import WeekOneLevelControls from "./WeekOneLevelControls";
 import { activities } from "@/lib/week-one-catalog.js";
 import { emptyDayContent } from "@/lib/week-one-program-rules.js";
 import {
@@ -66,7 +67,7 @@ function DayEditor({ day, data, act }) {
       activities: c.activities.map((a, i) => (i === index ? mutate(a) : a)),
     }));
   }
-  const locked = ["OPEN", "CLOSED"].includes(day.state);
+  const locked = ["OPEN", "CLOSED"].includes(day.state) || day.contentLocked;
   return (
     <WeekPanel
       title={`Day ${day.day} · ${day.title}`}
@@ -646,7 +647,9 @@ export function StaffAnnouncements({ data, act, now }) {
         .filter((d) => d.day > 1)
         .map((day) => (
           <WeekPanel key={day.day} title={`Day ${day.day} · Class recaps`}>
-            {day.state === "OPEN" &&
+            {(day.state === "OPEN" ||
+              (data.weekOneProgram.progression?.mode === "COMPLETION" &&
+                day.activities?.length > 0)) &&
               [1, 2].map((session) => (
                 <div key={session}>
                   <p>
@@ -675,7 +678,9 @@ export function StaffAnnouncements({ data, act, now }) {
                 Class {r.session}: {r.text} · {weekTime(r.publishedAt)}
               </p>
             ))}
-            {day.state === "OPEN" && (
+            {(day.state === "OPEN" ||
+              (data.weekOneProgram.progression?.mode === "COMPLETION" &&
+                day.activities?.length > 0)) && (
               <WeekForm
                 action="publish-recap"
                 act={act}
@@ -1214,6 +1219,7 @@ export function StaffResults({ data, act }) {
     cc = data.user.role === "CENTRE_COMMAND";
   return (
     <>
+      <WeekOneLevelControls data={data} act={act} />
       <WeekPanel
         title="Week 1 readiness and publication"
         action={

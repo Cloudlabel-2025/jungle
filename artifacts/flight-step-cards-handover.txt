@@ -1,0 +1,16 @@
+LEVEL 1 / IMAGE-BACKED HEADER AND STEP CARDS
+
+The mission background now fills the entire flight page, behind the player
+HUD, tabs, step cards and mission scene. Removed the solid top green area.
+The three progress steps are separated cards over the artwork. The current
+server-derived step has a lime border and glow; completed steps show a check,
+and upcoming steps are dimmed and labelled Locked. Cards indicate progress,
+and do not allow bypassing genre/question locks.
+
+Validation: 7 flight/checkpoint tests passed. Browser review at 1600 x 900,
+1280 x 720 and 390 x 844 confirmed separate cards, the active glow and visible
+background artwork behind the header. Mobile has no horizontal overflow.
+No player choices or progress were changed.
+
+Screenshots: flight-step-cards-desktop.jpg and flight-step-cards-mobile.jpg.
+Production build passed. git diff --check passed.

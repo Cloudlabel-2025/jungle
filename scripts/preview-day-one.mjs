@@ -11,16 +11,24 @@ import { fixtureConfig } from "../tests/day-one-fixture.mjs";
 import { localParts } from "../lib/day-one-rules.js";
 import { seed } from "../lib/seed.js";
 import { publishFixtureRules } from "../tests/week-one-program-fixture.mjs";
+import { blankProgram } from "../lib/week-one-program-rules.js";
+import { emptyRecovery } from "../lib/recovery-rules.js";
+import { rosterDigest } from "../lib/recovery.js";
+import { syncAttendance } from "../lib/attendance.js";
 
 const fresh = process.argv.includes("--qa-fresh");
+const research = process.argv.includes("--research");
+const attendanceQA = process.argv.includes("--attendance");
+const attendanceEod = process.argv.includes("--attendance-eod");
 
 const replica = await MongoMemoryReplSet.create({
   binary: { version: "7.0.24" },
   replSet: { count: 1, storageEngine: "wiredTiger" },
 });
 process.env.MONGODB_URI = replica.getUri("day1_browser_preview");
-let server;
+let server, attendanceTimer;
 async function close() {
+  clearInterval(attendanceTimer);
   if (server) server.kill();
   await mongoose.disconnect();
   await replica.stop();
@@ -51,6 +59,20 @@ try {
   config.weekdays = [0, 1, 2, 3, 4, 5, 6];
   config.startTime = "00:00";
   config.endTime = "23:59";
+  if (attendanceEod) {
+    config.clockCutoff = new Date(now.getTime() - 2 * 3600000).toISOString();
+    config.closingCutoff = new Date(now.getTime() - 60000).toISOString();
+  }
+  if (research) {
+    config.selectionMode = "research-2026-11-12";
+    if (process.argv.includes("--research-random"))
+      config.questionSelection = "RANDOM";
+    config.bankApproval =
+      "Synthetic UI review approval of the 51 supplied questions; not an institutional content approval.";
+    config.researchGroups = Array.from({ length: 5 }, (_, i) => ({
+      members: gamers.slice(i * 5, i * 5 + 5).map((g) => g._id),
+    }));
+  }
   const call = (u, a, b = {}, t = now) => dayOneAction(u, a, b, t);
   await call(
     cc,
@@ -77,10 +99,12 @@ try {
       );
     }
     for (let i = 0; i < gamers.length; i++) {
+      if (attendanceQA || (attendanceEod && i > 1)) continue;
       const g = gamers[i],
         early = new Date(now.getTime() - 3 * 3600000),
         started = new Date(now.getTime() - 45 * 60000);
       await call(g, "clock", {}, early);
+      if (research) continue; // Leave all 25 real selection controls available for browser/HTTP QA.
       await call(g, "agenda-view", {}, early);
       await call(g, "agenda-ack", {}, early);
       if (i % 7 === 0) continue;
@@ -138,13 +162,78 @@ try {
       await call(g, "class");
     }
     // Ensure the first demo Gamer is useful for checking the full My Day layout.
-    const g = gamers[0];
-    await call(g, "sod", {
-      text: "Explore how discoveries about exoplanets are verified using independent observations.",
+    if (!research) {
+      const g = gamers[0];
+      await call(g, "sod", {
+        text: "Explore how discoveries about exoplanets are verified using independent observations.",
+      });
+      await call(g, "genre", { genreId: "genre-1" });
+      await call(g, "acknowledge");
+      await call(g, "start");
+    }
+  }
+  if (attendanceEod) {
+    const priorDeadline = new Date(now.getTime() - 3 * 60000);
+    await models.Attendance.updateOne(
+      { userId: gamers[1]._id },
+      {
+        $set: {
+          cohortId: "alpha",
+          sessionState: "ACTIVE",
+          cutoffAt: priorDeadline,
+          checkDueAt: priorDeadline,
+        },
+      },
+    );
+    await syncAttendance(now);
+    console.log(
+      "Synthetic EOD QA: Aarav has a pending check; Priya timed out while offline.",
+    );
+  }
+  if (process.argv.includes("--crash")) {
+    // Synthetic approved state, exclusively inside this disposable database.
+    const program = blankProgram();
+    program.locked = true;
+    program.publications = [
+      {
+        version: 1,
+        results: gamers.map((g) => ({
+          userId: g._id,
+          name: g.name,
+          total: 80,
+          status: "CLEARED",
+        })),
+        recognition: { awards: [], examples: [] },
+        teams: [],
+        rescue: [],
+      },
+    ];
+    const recovery = emptyRecovery();
+    recovery.fridayVersion = 1;
+    recovery.published = {
+      version: 1,
+      teams: [...new Set(gamers.map((g) => g.teamId))].map((id) => ({
+        id,
+        members: gamers.filter((g) => g.teamId === id).map((g) => g._id),
+      })),
+      by: cc._id,
+      at: now.toISOString(),
+      eligibleDigest: rosterDigest(recovery, program.publications[0]),
+    };
+    program.recovery = recovery;
+    await models.WeekOneProgram.updateOne(
+      { _id: "alpha" },
+      { $set: { data: program } },
+    );
+    await models.FlightOpening.create({
+      _id: JSON.stringify(["alpha", gamers[0]._id]),
+      userId: gamers[0]._id,
+      cohortId: "alpha",
+      completedAt: now,
     });
-    await call(g, "genre", { genreId: "genre-1" });
-    await call(g, "acknowledge");
-    await call(g, "start");
+    console.log(
+      "Synthetic post-clearance crash QA enabled for the first demo Player only.",
+    );
   }
   server = spawn(
     process.execPath,
@@ -164,6 +253,10 @@ try {
         DEMO_MODE: "true",
         DEMO_ACCESS_CODE: "",
         SESSION_SECRET: randomBytes(48).toString("hex"),
+        WEEK1_NOTIFICATION_WEBHOOK_URL: "",
+        WEEK1_NOTIFICATION_WEBHOOK_TOKEN: "",
+        WEEK1_COLLEGE_CONTACTS_JSON: "{}",
+        APP_ORIGIN: "http://127.0.0.1:3101",
       },
     },
   );
@@ -174,6 +267,7 @@ try {
   console.log(
     "Disposable Day 1 preview: http://127.0.0.1:3101/gamer/dashboard",
   );
+  attendanceTimer = setInterval(() => syncAttendance().catch(() => {}), 15000);
   if (fresh)
     console.log(
       "Fresh QA state: Day 1 PREPARED, rules published, no learner attempts. Open Day 1 as CC through the browser. Production data is not connected.",

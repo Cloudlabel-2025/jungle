@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Star, Sparkles, Trophy, Zap, RotateCcw, Check } from "lucide-react";
+import { Star, Sparkles, Trophy, RotateCcw, Check } from "lucide-react";
+import XpIcon from "./XpIcon";
 import { Modal } from "./ui";
 import { completionKey, pendingCompletions } from "@/lib/level-celebration";
 import { teamRoles } from "@/lib/team-roles";
@@ -113,7 +114,7 @@ export function CompletionCelebration({ attempt, data, close }) {
                   </div>
                   <div className="completion-grants">
                     <span className="completion-xp">
-                      <Zap size={15} />+{reward.xp} XP
+                      <XpIcon size={18} />+{reward.xp} XP
                     </span>
                     <span
                       className="completion-trophies"

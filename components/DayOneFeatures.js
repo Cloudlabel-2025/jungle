@@ -1,12 +1,38 @@
 "use client";
 import PlayerVitals from "./PlayerVitals";
+import ResearchGenrePicker from "./ResearchGenrePicker";
+import FlightMissionBriefing from "./FlightMissionBriefing";
+import DayOneReviewEvidence from "./DayOneReviewEvidence";
+import LevelOneResult from "./LevelOneResult";
+import LevelOneControls from "./LevelOneControls";
+import SavedReflectionForm from "./SavedReflectionForm";
+import useSavedWork from "./useSavedWork";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Clock3, Trophy, LockKeyhole, Mic, Search } from "lucide-react";
-import { Panel as ExistingPanel, Badge, Form, Receipt, Empty } from "./ui";
-import { defaultSetup } from "@/lib/day-one-rules.js";
+import {
+  Clock3,
+  Trophy,
+  LockKeyhole,
+  Mic,
+  Search,
+  Compass,
+  Radio,
+  ArrowRight,
+  Check,
+  Link2,
+  Send,
+} from "lucide-react";
+import {
+  Panel as ExistingPanel,
+  Badge,
+  Form,
+  Receipt,
+  Empty,
+  Modal,
+} from "./ui";
 
-function Panel({ children, ...props }) {
+function Panel({ children, bare = false, ...props }) {
+  if (bare) return <div className="sky-research-content">{children}</div>;
   return (
     <ExistingPanel {...props}>
       <div
@@ -71,7 +97,8 @@ export function DayOneCheckIn({ data, act, now }) {
         <span>{c.timeZone}</span>
       </div>
       <p className="muted">
-        Clock-in cut-off: {fmt(c.clockCutoff, c.timeZone)}. Your player balance is shared across all programme stages.
+        Clock-in cut-off: {fmt(c.clockCutoff, c.timeZone)}. Your player balance
+        is shared across all programme stages.
       </p>
       {r?.clockAt ? (
         <Receipt>
@@ -81,6 +108,7 @@ export function DayOneCheckIn({ data, act, now }) {
       ) : (
         <button
           className="btn primary full"
+          data-pip-target="day-check-in"
           disabled={data.dayOne?.state !== "OPEN"}
           onClick={() => send(act, "clock", r)}
         >
@@ -93,6 +121,7 @@ export function DayOneCheckIn({ data, act, now }) {
 export function DayOneRewards({ data }) {
   const r = own(data);
   if (!r) return null;
+  if (r.levelOne) return <LevelOneResult level={r.levelOne} />;
   const names = {
     clock: "On-time clock-in",
     sod: "Start-of-day plan",
@@ -149,7 +178,14 @@ export function DayOneRewards({ data }) {
     </Panel>
   );
 }
-export function DiscoveryMission({ data, act, now }) {
+export function DiscoveryMission({
+  data,
+  act,
+  now,
+  game = false,
+  nextLevel,
+  onContinue,
+}) {
   const r = own(data),
     c = r?.config || data.dayOne?.config;
   if (!c)
@@ -160,20 +196,62 @@ export function DiscoveryMission({ data, act, now }) {
       </Empty>
     );
   if (!r) return <DayOneCheckIn data={data} act={act} now={now} />;
+  if (r.levelOne?.result?.completed && !r.genreId)
+    return <LevelOneResult level={r.levelOne} />;
   const g = c.genres.find((g) => g.id === r.genreId),
     s = r.submissions.at(-1);
   const remaining = r.startedAt
     ? Math.max(0, new Date(r.deadline) - new Date(now))
     : 90 * 60000;
   const timer = `${String(Math.floor(remaining / 60000)).padStart(2, "0")}:${String(Math.floor(remaining / 1000) % 60).padStart(2, "0")}`;
+  if (game && c.selectionMode === "research-2026-11-12")
+    return (
+      <fieldset
+        disabled={data.dayOne?.state !== "OPEN"}
+        className="flight-discovery-fieldset"
+      >
+        {!g ? (
+          data.dayOne?.state === "OPEN" ? (
+            <ResearchGenrePicker
+              act={act}
+              recordId={r._id}
+              interactive={c.questionSelection === "PLAYER_CHOICE"}
+              game
+            />
+          ) : (
+            <p className="flight-closed-notice">
+              This mission is closed. Your saved work remains in your profile.
+            </p>
+          )
+        ) : (
+          <FlightResearchMission
+            record={r}
+            config={c}
+            question={g}
+            act={act}
+            timer={timer}
+            remaining={remaining}
+            now={now}
+            nextLevel={nextLevel}
+            onContinue={onContinue}
+            open={data.dayOne?.state === "OPEN"}
+          />
+        )}
+      </fieldset>
+    );
   return (
     <fieldset
       disabled={data.dayOne?.state !== "OPEN"}
       style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}
     >
       <Panel
-        title="Individual discovery mission"
-        kicker="DAY 1 / EXTERNAL AI / 90 MINUTES"
+        bare={game && !g}
+        title={game ? "Your discovery mission" : "Individual discovery mission"}
+        kicker={
+          game
+            ? "LEVEL 1 / RESEARCH CHECKPOINT"
+            : "DAY 1 / EXTERNAL AI / 90 MINUTES"
+        }
         action={
           <Badge tone="cyan">
             <Clock3 size={14} />
@@ -181,11 +259,25 @@ export function DiscoveryMission({ data, act, now }) {
           </Badge>
         }
       >
-        <p className="muted">
-          Choose a genre, acknowledge the question, then begin your research.
-          Your timer persists after refresh and re-login.
-        </p>
-        {!r.acknowledgedAt && (
+        {!game && (
+          <p className="muted">
+            {c.questionSelection === "PLAYER_CHOICE"
+              ? "Choose a genre, select and lock one of its three questions, then acknowledge it and begin your research."
+              : "Choose a genre, acknowledge the question, then begin your research."}{" "}
+            Your timer persists after refresh and re-login.
+          </p>
+        )}
+        {c.selectionMode === "research-2026-11-12" &&
+          !r.researchAssignment &&
+          data.dayOne?.state === "OPEN" && (
+            <ResearchGenrePicker
+              act={act}
+              recordId={r._id}
+              interactive={c.questionSelection === "PLAYER_CHOICE"}
+              game={game}
+            />
+          )}
+        {c.selectionMode !== "research-2026-11-12" && !r.acknowledgedAt && (
           <Form
             key={`genre-${r.version}`}
             fields={[
@@ -204,6 +296,13 @@ export function DiscoveryMission({ data, act, now }) {
           <>
             <div className="journal-entry">
               <Badge>QUESTION V{g.version}</Badge>
+              {c.questionSelection === "PLAYER_CHOICE" &&
+                r.researchAssignment && (
+                  <Receipt>
+                    Question locked{" "}
+                    {fmt(r.researchAssignment.assignedAt, c.timeZone)}
+                  </Receipt>
+                )}
               <h3>{g.name}</h3>
               <p>{g.question}</p>
             </div>
@@ -301,7 +400,7 @@ export function DiscoveryMission({ data, act, now }) {
           </>
         )}
       </Panel>
-      <DayOneRewards data={data} />
+      {!game && <DayOneRewards data={data} />}
       <p className="muted">
         <LockKeyhole size={13} /> Your research baseline and ranking remain
         private. Trophies never change your research score.
@@ -309,65 +408,146 @@ export function DiscoveryMission({ data, act, now }) {
     </fieldset>
   );
 }
-function ResearchThreadForm({ record, act, open }) {
+function FlightResearchMission({
+  record: r,
+  config: c,
+  question: g,
+  act,
+  timer,
+  remaining,
+  now,
+  nextLevel,
+  onContinue,
+  open,
+}) {
+  const [busy, setBusy] = useState(false),
+    [error, setError] = useState("");
+  const submission = r.submissions.at(-1);
+  const run = async (action) => {
+    setBusy(true);
+    setError("");
+    try {
+      if (
+        !(await send(
+          act,
+          action,
+          r,
+          action === "review-link"
+            ? { revisionId: r.submissions.at(-1)?.id }
+            : {},
+        ))
+      )
+        setError("Your action was not confirmed. Please try again.");
+    } catch (e) {
+      setError(e.message || "Could not save your mission. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <FlightMissionBriefing
+      record={r}
+      question={g}
+      timer={timer}
+      remaining={remaining}
+      now={now}
+      nextLevel={nextLevel}
+      onContinue={onContinue}
+      busy={busy}
+      error={error}
+      onAction={run}
+      formatDate={(at) => fmt(at, c.timeZone)}
+    >
+      {r.startedAt && (
+        <ResearchThreadForm
+          key={submission?.id || r._id}
+          record={r}
+          act={act}
+          open={open}
+          game
+        />
+      )}
+    </FlightMissionBriefing>
+  );
+}
+function ResearchThreadForm({ record, act, open, game = false }) {
   const submission = record.submissions.at(-1);
   const initial = record.draft?.url ?? submission?.url ?? "";
   const [url, setUrl] = useState(initial),
     [reason, setReason] = useState("");
+  const automatic =
+    record.config.selectionMode === "research-2026-11-12" ||
+    Boolean(record.levelOne);
   const [status, setStatus] = useState(record.draft ? "Draft restored" : "");
   const [submitting, setSubmitting] = useState(false);
-  const queue = useRef(Promise.resolve()),
-    saved = useRef(initial);
-  useEffect(() => {
-    if (!open || submitting || url === saved.current) return;
-    const timer = setTimeout(() => {
-      queue.current = queue.current
-        .catch(() => {})
-        .then(async () => {
-          setStatus("Saving draft…");
-          const response = await fetch("/api/day1/draft", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url }),
-          });
-          const result = await response.json();
-          if (!response.ok)
-            throw new Error(result.error || "Draft could not be saved.");
-          saved.current = url;
-          setStatus("Draft saved");
-        })
-        .catch((error) => {
-          setStatus(error.message);
-        });
-    }, 800);
-    return () => clearTimeout(timer);
-  }, [url, open, submitting]);
+  const work = useSavedWork({
+    value: { url },
+    initialValue: { url: initial },
+    initialVersion: record.draft?.revision || 0,
+    enabled: open && !submitting,
+    ownerId: record.userId,
+    endpoint: "/api/day1/draft",
+  });
   return (
     <form
-      className="field-form"
+      className={`field-form ${game ? "mission-transmission-form" : ""}`}
+      aria-busy={submitting}
       onSubmit={async (event) => {
         event.preventDefault();
         if (submitting) return;
-        setSubmitting(true);
-        await queue.current;
-        await send(act, "submit", record, {
-          url,
-          ...(submission ? { reason } : {}),
-        });
-        setSubmitting(false);
+        try {
+          const pending = work.flush();
+          setSubmitting(true);
+          await pending;
+          const confirmed = await send(act, "submit", record, {
+            url,
+            ...(submission ? { reason } : {}),
+          });
+          if (!confirmed)
+            throw new Error(
+              "Transmission was not confirmed. Your link is still here; please try again.",
+            );
+        } catch (error) {
+          setStatus(error.message);
+        } finally {
+          setSubmitting(false);
+        }
       }}
     >
+      {game && (
+        <div className="mission-transmission-heading">
+          <Radio size={15} /> TRANSMISSION BAY
+        </div>
+      )}
       <label>
-        External AI conversation-thread URL
+        {game ? (
+          <span className="mission-link-label">
+            <Link2 size={14} /> Shared AI conversation
+          </span>
+        ) : (
+          "External AI conversation-thread URL"
+        )}
         <input
           type="url"
+          data-pip-target="chat"
           required
           minLength={10}
           maxLength={2000}
           value={url}
-          onChange={(event) => setUrl(event.target.value)}
+          disabled={submitting || !open}
+          placeholder={game ? "Paste your shared chat link" : undefined}
+          onChange={(event) => {
+            setStatus("");
+            setUrl(event.target.value);
+          }}
         />
       </label>
+      {automatic && (
+        <small>
+          Use a public ChatGPT Share link for the full conversation. Pip reads
+          it automatically; no transcript is needed.
+        </small>
+      )}
       {submission && (
         <label>
           Reason for revising the link
@@ -376,13 +556,34 @@ function ResearchThreadForm({ record, act, open }) {
             minLength={10}
             maxLength={2000}
             value={reason}
+            disabled={submitting || !open}
             onChange={(event) => setReason(event.target.value)}
           />
         </label>
       )}
-      <small role="status">{status}</small>
-      <button className="btn primary" disabled={submitting} type="submit">
-        {submission ? "Save revised AI thread" : "Submit AI thread"}
+      <small role="status">
+        {status.startsWith("Draft")
+          ? work.status || status
+          : status || work.status}
+      </small>
+      <button
+        className="btn primary"
+        data-pip-target="transmit"
+        disabled={submitting || !open}
+        type="submit"
+      >
+        {submitting
+          ? automatic
+            ? "Checking your discovery…"
+            : game
+              ? "Transmitting…"
+              : "Saving…"
+          : submission
+            ? "Save revised AI thread"
+            : game
+              ? "Transmit research chat"
+              : "Submit AI thread"}
+        {game && <Send size={16} />}
       </button>
     </form>
   );
@@ -468,10 +669,13 @@ function DayOneReflection({ data, act }) {
               Listening. Stop dictation, review the transcript, then save.
             </p>
           )}
-          <Form
-            key={transcript}
+          <SavedReflectionForm
+            ownerId={data.user._id}
+            draft={r.reflectionDrafts?.eod}
+            kind="eod"
+            externalText={transcript}
+            mode={voice ? "VOICE" : "TEXT"}
             fields={[textField("text", "Day 1 reflection")]}
-            initial={{ text: transcript }}
             submit="Save Day 1 EOD"
             onSubmit={(v) =>
               listening
@@ -535,7 +739,11 @@ export function DayOneDaily({ data, act, now }) {
               <p>{r.sod.text}</p>
             </>
           ) : (
-            <Form
+            <SavedReflectionForm
+              key={`${data.user._id}:${r._id}:sod`}
+              ownerId={data.user._id}
+              draft={r.reflectionDrafts?.sod}
+              kind="sod"
               fields={[textField("text", "What will you focus on today?")]}
               submit="Save Day 1 SOD"
               onSubmit={(v) => send(act, "sod", r, v)}
@@ -580,178 +788,7 @@ export function DayOneDaily({ data, act, now }) {
   );
 }
 
-export function DayOneGameSetup({ data, act }) {
-  const d = data.dayOne;
-  if (!d?.draft) return null;
-  const c = d.needsBaselineUpgrade
-      ? {
-          ...d.draft,
-          rubric: defaultSetup().rubric,
-          rubricVersion: defaultSetup().rubricVersion,
-          rewardVersion: defaultSetup().rewardVersion,
-          officialStart: d.draft.officialStart || "",
-        }
-      : d.draft,
-    fields = [
-      { name: "name", label: "Cohort name", min: 2 },
-      { name: "day", label: "Day 1 date", type: "date", optional: true },
-      { name: "timeZone", label: "IANA time zone" },
-      { name: "startTime", label: "Working day starts (HH:MM)" },
-      { name: "endTime", label: "Working day ends (HH:MM)" },
-      { name: "weekdays", label: "Working weekdays: 0=Sun, 1=Mon … 6=Sat" },
-      {
-        name: "holidays",
-        label: "Holiday dates (comma-separated YYYY-MM-DD)",
-        optional: true,
-      },
-      ...[
-        ["availableAt", "Challenge available"],
-        ["officialStart", "Official agenda start"],
-        ["clockCutoff", "Clock-in cut-off"],
-        ["closingCutoff", "EOD closing cut-off"],
-        ["revealAfter", "Earliest Week 1 Champion reveal"],
-      ].map(([name, label]) => ({
-        name,
-        label: `${label} (ISO date/time with Z or +05:30)`,
-        optional: true,
-      })),
-      ...c.genres.flatMap((g, i) => [
-        { name: `genre${i}`, label: `Genre ${i + 1} name` },
-        {
-          ...textField(
-            `question${i}`,
-            `Genre ${i + 1} final research question`,
-            20,
-          ),
-          optional: true,
-        },
-      ]),
-      {
-        ...textField(
-          "markingInstructions",
-          "External-AI marking instructions",
-          20,
-        ),
-        optional: true,
-      },
-      {
-        ...textField(
-          "championPrompt",
-          "Private Champion advanced verification prompt",
-          20,
-        ),
-        optional: true,
-      },
-      textField("inaccessiblePolicy", "Inaccessible-link correction policy"),
-      {
-        name: "action",
-        label: "Configuration action",
-        options: [
-          { value: "save-setup", label: "Save draft" },
-          {
-            value: "release",
-            label: "Validate and prepare a version (hidden from Gamers)",
-          },
-        ],
-      },
-    ];
-  const initial = {
-    ...c,
-    weekdays: c.weekdays.join(","),
-    holidays: c.holidays.join(","),
-    ...Object.fromEntries(
-      c.genres.flatMap((g, i) => [
-        [`genre${i}`, g.name],
-        [`question${i}`, g.question],
-      ]),
-    ),
-  };
-  return (
-    <Panel
-      title="Day 1 discovery configuration"
-      kicker="VERSIONED QUESTIONS / RUBRIC / FROZEN REWARDS"
-      action={<Badge>{d.state}</Badge>}
-    >
-      <details>
-        <summary>Configure the individual Day 1 mission</summary>
-        <p className="muted">
-          Prepare four final questions, operating times and assessment prompts.
-          Preparation keeps the mission hidden. MC or CC then opens Day 1 from
-          the dashboard. Opened content stays pinned to its original version.
-        </p>
-        <div className="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Day 1 criterion</th>
-                <th>Maximum marks</th>
-              </tr>
-            </thead>
-            <tbody>
-              {c.rubric.map((r) => (
-                <tr key={r.key}>
-                  <td>{r.name}</td>
-                  <td>{r.max}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="muted">
-          Each AI and human rating is 0–4. Their average is weighted by the
-          criterion maximum. Total 33; 8 other criteria Not Assessed. Player lives and energy are shared across all stages; Day 1 trophies cap at 20.
-        </p>
-        <Form
-          key={d.revision}
-          fields={fields}
-          initial={initial}
-          submit="Save Day 1 configuration"
-          onSubmit={(v) => {
-            const config = {
-              ...c,
-              ...Object.fromEntries(
-                [
-                  "name",
-                  "day",
-                  "timeZone",
-                  "startTime",
-                  "endTime",
-                  "availableAt",
-                  "officialStart",
-                  "clockCutoff",
-                  "closingCutoff",
-                  "revealAfter",
-                  "markingInstructions",
-                  "championPrompt",
-                  "inaccessiblePolicy",
-                ].map((k) => [k, v[k]]),
-              ),
-              weekdays: v.weekdays
-                .split(",")
-                .filter((x) => x.trim())
-                .map(Number),
-              holidays: v.holidays
-                .split(",")
-                .map((x) => x.trim())
-                .filter(Boolean),
-              genres: c.genres.map((g, i) => ({
-                ...g,
-                name: v[`genre${i}`],
-                question: v[`question${i}`],
-              })),
-            };
-            return act(`day1/${v.action}`, { config, revision: d.revision });
-          }}
-        />
-        {d.versions.map((v) => (
-          <Receipt key={v.version}>
-            Game v{v.version} prepared {fmt(v.releasedAt, c.timeZone)}
-          </Receipt>
-        ))}
-      </details>
-    </Panel>
-  );
-}
+export { default as DayOneGameSetup } from "./DayOneSetup";
 
 function DayOneReview({ person, record: r, data, act }) {
   const cc = data.user.role === "CENTRE_COMMAND",
@@ -790,10 +827,48 @@ function DayOneReview({ person, record: r, data, act }) {
         </Badge>
         <PlayerVitals player={person} />
       </div>
+      <DayOneReviewEvidence
+        record={r}
+        canVerify={cc}
+        formatDate={(at) => fmt(at, r.config.timeZone)}
+      />
+      <LevelOneControls data={data} act={act} initialUserId={person._id} />
+      {s && !s.evidence && (
+        <Form
+          fields={[]}
+          submit="Read shared chat and score automatically"
+          onSubmit={() => review("review-link", { revisionId: s.id })}
+        />
+      )}
+      {cc && s && (
+        <Form
+          key={`verify-${r.version}`}
+          fields={[
+            {
+              name: "status",
+              label: "Link access",
+              options: [
+                { value: "VERIFIED", label: "Accessible / verified" },
+                {
+                  value: "INACCESSIBLE",
+                  label: "Inaccessible / correction needed",
+                },
+              ],
+            },
+            textField("reason", "Verification note"),
+          ]}
+          initial={{ status: r.verification?.status }}
+          submit="Save link verification"
+          onSubmit={(v) => review("verify", { ...v, revisionId: s.id })}
+        />
+      )}
       <p className="muted">
         Genre:{" "}
-        {r.config.genres.find((g) => g.id === r.genreId)?.name || "Pending"}.
-        SOD: {fmt(r.sod?.at, r.config.timeZone)}. EOD:{" "}
+        {r.config.genres.find((g) => g.id === r.genreId)?.name ||
+          (r.researchSelection
+            ? `${r.researchSelection.genreName} · question not confirmed`
+            : "Pending")}
+        . SOD: {fmt(r.sod?.at, r.config.timeZone)}. EOD:{" "}
         {fmt(r.eod?.at, r.config.timeZone)}.
       </p>
       <details>
@@ -848,38 +923,6 @@ function DayOneReview({ person, record: r, data, act }) {
       )}
       {cc && s && (
         <>
-          <a
-            className="btn"
-            href={s.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View submitted AI thread
-          </a>
-          <p className="muted">
-            Submitted {fmt(s.at, r.config.timeZone)}. Verify access manually
-            before marking.
-          </p>
-          <Form
-            key={`verify-${r.version}`}
-            fields={[
-              {
-                name: "status",
-                label: "Link access",
-                options: [
-                  { value: "VERIFIED", label: "Accessible / verified" },
-                  {
-                    value: "INACCESSIBLE",
-                    label: "Inaccessible / correction needed",
-                  },
-                ],
-              },
-              textField("reason", "Verification note"),
-            ]}
-            initial={{ status: r.verification?.status }}
-            submit="Save link verification"
-            onSubmit={(v) => review("verify", { ...v, revisionId: s.id })}
-          />
           {r.verification?.status === "VERIFIED" && (
             <>
               <details>
@@ -994,6 +1037,7 @@ export function DayOneCohort({ data, act, now }) {
       }
       action={<Badge>{d.roster.length} GAMERS</Badge>}
     >
+      <LevelOneControls data={data} act={act} />
       <details>
         <summary>Open Day 1 submissions, markers and reviews</summary>
         <div className="filter-row">
@@ -1038,7 +1082,10 @@ export function DayOneCohort({ data, act, now }) {
                   <td>{p.r?.markers.sod ? "Met" : "Review"}</td>
                   <td>
                     {p.r?.config.genres.find((g) => g.id === p.r.genreId)
-                      ?.name || "Pending"}
+                      ?.name ||
+                      (p.r?.researchSelection
+                        ? `${p.r.researchSelection.genreName} · question not confirmed`
+                        : "Pending")}
                   </td>
                   <td>{p.r?.verification?.status || "Not submitted"}</td>
                   <td>{p.r?.eod ? "Saved" : "Pending"}</td>
@@ -1052,8 +1099,11 @@ export function DayOneCohort({ data, act, now }) {
                   )}
                   <td>
                     <button
+                      type="button"
                       className="btn small"
                       onClick={() => setSelected(p._id)}
+                      aria-label={`Review ${p.name}'s Day 1 submission`}
+                      aria-haspopup="dialog"
                       disabled={!p.r}
                     >
                       Review
@@ -1065,13 +1115,25 @@ export function DayOneCohort({ data, act, now }) {
           </table>
         </div>
         {person && record && (
-          <DayOneReview
-            key={record._id}
-            person={person}
-            record={record}
-            data={data}
-            act={act}
-          />
+          <Modal
+            title={`${person.name} · Day 1 review`}
+            kicker={
+              cc
+                ? "CENTRE COMMAND / SUBMISSION REVIEW"
+                : "MISSION COMMANDER / OPERATIONAL REVIEW"
+            }
+            close={() => setSelected("")}
+            wide
+            portal
+          >
+            <DayOneReview
+              key={record._id}
+              person={person}
+              record={record}
+              data={data}
+              act={act}
+            />
+          </Modal>
         )}
         {cc && (
           <>

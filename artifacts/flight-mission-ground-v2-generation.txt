@@ -1,0 +1,19 @@
+Generated with the built-in imagegen tool.
+Selected asset: public/images/flight-mission-ground-v2.png
+Used only by the Level 1 mission scene; the existing flight map artwork is retained.
+
+UI update: Enter level now reads Play. Genre beacons use a primary icon and
+two complementary icons, gentle floating motion, genre-specific accents and
+a pulse on selection. Motion can be paused/resumed. Reduced-motion mode is
+respected by default, with explicit per-scene opt-in available.
+
+Validation: production build passed; 7 flight navigation/checkpoint tests
+passed. Browser checks verified Play, automatic reduced-motion behavior,
+explicit animation enable, pause/resume, selected-beacon animation and the
+new background. The 390px mobile dialog has no horizontal overflow. A fresh
+page load had no new browser errors. No genre or question was locked and no
+player progress was reset during these checks.
+Screenshots: flight-mission-icons-v2-desktop.jpg and flight-mission-icons-v2-mobile.jpg.
+
+Final prompt:
+Create an original wide 16:9 painterly adventure-game background. Camera: STRICTLY VERTICAL TOP-DOWN aerial view looking straight down from a helicopter high in the sky toward the ground far below. Absolutely no horizon and no eye-level cloudscape. The ground MUST be clearly visible across the central 70 percent: beautiful sunlit sage-green open meadows and softly varied agricultural grassland, with a narrow winding jade river and subtle earth-colored contours, tiny distant terrain detail conveying great altitude. NO forest or jungle. Place soft ivory cumulus clouds in the immediate foreground only along the left and right sides and lower corners, partially obscuring the distant ground, creating the feeling of looking through a break in the clouds down to earth. Keep the middle clear and calm so interactive game icons can be overlaid. Warm morning sunlight on cloud edges, atmospheric distance on the ground, elegant hand-painted cinematic game environment, green expedition palette of sage, olive, jade and warm cream. Upper area slightly darker for pale interface text. Pure environment art only, not a UI mockup. Do not include aircraft, helicopters, people, characters, buildings, text, symbols, icons, roads, UI, paths, borders, logos or watermarks. The essential composition is sky clouds framing a directly overhead view of visible ground, NOT looking outward at the sky.

@@ -1,0 +1,34 @@
+Player profile and post-crash character selection — 13 November 2026
+
+The header now retains player status from the first sign-in: unknown-character
+avatar, name, XP bar, experience level, current lives/energy and own trophies.
+The new My profile button opens personal progress, including total XP, XP to the
+next level, streak, and separate Week 1 and expedition trophy balances. It does
+not expose the final team or character chooser during the flight.
+
+Story authority remains on the server. Week 1 lock, published results and a valid
+approved final-team digest are required before a boarded player reaches CRASH.
+The crash scene appears only then; completing it creates an idempotent personal
+CrashArrival receipt. Character selection is blocked until that receipt exists.
+The character stays masked until a successful team-safe character choice stamps
+characterSelectedAt. Existing approved expedition accounts retain their access.
+No XP, trophy, life, energy or streak balance is reset by either story receipt.
+Include CrashArrival alongside FlightOpening in database backups.
+
+Validation:
+- Full disposable-database suite: 176 passed, zero failed, zero skipped.
+- Production build: passed (Next.js 16.4.3, webpack).
+- git diff --check: passed.
+- Browser: first-login unknown-character profile and complete personal stats;
+  mobile header adjusted to avoid the flight heading; approved crash arrival,
+  automatic character picker, saving Zara and persistence after refresh;
+  Week 1 trophy and account balances preserved in the profile.
+- Screenshots: player-profile-desktop.jpg, player-profile-mobile.jpg,
+  player-profile-after-crash-mobile.jpg, player-crash-arrival-mobile.jpg,
+  player-flight-profile-hud-mobile.jpg.
+
+Preview: node scripts/preview-day-one.mjs --research
+Approved-crash QA: append --crash (first demo player only).
+Both modes use a disposable local MongoDB replica set, not production records.
+The crash fixture is synthetic approval data; the full regression suite separately
+exercises the real Week 1 and final-team permission/publication flows.

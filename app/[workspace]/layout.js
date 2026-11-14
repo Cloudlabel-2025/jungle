@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { currentUser, demoEnabled } from "@/lib/auth.js";
 import { navigation, prefix } from "@/lib/catalog.js";
 import WorkspaceShell from "@/components/WorkspaceShell";
+import { publicPlayer } from "@/lib/player-stage.js";
 
 export const dynamic = "force-dynamic";
 export default async function WorkspaceLayout({ children, params }) {
@@ -15,7 +16,7 @@ export default async function WorkspaceLayout({ children, params }) {
   return (
     <WorkspaceShell
       workspace={workspace}
-      initialUser={user ? JSON.parse(JSON.stringify(user)) : null}
+      initialUser={user ? JSON.parse(JSON.stringify(await publicPlayer(user))) : null}
       initialTime={new Date().toISOString()}
       demo={demoEnabled()}
     >

@@ -1,0 +1,49 @@
+Player clock-in / clock-out — 13 November 2026
+
+On arrival, players who are not clocked in see Clock in to play. Not now closes
+the message; the header clock icon reopens attendance controls. Manual clock-out
+saves an OUT state and audit event. Returning after manual clock-out prompts for
+clock-in again. The original daily clockAt is retained, so repeated sessions do
+not repeat attendance awards or initialize a second Day 1 research record.
+
+At the released scheduledEnd/closingCutoff, an active session gets a server-owned
+warningAt and responseDeadline. The response window is two minutes. Still playing
+clears the warning and schedules a new check 30 minutes later. Clock out now
+finishes immediately. No response marks the session OUT with reason TIMEOUT and
+effective clockOutAt equal to the expired response deadline, even if processing
+runs late. A late response cannot revive an expired session; explicit clock-in
+is required. Refresh, multiple tabs and overnight checks retain server state.
+
+Attendance lifecycle fields and sessionEvents live on existing Attendance rows;
+daily uniqueness remains userId/day. Player commands reload the current active
+account and accept no identity, time or deadline overrides. Week 1 check-in uses
+the existing Day 1 clock/reward flow; other Week 1 days use the open day's date
+and schedule. Expedition attendance retains the existing lateness/reward policy.
+Clock-out is separate from EOD reflection and research submission.
+
+The main worker was started for the configured database. Future npm run dev
+launches start it automatically. Standalone: node --use-system-ca
+--env-file-if-exists=.env.local scripts/process-attendance.mjs --watch.
+It processes every 15 seconds. Hosted deployments must run a worker or schedule
+the existing CRON_SECRET-protected /api/pilot/cron; cron now includes attendance.
+Snapshots also reconcile the current player's deadlines. Deployment was not done.
+
+Validation: full suite 185 passed, zero failed/skipped. Additional attendance
+integration coverage passed for overnight sessions, midnight calendar endings,
+same-day re-entry without duplicate rewards, invalid/forged commands, concurrent
+clock-in/timeout processing, expiry boundaries and adoption of existing check-in.
+Production build passed. Browser QA: arrival modal, manual out and re-entry after
+refresh, EOD countdown, Still playing surviving refresh, offline timeout notice,
+and 390px mobile header/modal layout. All browser mutations used disposable data.
+
+QA modes: preview-day-one.mjs --research --attendance (arrival, no pre-clocked
+players); --research --attendance-eod (synthetic Aarav pending warning; Priya
+already timed out offline). Stored receipt/session/research data in the main
+game was not reset or advanced by QA.
+
+Observed configuration issue: the main game's Day 1 is OPEN for 2026-11-05.
+New clock-in on 2026-11-13 is unavailable under that schedule; the player prompt
+explains the date mismatch. The released schedule was not rewritten by this task.
+
+Screenshots: player-clock-in.jpg, player-still-playing.jpg,
+player-auto-clock-out-mobile.jpg.

@@ -8,9 +8,11 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
   if (part === "rewards")
     return (
       <div className="player-honours" aria-label="Player achievements">
-        <span className="player-team-name">
-          {teamName || "Your expedition"}
-        </span>
+        {!player.characterHidden && (
+          <span className="player-team-name">
+            {teamName || "Your expedition"}
+          </span>
+        )}
         <span className="player-trophy-count">
           <Trophy size={18} />
           <strong>
@@ -34,11 +36,13 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
         </span>
       </div>
     );
-  const progress = (player.xp || 0) % XP_PER_LEVEL;
+  const progress = Math.max(0, player.xp || 0) % XP_PER_LEVEL;
   const character = characterFor(player);
-  const role = character
-    ? `${character.name} · ${character.label} · Full stack`
-    : "Full-stack explorer";
+  const role = player.characterHidden
+    ? "Character unknown"
+    : character
+      ? `${character.name} · ${character.label} · Full stack`
+      : "Full-stack explorer";
   return (
     <section className="player-identity" aria-label="Player status">
       <div className="player-profile-heading">

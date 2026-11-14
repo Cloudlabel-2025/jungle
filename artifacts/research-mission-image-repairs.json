@@ -1,0 +1,97 @@
+{
+  "generator": "Built-in image_gen edit tool",
+  "audited": 51,
+  "replacements": [
+    {
+      "id": "food-2",
+      "issue": "Phone displayed toward the viewer instead of the people comparing it.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as a believable food-street cafe table, viewed from above at a gentle angle. A smartphone lies FLAT on the tabletop, screen facing directly upward, beside three small food plates and a simple comparison notebook. No people or hands in the foreground, no held phone. Preserve the real-looking food stalls in the distance. The device rests fully on the table; the screen, bezel and physical body share one consistent perspective.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/food-2.webp"
+    },
+    {
+      "id": "gaming-1",
+      "issue": "Held phone screen faces away from its apparent user.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as a neat tabletop multiplayer gaming setup seen from a single overhead three-quarter camera. Two open laptops and two smartphones lie on the table; all screens and keyboards face the SAME lower edge, toward an unseen user and the viewer. Laptop keyboards attach at the bottom hinge of their own displays; lids have plain backs, no screens on the backs. Phones rest face-up flat on the wood, not upright or held. Five simple player markers represent five friends. No people, hands, floating objects or duplicate device faces.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/gaming-1.webp"
+    },
+    {
+      "id": "music-1",
+      "issue": "Central phone placement and busy driving scene obscure physical device support.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as the interior of a safely PARKED car seen from the back seat, with a beautiful sunset road-trip view through the windshield. A single phone sits in a clearly visible dashboard clamp, screen facing back into the cabin toward the viewer. Show the clamp and its attachment. Music-note and playlist shapes on screen are simple and abstract. No people, hands, floating phones or driver interaction. Keep steering wheel and seats physically coherent.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/music-1.webp"
+    },
+    {
+      "id": "music-2",
+      "issue": "Laptop display faces the viewer while the listener sits behind it.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as an intimate music-discovery still life on a wooden desk: wired over-ear headphones, three record sleeves, and ONE smartphone resting completely FLAT screen-up on the tabletop. A minimal sound-wave display is visible from above. No laptop, no person, no hands, no floating screen. Keep the warm window light and leafy room.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/music-2.webp"
+    },
+    {
+      "id": "movies-2",
+      "issue": "Trailer laptop screen and seated viewer are staged on inconsistent sides.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as a simple movie-research coffee-table still life viewed from above. A tablet rests face-up on a low, physically visible stand with its screen angled toward the lower edge and viewer, showing a generic cinematic landscape. Beside it are three separate paper review cards with simple star shapes, popcorn and a film clapper. No laptop, no people, no hands, no readable words. All objects rest on the table.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/movies-2.webp"
+    },
+    {
+      "id": "movies-3",
+      "issue": "Sticky notes are pasted to the back of the laptop lid.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Remove the laptop completely and replace it with an open paper storyboard notebook resting on the grass. Keep a believable college filmmaking scene, but simplify to a smartphone securely clamped to a three-legged tripod in the foreground, seen from behind the camera operator's viewpoint: its screen faces the viewer and its rear camera faces two actors ahead of it. No sticky notes on devices, no reversed screens, no duplicate screens. Keep hands away from equipment; actors stand naturally.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/movies-3.webp"
+    },
+    {
+      "id": "fashion-2",
+      "issue": "Clothing-comparison laptop screen faces away from the shopper.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as an overhead clothing-shopping comparison still life. Three neatly folded sweaters, fabric swatches, a measuring tape, a small delivery parcel, and one smartphone lying flat, screen facing up, on the same wooden table. The phone has a simple garment-thumbnail layout without letters. No laptop, people, hands or mirrors. Everything lies on a physically consistent horizontal tabletop.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/fashion-2.webp"
+    },
+    {
+      "id": "room-design-2",
+      "issue": "Room-plan laptop is angled away from the students examining it.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Remove the laptop and both foreground people. Repaint a practical small Indian bedroom with a desk, plain bed, fan, limited safe wall sockets and a clear floor. An open printed room-plan notebook lies FLAT on the desk with a ruler and pencil beside it. No digital screens, floating panels, hands, sticky notes or impossible furniture. Preserve the warm olive atmosphere and the room-design mission.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/room-design-2.webp"
+    },
+    {
+      "id": "technology-1",
+      "issue": "Review display is staged opposite the seated phone shopper.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as an overhead smartphone-comparison tabletop, with three unbranded smartphones lying FLAT side by side, all three front screens facing UP and oriented toward the same lower edge. Add a small game controller, a few budget coins and a plain notebook beside them. No people, hands, laptop or floating thought bubbles. Do not draw camera lenses on the screen side. All device edges and shadows agree with one table plane.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/technology-1.webp"
+    },
+    {
+      "id": "fitness-2",
+      "issue": "Both phone and laptop displays face away from the person assessing them.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as an overhead evidence-checking workout desk. One phone rests FLAT screen-up on the table, displaying a simple exercise silhouette. Beside it, an open notebook has a few clearly drawn exercise diagrams, a resistance band and water bottle. No people, hands, laptop, mirrored device or floating panels. Keep all objects grounded and the exercise routine physically plausible.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/fitness-2.webp"
+    },
+    {
+      "id": "money-2",
+      "issue": "Calculator buttons and laptop screen face away from their apparent operator.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as a clean overhead shopping-cost comparison still life. A single ordinary calculator lies FLAT, button side facing UP, screen at its far/top edge and a normal rectangular button grid underneath. Three small shopping parcels, receipt slips, a simple headphones product and a pencil sit on the same wood tabletop. No people, hands, laptops, floating labels or held calculator. No readable amounts required. Objects must not overlap or merge.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/money-2.webp"
+    },
+    {
+      "id": "business-2",
+      "issue": "Laptop appears to show a display on its rear lid.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as a tabletop college T-shirt shop still life: folded T-shirts, a rack behind, one phone lying FLAT screen-up showing a simple shirt thumbnail and heart shapes, and an empty cardboard order tray beside a plain order notebook. No laptop, no people, no hands, no floating UI, no sticky notes on devices. Clearly contrast interest with no packed orders through the empty tray.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/business-2.webp"
+    },
+    {
+      "id": "relationships-2",
+      "issue": "Two video-call laptops show screens on the wrong sides and confuse the two locations.",
+      "revision": 2,
+      "prompt": "EDIT TARGET: the attached mission-card image. Fix the physical staging errors, while preserving the painterly adventure-game aesthetic, emerald/olive palette, warm natural light, vertical 2:3 format, edge-to-edge framing and the quiet dark-green lower third needed for interface text. Completely repaint the upper scene as described. Prioritize believable geometry and clear storytelling over extra decoration. No typography, logos or watermark. All screens must exist only on the FRONT of their device; no displays or sticky notes on lid backs. No impossible hands, duplicated limbs, merged props, floating gadgets or arbitrary infographic bubbles. Repaint the upper scene as a single overhead long-distance-relationship still life: two smartphones lying FLAT screen-up on a wood table, a folded map linking two cities, a train ticket and a shared photograph. Each phone has one simple portrait of a different young adult on its upward-facing display, indicating a video call. No live people, hands, laptops, mirrored screens or floating devices. All papers lie flat; all objects have consistent perspective.",
+      "source": "D:/Projects/Jungle/public/images/research-missions/relationships-2.webp"
+    }
+  ]
+}

@@ -7,6 +7,9 @@ import { programmeScreen } from "@/lib/workspace-navigation.js";
 import { useWorkspace } from "./WorkspaceContext";
 import { Busy, Empty } from "./ui";
 import WorkflowOverview from "./WorkflowOverview";
+import SkyFlightMap from "./SkyFlightMap";
+import CrashArrival from "./CrashArrival";
+import { flightScreens } from "@/lib/flight-rules.js";
 
 const GamerView = dynamic(() => import("./Views").then((m) => m.GamerView), {
   loading: () => <Busy label="Opening this page…" />,
@@ -39,10 +42,16 @@ export default function WorkspaceScreen({ screen }) {
     return null;
   }
   const role = user.role;
+  if(data.story?.crashReady && !["notifications","week-one-ask-mc"].includes(screen))return <CrashArrival act={act}/>;
+  if (data.story?.flight && (screen === "dashboard" || !flightScreens.has(screen) ||
+      (!data.story.introComplete && !["week-one-ask-mc", "notifications"].includes(screen))))
+    return <SkyFlightMap data={data} act={act} now={clock} />;
+  if (data.story?.flight && screen === "week-one-games")
+    return <SkyFlightMap data={data} act={act} now={clock} />;
   const squad = data.teams.find((team) => team._id === user.teamId);
   return (
     <>
-      {["dashboard", "setup", "week-one"].includes(screen) &&
+      {!data.story?.flight && ["dashboard", "setup", "week-one"].includes(screen) &&
         !(role === "GAMER" && screen === "dashboard") && (
           <WorkflowOverview data={data} now={clock} />
         )}
@@ -70,7 +79,7 @@ export default function WorkspaceScreen({ screen }) {
       {screen === "notifications" ? (
         <NotificationInbox />
       ) : screen === "ide" ? (
-        <CodeLab data={data} act={act} notify={notify} />
+        <CodeLab key={data.user._id} data={data} act={act} notify={notify} />
       ) : role === "GAMER" ? (
         <GamerView screen={screen} data={data} act={act} now={clock} />
       ) : (

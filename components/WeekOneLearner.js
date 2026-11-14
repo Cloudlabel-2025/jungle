@@ -3,6 +3,9 @@ import PlayerVitals from "./PlayerVitals";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Badge, Receipt, Form } from "./ui";
+import SavedReflectionForm from "./SavedReflectionForm";
+import useSavedWork from "./useSavedWork";
+import { FlightLevelRewards } from "./WeekOneStarGuide";
 import {
   DayOneCheckIn,
   DiscoveryMission,
@@ -64,12 +67,35 @@ export function Notifications({ data, act }) {
     </WeekPanel>
   );
 }
-function Reflection({ questions, saved, onSubmit, title }) {
-  const [answers, setAnswers] = useState(questions.map(() => "")),
+function Reflection({
+  questions,
+  saved,
+  onSubmit,
+  title,
+  draft,
+  ownerId,
+  day,
+}) {
+  const initial =
+    draft?.value?.answers ||
+    draft?.answers ||
+    (draft?.text
+      ? questions.map((_, i) => (i === 0 ? draft.text : ""))
+      : questions.map(() => ""));
+  const [answers, setAnswers] = useState(initial),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [voice, setVoice] = useState(false);
+    [voice, setVoice] = useState(draft?.mode === "VOICE");
   const recognition = useRef(null);
+  const work = useSavedWork({
+    value: { answers, mode: voice ? "VOICE" : "TEXT" },
+    initialValue: { answers: initial, mode: draft?.mode || "TEXT" },
+    initialVersion: draft?.revision || 0,
+    enabled: !saved && !busy && Boolean(ownerId),
+    ownerId,
+    endpoint: "/api/week1/program/reflection-draft",
+    payload: { kind: "eod", day },
+  });
   useEffect(() => () => recognition.current?.abort(), []);
   function dictate(index) {
     const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -112,9 +138,16 @@ function Reflection({ questions, saved, onSubmit, title }) {
           className="field-form"
           onSubmit={async (event) => {
             event.preventDefault();
-            setBusy(true);
-            await onSubmit(answers, voice ? "VOICE" : "TEXT");
-            setBusy(false);
+            setError("");
+            try {
+              await work.flush();
+              setBusy(true);
+              await onSubmit(answers, voice ? "VOICE" : "TEXT");
+            } catch (error) {
+              setError(error.message);
+            } finally {
+              setBusy(false);
+            }
           }}
         >
           {questions.map((q, i) => (
@@ -140,6 +173,15 @@ function Reflection({ questions, saved, onSubmit, title }) {
             </label>
           ))}
           {error && <p role="alert">{error}</p>}
+          {ownerId && (
+            <p role="status" className="muted">
+              {work.status ||
+                (draft
+                  ? "Saved draft restored"
+                  : "Your draft saves automatically.")}{" "}
+              · Drafts are not submitted work.
+            </p>
+          )}
           <button className="btn primary" disabled={busy}>
             Save reflection
           </button>
@@ -205,17 +247,25 @@ export function MyDay({ data, act }) {
           {d?.sod ? (
             <p>{d.sod.text}</p>
           ) : (
-            <WeekForm
-              action="sod"
-              act={act}
-              values={{ day: day.day }}
+            <SavedReflectionForm
+              key={`${data.user._id}:${day.day}:sod`}
+              ownerId={data.user._id}
+              day={day.day}
+              kind="sod"
+              draft={d?.reflectionDrafts?.sod}
+              onSubmit={(values) =>
+                runProgram(act, "sod", { day: day.day, ...values })
+              }
               fields={[textField("text", "What will you focus on today?")]}
               submit="Save SOD"
             />
           )}
         </WeekPanel>
         <Reflection
-          key={`eod-${day.day}`}
+          key={`${data.user._id}:eod-${day.day}`}
+          ownerId={data.user._id}
+          day={day.day}
+          draft={d?.reflectionDrafts?.eod}
           title="End-of-day reflection"
           questions={eodQuestions[day.day]}
           saved={d?.eod}
@@ -324,16 +374,13 @@ export function Announcements({ data, act }) {
     </>
   );
 }
-export function AttemptForm({ record, act, now, open }) {
+export function AttemptForm({ record, act, now, open, ownerId }) {
   const d = record.data,
     activity = d.activity,
     submitted = d.submissions.at(-1);
   const [answers, setAnswers] = useState(d.draft || {}),
     [status, setStatus] = useState(d.savedAt ? "Draft restored" : ""),
     [busy, setBusy] = useState(false);
-  const queue = useRef(Promise.resolve()),
-    saved = useRef(JSON.stringify(d.draft || {})),
-    revision = useRef(record.version);
   const changed = JSON.stringify(answers),
     expired = new Date(now) > new Date(d.deadline),
     quiz = activity.kind === "QUIZ";
@@ -341,44 +388,24 @@ export function AttemptForm({ record, act, now, open }) {
     open ||
     d.extensions?.some((e) => new Date(now) <= new Date(e.deadline)) ||
     activity.kind === "CHALLENGE";
-  useEffect(() => {
-    if (changed === saved.current) revision.current = record.version;
-  }, [record.version, changed]);
-  useEffect(() => {
-    if (
-      !canWrite ||
-      expired ||
-      busy ||
-      changed === saved.current ||
-      (quiz && d.submittedAt)
-    )
-      return;
-    const timer = setTimeout(() => {
-      queue.current = queue.current
-        .catch(() => {})
-        .then(async () => {
-          setStatus("Saving draft…");
-          const response = await fetch("/api/week1/program/attempt-save", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              attemptId: record._id,
-              attemptVersion: revision.current,
-              answers,
-            }),
-          });
-          const result = await response.json();
-          if (!response.ok) throw new Error(result.error);
-          revision.current = result.attemptVersion;
-          saved.current = changed;
-          setStatus("Draft saved");
-        })
-        .catch((error) => setStatus(error.message));
-    }, 800);
-    return () => clearTimeout(timer);
-  }, [changed, canWrite, expired, busy, quiz, d.submittedAt]);
-  const update = (key, value) =>
+  const work = useSavedWork({
+    value: { answers },
+    initialValue: { answers: d.draft || {} },
+    initialVersion: record.version,
+    ownerId,
+    enabled: canWrite && !expired && !busy && !(quiz && d.submittedAt),
+    endpoint: "/api/week1/program/attempt-save",
+    buildBody: (value, version) => ({
+      attemptId: record._id,
+      attemptVersion: version,
+      answers: value.answers,
+    }),
+  });
+  useEffect(() => work.syncVersion(record.version), [record.version, changed]);
+  const update = (key, value) => {
+    setStatus("");
     setAnswers((old) => ({ ...old, [key]: value }));
+  };
   const remaining = Math.max(0, new Date(d.deadline) - new Date(now));
   return (
     <WeekPanel
@@ -411,14 +438,20 @@ export function AttemptForm({ record, act, now, open }) {
         onSubmit={async (event) => {
           event.preventDefault();
           if (busy) return;
-          setBusy(true);
-          await queue.current;
-          await runProgram(act, "attempt-submit", {
-            attemptId: record._id,
-            attemptVersion: revision.current,
-            answers,
-          });
-          setBusy(false);
+          try {
+            const pending = work.flush();
+            setBusy(true);
+            await pending;
+            await runProgram(act, "attempt-submit", {
+              attemptId: record._id,
+              attemptVersion: work.getVersion(),
+              answers,
+            });
+          } catch (error) {
+            setStatus(error.message);
+          } finally {
+            setBusy(false);
+          }
         }}
       >
         <fieldset
@@ -536,7 +569,11 @@ export function AttemptForm({ record, act, now, open }) {
                 ),
               )}
         </fieldset>
-        <small role="status">{status}</small>
+        <small role="status">
+          {status.startsWith("Draft")
+            ? work.status || status
+            : status || work.status}
+        </small>
         <button
           className="btn primary"
           disabled={busy || !canWrite || (quiz && Boolean(d.submittedAt))}
@@ -603,6 +640,7 @@ export function Games({ data, act, now }) {
           </div>
         ) : (
           <div key={day.day}>
+            <FlightLevelRewards data={data} day={day.day} />
             {day.activities.map((activity) => {
               const record = p.attempts.find(
                 (a) => a.activityId === activity.id,
@@ -610,10 +648,11 @@ export function Games({ data, act, now }) {
               return record ? (
                 <AttemptForm
                   key={record._id}
+                  ownerId={data.user._id}
                   record={record}
                   act={act}
                   now={now}
-                  open={day.state === "OPEN"}
+                  open={day.state === "OPEN" || p.progression?.mode === "COMPLETION"}
                 />
               ) : (
                 <WeekPanel
@@ -874,7 +913,13 @@ export function Challenges({ data, act, now }) {
               <h3>{c.title}</h3>
               <Badge>{c.kind}</Badge>
               {record ? (
-                <AttemptForm record={record} act={act} now={now} open />
+                <AttemptForm
+                  ownerId={data.user._id}
+                  record={record}
+                  act={act}
+                  now={now}
+                  open
+                />
               ) : (
                 <>
                   <p>{c.brief}</p>

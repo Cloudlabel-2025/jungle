@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Footprints } from "lucide-react";
+import { Footprints, Compass } from "lucide-react";
 
 // The persistent workspace owns this gate. Ready data closes it immediately;
 // navigation and background refreshes never reset the completed entry.
@@ -34,7 +34,7 @@ export function useGameEntryLoading(userId, ready, error) {
   );
 }
 
-export default function GameLoadingScreen({ onCancel }) {
+export default function GameLoadingScreen({ onCancel, flight = false }) {
   const screen = useRef(null);
   const [slow, setSlow] = useState(false);
   useEffect(() => {
@@ -60,12 +60,12 @@ export default function GameLoadingScreen({ onCancel }) {
         <span className="game-entry-brand">
           CODE<span>WILD</span>
         </span>
-        <span className="game-entry-kicker">BACK ON THE TRAIL</span>
-        <h1>Opening your expedition</h1>
-        <p>Finding your place in the jungle…</p>
+        <span className="game-entry-kicker">{flight ? "WELCOME ABOARD" : "BACK ON THE TRAIL"}</span>
+        <h1>{flight ? "Preparing your flight" : "Opening your expedition"}</h1>
+        <p>{flight ? "Getting your learning journey ready…" : "Finding your place in the jungle…"}</p>
         <div className="game-entry-trail" aria-hidden="true">
           {[0, 1, 2].map((step) => (
-            <Footprints key={step} size={23} />
+            flight ? <Compass key={step} size={23} /> : <Footprints key={step} size={23} />
           ))}
         </div>
         <div className="game-entry-track" aria-hidden="true">

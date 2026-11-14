@@ -1,0 +1,41 @@
+{
+  "generator": "Built-in image_gen",
+  "reference": "welcoming",
+  "assets": [
+    {
+      "expression": "welcoming",
+      "source": "C:/Users/sakth/.codex/generated_images/01a1cf89-beab-7613-8bc6-7533c6e29401/exec-cc33fec5-0fa2-4561-86eb-f9b8a3e9b5dc.png",
+      "original": "artifacts/pip-characters/pip-welcoming.png",
+      "web": "public/images/pip/pip-welcoming.webp",
+      "prompt": "Use case: stylized-concept. Asset type: transparent video game companion character sprite. Create PIP, an original charming little expedition helper drone for a green aerial exploration game. Single full-body character centered, large readable silhouette and face, three-quarter view facing slightly right, whole character and limbs within frame with generous transparent margin. Premium hand-painted 3D adventure-game illustration, tactile clean materials, appealing character design rather than a generic icon. Compact rounded sage-green and dark forest-green hovering robot, cream metal trim, two small ducted rotor pods mounted on either side, tiny antenna with a warm lime status light, dark glass face screen with two luminous expressive pale lime eyes and a small smiling mouth. Two short articulated robot arms with simple three-digit grippers, no human hands. Warm, safe, curious and friendly. EXPRESSION: WELCOMING, bright open friendly eyes, joyful gentle smile, one arm raised in an unmistakable friendly wave. Keep face especially readable at 120px display size. Soft studio illumination and detailed edges; no ground plane, no landscape, no frame, no badge, no typography, no text, no watermark, no other characters. Truly transparent background with alpha; no checkerboard drawn into image."
+    },
+    {
+      "expression": "thinking",
+      "source": "C:/Users/sakth/.codex/generated_images/01a1cf89-beab-7613-8bc6-7533c6e29401/exec-9d4b8a84-71d8-4007-aba2-8a852d6ae06b.png",
+      "original": "artifacts/pip-characters/pip-thinking.png",
+      "web": "public/images/pip/pip-thinking.webp",
+      "prompt": "Edit the reference character sprite to produce one THINKING expression asset for the SAME PIP video game companion. Reference image is the identity and style reference and edit target. Preserve the exact sage-green hovering robot design, cream trim, dark glass face with lime luminous facial features, two ducted rotor pods, antenna light, small canvas pouch, proportions, materials, lighting, camera angle, apparent scale and illustration quality. Change only facial expression and arm pose as follows: THINKING: curious thoughtful expression, one eyebrow raised, eyes looking up and to the right, tiny contemplative mouth. One three-digit gripper rests thoughtfully against the lower rim of its face screen, other arm relaxed. Keep entire character including antenna, rotors and hands fully within frame with a little breathing room. Same landscape canvas composition, centered full-body character. Make the expression strongly readable at small game UI size. True transparent alpha background, no background scene, no ground shadow, no lettering or watermark, no other character, no human hands, no extra arms, no additional rotors. Preserve existing transparency."
+    },
+    {
+      "expression": "guiding",
+      "source": "C:/Users/sakth/.codex/generated_images/01a1cf89-beab-7613-8bc6-7533c6e29401/exec-a15400d2-a39a-43d5-a0d4-feff8b736541.png",
+      "original": "artifacts/pip-characters/pip-guiding.png",
+      "web": "public/images/pip/pip-guiding.webp",
+      "prompt": "Edit the reference character sprite to produce one GUIDING expression asset for the SAME PIP video game companion. Reference image is the identity and style reference and edit target. Preserve the exact sage-green hovering robot design, cream trim, dark glass face with lime luminous facial features, two ducted rotor pods, antenna light, small canvas pouch, proportions, materials, lighting, camera angle, apparent scale and illustration quality. Change only facial expression and arm pose as follows: GUIDING: confident encouraging expression with bright attentive eyes and a small reassuring smile. One articulated robot arm clearly points toward the right side of the canvas using one simple robotic digit; other arm is open in a friendly presenting gesture. Keep entire character including antenna, rotors and hands fully within frame with a little breathing room. Same landscape canvas composition, centered full-body character. Make the expression strongly readable at small game UI size. True transparent alpha background, no background scene, no ground shadow, no lettering or watermark, no other character, no human hands, no extra arms, no additional rotors. Preserve existing transparency."
+    },
+    {
+      "expression": "celebrating",
+      "source": "C:/Users/sakth/.codex/generated_images/01a1cf89-beab-7613-8bc6-7533c6e29401/exec-302f0116-8759-45cb-a3b0-5ebb68dea10d.png",
+      "original": "artifacts/pip-characters/pip-celebrating.png",
+      "web": "public/images/pip/pip-celebrating.webp",
+      "prompt": "Edit the reference character sprite to produce one CELEBRATING expression asset for the SAME PIP video game companion. Reference image is the identity and style reference and edit target. Preserve the exact sage-green hovering robot design, cream trim, dark glass face with lime luminous facial features, two ducted rotor pods, antenna light, small canvas pouch, proportions, materials, lighting, camera angle, apparent scale and illustration quality. Change only facial expression and arm pose as follows: CELEBRATING: delighted crescent-shaped smiling eyes and a broad happy smile on the screen, both articulated robot arms raised in a joyful victory pose. No props and no confetti so silhouette is crisp. Keep entire character including antenna, rotors and hands fully within frame with a little breathing room. Same landscape canvas composition, centered full-body character. Make the expression strongly readable at small game UI size. True transparent alpha background, no background scene, no ground shadow, no lettering or watermark, no other character, no human hands, no extra arms, no additional rotors. Preserve existing transparency."
+    },
+    {
+      "expression": "concerned",
+      "source": "C:/Users/sakth/.codex/generated_images/01a1cf89-beab-7613-8bc6-7533c6e29401/exec-2f7ceaa9-fbe8-4a18-95e7-6fd706bdfd3b.png",
+      "original": "artifacts/pip-characters/pip-concerned.png",
+      "web": "public/images/pip/pip-concerned.webp",
+      "prompt": "Edit the reference character sprite to produce one CONCERNED expression asset for the SAME PIP video game companion. Reference image is the identity and style reference and edit target. Preserve the exact sage-green hovering robot design, cream trim, dark glass face with lime luminous facial features, two ducted rotor pods, antenna light, small canvas pouch, proportions, materials, lighting, camera angle, apparent scale and illustration quality. Change only facial expression and arm pose as follows: CONCERNED: empathetic worried expression, inner eyebrows gently raised, eyes soft and concerned, small downward-curved mouth. One open three-digit gripper held toward the viewer in a gentle pause / let me help gesture. Supportive and reassuring rather than frightened or angry. Keep entire character including antenna, rotors and hands fully within frame with a little breathing room. Same landscape canvas composition, centered full-body character. Make the expression strongly readable at small game UI size. True transparent alpha background, no background scene, no ground shadow, no lettering or watermark, no other character, no human hands, no extra arms, no additional rotors. Preserve existing transparency."
+    }
+  ]
+}

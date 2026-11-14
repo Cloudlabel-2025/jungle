@@ -7,6 +7,19 @@ import { programmePath } from "@/lib/workspace-navigation.js";
 export default function WeekOneRelease({ data, act, now }) {
   const release = data.weekOne;
   if (!release || data.user.role === "GAMER") return null;
+  if (release.progressionMode === "COMPLETION")
+    return (
+      <Panel title="Automatic level progression" kicker="PLAYER PROGRESS">
+        <p>
+          Players unlock the next level by completing their current mission. No
+          day opening, closing or CC release is needed.
+        </p>
+        <p className="muted">
+          Prepare level content once in Game Configuration. MC/CC can still
+          review work and manage Level 1 results or replay.
+        </p>
+      </Panel>
+    );
   const current = release.days.find((d) => d.state === "OPEN");
   const next = release.days.find((d) => d.state !== "CLOSED");
   const run = (action, day, values = {}) =>

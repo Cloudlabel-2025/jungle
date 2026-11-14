@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import { boundedJson } from "@/lib/request-body.js";
+import { guardFlightApi, completeFlightIntro, completeCrashArrival, publicPlayer } from "@/lib/player-stage.js";
+import { attendanceAction } from "@/lib/attendance.js";
+import { saveLabWork } from "@/lib/lab-work.js";
+import { workHistory,workFile } from "@/lib/work-history.js";
 import {
   guardTargets,
   cohortOf,
@@ -134,7 +138,7 @@ async function handle(request, { params }) {
         );
         await setSession(user._id);
         await dayOneSignIn(user);
-        return NextResponse.json({ success: true, user });
+        return NextResponse.json({ success: true, user: await publicPlayer(user) });
       }
       if (!demoEnabled())
         fail(
@@ -157,7 +161,7 @@ async function handle(request, { params }) {
         fail("Unknown or inactive persona.", 404);
       await setSession(user._id);
       await dayOneSignIn(user);
-      return NextResponse.json({ success: true, user });
+      return NextResponse.json({ success: true, user: await publicPlayer(user) });
     }
     if (route === "auth/logout" && request.method === "POST") {
       await clearSession();
@@ -167,10 +171,22 @@ async function handle(request, { params }) {
     if (route === "auth/me" && request.method === "GET")
       return NextResponse.json({
         authenticated: !!user,
-        user,
+        user: await publicPlayer(user),
         serverTime: new Date().toISOString(),
       });
     assertRole(user, all);
+    await guardFlightApi(user, route, request.method);
+    if(route === "player/work-history" && request.method === "GET")return NextResponse.json(await workHistory(user,Object.fromEntries(new URL(request.url).searchParams)),{headers:{"Cache-Control":"private, no-store"}});
+    if(route === "player/work-file" && request.method === "GET"){
+      const saved=await workFile(user,new URL(request.url).searchParams.get("id"));
+      return NextResponse.json(saved,{headers:{"Cache-Control":"private, no-store","Content-Disposition":`attachment; filename="codewild-work-${saved.day}.json"`}});
+    }
+    if (route === "story/flight-intro" && request.method === "POST")
+      return NextResponse.json(await completeFlightIntro(user, body), { headers: { "Cache-Control": "private, no-store" } });
+    if (route === "story/crash-arrival" && request.method === "POST")
+      return NextResponse.json(await completeCrashArrival(user, body), {headers:{"Cache-Control":"private, no-store"}});
+    if(path[0] === "attendance" && path.length === 2 && request.method === "POST")
+      return NextResponse.json(await attendanceAction(user,path[1],body),{headers:{"Cache-Control":"private, no-store"}});
     if (route === "notifications/read" && request.method === "POST")
       return NextResponse.json(await markNotificationsRead(user, body.ids));
     if (
@@ -227,10 +243,12 @@ async function handle(request, { params }) {
       return NextResponse.json(await weekOneAction(user, path[1], body));
     if (route === "day1/state" && request.method === "GET")
       return NextResponse.json(await dayOneSnapshot(user), {
-        headers: { "Cache-Control": "no-store" },
+        headers: { "Cache-Control": "private, no-store" },
       });
     if (path[0] === "day1" && path.length === 2 && request.method === "POST")
-      return NextResponse.json(await dayOneAction(user, path[1], body));
+      return NextResponse.json(await dayOneAction(user, path[1], body), {
+        headers: { "Cache-Control": "private, no-store" },
+      });
     if (
       path[0] === "centre-command" &&
       path[1] === "teams" &&
@@ -363,6 +381,7 @@ async function handle(request, { params }) {
               )
             : null,
           updatedAt: saved?.updatedAt,
+          version: saved?.version || 0,
         });
       }
       if (route.startsWith("gamer/")) {
@@ -460,6 +479,7 @@ async function handle(request, { params }) {
       fail("Endpoint not found.", 404);
     }
     if (request.method !== "POST") fail("Method not allowed.", 405);
+    let mutationResult={};
     await transaction(async (session) => {
       await models.Cohort.updateOne(
         { _id: cohortOf(user) },
@@ -696,30 +716,7 @@ async function handle(request, { params }) {
         );
       } else if (route === "gamer/lab") {
         assertRole(user, ["GAMER"]);
-        const keys = ["src/App.jsx", "src/styles.css", "tests/ledger.test.js"];
-        if (
-          !body.files ||
-          Object.keys(body.files).length !== 3 ||
-          !keys.every(
-            (k) =>
-              typeof body.files[k] === "string" &&
-              body.files[k].length <= 25000,
-          )
-        )
-          fail("Invalid virtual project. Each file must be under 25 KB.");
-        await models.Lab.updateOne(
-          { _id: user._id },
-          {
-            $set: {
-              files: Object.entries(body.files).map(([path, content]) => ({
-                path,
-                content,
-              })),
-              updatedAt: now,
-            },
-          },
-          { upsert: true, session },
-        );
+        mutationResult=await saveLabWork(fresh,body,session,now);
       } else if (route === "commander/task") {
         assertRole(user, staff);
         const task = await models.Task.findById(body.taskId).session(session);
@@ -1167,7 +1164,7 @@ async function handle(request, { params }) {
         );
       } else fail("Endpoint not found.", 404);
     });
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true,...mutationResult });
   } catch (error) {
     const status = error.status || (error.code === 11000 ? 409 : 400);
     const message =

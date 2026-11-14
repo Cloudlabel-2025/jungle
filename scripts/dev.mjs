@@ -24,7 +24,7 @@ const dbPath = fileURLToPath(new URL("../.data/mongo", import.meta.url));
 const lockPath = fileURLToPath(
   new URL("../.data/dev-launcher.lock", import.meta.url),
 );
-let repl, child, releaseLock;
+let repl, child, releaseLock, attendanceWorker;
 let databaseWatch, databaseRecovery;
 let localReplicaSetName = "testset";
 let stopping = false;
@@ -48,6 +48,7 @@ async function shutdown(exitCode = 0) {
   clearInterval(databaseWatch);
   try {
     await stopNext(child);
+    if (attendanceWorker) await stopNext(attendanceWorker);
     if (databaseRecovery) await databaseRecovery;
     await mongoose.disconnect();
     if (repl) await repl.stop({ doCleanup: false });
@@ -108,6 +109,18 @@ async function main() {
   await seed();
   await mongoose.disconnect();
   console.log(`CODEWILD · 29 personas ready. Local preview: ${url}`);
+  attendanceWorker = spawn(
+    process.execPath,
+    [
+      ...process.execArgv.filter((arg) => arg === "--use-system-ca"),
+      "scripts/process-attendance.mjs",
+      "--watch",
+    ],
+    { stdio: "inherit", env: process.env, windowsHide: true },
+  );
+  attendanceWorker.once("error", () =>
+    console.error("CODEWILD · Attendance worker could not start."),
+  );
   child = spawn(
     process.execPath,
     [

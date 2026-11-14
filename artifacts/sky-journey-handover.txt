@@ -1,0 +1,30 @@
+SKY MAP / LEVEL 1 CORRECTION — 13 NOVEMBER 2026
+
+Latest visual correction: use the expedition-style full-height map with green controls and a top-down aerial cloud/ground picture, not the blue diagram or forest terrain. Side clouds frame the distant hazy ground. Removed the future destination, storm icon, crash explanation and spoiler heading from player-facing flight UI. See artifacts/flight-aerial-art.txt for the generated asset and exact prompt. Backend stage gates are unchanged.
+
+Full-screen follow-up: image extends behind the player HUD, with zero outer padding/frame and no SVG routes between levels. Detailed transparent helicopter sprite faces right. Final production build passed (tmp/sky-fullscreen-build.log), and both map-state tests passed. Browser measured the desktop map at x=0,y=0,width=1280,height=720 in a 1280x720 viewport; mobile map fills 390x844 without horizontal page overflow. Zero route/chart elements remain. Sprite loads; reduced motion disables its hover. Keyboard Level 1 entry, boarding, all seven genres and Escape close work. Player text contains no crash/wilds spoilers. Preview remains on port 3101 with Aarav boarded but no genre/question committed. Screenshots: artifacts/flight-fullscreen-desktop.jpg and artifacts/flight-fullscreen-mobile.jpg.
+
+Spacing correction: map widened from 1400 to 2800 px; markers now have 580 px horizontal gaps, up from roughly 240 px. Each arrow pans 580 px. Production build passed (tmp/sky-spacing-build.log). Browser verified all four gaps at exactly 580 px, panning to both disabled end controls, mobile panning without horizontal page overflow, and keyboard Level 1 entry/Escape close. Preview remains on port 3101 with fresh test data. Screenshot: artifacts/flight-wider-level-spacing.jpg.
+
+Confirmed scope
+First-day players see a sky map, travelling by helicopter through connected levels. Level 1 contains the genre, question and research-chat evidence checkpoints. The user reconfirmed that the crash into the wilds happens AFTER Week 1 clearance and approved final-team publication. Day 2 remains a flight mission. Crash scene and repair inventory are later units.
+
+Implementation
+SkyFlightMap replaces the standalone briefing on the flight home and My Games. Selecting Level 1 opens a mission dialog containing boarding, the existing seven-genre/three-question game, acknowledgement, explicit timer start and researched-chat URL submission. Genre, question and chat checkpoints derive from the authenticated server snapshot. Returning to the map shows the saved progress; chat submission is labelled awaiting verification, separately from verified evidence.
+Levels 2–5 follow actual daily releases and open existing activities inside their mission dialog. Future levels show why they are locked. A submitted or verified chat never releases another day, clears Week 1 or bypasses team approval. Character remains unknown. MC/CC workspaces and existing assessment, evidence, timer and genre/question locks are preserved.
+Map supports native horizontal touch scrolling, arrow controls, keyboard level selection and reduced motion. Dialog uses the existing focus trap, Escape close and focus restoration. Briefing, check-in and help remain available, with a return-to-map link on other Week 1 pages.
+
+Code
+components/SkyFlightMap.js, app/sky-journey.css: sky scene, helicopter, path, level nodes, mission dock and dialogs.
+lib/sky-journey.js: presentation of saved checkpoint/release state; does not create eligibility.
+WorkspaceScreen routes flight home/My Games to the map. Arena adds the sky backdrop and navigation label. DayOneFeatures and ResearchGenrePicker use a compact game presentation inside the level, preserving the original staff/legacy views.
+
+Verification
+33 Day 1/flight/research regressions passed using disposable MongoDB; no failures or skips. Includes two new map-progress tests: per-player saved checkpoints, pending versus verified evidence, and no future-day unlock from submission. Existing tests exercise backend stage denials, immutable question selection, concurrency, research evidence and Friday reuse.
+Browser developer check: fresh player lands on sky map; keyboard enters Level 1; boarding exposes seven genres; locking genre shows its three questions; chosen question, acknowledgement, explicit research start and synthetic chat submission work within the mission. Returning to the map shows 3/3 and awaiting verification; refresh preserves this; Level 2 remains locked with an explanation.
+Final production build passed (tmp/sky-build-final.log). Authenticated HTTP checks passed for all 25 players/five research groups: seven offers, three-question reveal, permanent choices, concurrent claims, reconnect/retry, privacy and role boundaries (tmp/sky-http.log).
+Final mobile check at 390x844: map and seven-card mission render without horizontal page overflow; arrows reach the actual map end and disable there; decorative clouds no longer extend the scrollable route. Escape closes the mission and restores focus to its level. Reduced-motion preference disables the aircraft animation. Reset the viewport after testing. Screenshots: artifacts/sky-journey-desktop.jpg and artifacts/sky-level-one-mobile.jpg.
+The final preview was restarted with a fresh disposable cohort. Aarav is boarded with zero research checkpoints committed, ready for the user to enter Level 1.
+
+Preview
+node scripts/preview-day-one.mjs --research runs the disposable synthetic preview at http://127.0.0.1:3101/gamer/dashboard. It pre-opens Day 1/check-in; production data is never connected. This is developer verification, not independent player/MC/CC UAT or a production-readiness certification. No real AI service/chat verification was performed.

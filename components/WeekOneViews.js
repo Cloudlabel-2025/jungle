@@ -96,7 +96,8 @@ export default function WeekOneView({ screen, data, act, now }) {
         aria-label="Week 1 programme"
         style={{ display: "flex", flexWrap: "wrap", gap: 8 }}
       >
-        {weekOneNavigation[data.user.role].map(([code, page, label]) => (
+        {gamer && data.story?.flight && <Link className="btn small" href="/gamer/dashboard">Return to sky map</Link>}
+        {weekOneNavigation[data.user.role].filter(([,page]) => !data.story?.flight || data.story.introComplete || page === "ask-mc").map(([code, page, label]) => (
           <Link
             key={code}
             className={`btn small ${page === screen ? "primary" : ""}`}

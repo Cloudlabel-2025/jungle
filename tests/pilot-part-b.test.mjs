@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
+import { hash } from "../lib/pilot-rules.js";
 import mongoose from "mongoose";
 import { models } from "../lib/db.js";
 import { pilotAction, pilotSnapshot, storageProof } from "../lib/pilot-engine.js";
@@ -292,9 +293,19 @@ test(
 
     const outside = { ...gamers[0], _id: "pilot-phase2-volunteer", email: "volunteer@pilot.invalid", teamId: "pilot-phase2-other" };
     await models.User.create(outside);
+    // Cross-team Phase 2 volunteers must also have the approved foundation roster,
+    // rather than bypassing Week 1 solely through a synthetic Key 5 record.
+    const companions = [1, 2].map(i => ({ ...outside, _id: `${outside._id}-${i}`, email: `volunteer-${i}@pilot.invalid` }));
+    await models.User.insertMany(companions);
+    const foundation = await models.WeekOneProgram.findById(cohortId);
+    foundation.data.publications.at(-1).results.push(...[outside, ...companions].map(u => ({ userId: u._id, name: u.name, total: 80, status: "CLEARED" })));
+    foundation.data.recovery.published.teams.push({ id: outside.teamId, members: [outside, ...companions].map(u => u._id) });
+    foundation.markModified("data");
+    await foundation.save();
     await models.PilotSprint.updateOne({ _id: loaded.sprint._id }, {
+      $set: { "data.rosterDigest": hash(foundation.data.recovery.published) },
       $push: {
-        "data.teams": { teamId: outside.teamId, commanderId: otherMC._id, members: [outside._id] },
+        "data.teams": { teamId: outside.teamId, commanderId: otherMC._id, members: [outside, ...companions].map(u => u._id) },
         "data.acceptances": { teamId: outside.teamId, decision: "ACCEPTED", key: "Key 5" },
       },
     });

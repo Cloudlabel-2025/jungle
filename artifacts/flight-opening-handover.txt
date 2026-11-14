@@ -1,0 +1,34 @@
+CODEWILD — FIRST FLIGHT STORY UNIT
+12 November 2026
+
+Implemented scope
+Helicopter flight opening at the Player home; unknown character slot; stage-aware loading text; minimal pre-opening navigation; relevant Week 1 navigation after welcome; persistent personal welcome receipt; backend guards and filtered state. Existing research remains the current five-card flow. The seven-sector wheel, three-question choice, crash sequence and repair inventory remain later units.
+
+Player flow
+Sign in -> helicopter opening -> Begin flight learning -> My Day -> existing Week 1 rules, briefings, research and support. The welcome action is idempotent, survives refresh/logout and does not grant project clearance. There is no mandatory animation delay; keyboard interaction and a reduced-motion presentation are supported. Existing stored character assignments and assessment records are retained, while character identity/selection is suppressed in the flight stage.
+
+Stage authority and access
+lib/player-stage.js resolves stage from server-held cohort/programme state and the locked published Week 1/final-team roster with its current digest. Displayed week changes, introductory completion, old URLs and client-supplied fields do not grant expedition access. Week 1 accounts without a valid current published roster remain in flight. MC/CC retain their existing controls. Existing post-foundation fixtures retain their access.
+
+Flight snapshots omit the Alumni map, legacy project/task/module catalogue, team/character projections and unrelated project data. The shell does not show the character picker, project completion overlays, map controls, XP header or unrelated workspace navigation. Personal Week 1 evidence, balances within relevant activities, questions/support and published results remain owned by their original flows.
+
+Direct legacy page routes redirect to the flight home. The API restricts character changes, project actions, old module/workshop operations, pilot snapshots/actions and pilot evidence access. Read-only programme state and essential help remain available; learning writes require the saved welcome. Character/project domain services also check the authoritative stage. MongoDB transactions read stage records sequentially within the session.
+
+Verification evidence
+Focused Day 1 suite: 24 passed, including the new stage tests and existing research journey (tmp/flight-tests.log).
+The initial full run exposed a later-stage synthetic volunteer fixture with Key 5 but no approved foundation record. The fixture now explicitly supplies the approved foundation roster and keeps the loaded sprint roster digest consistent. The new gate was not weakened. Focused affected test passed (tmp/flight-part-b-retest.log).
+Final full regression: 161 passed, 0 failed/cancelled/skipped (tmp/flight-all-tests-verified.log).
+Final production build: passed (tmp/flight-build-final.log).
+HTTP: 25 scoped flight accounts passed unknown-identity/state filtering, welcome persistence/re-login, pre-welcome restrictions, legacy URL redirects, forged stage/character/project/module/pilot/storage denials and MC/CC control continuity, repeated against the final build (tmp/flight-http-final.log).
+Browser: helicopter scene, unknown identity, no character portrait images, minimal pre-opening menu, keyboard welcome and existing My Day handoff verified. The 390px view had document width 375px (no horizontal overflow). The browser's reduced-motion preference disabled the flight animation. Screenshots are saved in the session visualization folder.
+Final browser retest confirmed that one Enter key on Begin flight learning opens My Day directly; My Games still displays the existing five-card research activity and reload preserves the welcome. The final preview is left running with Harsh Vardhan at the fresh opening, before its welcome receipt. No browser console errors were recorded.
+
+Run and review
+npm run build
+node scripts/preview-day-one.mjs --research
+node scripts/check-flight-http.mjs
+node scripts/check-day-one.mjs --all --test-concurrency=2
+
+Preview: http://127.0.0.1:3101/gamer/dashboard. Synthetic persona accounts and a disposable MongoDB only. This launcher still pre-opens Day 1 and clocks the learners in, so it demonstrates the opening/research handoff rather than certifying fresh institutional setup. The first HTTP account may already have a welcome receipt; choose another Player to see the new opening action.
+
+FlightOpening receipts belong in the application database backup policy. No production database, existing learner assignment or assessment was reset. No deployment or independent production-UAT signoff is claimed. Stop and review this first unit before implementing the wheel or later story stages.
