@@ -18,6 +18,7 @@ let replayConfig;
 let replayDays;
 
 const progress = [
+  "PipProgress",
   "LevelOneReward",
   "FlightOpening",
   "CrashArrival",
@@ -219,9 +220,11 @@ try {
         { $set: { currentWeek: 1 }, $inc: { rosterVersion: 1 } },
         { session },
       );
+      await models.User.updateMany({ role: "GAMER", pipGeneration: { $exists: false } }, { $set: { pipGeneration: 1 } }, { session });
       await models.User.updateMany(
         { role: "GAMER" },
         {
+          $inc: { pipGeneration: 1 },
           $set: {
             hp: MAX_LIVES,
             energy: MAX_ENERGY,

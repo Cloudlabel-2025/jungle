@@ -556,7 +556,8 @@
 .flight-research-scene[data-motion="on"] .flight-scout {
   transition:
     left 0.7s ease,
-    top 0.7s ease !important;
+    top 0.7s ease,
+    transform 0.7s ease !important;
 }
 .flight-world-beacon strong {
   margin-top: 13px;
@@ -651,6 +652,14 @@
   height: 85px;
   object-fit: contain;
   filter: drop-shadow(0 16px 12px #03170dbb);
+}
+.flight-scout.is-above-genre {
+  /* The beacon's anchor is its whole button centre, below its round icon. */
+  transform: translate(-50%, calc(-100% - 68px));
+}
+.flight-scout.is-above-genre > span { display: none; }
+@media (orientation: landscape) and (max-height: 540px) {
+  .flight-scout.is-above-genre { transform: translate(-50%, calc(-100% - 50px)); }
 }
 .flight-scout > span {
   display: inline-block;

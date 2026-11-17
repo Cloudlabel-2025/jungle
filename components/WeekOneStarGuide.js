@@ -9,7 +9,7 @@ import { levelReward, weekOneLevelGuides } from "@/lib/week-one-level-rules.js";
 export function WeekOneStarGuideContent({ day, result }) {
   const [target, setTarget] = useState(3);
   const guide = weekOneLevelGuides[day],
-    reward = levelReward(target);
+    reward = levelReward(target, day);
   const goals = [
     [
       Compass,
@@ -44,7 +44,7 @@ export function WeekOneStarGuideContent({ day, result }) {
         <span>FLIGHT / LEVEL 0{day}</span>
         <img
           src="/images/pip/pip-guiding.webp"
-          alt="Pip guiding your star hunt"
+          alt="Kiko guiding your star hunt"
           width="220"
           height="220"
         />
@@ -70,8 +70,8 @@ export function WeekOneStarGuideContent({ day, result }) {
               onClick={() => setTarget(n)}
             >
               <MissionStars stars={n} />
-              <strong>{levelReward(n).trophies} trophies</strong>
-              <small>{levelReward(n).xp} XP</small>
+              <strong>{levelReward(n, day).trophies} trophies</strong>
+              <small>{levelReward(n, day).xp} XP</small>
             </button>
           ))}
         </div>
@@ -123,7 +123,7 @@ export default function WeekOneStarGuide({ day, result }) {
       {open && (
         <Modal
           title={`Level ${day} · Star hunt`}
-          kicker="PIP’S FLIGHT BRIEFING"
+          kicker="KIKO’S FLIGHT BRIEFING"
           variant="star-guide"
           portal
           wide
@@ -162,7 +162,7 @@ export function FlightLevelRewards({ data, day, compact = false }) {
             <strong>{row.creditedXp} XP</strong>
           </>
         ) : (
-          <span>Earn 15–30 trophies · 75–150 XP</span>
+          <span>Earn 15–30 trophies · {levelReward(1, day).xp}–{levelReward(3, day).xp} XP · {day}× flight XP</span>
         )}
       </div>
       <WeekOneStarGuide day={day} result={result} />

@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Footprints, Compass } from "lucide-react";
+import { Compass } from "lucide-react";
+import { VowEmblem } from "./VowBrand";
+import { brand } from "@/lib/brand.js";
 
 // The persistent workspace owns this gate. Ready data closes it immediately;
 // navigation and background refreshes never reset the completed entry.
@@ -48,38 +50,49 @@ export default function GameLoadingScreen({ onCancel, flight = false }) {
   }, []);
   return (
     <div
-      className="game-entry-loader"
+      className={`game-entry-loader ${flight ? "is-flight-loading" : ""}`}
       role="status"
       aria-live="polite"
-      aria-label="Loading CODEWILD"
+      aria-label={`Loading ${brand.name}`}
       tabIndex={-1}
       ref={screen}
     >
-      <div className="game-entry-scene" aria-hidden="true" />
+      <div className="game-entry-scene" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
       <div className="game-entry-content">
-        <span className="game-entry-brand">
-          CODE<span>WILD</span>
-        </span>
-        <span className="game-entry-kicker">{flight ? "WELCOME ABOARD" : "BACK ON THE TRAIL"}</span>
-        <h1>{flight ? "Preparing your flight" : "Opening your expedition"}</h1>
-        <p>{flight ? "Getting your learning journey ready…" : "Finding your place in the jungle…"}</p>
-        <div className="game-entry-trail" aria-hidden="true">
-          {[0, 1, 2].map((step) => (
-            flight ? <Compass key={step} size={23} /> : <Footprints key={step} size={23} />
-          ))}
+        <div className="vow-loading-crest">
+          <div className="vow-loading-orbit" aria-hidden="true" />
+          <VowEmblem decorative eager />
+          <span className="vow-loading-glint" aria-hidden="true" />
         </div>
-        <div className="game-entry-track" aria-hidden="true">
-          <i />
-        </div>
-        {slow && (
-          <p className="game-entry-slow">
-            This is taking a little longer. Your game will open as soon as it’s
-            ready.
+        <div className="vow-loading-copy">
+          <span className="game-entry-kicker">YOUR NEXT DISCOVERY AWAITS</span>
+          <h1>{brand.name}</h1>
+          <span className="vow-loading-initials">V O W</span>
+          <p>
+            <Compass size={15} aria-hidden="true" />
+            {flight ? "Preparing your flight…" : "Preparing your voyage…"}
           </p>
-        )}
-        <button className="game-entry-cancel" onClick={onCancel}>
-          Back to sign-in
-        </button>
+          <div className="game-entry-track" aria-hidden="true">
+            <i />
+          </div>
+          <small className="vow-loading-caption">
+            Explore. Question. Discover.
+          </small>
+          {slow && (
+            <p className="game-entry-slow">
+              Your voyage is still loading. It will open as soon as it’s ready.
+            </p>
+          )}
+          {onCancel && (
+            <button className="game-entry-cancel" onClick={onCancel}>
+              Back to sign-in
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

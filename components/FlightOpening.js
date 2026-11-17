@@ -28,7 +28,7 @@ export default function FlightOpening({ data, act }) {
           <div className="helicopter-strut" />
         </div>
         <div className="flight-story-copy">
-          <p className="flight-eyebrow">CODEWILD / THE JOURNEY BEGINS</p>
+          <p className="flight-eyebrow">VOW / THE JOURNEY BEGINS</p>
           <h1 id="flight-title">
             Above the canopy.
             <br />

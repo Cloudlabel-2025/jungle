@@ -39,9 +39,9 @@ test("each Level 2–5 game guide publishes its actual star requirements and rew
       "15 trophies",
       "25 trophies",
       "30 trophies",
-      "75 XP",
-      "125 XP",
-      "150 XP",
+      `${75 * day} XP`,
+      `${125 * day} XP`,
+      `${150 * day} XP`,
       "saved timers",
       "Factual accuracy",
     ]) {

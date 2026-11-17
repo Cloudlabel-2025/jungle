@@ -1,0 +1,222 @@
+/* Dedicated entry styles avoid changing shared game forms or workspace UI. */
+.vow-login-scene {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 28px 20px;
+  background:
+    linear-gradient(#07180f30, #07180f63),
+    url("/brand/vow-login-wilderness-v1.webp") center / cover;
+  background-color: #132b1c;
+}
+.vow-login-panel {
+  width: min(100%, 440px);
+  padding: 24px 34px 26px;
+  border: 1px solid #96b57570;
+  border-radius: 24px;
+  color: #f0f4e6;
+  background: #0c271df5;
+  box-shadow:
+    0 22px 70px #061b1670,
+    inset 0 1px #dcebb916;
+}
+.vow-login-heading {
+  text-align: center;
+}
+.vow-login-heading .vow-emblem {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 5px;
+  object-fit: contain;
+}
+.vow-login-brand {
+  color: #d4e4b8;
+  font-size: 17px;
+  font-weight: 600;
+}
+.vow-login-heading h1 {
+  font-family: var(--body);
+  font-size: 31px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  margin-top: 9px;
+  line-height: 1.15;
+}
+.vow-login-heading > p:last-child {
+  color: #c4d1bf;
+  font-size: 16px;
+  margin-top: 7px;
+}
+.vow-login-form {
+  display: grid;
+  gap: 17px;
+  margin-top: 25px;
+}
+.vow-login-field {
+  display: grid;
+  gap: 6px;
+}
+.vow-login-field label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e2ebd5;
+}
+.jungle-world .vow-login-field input {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin: 0;
+  padding: 11px 14px;
+  background: #071c14;
+  color: #f0f4e6;
+  border: 1px solid #6d8866;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: none;
+}
+.vow-login-field input::placeholder {
+  color: #aebfa8;
+  opacity: 1;
+}
+.vow-login-password {
+  position: relative;
+}
+.jungle-world .vow-login-password input {
+  padding-right: 52px;
+}
+.vow-login-password button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: transparent;
+  color: #d0debd;
+}
+.vow-login-password button:hover {
+  background: #d0debd18;
+}
+.vow-login-submit {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid #d5e8ad;
+  border-radius: 10px;
+  background: #d2e6a5;
+  color: #10271b;
+  font-size: 19px;
+  font-weight: 700;
+  box-shadow: 0 3px #698349;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.vow-login-submit:hover:not(:disabled) {
+  background: #e0efbd;
+  transform: translateY(-1px);
+}
+.vow-login-submit:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+.vow-login-submit:disabled {
+  opacity: 0.7;
+}
+.vow-login-help {
+  text-align: center;
+  color: #becdb6;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-top: 20px;
+}
+.vow-login-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #ffd0c6;
+  font-size: 15px;
+  line-height: 1.3;
+}
+.vow-login-error svg {
+  margin-top: 2px;
+}
+.vow-login-demo {
+  margin-top: 18px;
+  color: #d6e6c0;
+  font-size: 14px;
+}
+.vow-login-demo summary {
+  cursor: pointer;
+  text-align: center;
+  padding: 5px;
+}
+.vow-login-demo[open] {
+  padding-top: 10px;
+}
+.vow-login-demo > p {
+  margin: 12px 0;
+}
+.vow-login-demo .persona-list {
+  max-height: 210px;
+  overflow-y: auto;
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  .vow-login-scene {
+    padding: 12px 20px;
+  }
+  .vow-login-panel {
+    width: min(100%, 420px);
+    padding: 10px 26px;
+    border-radius: 18px;
+  }
+  .vow-login-heading .vow-emblem {
+    width: 34px;
+    height: 34px;
+    margin: 0 auto;
+  }
+  .vow-login-brand {
+    font-size: 14px;
+  }
+  .vow-login-heading h1 {
+    font-size: 24px;
+    margin-top: 3px;
+  }
+  .vow-login-heading > p:last-child {
+    display: none;
+  }
+  .vow-login-form {
+    margin-top: 9px;
+    gap: 7px;
+  }
+  .vow-login-field {
+    gap: 2px;
+  }
+  .vow-login-field label {
+    font-size: 14px;
+  }
+  .jungle-world .vow-login-field input {
+    height: 40px;
+    padding-block: 7px;
+  }
+  .vow-login-password button {
+    height: 36px;
+  }
+  .vow-login-submit {
+    min-height: 40px;
+    font-size: 17px;
+  }
+  .vow-login-help {
+    margin-top: 12px;
+    font-size: 12px;
+  }
+  .vow-login-demo {
+    margin-top: 5px;
+    font-size: 12px;
+  }
+}

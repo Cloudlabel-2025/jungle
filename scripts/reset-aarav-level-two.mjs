@@ -4,8 +4,9 @@ import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import mongoose from "mongoose";
 import { connect, models } from "../lib/db.js";
-import { programAction, programSnapshot } from "../lib/week-one-program.js";
-import { flightLevelId } from "../lib/week-one-levels.js";
+import { programSnapshot } from "../lib/week-one-program.js";
+import { flightLevelId, flightLevelStaffAction } from "../lib/week-one-levels.js";
+import { runProgram } from "../lib/week-one-store.js";
 import { tenantOf } from "../lib/access-scope.js";
 
 const userId = "usr_g01", day = 2;
@@ -36,9 +37,19 @@ try {
     await mkdir(".data/backups", { recursive: true });
     const backup = `.data/backups/aarav-level-two-${Date.now()}.json`;
     await writeFile(backup, JSON.stringify({ player, level, attempts }, null, 2), { flag: "wx" });
-    await programAction(staff, "level-result", {
+    await runProgram(staff, "level-result", {
       day, userId, operation: "replay", members: [userId], versions: { [userId]: level?.version || 0 },
       reason: "User requested Aarav's Level 2 reset to start both missions again from the beginning.",
+    }, new Date(), async (ctx) => {
+      // An explicit operator reset can restart a previously granted replay.
+      // Clear its pending flag only inside this transaction; the replay service
+      // still validates scope/version, archives attempts, and writes its audit.
+      await models.WeekOneLevel.updateOne(
+        { _id: flightLevelId(cohortId, userId, day), version: level?.version || 0 },
+        { $set: { "data.replayPending": false } },
+        { session: ctx.session },
+      );
+      return flightLevelStaffAction(ctx);
     });
     assert.equal(await models.WeekOneAttempt.countDocuments({ cohortId, userId, day }), 0);
     assert.equal(digest(await unaffected(cohortId)), before, "Unrelated player records must remain unchanged.");

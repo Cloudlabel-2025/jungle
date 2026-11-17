@@ -1,0 +1,2193 @@
+.flight-finale {
+  --finale-gold: #e2c985;
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  min-height: 0;
+  padding: 112px 30px 18px 90px;
+  overflow: hidden;
+  color: #eee9d1;
+  font-family: Rajdhani, sans-serif;
+  background: #10261f;
+}
+.flight-finale button,
+.flight-finale a {
+  touch-action: manipulation;
+}
+.flight-finale button:focus-visible,
+.flight-finale a:focus-visible,
+.flight-finale input:focus-visible,
+.flight-finale textarea:focus-visible {
+  outline: 3px solid #f4d98e;
+  outline-offset: 3px;
+}
+.flight-finale button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.flight-finale h2,
+.flight-finale h3,
+.flight-finale h4,
+.flight-finale p {
+  margin: 0;
+}
+.flight-finale button {
+  font-family: inherit;
+  cursor: pointer;
+}
+.verdict-deck {
+  background:
+    radial-gradient(ellipse at 40% 30%, #5b65482c, transparent 65%),
+    repeating-linear-gradient(
+      0deg,
+      #d5b27605 0px,
+      #d5b27605 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+    #142920;
+}
+.captains-run {
+  --finale-gold: #cde6ae;
+  background:
+    radial-gradient(ellipse at 50% 40%, #41614788, transparent 65%),
+    linear-gradient(0deg, #071d19, #183a30);
+}
+.finale-eyebrow {
+  font:
+    9px/1.5 "JetBrains Mono",
+    monospace;
+  letter-spacing: 1.6px;
+  color: var(--finale-gold);
+}
+.finale-header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.finale-header > div:first-child {
+  margin-right: auto;
+}
+.finale-header h2 {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 28px;
+  line-height: 1.15;
+}
+.finale-header h2 svg {
+  color: var(--finale-gold);
+}
+.finale-scroll {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #809363 #132a22;
+  padding: 4px;
+}
+.finale-button,
+.flight-finale .view-objectives-link .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #e2c98570;
+  border-radius: 10px;
+  background: #dfd198;
+  color: #192e22;
+  padding: 11px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  box-shadow: 0 3px 0 #756c40;
+}
+.finale-button.secondary,
+.flight-finale .view-objectives-link .btn {
+  background: #203b2f;
+  color: #e5e6c9;
+  box-shadow: none;
+}
+.finale-text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  color: var(--finale-gold);
+  background: transparent;
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.finale-error,
+.finale-warning {
+  padding: 10px 14px;
+  border: 1px solid #bf9860;
+  border-radius: 8px;
+  background: #493d24;
+  color: #ffe8bb;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.finale-rewards {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 0;
+}
+.finale-rewards > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+.finale-rewards > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #cad7ae;
+}
+.finale-rewards .week-level-rewards {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+.finale-lock {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
+  flex: 1;
+}
+.finale-subnav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 4px 0 14px;
+}
+.finale-subnav button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #e2d9b1;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  white-space: nowrap;
+}
+.finale-subnav h3 {
+  font-size: 24px;
+}
+.finale-subnav > span {
+  margin-left: auto;
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  color: #9fb18b;
+  letter-spacing: 1px;
+}
+.finale-attempt-status {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 14px;
+  border: 1px solid #b1ad7150;
+  background: #0d211b;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.finale-attempt-status > strong {
+  font-size: 18px;
+}
+.finale-attempt-status > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  font:
+    11px "JetBrains Mono",
+    monospace;
+  color: var(--finale-gold);
+}
+.finale-attempt-status > small {
+  font-size: 13px;
+  color: #b0c09d;
+}
+.finale-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+.deck-arrival {
+  display: grid;
+  grid-template-columns: 0.9fr 1.3fr;
+  gap: 50px;
+  align-items: center;
+  min-height: 100%;
+  max-width: 1400px;
+  margin: auto;
+}
+.deck-hero {
+  position: relative;
+  padding: 24px 10px;
+}
+.deck-hero h3 {
+  font-size: clamp(36px, 4.5vw, 68px);
+  line-height: 0.98;
+  margin: 20px 0;
+  color: #f1e3bb;
+}
+.deck-hero > p {
+  max-width: 360px;
+  font-size: 19px;
+  line-height: 1.4;
+  color: #bfc6a6;
+}
+.deck-fire-mark {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  color: #d4bc7680;
+  margin-top: 26px;
+}
+.deck-fire-mark > span {
+  font:
+    20px "JetBrains Mono",
+    monospace;
+  letter-spacing: 5px;
+}
+.deck-dossiers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  padding: 30px 4px;
+}
+.deck-dossier {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 16px;
+  min-height: 330px;
+  padding: 35px 24px 22px;
+  border: 1px solid #b2a66e;
+  border-radius: 3px 18px 18px 5px;
+  color: #f0e5c0;
+  background: linear-gradient(135deg, #405039, #273d2c);
+  box-shadow: 6px 7px 0 #091b1555;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.deck-dossier:first-child {
+  transform: rotate(-2deg);
+}
+.deck-dossier:nth-child(2) {
+  transform: rotate(2deg);
+}
+.deck-dossier:hover {
+  transform: translateY(-8px) rotate(0);
+  box-shadow: 8px 12px 0 #091b1555;
+}
+.dossier-tab {
+  position: absolute;
+  top: -21px;
+  left: -1px;
+  border: 1px solid #b2a66e;
+  border-bottom: 0;
+  background: #405039;
+  padding: 6px 17px;
+  border-radius: 8px 8px 0 0;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+}
+.deck-dossier > svg {
+  color: #e0c989;
+}
+.deck-dossier h4 {
+  font-size: 28px;
+  line-height: 1.05;
+}
+.deck-dossier p {
+  font-size: 17px;
+  line-height: 1.35;
+  color: #c1c7a8;
+}
+.deck-dossier > strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  font-size: 16px;
+  width: 100%;
+  border-top: 1px solid #e1c48345;
+  padding-top: 16px;
+}
+.deck-dossier > strong > svg:last-child {
+  margin-left: auto;
+}
+.deck-case-selection {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  max-width: 1150px;
+  margin: 30px auto;
+}
+.deck-case-selection aside {
+  padding: 24px;
+  border-right: 1px solid #bdae7066;
+}
+.deck-case-selection aside h4 {
+  font-size: 26px;
+  margin: 14px 0 10px;
+}
+.deck-case-selection aside p {
+  font-size: 16px;
+  color: #b7c1a5;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+.deck-case-selection aside > button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-top: 8px;
+  color: #d5dcbb;
+  background: #233f30;
+  border: 1px solid #657d50;
+  border-radius: 8px;
+  font-size: 17px;
+  text-align: left;
+}
+.deck-case-selection aside > button[aria-pressed="true"] {
+  background: #d8c48b;
+  color: #162c22;
+}
+.deck-case-selection article {
+  padding: 30px;
+  background: #0b211bbb;
+  border: 1px solid #a0a06b55;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+.deck-case-selection article h4 {
+  font-size: 32px;
+}
+.deck-case-selection article p {
+  font-size: 21px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.deck-case-selection article small {
+  color: #b9c39e;
+}
+.deck-work-modes {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+.deck-work-modes button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid #8c936166;
+  background: #1b3629;
+  color: #cfd7b1;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.deck-work-modes button[aria-pressed="true"] {
+  color: #172e23;
+  background: #d8c88b;
+}
+.deck-evidence-room {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 24px;
+  min-height: 330px;
+}
+.deck-clue-reader {
+  position: relative;
+  align-self: start;
+  min-height: 280px;
+  background: #ddcf9d;
+  color: #233626;
+  padding: 30px;
+  box-shadow: 5px 7px 0 #0004;
+  border-radius: 2px 5px 30px 4px;
+}
+.deck-clue-reader .finale-eyebrow {
+  color: #4b5b35;
+}
+.deck-clue-reader blockquote {
+  margin: 24px 0 26px;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.deck-clue-pins {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.deck-clue-pins button {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 1px solid #55643d;
+  background: transparent;
+  color: #2f442c;
+}
+.deck-clue-pins button[aria-pressed="true"] {
+  background: #2f442c;
+  color: #e7d7a1;
+}
+.deck-note {
+  font-size: 14px !important;
+  line-height: 1.5;
+  color: #aab99b;
+  margin: 14px 0 !important;
+}
+.deck-clue-reader .deck-note {
+  color: #495a39;
+}
+.deck-test-bench {
+  padding: 24px;
+  border: 1px dashed #9daa6666;
+  border-radius: 16px;
+  background: #0b211bcc;
+}
+.deck-test-bench h4 {
+  font-size: 27px;
+  margin: 10px 0 20px;
+}
+.deck-test-plans {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.deck-test-plans button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: #203c2c;
+  border: 1px solid #728854;
+  color: #dae0b9;
+  border-radius: 10px;
+  font-size: 17px;
+  text-align: left;
+}
+.deck-test-plans button[aria-pressed="true"] {
+  border-color: #f2d28a;
+  background: #4b5434;
+  color: #ffecbb;
+}
+.deck-switches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.deck-switches fieldset {
+  margin: 0;
+  border: 1px solid #78865477;
+  padding: 10px;
+  border-radius: 8px;
+  min-width: 0;
+}
+.deck-switches legend {
+  font-size: 14px;
+  color: #c3cdab;
+}
+.deck-switches button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0;
+  border: 1px solid #69794e;
+  background: #152d23;
+  color: #dce4bc;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: left;
+}
+.deck-switches button[aria-pressed="true"] {
+  background: #d9c58a;
+  color: #1b3023;
+}
+.deck-test-feedback {
+  display: flex;
+  gap: 14px;
+  border-left: 3px solid #a7cf93;
+  background: #2c4d32;
+  padding: 16px;
+  margin-top: 18px;
+  animation: finale-stamp 0.24s ease-out;
+}
+.deck-test-feedback.is-risk {
+  border-color: #e1b16e;
+  background: #4b4028;
+}
+.deck-test-feedback > svg {
+  flex-shrink: 0;
+}
+.deck-test-feedback strong {
+  font-size: 20px;
+}
+.deck-test-feedback p {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-top: 6px;
+}
+.flight-evidence-console {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 20px;
+  min-height: 330px;
+}
+.flight-evidence-console > nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 430px;
+  overflow: auto;
+  padding: 2px;
+}
+.flight-evidence-console > nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 10px;
+  border: 1px solid #647d4755;
+  border-radius: 8px;
+  background: #10291e;
+  color: #bac7a2;
+  text-align: left;
+}
+.flight-evidence-console > nav button > span {
+  width: 16px;
+  flex-shrink: 0;
+  color: #bdb479;
+}
+.flight-evidence-console > nav button > small {
+  font-size: 14px;
+  line-height: 1.15;
+}
+.flight-evidence-console > nav button[aria-pressed="true"] {
+  background: #d7c78c;
+  color: #1d3325;
+  border-color: #f1db9b;
+}
+.flight-evidence-console > nav button.is-filled:not([aria-pressed="true"]) {
+  border-color: #b9ce7e77;
+  color: #e6e7bc;
+}
+.evidence-writing {
+  background: #0b211cdd;
+  border: 1px solid #78915866;
+  border-radius: 16px;
+  padding: 28px;
+}
+.evidence-writing h3 {
+  font-size: 28px;
+  margin: 10px 0;
+}
+.evidence-writing > p {
+  font-size: 19px;
+  color: #c2d1b2;
+  line-height: 1.45;
+  margin-bottom: 18px;
+}
+.flight-finale textarea,
+.flight-finale input {
+  display: block;
+  width: 100%;
+  resize: vertical;
+  min-height: 120px;
+  border: 1px solid #8da06c;
+  background: #102e23;
+  color: #f3edcc;
+  border-radius: 10px;
+  padding: 16px;
+  font:
+    19px/1.45 Rajdhani,
+    sans-serif;
+}
+.flight-finale input {
+  min-height: 48px;
+}
+.evidence-writing-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0 20px;
+  color: #aebf9a;
+  font-size: 13px;
+}
+.finale-debrief {
+  max-width: 850px;
+  margin: 16px auto;
+  text-align: center;
+  padding: 24px;
+}
+.finale-seal {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border: 2px solid #d9c279;
+  border-radius: 50%;
+  box-shadow: 0 0 0 7px #d9c27915;
+  color: #ead7a3;
+  animation: finale-stamp 0.3s ease-out;
+}
+.finale-debrief h3 {
+  font-size: 32px;
+  margin: 10px 0;
+}
+.finale-debrief > p {
+  font-size: 19px;
+  color: #c4d2b0;
+  line-height: 1.5;
+  margin: 12px auto 22px;
+  max-width: 620px;
+}
+.finale-debrief > .finale-actions {
+  justify-content: center;
+}
+.finale-score {
+  display: block;
+  font-size: 48px;
+  color: #e6d591;
+  margin: 18px;
+}
+.finale-score small {
+  display: block;
+  font-size: 16px;
+}
+.finale-record {
+  margin-top: 24px;
+  border: 1px solid #8a9b6655;
+  border-radius: 16px;
+  padding: 22px;
+  text-align: left;
+}
+.finale-record nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.finale-record nav button {
+  padding: 8px 12px;
+  border: 1px solid #7b9059;
+  background: #173629;
+  color: #dbe3b9;
+  border-radius: 8px;
+}
+.finale-record nav button[aria-pressed="true"] {
+  background: #d3c38b;
+  color: #203424;
+}
+.finale-record > div {
+  padding: 12px 0;
+  border-bottom: 1px solid #8a9b6633;
+}
+.finale-record strong {
+  color: #dacd96;
+  font-size: 17px;
+}
+.finale-record p {
+  font-size: 17px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-top: 6px;
+}
+.trial-arrival {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 50px;
+  align-items: center;
+  min-height: 100%;
+  padding: 45px 35px;
+  isolation: isolate;
+}
+.trial-horizon {
+  position: absolute;
+  inset: 5% 40% 5% 0;
+  border: 1px solid #adc98b33;
+  border-radius: 50%;
+  z-index: -1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  opacity: 0.3;
+  transform: rotate(-10deg);
+}
+.trial-horizon::before,
+.trial-horizon::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 35%;
+  height: 1px;
+  background: #bdd5a4;
+}
+.trial-horizon::after {
+  top: 65%;
+}
+.trial-horizon > span {
+  position: absolute;
+  bottom: 15%;
+  left: 25%;
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 2px;
+}
+.trial-horizon > svg {
+  position: absolute;
+  top: 14%;
+  left: 15%;
+  animation: finale-plane 5s ease-in-out infinite;
+}
+.trial-brief h3 {
+  font-size: clamp(38px, 4.3vw, 66px);
+  line-height: 1.05;
+  margin: 20px 0;
+  color: #e5edc8;
+}
+.trial-brief > p {
+  max-width: 340px;
+  color: #b7cba7;
+  font-size: 20px;
+  line-height: 1.4;
+}
+.trial-flightplan {
+  position: relative;
+  display: grid;
+  gap: 24px;
+}
+.trial-flightplan::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 42px;
+  width: 2px;
+  background: #8ba76c66;
+  z-index: -1;
+}
+.trial-flightplan > button {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 25px 22px;
+  border: 1px solid #8ea46c88;
+  border-radius: 60px 18px 18px 60px;
+  background: #103628e8;
+  color: #e0e9c2;
+  text-align: left;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.trial-flightplan > button:hover {
+  background: #284f38;
+  transform: translateX(4px);
+}
+.trial-checkpoint-number {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border: 1px solid #c8d9a1;
+  border-radius: 50%;
+  font:
+    22px "JetBrains Mono",
+    monospace;
+  color: #deebac;
+  box-shadow: 0 0 0 7px #bfd18e0b;
+}
+.trial-flightplan small {
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #c5da9d;
+}
+.trial-flightplan strong {
+  display: block;
+  font-size: 26px;
+  margin: 7px 0;
+}
+.trial-flightplan p {
+  font-size: 16px;
+  color: #acc4a2;
+  line-height: 1.3;
+}
+.trial-checkpoint-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 14px;
+  margin-left: auto;
+}
+.trial-launch {
+  text-align: center;
+  max-width: 800px;
+  margin: 10px auto;
+  padding: 28px;
+}
+.trial-launch-emblem {
+  display: grid;
+  place-items: center;
+  width: 110px;
+  height: 110px;
+  border: 1px solid #bdd39b;
+  border-radius: 50%;
+  margin: 0 auto 22px;
+  color: #d1e4a8;
+  box-shadow: 0 0 0 14px #b3cf8b0b;
+}
+.trial-launch h4 {
+  font-size: 36px;
+  line-height: 1.1;
+  margin: 14px 0;
+}
+.trial-launch > p {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #b5caaa;
+  margin: 18px 0;
+}
+.trial-launch-facts {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  margin: 20px 0;
+  color: #c6d7a9;
+}
+.trial-launch > small {
+  display: block;
+  margin-top: 14px;
+  color: #adbf9c;
+}
+.knowledge-run {
+  max-width: 1180px;
+  margin: auto;
+  padding: 12px;
+}
+.knowledge-runway {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 4px 0 26px;
+  flex-wrap: wrap;
+}
+.knowledge-runway button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #183b2c;
+  border: 1px solid #6b8c55;
+  color: #c2d7a7;
+  position: relative;
+}
+.knowledge-runway button.is-filled {
+  background: #9dbb7d;
+  color: #142b20;
+}
+.knowledge-runway button[aria-pressed="true"] {
+  box-shadow: 0 0 0 5px #cce2a82b;
+  border-color: #efffd2;
+  background: #d6e9b4;
+  color: #1c3826;
+}
+.knowledge-question {
+  text-align: center;
+}
+.knowledge-question h4 {
+  font-size: 32px;
+  line-height: 1.2;
+  max-width: 950px;
+  margin: 16px auto 26px;
+}
+.knowledge-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 0 auto 22px;
+}
+.knowledge-options > button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 90px;
+  padding: 20px;
+  background: #123a2b;
+  border: 1px solid #82a164;
+  border-radius: 16px;
+  color: #dbe8c5;
+  text-align: left;
+  transition:
+    transform 0.15s,
+    background 0.15s;
+}
+.knowledge-options > button:hover {
+  background: #284d34;
+  transform: translateY(-2px);
+}
+.knowledge-options > button[aria-pressed="true"] {
+  background: #d1e3aa;
+  color: #1b3827;
+  border-color: #edfacd;
+  box-shadow: 0 0 22px #bada891c;
+}
+.knowledge-options > button > span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font:
+    14px "JetBrains Mono",
+    monospace;
+}
+.knowledge-options strong {
+  font-size: 21px;
+  line-height: 1.25;
+}
+.knowledge-options svg {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.knowledge-review {
+  padding: 50px 30px;
+  text-align: center;
+  border: 1px solid #bbd19866;
+  border-radius: 22px;
+  background: #123325;
+}
+.knowledge-review h4 {
+  font-size: 34px;
+  margin: 15px 0;
+}
+.knowledge-review p {
+  font-size: 20px;
+  line-height: 1.4;
+  color: #bed1ae;
+  margin-bottom: 24px;
+}
+.discovery-passport {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 24px;
+}
+.passport-origin {
+  padding: 24px;
+  border: 1px dashed #bfd39377;
+  border-radius: 14px;
+  align-self: start;
+  background: #193d2d;
+}
+.passport-origin > svg {
+  display: block;
+  margin: 20px 0;
+  color: #c7dda3;
+}
+.passport-origin h4 {
+  font-size: 26px;
+}
+.passport-origin > p {
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 14px 0;
+  white-space: pre-wrap;
+}
+.passport-origin a {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #d4e9ad;
+  font-size: 15px;
+}
+.passport-mission {
+  border-top: 1px solid #c5d39644;
+  padding-top: 18px;
+  margin-top: 20px;
+}
+.passport-mission p {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #b6c9a8;
+  margin-top: 8px;
+}
+.research-passport {
+  grid-template-columns: 180px minmax(0, 1fr);
+}
+.research-passport .evidence-writing {
+  background: linear-gradient(90deg, #18402d, #163626);
+}
+@keyframes finale-stamp {
+  from {
+    transform: scale(0.86);
+    opacity: 0.2;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes finale-plane {
+  50% {
+    transform: translate(8px, -5px);
+  }
+}
+@media (max-width: 1100px) {
+  .flight-finale {
+    padding-right: 20px;
+  }
+  .deck-arrival {
+    gap: 24px;
+  }
+  .deck-dossier {
+    min-height: 280px;
+    padding: 28px 18px 20px;
+  }
+  .deck-dossier h4 {
+    font-size: 24px;
+  }
+  .deck-hero h3 {
+    font-size: 42px;
+  }
+  .deck-evidence-room {
+    gap: 16px;
+  }
+  .deck-clue-reader {
+    padding: 22px;
+  }
+  .deck-clue-reader blockquote {
+    font-size: 24px;
+  }
+  .trial-arrival {
+    gap: 22px;
+    padding: 25px 10px;
+  }
+  .trial-brief h3 {
+    font-size: 42px;
+  }
+  .trial-flightplan > button {
+    gap: 14px;
+    padding: 22px 15px;
+  }
+  .trial-flightplan strong {
+    font-size: 23px;
+  }
+  .discovery-passport {
+    grid-template-columns: 210px 1fr;
+    gap: 14px;
+  }
+  .research-passport {
+    grid-template-columns: 145px 1fr;
+    gap: 12px;
+  }
+  .evidence-writing {
+    padding: 20px;
+  }
+  .evidence-writing h3 {
+    font-size: 24px;
+  }
+  .evidence-writing > p {
+    font-size: 17px;
+  }
+  .finale-rewards > span {
+    max-width: 240px;
+  }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .flight-finale {
+    padding: 62px 14px 10px 62px;
+    gap: 7px;
+  }
+  .finale-header {
+    gap: 8px;
+  }
+  .finale-header h2 {
+    font-size: 20px;
+    gap: 6px;
+  }
+  .finale-header h2 svg {
+    width: 20px;
+  }
+  .finale-eyebrow {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+  .finale-button,
+  .flight-finale .view-objectives-link .btn {
+    font-size: 13px;
+    padding: 8px 11px;
+  }
+  .finale-header .view-objectives-link .btn {
+    font-size: 12px;
+  }
+  .finale-header .view-objectives-link svg {
+    width: 13px;
+  }
+  .finale-scroll {
+    padding: 3px;
+  }
+  .deck-arrival {
+    gap: 18px;
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+  .deck-hero {
+    padding: 12px 0;
+  }
+  .deck-hero h3 {
+    font-size: 32px;
+    margin: 10px 0;
+  }
+  .deck-hero > p {
+    font-size: 15px;
+    max-width: 260px;
+  }
+  .deck-fire-mark {
+    margin-top: 12px;
+    gap: 10px;
+  }
+  .deck-fire-mark > svg {
+    width: 46px;
+    height: 46px;
+  }
+  .deck-fire-mark > span {
+    font-size: 11px;
+    letter-spacing: 3px;
+  }
+  .deck-dossiers {
+    gap: 14px;
+    padding: 25px 0 10px;
+  }
+  .deck-dossier {
+    gap: 10px;
+    min-height: 205px;
+    padding: 20px 15px 14px;
+    border-radius: 3px 12px 12px 4px;
+  }
+  .deck-dossier > svg {
+    width: 30px;
+    height: 30px;
+  }
+  .deck-dossier h4 {
+    font-size: 21px;
+  }
+  .deck-dossier p {
+    font-size: 14px;
+  }
+  .deck-dossier > strong {
+    font-size: 13px;
+    padding-top: 10px;
+  }
+  .dossier-tab {
+    top: -18px;
+    font-size: 7px;
+    padding: 6px 10px;
+  }
+  .finale-subnav {
+    gap: 14px;
+    margin: 3px 0 8px;
+  }
+  .finale-subnav h3 {
+    font-size: 20px;
+  }
+  .finale-subnav button {
+    font-size: 13px;
+  }
+  .finale-subnav > span {
+    font-size: 6px;
+  }
+  .deck-case-selection {
+    grid-template-columns: 210px 1fr;
+    gap: 14px;
+    margin: 12px auto;
+  }
+  .deck-case-selection aside {
+    padding: 12px;
+  }
+  .deck-case-selection aside > svg {
+    display: none;
+  }
+  .deck-case-selection aside h4 {
+    font-size: 20px;
+    margin: 0 0 8px;
+  }
+  .deck-case-selection aside p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .deck-case-selection aside > button {
+    padding: 8px;
+    font-size: 14px;
+  }
+  .deck-case-selection article {
+    padding: 18px;
+    gap: 12px;
+  }
+  .deck-case-selection article h4 {
+    font-size: 24px;
+  }
+  .deck-case-selection article p {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  .finale-attempt-status {
+    gap: 10px;
+    padding: 7px 10px;
+    margin-bottom: 7px;
+  }
+  .finale-attempt-status > strong {
+    font-size: 14px;
+  }
+  .finale-attempt-status > span {
+    font-size: 9px;
+  }
+  .finale-attempt-status > small {
+    font-size: 10px;
+  }
+  .deck-work-modes {
+    margin: 7px 0;
+  }
+  .deck-work-modes button {
+    font-size: 13px;
+    padding: 7px 10px;
+  }
+  .deck-evidence-room {
+    gap: 12px;
+    min-height: 200px;
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+  .deck-clue-reader {
+    padding: 18px;
+    min-height: 210px;
+  }
+  .deck-clue-reader blockquote {
+    font-size: 21px;
+    margin: 16px 0;
+  }
+  .deck-clue-pins button {
+    width: 26px;
+    height: 26px;
+  }
+  .deck-test-bench {
+    padding: 16px;
+  }
+  .deck-test-bench h4 {
+    font-size: 22px;
+    margin: 8px 0 12px;
+  }
+  .deck-test-plans {
+    gap: 7px;
+    margin-bottom: 12px;
+  }
+  .deck-test-plans button {
+    font-size: 14px;
+    padding: 10px;
+  }
+  .deck-switches {
+    gap: 10px;
+  }
+  .deck-switches button {
+    font-size: 13px;
+    padding: 8px;
+  }
+  .deck-switches legend {
+    font-size: 12px;
+  }
+  .deck-note {
+    font-size: 12px !important;
+  }
+  .deck-test-feedback {
+    padding: 10px;
+    gap: 9px;
+    margin-top: 10px;
+  }
+  .deck-test-feedback strong {
+    font-size: 16px;
+  }
+  .deck-test-feedback p {
+    font-size: 13px;
+  }
+  .flight-evidence-console {
+    grid-template-columns: 165px 1fr;
+    gap: 12px;
+    min-height: 230px;
+  }
+  .flight-evidence-console > nav {
+    max-height: 250px;
+  }
+  .flight-evidence-console > nav button {
+    padding: 7px;
+    gap: 6px;
+  }
+  .flight-evidence-console > nav button > small {
+    font-size: 12px;
+  }
+  .evidence-writing {
+    padding: 16px;
+  }
+  .evidence-writing h3 {
+    font-size: 23px;
+    margin: 6px 0;
+  }
+  .evidence-writing > p {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .flight-finale textarea {
+    min-height: 92px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .evidence-writing-meta {
+    font-size: 10px;
+    margin: 7px 0 12px;
+  }
+  .finale-text-button {
+    font-size: 12px;
+    padding: 8px 0;
+  }
+  .trial-arrival {
+    grid-template-columns: 0.85fr 1.15fr;
+    padding: 12px 3px;
+    gap: 18px;
+  }
+  .trial-brief h3 {
+    font-size: 32px;
+    margin: 10px 0;
+  }
+  .trial-brief > p {
+    font-size: 16px;
+  }
+  .trial-flightplan {
+    gap: 14px;
+  }
+  .trial-flightplan > button {
+    padding: 16px 12px;
+    gap: 12px;
+    border-radius: 45px 14px 14px 45px;
+  }
+  .trial-checkpoint-number {
+    height: 40px;
+    width: 40px;
+    font-size: 16px;
+  }
+  .trial-flightplan strong {
+    font-size: 22px;
+    margin: 5px 0;
+  }
+  .trial-flightplan p {
+    font-size: 13px;
+  }
+  .trial-flightplan small {
+    font-size: 6px;
+  }
+  .trial-checkpoint-action {
+    font-size: 12px;
+    gap: 4px;
+  }
+  .trial-launch {
+    padding: 12px 30px;
+    margin: 0 auto;
+  }
+  .trial-launch-emblem {
+    height: 56px;
+    width: 56px;
+    box-shadow: 0 0 0 6px #b3cf8b0b;
+    margin-bottom: 14px;
+  }
+  .trial-launch-emblem svg {
+    width: 30px;
+  }
+  .trial-launch h4 {
+    font-size: 26px;
+    margin: 10px 0;
+  }
+  .trial-launch > p {
+    font-size: 16px;
+    margin: 12px 0;
+  }
+  .trial-launch-facts {
+    font-size: 12px;
+    gap: 14px;
+    margin: 12px 0;
+  }
+  .trial-launch > small {
+    font-size: 11px;
+    margin-top: 10px;
+  }
+  .knowledge-run {
+    padding: 5px;
+  }
+  .knowledge-runway {
+    gap: 8px;
+    margin: 3px 0 16px;
+  }
+  .knowledge-runway button {
+    height: 24px;
+    width: 24px;
+    font-size: 10px;
+  }
+  .knowledge-runway button svg {
+    width: 11px;
+  }
+  .knowledge-question h4 {
+    font-size: 24px;
+    margin: 10px auto 16px;
+  }
+  .knowledge-options {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .knowledge-options > button {
+    padding: 12px;
+    min-height: 62px;
+    gap: 10px;
+    border-radius: 10px;
+  }
+  .knowledge-options strong {
+    font-size: 17px;
+  }
+  .knowledge-options > button > span {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+  .knowledge-review {
+    padding: 25px;
+  }
+  .knowledge-review h4 {
+    font-size: 26px;
+  }
+  .knowledge-review p {
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+  .discovery-passport {
+    grid-template-columns: 190px 1fr;
+    gap: 12px;
+  }
+  .passport-origin {
+    padding: 15px;
+  }
+  .passport-origin > svg {
+    width: 24px;
+    height: 24px;
+    margin: 12px 0;
+  }
+  .passport-origin h4 {
+    font-size: 21px;
+  }
+  .passport-origin > p {
+    font-size: 15px;
+    margin: 10px 0;
+  }
+  .passport-origin a {
+    font-size: 12px;
+  }
+  .passport-mission {
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+  .passport-mission p {
+    font-size: 12px;
+  }
+  .passport-mission strong {
+    font-size: 14px;
+  }
+  .research-passport {
+    grid-template-columns: 135px 1fr;
+    gap: 10px;
+  }
+  .finale-debrief {
+    padding: 18px;
+    margin: 10px auto;
+  }
+  .finale-seal {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 14px;
+  }
+  .finale-seal svg {
+    width: 24px;
+  }
+  .finale-debrief h3 {
+    font-size: 26px;
+  }
+  .finale-debrief > p {
+    font-size: 16px;
+  }
+  .finale-rewards {
+    gap: 7px;
+  }
+  .finale-rewards > span {
+    font-size: 10px;
+    max-width: 170px;
+  }
+  .finale-error,
+  .finale-warning {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+}
+@media (max-width: 650px) and (orientation: landscape) {
+  .flight-finale {
+    padding-left: 50px;
+  }
+  .finale-header h2 {
+    font-size: 16px;
+  }
+  .finale-header .view-objectives-link .btn {
+    font-size: 10px;
+    padding: 7px;
+  }
+  .finale-header > button {
+    font-size: 11px;
+  }
+  .deck-arrival {
+    gap: 12px;
+    grid-template-columns: 1fr;
+  }
+  .deck-hero {
+    display: none;
+  }
+  .deck-dossier {
+    min-height: 170px;
+  }
+  .trial-arrival {
+    grid-template-columns: 1fr;
+  }
+  .trial-brief {
+    display: none;
+  }
+  .discovery-passport {
+    grid-template-columns: 1fr;
+  }
+  .passport-origin {
+    padding: 12px;
+  }
+  .passport-origin > svg,
+  .passport-mission {
+    display: none;
+  }
+  .passport-origin > p {
+    font-size: 14px;
+  }
+  .research-passport {
+    grid-template-columns: 130px 1fr;
+  }
+  .deck-evidence-room {
+    grid-template-columns: 1fr;
+  }
+  .deck-case-selection {
+    grid-template-columns: 170px 1fr;
+  }
+  .deck-case-selection article p {
+    font-size: 15px;
+  }
+}
+/* A field notebook beside the evidence, rather than a form replacing the game. */
+.deck-door-game {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 0.7fr 1fr;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #79966855;
+  border-radius: 12px;
+  padding: 18px 14px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #133727, #0c251c);
+}
+.deck-door-game > div {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 8px;
+}
+.deck-door-game strong {
+  font-size: 16px;
+}
+.deck-door-game small {
+  font-size: 11px;
+  color: #aebd9a;
+}
+.door-boundary {
+  color: #e2c985;
+}
+.door-identity,
+.door-record {
+  color: #c2d49b;
+}
+.door-request-token {
+  position: absolute;
+  left: 14%;
+  top: 40%;
+  background: #e2c985;
+  color: #203624;
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  animation: deck-request-pass 1.2s ease-in-out both;
+}
+.is-blocked .door-request-token {
+  animation-name: deck-request-block;
+}
+.is-blocked .door-boundary {
+  color: #f0b57b;
+}
+.deck-trial-table {
+  background: #0a211b;
+  border: 1px solid #8c9e6266;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 0 0 20px;
+}
+.deck-trial-table > div {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 7px;
+  margin: 15px 0;
+}
+.deck-trial-table > div > span {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  min-height: 58px;
+  border: 1px solid #91ab72;
+  background: #2c4c32;
+  border-radius: 8px;
+  transition:
+    opacity 0.35s,
+    transform 0.35s;
+}
+.deck-trial-table .trial-fail {
+  background: #54422b;
+  border-color: #c4a274;
+  color: #ead5a5;
+}
+.deck-trial-table .is-excluded {
+  opacity: 0.15;
+  transform: translateY(9px) rotate(8deg);
+}
+.deck-trial-table strong {
+  font:
+    14px "JetBrains Mono",
+    monospace;
+}
+.deck-trial-table small {
+  font:
+    7px "JetBrains Mono",
+    monospace;
+}
+.deck-trial-table > p {
+  font-size: 14px;
+  color: #bcc8a6;
+}
+.deck-field-notebook {
+  padding: 16px;
+  background: #243d2c;
+  border: 1px solid #a69c6388;
+  border-radius: 4px 16px 16px 4px;
+  box-shadow: 4px 5px 0 #0003;
+}
+.deck-field-notebook > .finale-eyebrow {
+  display: block;
+  margin-bottom: 14px;
+}
+.deck-field-notebook .fire-report {
+  display: block;
+  min-height: 0;
+}
+.deck-field-notebook .fire-report > nav {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex-wrap: wrap;
+  max-height: none;
+  margin-bottom: 14px;
+  overflow: visible;
+}
+.deck-field-notebook .fire-report > nav button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+  justify-content: center;
+}
+.deck-field-notebook .fire-report > nav button > small {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.deck-field-notebook .evidence-writing {
+  background: #e0d3a4;
+  color: #233c29;
+  border: 0;
+  border-left: 4px dotted #8a976c;
+  border-radius: 3px;
+  padding: 22px;
+}
+.deck-field-notebook .evidence-writing > .finale-eyebrow {
+  color: #52623d;
+}
+.deck-field-notebook .evidence-writing > p {
+  color: #526044;
+  font-size: 16px;
+}
+.deck-field-notebook .evidence-writing textarea {
+  color: #223a27;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px dashed #74805a;
+  min-height: 100px;
+  padding: 4px;
+  background: repeating-linear-gradient(
+    transparent 0,
+    transparent 26px,
+    #57684433 27px,
+    transparent 28px
+  );
+  font-size: 17px;
+  line-height: 28px;
+}
+.deck-field-notebook .evidence-writing textarea::placeholder {
+  color: #697152;
+}
+.deck-field-notebook .evidence-writing-meta {
+  color: #5c6b4c;
+}
+.deck-field-notebook .evidence-writing .finale-eyebrow {
+  color: #566344;
+}
+.deck-field-notebook .evidence-writing .finale-text-button {
+  color: #294b30;
+}
+.research-passport > nav button {
+  position: relative;
+  min-height: 47px;
+  border-style: dashed;
+  border-radius: 3px;
+  transform: rotate(-1deg);
+}
+.research-passport > nav button:nth-child(even) {
+  transform: rotate(1deg);
+}
+.research-passport > nav button.is-filled::after {
+  content: "RECORDED";
+  position: absolute;
+  right: 3px;
+  top: 1px;
+  font:
+    6px "JetBrains Mono",
+    monospace;
+  color: #b9d889;
+  transform: rotate(-8deg);
+}
+.research-passport > nav button[aria-pressed="true"]::after {
+  color: #395632;
+}
+.research-passport .evidence-writing {
+  border-radius: 3px 18px 18px 3px;
+  border-left: 5px double #77996b;
+  background:
+    radial-gradient(ellipse at 100% 0, #496e3b33, transparent 50%), #183c2c;
+}
+.research-passport .evidence-writing > .finale-eyebrow {
+  display: inline-block;
+  border: 2px solid #bed69c88;
+  border-radius: 50%;
+  padding: 15px 8px;
+  transform: rotate(-6deg);
+  font-size: 7px;
+  float: right;
+  margin: 0 0 12px 10px;
+}
+.research-passport .evidence-writing textarea {
+  min-height: 115px;
+  background: repeating-linear-gradient(
+    #153527 0,
+    #153527 27px,
+    #9eb67f44 28px,
+    #153527 29px
+  );
+  border: 0;
+  border-bottom: 1px dashed #a8bf82;
+  border-radius: 0;
+  line-height: 29px;
+  padding: 0 6px;
+}
+@keyframes deck-request-pass {
+  from {
+    left: 14%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  to {
+    left: 80%;
+    opacity: 0;
+  }
+}
+@keyframes deck-request-block {
+  from {
+    left: 14%;
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  80% {
+    left: 48%;
+    opacity: 1;
+  }
+  to {
+    left: 48%;
+    opacity: 0;
+  }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .deck-door-game {
+    padding: 12px 8px;
+    margin-bottom: 12px;
+    gap: 6px;
+  }
+  .deck-door-game strong {
+    font-size: 13px;
+  }
+  .deck-door-game small {
+    font-size: 9px;
+  }
+  .door-boundary svg {
+    width: 36px;
+    height: 36px;
+  }
+  .deck-door-game > div > svg:not(.door-boundary svg) {
+    width: 22px;
+    height: 22px;
+  }
+  .deck-trial-table {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+  .deck-trial-table > div {
+    gap: 5px;
+    margin: 10px 0;
+  }
+  .deck-trial-table > div > span {
+    min-height: 42px;
+  }
+  .deck-trial-table strong {
+    font-size: 10px;
+  }
+  .deck-trial-table small {
+    font-size: 5px;
+  }
+  .deck-trial-table > p {
+    font-size: 12px;
+  }
+  .deck-field-notebook {
+    padding: 12px;
+  }
+  .deck-field-notebook .evidence-writing {
+    padding: 15px;
+  }
+  .deck-field-notebook .evidence-writing > p {
+    font-size: 14px;
+  }
+  .deck-field-notebook .evidence-writing textarea {
+    min-height: 82px;
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .deck-field-notebook .fire-report > nav {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .deck-field-notebook .fire-report > nav button {
+    width: 24px;
+    height: 24px;
+  }
+  .research-passport > nav button {
+    min-height: 38px;
+  }
+  .research-passport .evidence-writing > .finale-eyebrow {
+    padding: 10px 5px;
+    font-size: 5px;
+  }
+  .research-passport .evidence-writing textarea {
+    min-height: 94px;
+    font-size: 16px;
+  }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .flight-finale {
+    gap: 6px;
+  }
+  .finale-header > .finale-eyebrow,
+  .finale-header > div > .finale-eyebrow {
+    display: none;
+  }
+  .finale-header h2 {
+    font-size: 18px;
+  }
+  .finale-subnav {
+    margin: 0 0 5px;
+  }
+  .finale-subnav h3 {
+    font-size: 17px;
+  }
+  .finale-attempt-status {
+    padding: 5px 9px;
+    margin-bottom: 5px;
+  }
+  .finale-attempt-status > strong {
+    font-size: 12px;
+  }
+  .deck-work-modes {
+    margin: 5px 0;
+  }
+  .deck-work-modes button {
+    padding: 5px 9px;
+    font-size: 12px;
+  }
+  .trial-flightplan > button {
+    padding: 13px 12px;
+  }
+  .trial-flightplan p {
+    display: none;
+  }
+  .trial-flightplan strong {
+    font-size: 20px;
+  }
+  .trial-arrival {
+    gap: 15px;
+  }
+  .deck-dossier {
+    min-height: 185px;
+  }
+  .knowledge-question h4 {
+    font-size: 21px;
+    margin: 9px auto 12px;
+  }
+  .knowledge-options > button {
+    min-height: 53px;
+    padding: 10px;
+  }
+  .knowledge-options strong {
+    font-size: 15px;
+  }
+  .knowledge-runway {
+    gap: 7px;
+    margin-bottom: 10px;
+  }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .captains-run .finale-subnav h3,
+  .captains-run .finale-subnav > span,
+  .captains-run .finale-attempt-status > strong {
+    display: none;
+  }
+  .captains-run .finale-subnav {
+    margin-bottom: 3px;
+  }
+  .captains-run .finale-attempt-status {
+    padding: 4px 8px;
+  }
+  .knowledge-runway button {
+    width: 21px;
+    height: 21px;
+  }
+  .knowledge-runway {
+    gap: 6px;
+    margin: 3px 0 7px;
+  }
+  .knowledge-question h4 {
+    font-size: 19px;
+    margin: 6px auto 10px;
+  }
+  .knowledge-options {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .knowledge-options > button {
+    min-height: 46px;
+    padding: 8px;
+  }
+  .knowledge-options strong {
+    font-size: 14px;
+  }
+  .knowledge-question .finale-actions {
+    gap: 8px;
+  }
+  .knowledge-question .finale-actions > .finale-button {
+    padding: 7px 10px;
+  }
+}
+/* Keep the active test, rather than repeated headings, above the fold. */
+.flight-finale:has(.finale-attempt) .finale-subnav {
+  min-height: 28px;
+  margin: 0 0 8px;
+}
+.flight-finale:has(.finale-attempt) .finale-subnav h3,
+.flight-finale:has(.finale-attempt) .finale-subnav > span {
+  display: none;
+}
+.flight-finale:has(.finale-attempt) .finale-attempt-status {
+  margin: -36px 0 9px 155px;
+  min-height: 28px;
+  padding: 4px 10px;
+}
+.deck-work-modes {
+  margin: 6px 0 10px;
+}
+.deck-work-modes button {
+  padding: 7px 13px;
+  font-size: 14px;
+}
+.deck-test-bench {
+  padding: 18px;
+}
+.deck-test-bench h4 {
+  font-size: 24px;
+  margin: 7px 0 12px;
+}
+.deck-door-game {
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.deck-door-game > div {
+  gap: 5px;
+}
+.door-boundary svg {
+  height: 38px;
+  width: 38px;
+}
+.deck-switches fieldset {
+  padding: 6px 8px;
+}
+.deck-switches button {
+  padding: 8px;
+  margin: 4px 0;
+  font-size: 14px;
+}
+.deck-test-bench > .deck-note {
+  margin: 8px 0 !important;
+  font-size: 12px !important;
+}
+.deck-test-feedback {
+  padding: 10px;
+  margin-top: 10px;
+  gap: 10px;
+}
+.deck-test-feedback strong {
+  font-size: 17px;
+}
+.deck-test-feedback p {
+  font-size: 14px;
+  line-height: 1.3;
+}
+.deck-trial-table {
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.deck-trial-table > div {
+  margin: 10px 0;
+}
+.deck-trial-table > div > span {
+  min-height: 46px;
+}
+.deck-test-plans {
+  gap: 7px;
+  margin-bottom: 12px;
+}
+.deck-test-plans button {
+  padding: 10px;
+  font-size: 15px;
+}
+.deck-test-bench .finale-text-button {
+  padding: 7px 0;
+}
+.deck-test-bench > .finale-button {
+  padding: 9px 15px;
+}
+.deck-clue-reader blockquote {
+  font-size: 25px;
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .flight-finale:has(.finale-attempt) .finale-attempt-status {
+    margin-left: 110px;
+    margin-top: -34px;
+    min-height: 26px;
+    padding: 4px 7px;
+  }
+  .flight-finale:has(.finale-attempt) .finale-subnav {
+    min-height: 26px;
+    margin-bottom: 8px;
+  }
+  .finale-attempt-status > strong {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .deck-work-modes {
+    margin: 4px 0 7px;
+  }
+  .deck-test-bench {
+    padding: 13px;
+  }
+  .deck-test-bench h4 {
+    font-size: 21px;
+  }
+  .deck-door-game strong {
+    font-size: 12px;
+  }
+  .deck-test-feedback p {
+    font-size: 12px;
+  }
+  .deck-clue-reader blockquote {
+    font-size: 21px;
+  }
+}

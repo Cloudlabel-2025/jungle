@@ -498,3 +498,4 @@
     animation: none !important;
   }
 }
+.pip-save-status { position: fixed; right: 16px; bottom: 16px; z-index: 130; max-width: min(340px, 80vw); margin: 0; padding: 10px 14px; background: #10291f; border: 1px solid #b9ce8d; border-radius: 10px; color: #e5edcd; font-size: 14px; }

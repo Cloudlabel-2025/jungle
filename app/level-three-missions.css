@@ -1,0 +1,1170 @@
+.level-three-scene .l3-mission-cover {
+  flex: 1 1 0;
+  width: 100%;
+  min-height: 80px;
+  max-height: 240px;
+  margin: 12px 0;
+  border: 1px solid #d8c68555;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.level-three-scene .l2-mission-card {
+  border-width: 2px;
+}
+.level-three-scene .l2-mission-card.is-complete {
+  border-color: #d9c67d;
+}
+.level-three-scene .l2-field-console:has(.l3-sequence-board) {
+  min-height: 0;
+}
+.l3-board-task {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.l3-board-clock {
+  display: none;
+  color: #d9dba7;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+}
+.l3-sequence-board {
+  flex: 1 1 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(130px, 0.8fr) minmax(0, 1.5fr);
+  gap: 14px;
+  overflow: auto;
+  padding: 4px;
+}
+.l3-component-bank {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: start;
+}
+.l3-component-bank button {
+  min-height: 44px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #c4ce8a99;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #365638, #1a392c);
+  color: #f2edc4;
+  font:
+    600 15px/1.2 Rajdhani,
+    sans-serif;
+  cursor: pointer;
+}
+.l3-component-bank button:hover:not(:disabled) {
+  border-color: #f1d47c;
+  background: #3d5938;
+}
+.l3-component-bank button svg {
+  flex-shrink: 0;
+  color: #d9cb7d;
+}
+.l3-signal-path {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.l3-signal-path li {
+  position: relative;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px;
+  border: 1px dashed #a4b38166;
+  border-radius: 10px;
+  background: #071f19aa;
+  color: #a0b39a;
+}
+.l3-signal-path .is-connected {
+  border-style: solid;
+  border-color: #c4ce8a99;
+  background: #284831;
+  color: #f4edc9;
+  animation: l3-connect 0.2s ease-out;
+}
+.l3-slot-number {
+  color: #d7cb86;
+  font:
+    10px "JetBrains Mono",
+    monospace;
+}
+.l3-signal-path strong {
+  flex: 1;
+  min-width: 0;
+  font:
+    600 14px/1.15 Rajdhani,
+    sans-serif;
+}
+.l3-slot-tools {
+  display: flex;
+  gap: 3px;
+}
+.l3-slot-tools button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid #aebc7944;
+  border-radius: 6px;
+  background: #0c2a20;
+  color: #e4e9bd;
+  cursor: pointer;
+}
+.l3-slot-tools button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.l3-bank-complete {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #d9dda5;
+  padding: 12px;
+  border: 1px solid #adbe7b55;
+  border-radius: 10px;
+  font-size: 14px;
+}
+@keyframes l3-connect {
+  from {
+    opacity: 0.3;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .level-three-scene:has(.l2-comic-reader),
+  .level-three-scene:has(.is-game-library) {
+    padding-top: 72px;
+  }
+  .level-three-scene:has(.l3-sequence-board) > .week-level-rewards {
+    display: none;
+  }
+  .level-three-scene .l2-investigation:has(.l3-sequence-board) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .level-three-scene .l2-investigation:has(.l3-sequence-board) > .l2-case-file {
+    display: none;
+  }
+  .level-three-scene .l2-field-console:has(.l3-sequence-board) > header,
+  .level-three-scene
+    .l2-field-console:has(.l3-sequence-board)
+    > .l2-answer-label {
+    display: none;
+  }
+  .level-three-scene
+    .l2-field-console:has(.l3-sequence-board)
+    > .l2-note-steps {
+    padding: 0 0 4px;
+  }
+  .level-three-scene .l2-field-console:has(.l3-sequence-board) > h2 {
+    font-size: 17px;
+    margin: 3px 0 4px;
+  }
+  .l3-board-clock {
+    display: inline-flex;
+  }
+  .level-three-scene .l3-mission-cover {
+    min-height: 50px;
+    margin: 5px 0;
+    max-height: 115px;
+  }
+  .l3-sequence-board {
+    padding: 0;
+    gap: 6px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .l3-component-bank {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 5px;
+  }
+  .l3-component-bank button {
+    min-height: 34px;
+    padding: 5px;
+    gap: 4px;
+    font-size: 11px;
+  }
+  .l3-signal-path {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 7px;
+  }
+  .l3-signal-path li {
+    min-height: 30px;
+    padding: 3px 5px;
+    gap: 5px;
+  }
+  .l3-signal-path strong {
+    font-size: 12px;
+  }
+  .l3-slot-tools button {
+    width: 26px;
+    height: 26px;
+  }
+  .l3-bank-complete {
+    grid-column: 1 / -1;
+    padding: 5px;
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .l3-signal-path .is-connected {
+    animation: none;
+  }
+}
+/* Level 3 is an explanation expedition, rather than another comic reader. */
+.l3-launch {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: auto;
+}
+.l3-evidence-board {
+  color: #eee8bf;
+  border: 1px solid #b8c77c66;
+  border-radius: 18px;
+  padding: 20px;
+  background:
+    radial-gradient(ellipse at top, #3b5636aa, transparent 70%), #102d23ed;
+}
+.l3-evidence-board > header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: #d7d994;
+}
+.l3-evidence-board header small {
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.12em;
+}
+.l3-evidence-board header h3 {
+  margin: 4px 0 0;
+  font:
+    700 25px/1.1 Rajdhani,
+    sans-serif;
+}
+.l3-clue-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.l3-clue-cards button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  min-height: 145px;
+  padding: 16px;
+  border: 1px solid #afbc7966;
+  border-radius: 12px;
+  background: #193c2d;
+  color: #e4e7bc;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.18s,
+    box-shadow 0.18s;
+}
+.l3-clue-cards button[aria-pressed="true"] {
+  border-color: #eed283;
+  box-shadow: 0 0 20px #d0c16c22;
+  transform: translateY(-3px);
+  background: #324c31;
+}
+.l3-clue-cards button > span:first-child {
+  color: #ead286;
+}
+.l3-clue-cards small {
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  color: #bdce98;
+}
+.l3-clue-cards strong {
+  font:
+    700 21px/1.1 Rajdhani,
+    sans-serif;
+}
+.l3-clue-cards button > span:last-child {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: auto;
+  font-size: 13px;
+}
+.l3-clue-reveal {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  margin: 16px 0 0;
+  border-left: 3px solid #d9ca81;
+  background: #081f17aa;
+  border-radius: 0 10px 10px 0;
+  font:
+    500 20px/1.4 Rajdhani,
+    sans-serif;
+  animation: l3-connect 0.2s ease-out;
+}
+.l3-clue-reveal svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.l3-clue-reveal p {
+  margin: 0;
+}
+.l3-original-brief {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #bdcead;
+}
+.l3-original-brief summary {
+  cursor: pointer;
+}
+.l3-original-brief p {
+  line-height: 1.4;
+}
+.l3-launch-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 22px;
+  border: 1px solid #afbc7955;
+  border-radius: 14px;
+  background: #112f24ee;
+}
+.l3-launch-footer p {
+  margin: 0;
+  font-size: 18px;
+}
+.l3-launch-footer small {
+  display: block;
+  margin-top: 5px;
+  color: #b6c9a4;
+  font-size: 13px;
+}
+.l3-launch-footer button {
+  flex-shrink: 0;
+}
+.l3-launch-route {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin: 30px 0;
+  color: #e1d587;
+  font:
+    700 18px Rajdhani,
+    sans-serif;
+}
+.l3-story-trail {
+  display: flex;
+  gap: 6px;
+  padding: 16px 0 10px;
+  flex-shrink: 0;
+}
+.l3-story-trail button {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 3px;
+  color: #aac394;
+  border: 1px solid #aec17b44;
+  border-radius: 10px;
+  background: #102d22;
+  cursor: pointer;
+}
+.l3-story-trail b {
+  display: grid;
+  place-items: center;
+  height: 25px;
+  font:
+    700 20px Rajdhani,
+    sans-serif;
+}
+.l3-story-trail span {
+  font:
+    600 12px Rajdhani,
+    sans-serif;
+  text-transform: capitalize;
+}
+.l3-story-trail [aria-current="step"] {
+  color: #f7e5a6;
+  border-color: #ead384;
+  background: #3c5030;
+  box-shadow: 0 0 18px #d7bd5922;
+}
+.l3-story-trail .is-filled b {
+  color: #e0d284;
+}
+.level-three-scene .l2-investigation {
+  grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.5fr);
+  gap: 18px;
+}
+.level-three-scene .l2-case-file:has(.l3-evidence-board) {
+  padding: 16px;
+}
+.level-three-scene .l2-case-file .l3-evidence-board {
+  padding: 0;
+  background: none;
+  border: 0;
+}
+.level-three-scene .l2-case-file .l3-evidence-board > header {
+  display: none;
+}
+.level-three-scene .l2-case-file .l3-clue-cards {
+  gap: 6px;
+}
+.level-three-scene .l2-case-file .l3-clue-cards button {
+  min-height: 120px;
+  padding: 9px;
+  gap: 7px;
+}
+.level-three-scene .l2-case-file .l3-clue-cards strong {
+  font-size: 16px;
+}
+.level-three-scene .l2-case-file .l3-clue-cards svg {
+  width: 19px;
+  height: 19px;
+}
+.level-three-scene .l2-case-file .l3-clue-cards small {
+  font-size: 7px;
+}
+.l3-run-control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.l3-run-control small {
+  color: #c1cfaa;
+  font:
+    13px/1.35 Rajdhani,
+    sans-serif;
+}
+.l3-signal-path li.is-signal-here {
+  border-color: #ffe49a;
+  background: #5c6235;
+  box-shadow: 0 0 25px #eed28366;
+}
+.level-three-scene button:focus-visible {
+  outline: 2px solid #ffe49a;
+  outline-offset: 3px;
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .level-three-scene {
+    padding-top: 72px;
+    gap: 6px;
+  }
+  .level-three-scene:has(.l3-launch) > .week-level-rewards,
+  .level-three-scene:has(.l2-investigation) > .week-level-rewards {
+    display: none;
+  }
+  .level-three-scene .l2-briefing {
+    gap: 6px;
+  }
+  .level-three-scene .l2-comic-selection {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .l3-launch {
+    gap: 6px;
+  }
+  .l3-evidence-board {
+    padding: 10px 14px;
+    border-radius: 12px;
+  }
+  .l3-evidence-board > header {
+    margin-bottom: 8px;
+    gap: 8px;
+  }
+  .l3-evidence-board header h3 {
+    font-size: 18px;
+  }
+  .l3-evidence-board header small {
+    font-size: 7px;
+  }
+  .l3-clue-cards {
+    gap: 8px;
+  }
+  .l3-clue-cards button {
+    min-height: 64px;
+    padding: 7px 10px;
+    gap: 4px;
+    display: grid;
+    grid-template-columns: 26px 1fr;
+  }
+  .l3-clue-cards button > span:first-child {
+    grid-row: 1/3;
+  }
+  .l3-clue-cards strong {
+    font-size: 16px;
+  }
+  .l3-clue-cards small {
+    font-size: 7px;
+  }
+  .l3-clue-cards button > span:last-child {
+    display: none;
+  }
+  .l3-clue-reveal {
+    padding: 8px;
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.25;
+  }
+  .l3-original-brief {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  .l3-launch-footer {
+    padding: 7px 12px;
+    gap: 10px;
+  }
+  .l3-launch-footer p {
+    font-size: 13px;
+  }
+  .l3-launch-footer small {
+    font-size: 10px;
+    margin-top: 2px;
+  }
+  .l3-launch-route {
+    margin: 12px 0;
+    gap: 12px;
+    font-size: 14px;
+  }
+  .level-three-scene .l2-investigation {
+    grid-template-columns: minmax(210px, 0.8fr) minmax(0, 1.5fr);
+    gap: 8px;
+  }
+  .level-three-scene .l2-case-file:has(.l3-evidence-board) {
+    padding: 8px;
+  }
+  .level-three-scene .l2-case-file .l3-clue-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .level-three-scene .l2-case-file .l3-clue-cards button {
+    min-height: 28px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 6px;
+  }
+  .level-three-scene .l2-case-file .l3-clue-cards button > span:first-child {
+    display: none;
+  }
+  .level-three-scene .l2-case-file .l3-clue-cards strong {
+    font-size: 12px;
+  }
+  .l3-story-trail {
+    padding: 5px 0;
+    gap: 3px;
+  }
+  .l3-story-trail button {
+    padding: 3px 2px;
+    gap: 1px;
+    border-radius: 6px;
+  }
+  .l3-story-trail b {
+    height: 18px;
+    font-size: 16px;
+  }
+  .l3-story-trail span {
+    font-size: 9px;
+  }
+  .level-three-scene .l2-field-console > header {
+    font-size: 10px;
+  }
+  .l3-run-control {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    align-items: center;
+    gap: 8px;
+  }
+  .l3-run-control small {
+    font-size: 11px;
+  }
+  .level-three-scene
+    .l2-field-console:has(.l3-sequence-board)
+    > .l3-story-trail {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .l3-clue-reveal {
+    animation: none;
+  }
+  .l3-clue-cards button {
+    transition: none;
+  }
+}
+.l3-launch > .l3-evidence-board {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+.l3-launch-footer {
+  flex-shrink: 0;
+}
+@media (min-height: 541px) and (max-height: 800px) {
+  .level-three-scene:has(.l3-launch) > .week-level-rewards {
+    display: none;
+  }
+  .l3-launch .l3-clue-cards button {
+    min-height: 110px;
+  }
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .level-three-scene .l2-case-file:has(.l3-evidence-board) > .l2-eyebrow {
+    display: none;
+  }
+  .level-three-scene .l2-case-file:has(.l3-evidence-board) > h3 {
+    margin: 3px 0 5px;
+    font-size: 17px;
+  }
+  .level-three-scene .l2-case-file:has(.l3-evidence-board) > .l2-back {
+    margin-bottom: 3px;
+  }
+  .level-three-scene .l2-case-file:has(.l3-evidence-board) .l2-timer {
+    padding-top: 4px;
+    margin-top: 4px;
+  }
+  .level-three-scene .l2-case-file:has(.l3-evidence-board) .l2-timer strong {
+    font-size: 15px;
+  }
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .l3-component-bank .l3-bank-complete {
+    display: none;
+  }
+}
+/* An illustrated clue hunt replaces the launch-page dashboard cards. */
+.level-three-scene:has(.l3-hunt) > .week-level-rewards {
+  display: none;
+}
+.level-three-scene:has(.l3-hunt) .l2-briefing {
+  gap: 8px;
+}
+.level-three-scene:has(.l3-hunt) .l2-briefing-heading h2 {
+  font-size: 22px;
+}
+.level-three-scene:has(.l3-hunt) .l2-briefing-heading > div > span {
+  display: none;
+}
+.level-three-scene:has(.l3-hunt) .l2-comic-selection {
+  gap: 6px;
+}
+.l3-hunt {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.l3-hunt-stage {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(270px, 0.8fr);
+  gap: 0;
+  border: 1px solid #c9c48299;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #0c281e;
+  box-shadow: 0 20px 55px #02180e66;
+}
+.l3-hunt-picture {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(ellipse, #75865d55, #0d261e);
+  isolation: isolate;
+}
+.l3-hunt-picture .l3-hunt-art {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  height: auto;
+  animation: l3-scene-enter 0.35s ease-out;
+}
+.l3-hunt-location,
+.l3-hunt-counter {
+  position: absolute;
+  top: 14px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid #d9d28b77;
+  border-radius: 10px;
+  background: #092b22ee;
+  color: #ede5ae;
+}
+.l3-hunt-location {
+  left: 14px;
+}
+.l3-hunt-location span {
+  display: grid;
+  gap: 3px;
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.1em;
+}
+.l3-hunt-location strong {
+  font:
+    700 18px Rajdhani,
+    sans-serif;
+  letter-spacing: 0;
+}
+.l3-hunt-counter {
+  right: 14px;
+  font:
+    600 13px Rajdhani,
+    sans-serif;
+}
+.l3-hunt-hotspots {
+  display: flex;
+  gap: 9px;
+  padding: 12px;
+  background: linear-gradient(#14372ae6, #071e17);
+  border-top: 1px solid #d3c88066;
+  flex-shrink: 0;
+}
+.l3-hunt-hotspots button {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px;
+  border: 1px solid #c2bc7577;
+  border-radius: 12px;
+  background: #163e2d;
+  color: #ebedc6;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+.l3-hunt-hotspots b {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #dfd78e;
+  background: #24432d;
+  box-shadow: 0 0 0 5px #c4d27a11;
+  animation: l3-clue-beacon 2s ease-in-out infinite;
+}
+.l3-hunt-hotspots button[aria-pressed="true"] {
+  border-color: #ffe39a;
+  background: #465c35;
+  transform: translateY(-3px);
+  box-shadow: 0 0 16px #e0c26a22;
+}
+.l3-hunt-hotspots .is-found b {
+  background: #d9d994;
+  color: #183927;
+  animation: none;
+}
+.l3-hunt-hotspots span {
+  display: grid;
+  gap: 4px;
+}
+.l3-hunt-hotspots small {
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  color: #d5d89b;
+}
+.l3-hunt-hotspots strong {
+  font:
+    700 17px/1.1 Rajdhani,
+    sans-serif;
+}
+.l3-hunt-discovery {
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(16px, 2vw, 34px);
+  background: linear-gradient(135deg, #1c402b, #0b261d);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #a7b878 transparent;
+}
+.l3-hunt-kicker {
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.12em;
+  color: #dccd84;
+}
+.l3-hunt-discovery h3 {
+  font:
+    700 clamp(22px, 2.3vw, 36px)/1.1 Rajdhani,
+    sans-serif;
+  color: #f6e6b2;
+  margin: 18px 0;
+}
+.l3-hunt-dialogue {
+  font:
+    500 clamp(17px, 1.5vw, 24px)/1.4 Rajdhani,
+    sans-serif;
+  color: #edf0d2;
+  margin: 0;
+  padding: 16px 0;
+  border-top: 1px solid #c4c78055;
+}
+.l3-hunt-goal {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 20px;
+  color: #c1d3a4;
+}
+.l3-hunt-goal svg {
+  flex-shrink: 0;
+  color: #dccd84;
+}
+.l3-hunt-goal p {
+  margin: 0;
+  font:
+    15px/1.35 Rajdhani,
+    sans-serif;
+}
+.l3-hunt-goal strong {
+  display: block;
+  color: #e5dfa8;
+  margin-bottom: 4px;
+}
+.l3-hunt-brief-toggle {
+  border: 0;
+  border-bottom: 1px dashed #b2c78488;
+  padding: 4px 0;
+  background: none;
+  color: #bac99d;
+  cursor: pointer;
+  margin-top: 18px;
+  font:
+    13px Rajdhani,
+    sans-serif;
+}
+.l3-hunt-full-brief {
+  font:
+    14px/1.35 Rajdhani,
+    sans-serif;
+  color: #c0d0ae;
+  flex-shrink: 0;
+}
+.l3-hunt-footer {
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 90px;
+  padding: 12px 20px 12px 135px;
+  margin-left: 18px;
+  border: 1px solid #b8bf7766;
+  border-radius: 18px;
+  background: #103125ee;
+}
+.l3-hunt-footer > img {
+  position: absolute;
+  left: -18px;
+  bottom: 0;
+  width: 145px;
+  height: 125px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px #0006);
+  animation: l3-pip-hover 3s ease-in-out infinite;
+  pointer-events: none;
+}
+.l3-hunt-pip {
+  flex: 1;
+  min-width: 0;
+}
+.l3-hunt-pip > strong {
+  font:
+    700 14px Rajdhani,
+    sans-serif;
+  color: #e9d996;
+}
+.l3-hunt-pip > strong span {
+  margin-left: 8px;
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  color: #aebe96;
+}
+.l3-hunt-pip p {
+  margin: 4px 0;
+  font:
+    500 18px/1.2 Rajdhani,
+    sans-serif;
+  color: #e4ebcb;
+}
+.l3-hunt-pip small {
+  color: #a8be92;
+  font:
+    12px Rajdhani,
+    sans-serif;
+}
+.l3-hunt-footer > button {
+  flex-shrink: 0;
+}
+@keyframes l3-scene-enter {
+  from {
+    opacity: 0.4;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes l3-clue-beacon {
+  50% {
+    box-shadow:
+      0 0 0 8px #d4d57e20,
+      0 0 18px #dbd58966;
+  }
+}
+@keyframes l3-pip-hover {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .level-three-scene:has(.l3-hunt) {
+    padding-top: 68px;
+    gap: 4px;
+  }
+  .level-three-scene:has(.l3-hunt) .l2-briefing-heading h2 {
+    font-size: 15px;
+    margin: 0;
+  }
+  .level-three-scene:has(.l3-hunt) .l2-briefing {
+    gap: 3px;
+  }
+  .level-three-scene:has(.l3-hunt) .l2-comic-selection {
+    gap: 3px;
+  }
+  .level-three-scene:has(.l3-hunt) .l2-comic-other {
+    font-size: 10px;
+    padding: 0;
+  }
+  .l3-hunt {
+    gap: 5px;
+  }
+  .l3-hunt-stage {
+    grid-template-columns: minmax(0, 1.7fr) minmax(210px, 1fr);
+    border-radius: 13px;
+  }
+  .l3-hunt-location,
+  .l3-hunt-counter {
+    top: 5px;
+    padding: 4px 6px;
+    gap: 4px;
+    border-radius: 6px;
+  }
+  .l3-hunt-location {
+    left: 5px;
+  }
+  .l3-hunt-location span {
+    font-size: 5px;
+    gap: 1px;
+  }
+  .l3-hunt-location strong {
+    font-size: 12px;
+  }
+  .l3-hunt-counter {
+    right: 5px;
+    font-size: 10px;
+  }
+  .l3-hunt-hotspots {
+    padding: 5px;
+    gap: 5px;
+  }
+  .l3-hunt-hotspots button {
+    padding: 5px;
+    gap: 5px;
+    border-radius: 7px;
+  }
+  .l3-hunt-hotspots b {
+    width: 22px;
+    height: 22px;
+  }
+  .l3-hunt-hotspots b svg {
+    width: 13px;
+    height: 13px;
+  }
+  .l3-hunt-hotspots small {
+    font-size: 6px;
+  }
+  .l3-hunt-hotspots strong {
+    font-size: 11px;
+  }
+  .l3-hunt-discovery {
+    padding: 10px;
+  }
+  .l3-hunt-kicker {
+    font-size: 6px;
+  }
+  .l3-hunt-discovery h3 {
+    font-size: 19px;
+    margin: 8px 0;
+  }
+  .l3-hunt-dialogue {
+    font-size: 13px;
+    padding: 7px 0;
+    line-height: 1.25;
+  }
+  .l3-hunt-goal {
+    padding-top: 6px;
+    gap: 5px;
+  }
+  .l3-hunt-goal p {
+    font-size: 10px;
+  }
+  .l3-hunt-goal svg {
+    width: 15px;
+    height: 15px;
+  }
+  .l3-hunt-brief-toggle {
+    font-size: 10px;
+    margin-top: 6px;
+  }
+  .l3-hunt-full-brief {
+    font-size: 11px;
+  }
+  .l3-hunt-footer {
+    min-height: 48px;
+    padding: 5px 10px 5px 75px;
+    gap: 8px;
+    margin-left: 10px;
+    border-radius: 10px;
+  }
+  .l3-hunt-footer > img {
+    width: 85px;
+    height: 78px;
+    left: -10px;
+  }
+  .l3-hunt-pip > strong {
+    font-size: 10px;
+  }
+  .l3-hunt-pip > strong span {
+    font-size: 6px;
+  }
+  .l3-hunt-pip p {
+    font-size: 12px;
+    margin: 2px 0;
+  }
+  .l3-hunt-pip small {
+    display: none;
+  }
+  .l3-hunt-footer > button {
+    font-size: 12px;
+    min-height: 33px;
+    padding: 7px 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .l3-hunt-picture .l3-hunt-art,
+  .l3-hunt-hotspots b,
+  .l3-hunt-footer > img {
+    animation: none;
+  }
+  .l3-hunt-hotspots button {
+    transition: none;
+  }
+}
+.l3-hunt-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  opacity: 0.3;
+  filter: blur(16px);
+  pointer-events: none;
+}
+.l3-hunt-atmosphere .l2-comic-art {
+  width: 100%;
+  height: 100%;
+}
+.l3-hunt-picture > .l3-hunt-art {
+  filter: drop-shadow(0 0 22px #001b14aa);
+}
+@media (min-height: 541px) and (max-height: 800px) {
+  .l3-hunt-discovery {
+    padding: 18px 22px;
+  }
+  .l3-hunt-discovery h3 {
+    font-size: 27px;
+    margin: 12px 0;
+  }
+  .l3-hunt-dialogue {
+    font-size: 18px;
+    padding: 12px 0;
+  }
+  .l3-hunt-goal {
+    padding-top: 12px;
+  }
+  .l3-hunt-brief-toggle {
+    margin-top: 12px;
+  }
+}
+.level-three-scene:has(.l3-hunt) .l2-comic-selection > .l2-comic-other { position:static; flex-shrink:0; align-self:flex-start; }
+.l3-hunt-atmosphere { z-index:0; }
+.l3-hunt-picture > .l3-hunt-art { position:relative; z-index:1; }
+.l3-hunt-hotspots { position:relative; z-index:2; }
+@media (orientation:landscape) and (max-height:540px) {
+ .level-three-scene:has(.l3-hunt) .l2-briefing { position:relative; }
+ .level-three-scene:has(.l3-hunt) .l2-briefing-heading h2 { display:none; }
+ .level-three-scene:has(.l3-hunt) .l2-comic-selection { position:static; }
+ .level-three-scene:has(.l3-hunt) .l2-comic-selection > .l2-comic-other { position:absolute; top:3px; left:90px; }
+ .l3-hunt-goal { display:none; }
+}

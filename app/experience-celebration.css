@@ -1,0 +1,31 @@
+/* A short promotion effect over the live game, without blocking play. */
+.rank-level-up { position: fixed; top: 50%; left: 50%; width: min(360px, 90vw); height: min(340px, 90dvh); transform: translate(-50%, -50%); z-index: 350; display: grid; place-items: center; pointer-events: none; background: transparent; backdrop-filter: none; border: 0; box-shadow: none; }
+.rank-celebration { position: relative; isolation: isolate; display: grid; justify-items: center; gap: 18px; filter: drop-shadow(0 12px 22px #04130bd9); animation: rank-pop var(--rank-duration) both; }
+.rank-halo { position: absolute; z-index: -1; width: 340px; height: 340px; top: 50%; left: 50%; transform: translate(-50%, -55%); border-radius: 50%; background: radial-gradient(circle, #ffe79760, #e5c25618 45%, transparent 70%); animation: rank-halo 1s ease-out both; }
+.rank-medallion { position: relative; width: 166px; height: 180px; display: grid; justify-items: center; align-content: center; color: #193422; background: linear-gradient(135deg, #fffbd7, #f5d56c 30%, #c79627 65%, #ffed9c); clip-path: polygon(50% 0,95% 23%,95% 74%,50% 100%,5% 74%,5% 23%); animation: rank-medal .65s cubic-bezier(.18,.85,.22,1.35) both; }
+.rank-medallion::after { content: ""; position: absolute; inset: -50%; background: linear-gradient(110deg, transparent 40%, #fffbe9c0 50%, transparent 60%); animation: rank-shine 1s .55s both; }
+.rank-medallion span { font: 700 72px/.95 Rajdhani, sans-serif; }
+.rank-medallion small { font: 700 11px "JetBrains Mono", monospace; letter-spacing: .17em; margin: 6px 0; }
+.rank-medallion svg { width: 23px; height: 23px; }
+.rank-up-title { color: #ffeda9; font: 700 40px/1 Rajdhani, sans-serif; letter-spacing: .12em; text-shadow: 0 3px 0 #31452a, 0 0 20px #f5d56c70; animation: rank-word .4s .2s both; }
+.rank-burst { position: absolute; inset: 0; z-index: -1; }
+.rank-burst i { position: absolute; top: 40%; left: 50%; height: 5px; width: 5px; background: #fff0ae; border-radius: 50%; animation: rank-spark 1.3s calc(.2s + var(--ray) * 20ms) both; }
+@keyframes rank-pop { 0% { opacity: 0; transform: scale(.35); } 12% { opacity: 1; transform: scale(1.12); } 20%, 74% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: translateY(-24px) scale(1.08); } }
+@keyframes rank-medal { from { transform: scale(.25) rotate(-15deg); } to { transform: scale(1) rotate(0); } }
+@keyframes rank-word { from { opacity: 0; transform: translateY(12px) scale(.8); } to { opacity: 1; transform: none; } }
+@keyframes rank-halo { from { opacity: 0; scale: .4; } to { opacity: 1; scale: 1; } }
+@keyframes rank-shine { from { transform: translateX(-70%); } to { transform: translateX(70%); } }
+@keyframes rank-spark { 0% { opacity: 0; transform: rotate(calc(var(--ray) * 30deg)) translateX(40px) scale(0); } 25% { opacity: 1; } 100% { opacity: 0; transform: rotate(calc(var(--ray) * 30deg)) translateX(190px) scale(.3); } }
+@media (orientation: landscape) and (max-height: 560px) {
+  .rank-celebration { gap: 12px; }
+  .rank-medallion { width: 125px; height: 136px; }
+  .rank-medallion span { font-size: 52px; }
+  .rank-medallion small { margin: 3px 0; font-size: 9px; }
+  .rank-medallion svg { width: 18px; height: 18px; }
+  .rank-up-title { font-size: 30px; }
+  .rank-halo { width: 260px; height: 260px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rank-celebration, .rank-medallion, .rank-up-title, .rank-halo { animation: none; }
+  .rank-burst, .rank-medallion::after { display: none; }
+}

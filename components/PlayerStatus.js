@@ -1,7 +1,8 @@
 import { Heart, Flame, Trophy, Sparkles } from "lucide-react";
-import { XP_PER_LEVEL } from "@/lib/rewards";
+import { experienceProgress } from "@/lib/rewards";
 
 export default function PlayerStatus({ player }) {
+  const { level, progress, required } = experienceProgress(player.xp);
   return (
     <dl className="player-status" aria-label="Explorer status">
       <div className={`stat-health ${player.hp <= 1 ? "health-low" : ""}`}>
@@ -22,7 +23,7 @@ export default function PlayerStatus({ player }) {
         <dd key={player.xp}>
           {player.xp}
           <small>
-            XP <b className="stat-level">LV {player.level}</b>
+            XP <b className="stat-level">LV {level}</b>
           </small>
         </dd>
         <span
@@ -30,12 +31,12 @@ export default function PlayerStatus({ player }) {
           role="meter"
           aria-label="Experience toward next level"
           aria-valuemin={0}
-          aria-valuemax={XP_PER_LEVEL}
-          aria-valuenow={player.xp % XP_PER_LEVEL}
+          aria-valuemax={required}
+          aria-valuenow={progress}
         >
           <span
             style={{
-              width: `${((player.xp % XP_PER_LEVEL) / XP_PER_LEVEL) * 100}%`,
+              width: `${(progress / required) * 100}%`,
             }}
           />
         </span>

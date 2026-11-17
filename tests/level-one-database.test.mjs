@@ -321,6 +321,12 @@ test(
         at(50),
         { sharedChatReader },
       );
+      replay = await read(players[0]);
+      assert.equal((await balance(players[0])).xp,125,"Mission 1 alone cannot improve replay rewards");
+      await dayOneAction(players[0],"claim-check-submit",{
+        ownerId:players[0]._id,researchRevisionId:replay.data.submissions.at(-1).id,draftVersion:0,
+        answers:{claim:"The AI claims that electric vehicles always cost less to operate.",source:"https://example.org/independent-study",verdict:"UNCERTAIN",finding:"I compared the source with the AI claim and found the costs depend on local electricity prices, driving distance and maintenance. I would check those assumptions before trusting this conclusion."}
+      },at(51));
       assert.equal(
         (await balance(players[0])).xp,
         150,

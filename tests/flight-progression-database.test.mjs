@@ -1,4 +1,5 @@
 import test from "node:test";
+import { playerObjectives } from "../lib/player-objectives.js";
 import assert from "node:assert/strict";
 import mongoose from "mongoose";
 import { connect, models } from "../lib/db.js";
@@ -105,6 +106,12 @@ test(
         },
       });
       await enableCompletionProgression("alpha", now);
+      const objectivesP = await playerObjectives(p), objectivesQ = await playerObjectives(q);
+      assert.deepEqual(objectivesP.map(l=>l.unlocked),[true,true,false,false,false]);
+      assert.deepEqual(objectivesQ.map(l=>l.unlocked),[true,false,false,false,false]);
+      assert.equal(objectivesP[2].objective,undefined);
+      assert.equal(objectivesQ[1].objective,undefined);
+      await assert.rejects(playerObjectives(cc),/Player access required/);
       let snapshot = await programSnapshot(p, now);
       assert.equal(snapshot.progression.levels[1].open, true);
       assert.equal(

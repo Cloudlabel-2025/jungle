@@ -86,7 +86,7 @@ function DayEditor({ day, data, act }) {
       <button
         className="btn small"
         onClick={() =>
-          downloadJson(content, `codewild-day-${day.day}-content.json`)
+          downloadJson(content, `vow-day-${day.day}-content.json`)
         }
       >
         Download this content pack
@@ -749,7 +749,7 @@ export function Assessments({ data, act }) {
             if (result?.report)
               downloadJson(
                 result.report,
-                `codewild-${selected}-${result.report.batchId}.json`,
+                `vow-${selected}-${result.report.batchId}.json`,
               );
           }}
         >
@@ -1446,7 +1446,7 @@ export function StaffResults({ data, act }) {
                 onClick={() =>
                   downloadJson(
                     p.collegeNotices,
-                    "codewild-saturday-college-notifications.json",
+                    "vow-saturday-college-notifications.json",
                   )
                 }
               >

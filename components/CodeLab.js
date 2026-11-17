@@ -58,7 +58,7 @@ export default function CodeLab({ data, act, notify }) {
     [command, setCommand] = useState(""),
     [output, setOutput] = useState([
       {
-        text: "CODEWILD VM / Browser-isolated development environment",
+        text: "VOW VM / Browser-isolated development environment",
         type: "accent",
       },
       {

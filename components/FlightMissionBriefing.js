@@ -16,11 +16,13 @@ import {
 } from "lucide-react";
 import { missionImageFor } from "@/lib/mission-images";
 import { Modal } from "./ui";
+import { firstResearchReady } from "./LevelOneJourney";
 import LevelOneResult from "./LevelOneResult";
 import LevelOneStarGuide from "./LevelOneStarGuide";
 
 // Presentation only: acknowledgement, timer and evidence still use Day 1 actions.
 export default function FlightMissionBriefing({
+  onClaimCheck,
   record: r,
   question: g,
   timer,
@@ -41,18 +43,23 @@ export default function FlightMissionBriefing({
   const verified = r.levelOne
     ? Boolean(r.levelOne.result?.completed)
     : Boolean(submission && r.verification?.status === "VERIFIED");
+  const waitingCheck =
+    r.levelOne?.claimCheckRequired && firstResearchReady(r) && !verified;
   const phase = verified
     ? "verified"
-    : submission
-      ? "submitted"
-      : r.startedAt
-        ? "research"
-        : r.acknowledgedAt
-          ? "ready"
-          : "briefing";
+    : waitingCheck
+      ? "claim-check"
+      : submission
+        ? "submitted"
+        : r.startedAt
+          ? "research"
+          : r.acknowledgedAt
+            ? "ready"
+            : "briefing";
   const cover = missionImageFor(r.researchAssignment?.questionId || g.id);
   const title = g.name.split(" · ").at(-1);
   const status = {
+    "claim-check": "Mission 1 secured",
     briefing: "Mission discovered",
     ready: "Ready for launch",
     research: "Investigation underway",
@@ -163,7 +170,9 @@ export default function FlightMissionBriefing({
           )}
         </div>
         <span className="mission-phase-status" role="status">
-          {r.levelOne?.result && !verified ? "Correction needed" : status}
+          {r.levelOne?.result && !verified && !waitingCheck
+            ? "Correction needed"
+            : status}
         </span>
         <h4>
           {verified
@@ -196,21 +205,35 @@ export default function FlightMissionBriefing({
           </div>
         )}
         <p className="mission-control-copy">
-          {verified
-            ? r.levelOne
-              ? "Your level result is saved. Continue your journey from the flight map."
-              : "Command has verified your evidence. The next level opens when it is released."
-            : submission
+          {waitingCheck
+            ? "Mission 1 is saved. Complete the claim check in Mission 2 to finish Level 1."
+            : verified
               ? r.levelOne
-                ? "Your conversation is saved. Check your automatic result below."
-                : "Your conversation is saved. Command will check your evidence."
-              : r.startedAt
-                ? "Investigate with your AI tool. Return with a shared conversation link."
-                : r.acknowledgedAt
-                  ? "Launch when you are ready. The timer keeps running after you leave."
-                  : "Read the objective, then accept your mission. Your timer has not started."}
+                ? "Your level result is saved. Continue your journey from the flight map."
+                : "Command has verified your evidence. The next level opens when it is released."
+              : submission
+                ? r.levelOne
+                  ? "Your conversation is saved. Check your automatic result below."
+                  : "Your conversation is saved. Command will check your evidence."
+                : r.startedAt
+                  ? "Investigate with your AI tool. Return with a shared conversation link."
+                  : r.acknowledgedAt
+                    ? "Launch when you are ready. The timer keeps running after you leave."
+                    : "Read the objective, then accept your mission. Your timer has not started."}
         </p>
-        {r.levelOne && <LevelOneResult level={r.levelOne} compact={verified} />}
+        {waitingCheck && (
+          <button
+            className="flight-mission-action mission-launch-action"
+            data-pip-target="claim-check"
+            onClick={onClaimCheck}
+            disabled={busy}
+          >
+            Play Mission 2 · Check one claim <ArrowRight size={16} />
+          </button>
+        )}
+        {r.levelOne && !waitingCheck && (
+          <LevelOneResult level={r.levelOne} compact={verified} />
+        )}
         {verified && nextLevel?.available && onContinue && (
           <button
             className="flight-mission-action mission-launch-action"

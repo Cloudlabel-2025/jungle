@@ -9,6 +9,7 @@ import {
   Search,
   Send,
   Lightbulb,
+  ShieldCheck,
 } from "lucide-react";
 import { levelOneReward } from "@/lib/level-one-rules.js";
 import MissionStars from "./MissionStars";
@@ -33,6 +34,15 @@ export function LevelOneStarGuideContent({ record, now }) {
         ? "Share a conversation about your mission with at least 80 words, your question and an AI response."
         : "Reach 3 player messages and 3 AI responses about your mission, with at least 80 words. Your first question counts.",
     ],
+    ...(record?.levelOne?.claimCheckRequired
+      ? [
+          [
+            ShieldCheck,
+            "Check before you trust",
+            "Complete Mission 2: choose one claim, check an independent HTTPS source and explain your judgement in at least 20 words. Supported, challenged and uncertain are all valid conclusions.",
+          ],
+        ]
+      : []),
     ...(target >= 2
       ? [
           [
@@ -54,19 +64,19 @@ export function LevelOneStarGuideContent({ record, now }) {
   ];
   return (
     <div className="level-star-guide star-hunt-briefing">
-      <aside className="star-hunt-companion" aria-label="Pip’s mission advice">
+      <aside className="star-hunt-companion" aria-label="Kiko’s mission advice">
         <span className="star-hunt-flight-code">
           <Compass size={14} /> FLIGHT 01
         </span>
         <img
           className="star-hunt-pip"
           src="/images/pip/pip-guiding.webp"
-          alt="Pip guiding your discovery"
+          alt="Kiko guiding your discovery"
           width="300"
           height="300"
         />
         <div className="star-hunt-speech">
-          <span>PIP / YOUR FLIGHT COMPANION</span>
+          <span>KIKO / YOUR FLIGHT COMPANION</span>
           <p>
             {tip
               ? "Try asking: “Compare three explanations. What evidence supports each?” Then: “Which sources are reliable, and what is still uncertain?”"

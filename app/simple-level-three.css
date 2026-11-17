@@ -1,0 +1,1650 @@
+.simple-level-three {
+  background:
+    linear-gradient(130deg, #0a291cea, #183c2dc9),
+    url("/images/flight-mission-ground-v2.png") center/cover;
+  gap: 12px;
+}
+.simple-level-three::before {
+  display: none;
+}
+.simple-level-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.simple-level-header > div:first-child {
+  margin-right: auto;
+  min-width: 0;
+}
+.simple-level-header > div > span,
+.simple-lab-home-intro span,
+.simple-mission-choices small,
+.simple-lab-kicker {
+  font:
+    9px/1.5 "JetBrains Mono",
+    monospace;
+  letter-spacing: 1.3px;
+  color: #c8dba4;
+}
+.simple-level-header h2 {
+  font-size: 28px;
+  margin: 4px 0;
+  color: #eef2d7;
+  line-height: 1.1;
+}
+.simple-level-header .view-objectives-link .btn {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  font-size: 14px;
+  background: #1a3c2e;
+  color: #dce8c4;
+  border: 1px solid #9ebc7777;
+  border-radius: 9px;
+  padding: 10px 12px;
+  white-space: nowrap;
+}
+.simple-level-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #8ba270 #17352a;
+  padding: 3px;
+}
+.simple-level-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.simple-level-footer > .week-level-rewards {
+  flex: 1;
+  margin: 0;
+  min-width: 0;
+}
+.simple-level-three h3,
+.simple-level-three h4,
+.simple-level-three p {
+  margin: 0;
+}
+.simple-lab-home {
+  max-width: 1120px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  gap: 28px;
+}
+.simple-lab-home-intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+.simple-lab-home-intro > img {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px #0005);
+  animation: simple-kiko-hover 4s ease-in-out infinite;
+}
+.simple-lab-home-intro h3 {
+  font-size: 36px;
+  line-height: 1.1;
+  margin: 10px 0;
+}
+.simple-lab-home-intro p {
+  font-size: 19px;
+  color: #bbd0af;
+  line-height: 1.4;
+}
+.simple-mission-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.simple-mission-choices > button {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  text-align: left;
+  gap: 15px;
+  padding: 28px;
+  background: linear-gradient(145deg, #2d5238e8, #133326f5);
+  border: 1px solid #a3bc7e88;
+  border-radius: 22px;
+  color: #e8efcf;
+  box-shadow: 0 8px 20px #00180f44;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+.simple-mission-choices > button:hover {
+  transform: translateY(-4px);
+  border-color: #dcebac;
+}
+.simple-mission-choices > button > svg {
+  color: #cee4a1;
+}
+.simple-mission-choices h4 {
+  font-size: 29px;
+  line-height: 1.1;
+}
+.simple-mission-choices p {
+  font-size: 18px;
+  line-height: 1.4;
+  color: #bdcfae;
+}
+.simple-mission-choices strong {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  font-size: 17px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid #a9bd7a44;
+}
+.simple-mission-choices strong > svg:last-child {
+  margin-left: auto;
+}
+.simple-case-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.simple-case-bar > button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  color: #c7daa7;
+  padding: 4px 0;
+}
+.simple-case-bar > span {
+  color: #a9bf96;
+  font-size: 14px;
+}
+.simple-case-picker {
+  display: grid;
+  grid-template-columns: 1fr 270px;
+  gap: 30px;
+  align-items: center;
+  max-width: 1040px;
+  margin: 25px auto;
+  padding: 30px;
+  border: 1px solid #a2b87755;
+  border-radius: 24px;
+  background: #0f2e23dc;
+}
+.simple-case-picker h3 {
+  font-size: 36px;
+  line-height: 1.1;
+  margin: 12px 0;
+}
+.simple-case-picker p {
+  font-size: 19px;
+  color: #b8cdaa;
+  line-height: 1.4;
+}
+.simple-case-picker > img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px #0005);
+}
+.simple-case-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+.simple-case-options button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #90aa6e;
+  border-radius: 12px;
+  background: #234834;
+  color: #d8e6bd;
+  font-size: 20px;
+  line-height: 1.2;
+  text-align: left;
+}
+.simple-case-options button[aria-pressed="true"] {
+  background: #d6e6ac;
+  color: #1a3727;
+  border-color: #e6f0c6;
+}
+.simple-case-picker > div > small {
+  display: block;
+  color: #acc39c;
+  font-size: 13px;
+  margin-top: 14px;
+}
+.simple-lab-attempt {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: 10px;
+  overflow: visible;
+}
+.simple-lab-attempt .signal-lab-toolbar {
+  flex-shrink: 0;
+  display: flex;
+  gap: 14px;
+  padding: 9px 12px;
+  background: #0b291ee6;
+  border: 1px solid #9bb87955;
+  border-radius: 8px;
+}
+.simple-lab-attempt .signal-lab-toolbar > strong {
+  font-size: 17px;
+  margin-right: auto;
+}
+.simple-lab-attempt .signal-lab-toolbar > span {
+  font-size: 12px;
+}
+.simple-play-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.simple-play-steps > button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #79965a88;
+  background: #1c3f2c;
+  border-radius: 50px;
+  color: #bdcfa8;
+  font-size: 16px;
+}
+.simple-play-steps > button > span {
+  display: grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 12px;
+}
+.simple-play-steps > button[aria-current="step"] {
+  background: #cde0a1;
+  color: #203b27;
+  border-color: #ebf4cb;
+  box-shadow: 0 0 18px #c9dd8e1c;
+}
+.simple-lab-read {
+  padding: 20px 24px;
+  max-width: 1100px;
+  width: 100%;
+  margin: auto;
+  background: #123326e6;
+  border: 1px solid #99b67566;
+  border-radius: 20px;
+}
+.simple-case-intro h3 {
+  font-size: 30px;
+  margin: 8px 0 12px;
+}
+.simple-case-intro p {
+  font-size: 18px;
+  line-height: 1.4;
+  color: #b8cca9;
+}
+.simple-clue-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 22px 0;
+}
+.simple-clue-pair > article {
+  padding: 22px;
+  border: 1px solid #9bb87766;
+  border-radius: 16px;
+  background: #254b34;
+}
+.simple-clue-pair > article > svg {
+  color: #d8e8aa;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.simple-clue-pair > article > span,
+.simple-original-case > span {
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #d5e7ac;
+}
+.simple-clue-pair p,
+.simple-original-case p {
+  font-size: 22px;
+  line-height: 1.45;
+  margin-top: 16px;
+  color: #e4eccf;
+}
+.simple-original-case {
+  margin: 20px 0;
+  padding: 20px;
+  border-left: 3px solid #bddc8c;
+  background: #21483299;
+  border-radius: 0 12px 12px 0;
+}
+.simple-original-case p {
+  white-space: pre-wrap;
+}
+.simple-lab-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.simple-lab-next > span {
+  font-size: 15px;
+  color: #b9cca8;
+}
+.simple-lab-game {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 22px;
+  padding: 18px 20px;
+  background: #103022e8;
+  border: 1px solid #a5be7b66;
+  border-radius: 20px;
+  flex: 1;
+  min-height: 0;
+}
+.simple-lab-challenge h3 {
+  font-size: 29px;
+  margin: 9px 0 18px;
+}
+.simple-clue-reminder {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #294b34;
+  border: 1px solid #a8bf7870;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+.simple-clue-reminder > svg {
+  flex-shrink: 0;
+  color: #d6e6a5;
+}
+.simple-clue-reminder p {
+  font-size: 21px;
+  line-height: 1.4;
+  color: #e3ebcc;
+}
+.simple-predictions {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.simple-predictions legend {
+  font-size: 16px;
+  color: #b6cda4;
+  margin-bottom: 12px;
+}
+.simple-predictions button {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+  padding: 14px;
+  border: 1px solid #8fac6b;
+  border-radius: 12px;
+  background: #214832;
+  color: #dce8c2;
+  font-size: 20px;
+  line-height: 1.25;
+}
+.simple-predictions button > span {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #9ebc76;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.simple-predictions button[aria-pressed="true"] {
+  background: #d1e2a5;
+  color: #183724;
+  border-color: #eaf2c6;
+}
+.simple-predictions button[aria-pressed="true"] > span {
+  border-color: #496a34;
+}
+.simple-test-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+.simple-test-actions > span {
+  font-size: 13px;
+  color: #a8bf98;
+  max-width: 290px;
+  line-height: 1.4;
+}
+.simple-kiko-coach {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px;
+  text-align: center;
+  border-left: 1px solid #a6bd7b33;
+}
+.simple-kiko-coach > img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 15px #0005);
+}
+.simple-kiko-coach p {
+  font-size: 17px;
+  line-height: 1.4;
+  color: #b8cfaa;
+}
+.simple-kiko-coach > .lab-primary {
+  width: 100%;
+  font-size: 16px;
+}
+.simple-test-feedback {
+  padding: 16px;
+  margin-top: 16px;
+  background: #4a452a;
+  border-left: 3px solid #d0bb72;
+  border-radius: 0 12px 12px 0;
+  animation: simple-feedback-in 0.2s ease-out;
+}
+.simple-test-feedback.is-correct {
+  background: #345435;
+  border-color: #b7d88c;
+}
+.simple-test-feedback strong {
+  font-size: 21px;
+}
+.simple-test-feedback p {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-top: 7px;
+  color: #e0e8c8;
+}
+.simple-click-path {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+}
+.simple-click-path > li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px dashed #789a5c77;
+  border-radius: 11px;
+  color: #94af85;
+  min-height: 70px;
+}
+.simple-click-path > li > span {
+  font:
+    11px "JetBrains Mono",
+    monospace;
+}
+.simple-click-path svg {
+  flex-shrink: 0;
+  color: #d3e4a3;
+}
+.simple-click-path strong {
+  font-size: 16px;
+  line-height: 1.2;
+}
+.simple-click-path .is-next {
+  border-style: solid;
+  border-color: #d1df9d;
+  background: #35523677;
+  color: #dce9b8;
+}
+.simple-click-path .is-placed {
+  background: #2b4e34;
+  border-style: solid;
+  border-color: #95b169;
+  color: #e0eaca;
+}
+.simple-action-tray {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin: 16px 0;
+}
+.simple-action-tray button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  padding: 12px;
+  text-align: left;
+  background: #1d402d;
+  color: #dfe8c3;
+  border: 1px solid #9bb87488;
+  border-radius: 11px;
+}
+.simple-action-tray strong {
+  font-size: 17px;
+  line-height: 1.2;
+}
+.simple-action-tray small {
+  grid-column: 1;
+  font-size: 11px;
+  color: #a6bf91;
+  line-height: 1.25;
+}
+.simple-action-tray svg {
+  grid-column: 2;
+  grid-row: 1/3;
+  align-self: center;
+}
+.simple-path-tools {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  font-size: 13px;
+  color: #aac399;
+}
+.simple-path-tools > span {
+  margin-right: auto;
+}
+.simple-path-tools > button {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #bdd5a2;
+  padding: 5px 0;
+  font-size: 13px;
+}
+.simple-extra-test {
+  margin-top: 12px;
+}
+.simple-extra-test > button {
+  background: transparent;
+  border: 0;
+  color: #acc896;
+  font-size: 13px;
+  padding: 5px 0;
+}
+.simple-extra-test fieldset {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  padding: 10px;
+  border: 1px solid #90a76d44;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+.simple-extra-test legend {
+  font-size: 12px;
+  color: #afc49b;
+}
+.simple-extra-test fieldset button {
+  background: #1b3f2b;
+  border: 1px solid #87a66366;
+  border-radius: 7px;
+  color: #c8ddb0;
+  padding: 7px 10px;
+}
+.simple-extra-test fieldset button[aria-pressed="true"] {
+  background: #d5e4ad;
+  color: #233d27;
+}
+.simple-lab-explain {
+  padding: 20px 24px;
+  border: 1px solid #9fba7666;
+  border-radius: 20px;
+  background: #103023e8;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 0;
+}
+.simple-lab-explain > header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.simple-lab-explain > header > img {
+  height: 70px;
+  width: 70px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.simple-lab-explain > header h3 {
+  font-size: 28px;
+  margin: 5px 0;
+}
+.simple-lab-explain > header p {
+  font-size: 16px;
+  color: #adc59c;
+}
+.simple-lab-explain > header > button {
+  margin-left: auto;
+}
+.simple-answer-progress {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #b5cda4;
+  font-size: 14px;
+}
+.simple-answer-progress progress {
+  height: 6px;
+  flex: 1;
+  max-width: 400px;
+  accent-color: #c1db91;
+}
+.simple-answers-toggle {
+  color: #bfd7a2;
+  background: transparent;
+  border: 0;
+  padding: 4px;
+  font-size: 13px;
+}
+.simple-answer-jumps {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.simple-answer-jumps button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #244831;
+  border: 1px solid #89a36555;
+  color: #bdd3a5;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.simple-answer-jumps button[aria-current="step"] {
+  background: #d1e3a4;
+  color: #25402a;
+}
+.simple-one-answer > small {
+  display: block;
+  color: #9fb88c;
+  font-size: 12px;
+}
+.simple-one-answer h4 {
+  font-size: 29px;
+  margin: 7px 0 10px;
+}
+.simple-one-answer label {
+  display: block;
+  color: #c0d1b0;
+  font-size: 17px;
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+.simple-one-answer textarea {
+  display: block;
+  width: 100%;
+  min-height: 130px;
+  resize: vertical;
+  max-height: 300px;
+  border: 1px solid #99b476;
+  border-radius: 12px;
+  background: #0b291c;
+  color: #f0f2d9;
+  font:
+    19px/1.5 Rajdhani,
+    sans-serif;
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.simple-lab-explain > footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.simple-level-three .signal-lab-result {
+  overflow: visible;
+}
+.simple-level-three .signal-lab-result h3 {
+  margin: 12px 0;
+}
+.simple-level-three .signal-lab-result p {
+  margin: 12px 0;
+}
+.simple-level-three .signal-lab-result .signal-lab-result-actions {
+  flex-wrap: wrap;
+}
+@keyframes simple-kiko-hover {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes simple-feedback-in {
+  from {
+    opacity: 0.2;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 1050px) {
+  .simple-level-three {
+    padding-right: 20px;
+  }
+  .simple-level-header {
+    gap: 8px;
+  }
+  .simple-level-header h2 {
+    font-size: 24px;
+  }
+  .simple-lab-game {
+    grid-template-columns: minmax(0, 1fr) 170px;
+    gap: 14px;
+    padding: 16px;
+  }
+  .simple-kiko-coach > img {
+    width: 130px;
+    height: 130px;
+  }
+  .simple-kiko-coach p {
+    font-size: 15px;
+  }
+  .simple-click-path strong {
+    font-size: 14px;
+  }
+  .simple-action-tray strong {
+    font-size: 15px;
+  }
+  .simple-case-picker {
+    grid-template-columns: 1fr 190px;
+    gap: 20px;
+    padding: 24px;
+  }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .simple-level-three {
+    padding: 62px 14px 9px 62px;
+    gap: 7px;
+  }
+  .simple-level-header h2 {
+    font-size: 19px;
+  }
+  .simple-level-header > div > span {
+    font-size: 6px;
+  }
+  .simple-level-header .lab-secondary,
+  .simple-level-header .view-objectives-link .btn {
+    font-size: 11px;
+    padding: 7px 9px;
+    min-height: 29px;
+    gap: 5px;
+  }
+  .simple-level-header .view-objectives-link svg {
+    width: 12px;
+    height: 12px;
+  }
+  .simple-level-body {
+    padding: 2px;
+  }
+  .simple-lab-home {
+    gap: 16px;
+  }
+  .simple-lab-home-intro {
+    gap: 14px;
+  }
+  .simple-lab-home-intro > img {
+    width: 70px;
+    height: 70px;
+  }
+  .simple-lab-home-intro h3 {
+    font-size: 24px;
+    margin: 6px 0;
+  }
+  .simple-lab-home-intro p {
+    font-size: 14px;
+  }
+  .simple-lab-home-intro span {
+    font-size: 6px;
+  }
+  .simple-mission-choices {
+    gap: 16px;
+  }
+  .simple-mission-choices > button {
+    padding: 16px;
+    gap: 9px;
+    border-radius: 15px;
+  }
+  .simple-mission-choices > button > svg {
+    width: 26px;
+    height: 26px;
+  }
+  .simple-mission-choices small {
+    font-size: 6px;
+  }
+  .simple-mission-choices h4 {
+    font-size: 23px;
+  }
+  .simple-mission-choices p {
+    font-size: 14px;
+  }
+  .simple-mission-choices strong {
+    font-size: 13px;
+    padding-top: 9px;
+  }
+  .simple-case-picker {
+    grid-template-columns: 1fr 140px;
+    gap: 15px;
+    padding: 18px;
+    margin: 6px auto;
+  }
+  .simple-case-picker h3 {
+    font-size: 25px;
+    margin: 8px 0;
+  }
+  .simple-case-picker p {
+    font-size: 15px;
+  }
+  .simple-case-options {
+    margin: 15px 0;
+    gap: 8px;
+  }
+  .simple-case-options button {
+    font-size: 16px;
+    padding: 10px;
+  }
+  .simple-case-picker > div > small {
+    font-size: 10px;
+    margin-top: 10px;
+  }
+  .simple-case-picker > img {
+    max-height: 160px;
+  }
+  .simple-case-bar {
+    margin-bottom: 5px;
+    font-size: 13px;
+  }
+  .simple-case-bar > span {
+    font-size: 12px;
+  }
+  .simple-lab-attempt {
+    gap: 6px;
+  }
+  .simple-lab-attempt .signal-lab-toolbar {
+    padding: 5px 9px;
+    gap: 9px;
+  }
+  .simple-lab-attempt .signal-lab-toolbar > strong {
+    font-size: 13px;
+  }
+  .simple-lab-attempt .signal-lab-toolbar > span {
+    font-size: 10px;
+  }
+  .simple-lab-kicker {
+    font-size: 6px;
+  }
+  .simple-play-steps {
+    gap: 7px;
+  }
+  .simple-play-steps > button {
+    padding: 5px 10px;
+    font-size: 12px;
+    gap: 6px;
+  }
+  .simple-play-steps > button > span {
+    height: 17px;
+    width: 17px;
+    font-size: 9px;
+  }
+  .simple-lab-read {
+    padding: 14px 16px;
+    border-radius: 14px;
+  }
+  .simple-case-intro h3 {
+    font-size: 23px;
+    margin: 6px 0 8px;
+  }
+  .simple-case-intro p {
+    font-size: 14px;
+  }
+  .simple-clue-pair {
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .simple-clue-pair > article {
+    padding: 14px;
+  }
+  .simple-clue-pair > article > svg {
+    height: 16px;
+    width: 16px;
+  }
+  .simple-clue-pair > article > span {
+    font-size: 6px;
+  }
+  .simple-clue-pair p,
+  .simple-original-case p {
+    font-size: 17px;
+    line-height: 1.35;
+    margin-top: 11px;
+  }
+  .simple-original-case {
+    padding: 14px;
+    margin: 14px 0;
+  }
+  .simple-original-case > span {
+    font-size: 6px;
+  }
+  .simple-lab-next > span {
+    font-size: 11px;
+  }
+  .simple-level-three .lab-primary {
+    font-size: 13px;
+    padding: 8px 11px;
+    min-height: 32px;
+    white-space: normal;
+  }
+  .simple-lab-game {
+    padding: 13px;
+    grid-template-columns: minmax(0, 1fr) 140px;
+    gap: 12px;
+    border-radius: 14px;
+  }
+  .simple-lab-challenge h3 {
+    font-size: 23px;
+    margin: 7px 0 12px;
+  }
+  .simple-clue-reminder {
+    padding: 12px;
+    margin-bottom: 12px;
+    gap: 8px;
+  }
+  .simple-clue-reminder p {
+    font-size: 16px;
+    line-height: 1.3;
+  }
+  .simple-kiko-coach {
+    gap: 10px;
+    padding: 4px;
+  }
+  .simple-kiko-coach > img {
+    width: 90px;
+    height: 90px;
+  }
+  .simple-kiko-coach p {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+  .simple-predictions {
+    gap: 7px;
+  }
+  .simple-predictions legend {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  .simple-predictions button {
+    font-size: 16px;
+    padding: 10px;
+    gap: 9px;
+  }
+  .simple-predictions button > span {
+    height: 17px;
+    width: 17px;
+  }
+  .simple-test-actions {
+    margin-top: 12px;
+    gap: 10px;
+  }
+  .simple-test-actions > span {
+    font-size: 10px;
+  }
+  .simple-test-feedback {
+    padding: 11px;
+    margin-top: 10px;
+  }
+  .simple-test-feedback strong {
+    font-size: 17px;
+  }
+  .simple-test-feedback p {
+    font-size: 13px;
+    margin-top: 5px;
+  }
+  .simple-click-path {
+    gap: 7px;
+    margin-bottom: 10px;
+  }
+  .simple-click-path > li {
+    padding: 8px;
+    gap: 5px;
+    min-height: 50px;
+  }
+  .simple-click-path strong {
+    font-size: 12px;
+  }
+  .simple-click-path > li > span {
+    font-size: 8px;
+  }
+  .simple-click-path svg {
+    height: 15px;
+    width: 15px;
+  }
+  .simple-click-path small {
+    font-size: 11px;
+  }
+  .simple-action-tray {
+    gap: 7px;
+    margin: 10px 0;
+  }
+  .simple-action-tray button {
+    padding: 9px;
+    gap: 4px;
+  }
+  .simple-action-tray strong {
+    font-size: 13px;
+  }
+  .simple-action-tray small {
+    font-size: 9px;
+  }
+  .simple-path-tools {
+    gap: 10px;
+    font-size: 10px;
+  }
+  .simple-path-tools > button {
+    font-size: 10px;
+  }
+  .simple-extra-test {
+    margin-top: 8px;
+  }
+  .simple-extra-test > button {
+    font-size: 11px;
+  }
+  .simple-lab-explain {
+    padding: 13px 16px;
+    gap: 10px;
+    border-radius: 14px;
+  }
+  .simple-lab-explain > header {
+    gap: 10px;
+  }
+  .simple-lab-explain > header > img {
+    height: 43px;
+    width: 43px;
+  }
+  .simple-lab-explain > header h3 {
+    font-size: 21px;
+    margin: 3px 0;
+  }
+  .simple-lab-explain > header p {
+    font-size: 12px;
+  }
+  .simple-lab-explain > header > button {
+    font-size: 11px;
+    padding: 6px 9px;
+    min-height: 29px;
+  }
+  .simple-answer-progress {
+    font-size: 11px;
+    gap: 10px;
+  }
+  .simple-answers-toggle {
+    font-size: 10px;
+  }
+  .simple-one-answer h4 {
+    font-size: 23px;
+    margin: 5px 0 7px;
+  }
+  .simple-one-answer label {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .simple-one-answer textarea {
+    min-height: 95px;
+    padding: 11px;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  .simple-one-answer > small {
+    font-size: 10px;
+  }
+  .simple-lab-explain > footer .lab-secondary {
+    font-size: 12px;
+    padding: 7px 10px;
+    min-height: 31px;
+  }
+  .simple-level-footer {
+    gap: 8px;
+  }
+  .simple-level-footer > .lab-primary {
+    font-size: 12px;
+  }
+  .simple-level-three .signal-lab-result {
+    padding: 20px;
+  }
+  .simple-level-three .signal-lab-result h3 {
+    font-size: 25px;
+  }
+}
+.simple-level-three h2,
+.simple-level-three h3,
+.simple-level-three h4 {
+  font-weight: 700;
+}
+.simple-lab-home {
+  gap: 22px;
+}
+.simple-lab-home-intro > img {
+  height: 110px;
+  width: 110px;
+}
+.simple-lab-home-intro h3 {
+  font-size: 32px;
+}
+.simple-mission-choices > button {
+  padding: 24px;
+  gap: 13px;
+}
+.simple-lab-read {
+  padding: 17px 20px;
+}
+.simple-case-intro h3 {
+  font-size: 28px;
+  margin: 7px 0 8px;
+}
+.simple-case-intro p {
+  font-size: 17px;
+  line-height: 1.35;
+}
+.simple-clue-pair {
+  margin: 16px 0;
+  gap: 16px;
+}
+.simple-clue-pair > article {
+  padding: 18px;
+}
+.simple-clue-pair p {
+  font-size: 20px;
+  line-height: 1.35;
+  margin-top: 12px;
+}
+.simple-predictions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.simple-predictions legend {
+  grid-column: 1/-1;
+}
+.simple-predictions button {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14px;
+  font-size: 18px;
+  gap: 11px;
+  min-height: 100px;
+}
+.simple-click-path > li {
+  min-height: 55px;
+  padding: 10px;
+}
+.simple-lab-game {
+  padding: 15px 18px;
+}
+.simple-lab-challenge h3 {
+  font-size: 27px;
+  margin: 7px 0 14px;
+}
+.simple-clue-reminder {
+  padding: 14px;
+  margin-bottom: 15px;
+}
+.simple-clue-reminder p {
+  font-size: 19px;
+}
+.simple-action-tray button {
+  padding: 10px;
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .simple-lab-home {
+    gap: 14px;
+  }
+  .simple-lab-home-intro > img {
+    height: 65px;
+    width: 65px;
+  }
+  .simple-lab-home-intro h3 {
+    font-size: 23px;
+  }
+  .simple-mission-choices > button {
+    padding: 15px;
+    gap: 8px;
+  }
+  .simple-lab-read {
+    padding: 13px 15px;
+  }
+  .simple-case-intro h3 {
+    font-size: 22px;
+  }
+  .simple-case-intro p {
+    font-size: 14px;
+  }
+  .simple-clue-pair {
+    margin: 12px 0;
+    gap: 11px;
+  }
+  .simple-clue-pair > article {
+    padding: 12px;
+  }
+  .simple-clue-pair p {
+    font-size: 16px;
+    margin-top: 9px;
+  }
+  .simple-lab-game {
+    padding: 12px;
+  }
+  .simple-lab-challenge h3 {
+    font-size: 22px;
+    margin: 6px 0 10px;
+  }
+  .simple-clue-reminder {
+    padding: 11px;
+    margin-bottom: 11px;
+  }
+  .simple-clue-reminder p {
+    font-size: 15px;
+  }
+  .simple-predictions button {
+    font-size: 14px;
+    padding: 10px;
+    gap: 8px;
+    min-height: 78px;
+  }
+  .simple-predictions legend {
+    font-size: 11px;
+  }
+  .simple-click-path > li {
+    min-height: 45px;
+    padding: 7px;
+  }
+  .simple-click-path > li:not(.is-placed):not(.is-next) {
+    display: none;
+  }
+  .simple-action-tray button {
+    padding: 8px;
+  }
+  .simple-lab-explain > header p {
+    display: none;
+  }
+  .simple-lab-explain > header > img {
+    width: 34px;
+    height: 34px;
+  }
+  .simple-lab-explain > header h3 {
+    font-size: 19px;
+  }
+  .simple-one-answer > small:first-child {
+    display: none;
+  }
+  .simple-one-answer textarea {
+    min-height: 80px;
+  }
+  .simple-one-answer label {
+    font-size: 13px;
+  }
+}
+.simple-predictions button {
+  min-height: 90px;
+}
+.simple-test-actions {
+  margin-top: 12px;
+}
+.simple-predictions legend {
+  margin-bottom: 8px;
+}
+.simple-kiko-coach > img {
+  width: 150px;
+  height: 150px;
+}
+.simple-kiko-coach p {
+  font-size: 16px;
+}
+.simple-kiko-coach {
+  gap: 13px;
+}
+.simple-lab-explain > footer {
+  background: #103023;
+  padding-top: 6px;
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .simple-predictions button {
+    min-height: 70px;
+  }
+  .simple-test-actions {
+    margin-top: 10px;
+  }
+  .simple-kiko-coach > img {
+    width: 82px;
+    height: 82px;
+  }
+  .simple-kiko-coach p {
+    font-size: 12px;
+  }
+  .simple-kiko-coach {
+    gap: 9px;
+  }
+}
+.simple-kiko-coach > img {
+  animation: simple-kiko-hover 4s ease-in-out infinite;
+}
+.simple-lab-game.is-testing .simple-click-path > li {
+  animation: simple-node-pass 0.45s ease-in-out both;
+  animation-delay: var(--node-delay, 0ms);
+}
+.simple-lab-game.is-testing .simple-clue-reminder {
+  animation: simple-node-pass 0.7s ease-in-out infinite alternate;
+}
+@keyframes simple-node-pass {
+  50% {
+    border-color: #e1f7a4;
+    background: #52713a;
+    box-shadow: 0 0 18px #cbe68a55;
+  }
+}
+/* Keep the current answer and its Next button together in the play area. */
+.simple-lab-explain {
+  padding: 15px 20px;
+  gap: 10px;
+}
+.simple-lab-explain > header > img {
+  height: 43px;
+  width: 43px;
+}
+.simple-lab-explain > header h3 {
+  font-size: 22px;
+  margin: 2px 0;
+}
+.simple-lab-explain > header p {
+  display: none;
+}
+.simple-lab-explain > header .simple-lab-kicker {
+  font-size: 7px;
+}
+.simple-one-answer > small:first-child {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.simple-one-answer h4 {
+  font-size: 25px;
+  line-height: 1.15;
+  margin: 0 0 8px;
+}
+.simple-one-answer label {
+  font-size: 16px;
+  line-height: 1.35;
+  margin-bottom: 9px;
+}
+.simple-one-answer textarea {
+  min-height: 95px;
+  max-height: 200px;
+  line-height: 1.4;
+  padding: 12px;
+  margin-bottom: 7px;
+  border-radius: 3px 16px 16px 16px;
+}
+.simple-one-answer > small {
+  font-size: 11px;
+}
+.simple-lab-explain > footer {
+  padding-top: 0;
+}
+.simple-answer-progress {
+  font-size: 12px;
+}
+.simple-lab-explain > footer .lab-primary,
+.simple-lab-explain > footer .lab-secondary {
+  min-height: 35px;
+  padding: 8px 12px;
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .simple-lab-explain {
+    padding: 11px 14px;
+    gap: 8px;
+  }
+  .simple-lab-explain > header > img {
+    width: 30px;
+    height: 30px;
+  }
+  .simple-lab-explain > header h3 {
+    font-size: 17px;
+  }
+  .simple-lab-explain > header .simple-lab-kicker {
+    display: none;
+  }
+  .simple-answer-progress {
+    font-size: 10px;
+  }
+  .simple-one-answer h4 {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+  .simple-one-answer label {
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+  }
+  .simple-one-answer textarea {
+    min-height: 70px;
+    max-height: 150px;
+    padding: 9px;
+    font-size: 15px;
+  }
+  .simple-one-answer > small {
+    font-size: 9px;
+  }
+  .simple-lab-explain > footer .lab-primary,
+  .simple-lab-explain > footer .lab-secondary {
+    min-height: 31px;
+    padding: 6px 10px;
+  }
+}
+.simple-lab-explain {
+  gap: 6px;
+  padding-block: 12px;
+}
+.simple-one-answer textarea {
+  min-height: 80px;
+  margin-bottom: 5px;
+}
+.simple-lab-explain > footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  padding: 7px 0 0;
+  box-shadow: 0 -8px 10px #103023;
+  background: #103023;
+}
+.simple-lab-explain > header > img {
+  width: 38px;
+  height: 38px;
+}
+.simple-one-answer h4 {
+  font-size: 24px;
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .simple-lab-explain {
+    gap: 6px;
+    padding-block: 10px;
+  }
+  .simple-one-answer textarea {
+    min-height: 68px;
+  }
+  .simple-lab-explain > header > img {
+    width: 28px;
+    height: 28px;
+  }
+  .simple-one-answer h4 {
+    font-size: 21px;
+  }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .simple-lab-attempt .signal-lab-toolbar {
+    padding: 3px 8px;
+    min-height: 0;
+    line-height: 1.2;
+  }
+  .simple-lab-attempt .signal-lab-toolbar > strong {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .simple-lab-attempt .signal-lab-toolbar > span {
+    font-size: 9px;
+    line-height: 1.2;
+  }
+  .simple-play-steps > button {
+    font-size: 11px;
+    line-height: 1.2;
+    padding: 4px 9px;
+  }
+  .simple-play-steps > button > span {
+    height: 15px;
+    width: 15px;
+    font-size: 8px;
+  }
+  .simple-lab-explain > header {
+    display: none;
+  }
+  .simple-lab-explain {
+    gap: 5px;
+    padding: 9px 13px;
+  }
+  .simple-one-answer textarea {
+    min-height: 64px;
+    padding: 8px;
+    font-size: 15px;
+  }
+  .simple-one-answer > small:last-child {
+    display: none;
+  }
+  .simple-one-answer h4 {
+    font-size: 20px;
+    margin: 0 0 5px;
+  }
+  .simple-one-answer label {
+    font-size: 12px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .simple-lab-explain > footer {
+    padding-top: 4px;
+  }
+  .simple-answer-progress {
+    font-size: 10px;
+  }
+}
+.simple-mobile-answer-count {
+  display: none;
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .simple-lab-explain {
+    padding: 7px 13px;
+    gap: 4px;
+  }
+  .simple-answer-progress {
+    display: none;
+  }
+  .simple-one-answer textarea {
+    min-height: 48px;
+    line-height: 1.25;
+    padding: 5px 8px;
+    margin-bottom: 3px;
+  }
+  .simple-lab-explain > footer {
+    position: static;
+    box-shadow: none;
+    padding-top: 2px;
+  }
+  .simple-mobile-answer-count {
+    display: inline;
+    color: #b9cfa6;
+    font-size: 11px;
+  }
+  .simple-one-answer label {
+    margin-bottom: 5px;
+  }
+}
+.simple-result-more {
+  margin: 14px auto 0;
+  max-width: 760px;
+}
+.simple-result-more > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #9ab77866;
+  border-radius: 8px;
+  background: #1e402d;
+  color: #c0d6a5;
+  padding: 9px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  list-style: none;
+}
+.simple-result-more > summary::after {
+  content: "+";
+  font-size: 18px;
+}
+.simple-result-more[open] > summary::after {
+  content: "−";
+}
+.simple-result-more > summary::-webkit-details-marker {
+  display: none;
+}
+.simple-result-more > .signal-lab-result-actions {
+  margin-top: 16px;
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .simple-mission-choices p {
+    display: none;
+  }
+  .simple-mission-choices > button {
+    gap: 7px;
+    padding: 13px 15px;
+  }
+  .simple-mission-choices h4 {
+    font-size: 22px;
+  }
+  .simple-mission-choices strong {
+    padding-top: 8px;
+  }
+}

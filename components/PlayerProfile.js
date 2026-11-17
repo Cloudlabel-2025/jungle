@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Modal } from "./ui";
 import PlayerHeader from "./PlayerHeader";
 import PlayerWorkHistory from "./PlayerWorkHistory";
-import { XP_PER_LEVEL, experienceLevel } from "@/lib/rewards.js";
+import { experienceProgress, experienceLevel } from "@/lib/rewards.js";
 export default function PlayerProfile({ data, close, onChooseCharacter }) {
   const [historyOpen, setHistoryOpen] = useState(false);
   const player = data.user;
@@ -41,7 +41,7 @@ export default function PlayerProfile({ data, close, onChooseCharacter }) {
           </div>
           <div>
             <dt>XP to next level</dt>
-            <dd>{XP_PER_LEVEL - (xp % XP_PER_LEVEL)}</dd>
+            <dd>{experienceProgress(xp).remaining}</dd>
           </div>
           <div>
             <dt>Week 1 trophies</dt>

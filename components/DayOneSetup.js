@@ -360,7 +360,7 @@ function SetupForm({ data, act, report }) {
                   );
                   const link = document.createElement("a");
                   link.href = url;
-                  link.download = "codewild-research-questions.json";
+                  link.download = "vow-research-questions.json";
                   link.click();
                   setTimeout(() => URL.revokeObjectURL(url), 1000);
                 }}

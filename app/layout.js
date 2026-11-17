@@ -39,10 +39,25 @@ import "./level-one-results.css";
 import "./star-guide.css";
 import "./level-two-missions.css";
 import "./week-one-stars.css";
+import "./level-two-comics.css";
+import "./level-two-story-board.css";
+import "./cohort-calendar.css";
+import "./attendance-register.css";
+import "./experience-celebration.css";
+import "./level-three-missions.css";
+import "./signal-lab.css";
+import "./simple-level-three.css";
+import "./objectives.css";
+import "./flight-finale.css";
+import "./first-discovery.css";
+import "./vow-brand.css";
+import "./expedition-login.css";
+import { brand } from "@/lib/brand.js";
 export const metadata = {
-  title: "CODEWILD · Escape the Wild",
-  description:
-    "A jungle expedition powered by learning, teamwork, and code. Explore. Adapt. Survive.",
+  title: brand.title,
+  applicationName: brand.name,
+  description: brand.description,
+  icons: {icon:[{url:"/brand/vow-icon-v2-64.png",sizes:"64x64",type:"image/png"},{url:"/brand/vow-icon-v2-192.png",sizes:"192x192",type:"image/png"}],apple:[{url:"/brand/vow-icon-v2-180.png",sizes:"180x180",type:"image/png"}]},
 };
 export default function RootLayout({ children }) {
   return (
@@ -57,7 +72,7 @@ export default function RootLayout({ children }) {
           </span>
           <h1>Turn your phone to play</h1>
           <p>
-            CODEWILD is played in landscape. Rotate your phone to continue your
+            VOW is played in landscape. Rotate your phone to continue your
             journey.
           </p>
         </section>

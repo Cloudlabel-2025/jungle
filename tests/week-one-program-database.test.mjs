@@ -146,7 +146,7 @@ test(
       });
       for (let i = 0; i < gamers.length; i++) {
         const g = gamers[i];
-        await d1(g, "clock", {}, -1);
+        await d1(g, "clock", {}, 0);
         await d1(g, "agenda-view", {}, 1);
         await d1(g, "agenda-ack", {}, 2);
         await d1(
@@ -624,7 +624,7 @@ test(
         }
         const pack = programFixture(day);
         for (const g of gamers) {
-          await call(g, "clock", { day }, day, -1);
+          await call(g, "clock", { day }, day, 0);
           await call(g, "agenda-view", { day }, day, 1);
           await call(g, "agenda-ack", { day }, day, 2);
           for (const session of [1, 2]) {

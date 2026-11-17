@@ -117,10 +117,11 @@ export default function PlayerWorkHistory({
         {history && (
           <>
             <section className="work-history-attendance">
-              <h3>Clocked-in sessions</h3>
+              <h3>Attendance & extra play</h3>
               <p>
-                {duration(history.clockedSeconds)} clocked in on this date. This
-                is attendance time, not a measure of productive work.
+                {duration(history.clockedSeconds)} official attendance on this
+                date. {duration(history.extraSeconds || 0)} extra play, recorded
+                separately.
               </p>
               {!history.sessions.length ? (
                 <p className="muted">No clock-in recorded for this date.</p>
@@ -128,7 +129,12 @@ export default function PlayerWorkHistory({
                 <ol>
                   {history.sessions.map((s, i) => (
                     <li key={s.id}>
-                      <strong>Session {i + 1}</strong>
+                      <strong>
+                        {s.kind === "EXTRA"
+                          ? "Extra play"
+                          : "Official attendance"}{" "}
+                        · Session {i + 1}
+                      </strong>
                       <span>
                         {time(s.clockInAt)} →{" "}
                         {s.clockOutAt
@@ -142,13 +148,17 @@ export default function PlayerWorkHistory({
                       <small>
                         {s.unknownEnd
                           ? "Historical clock-in; duration unavailable"
-                          : s.reason === "TIMEOUT"
-                            ? "Automatic clock-out"
-                            : s.reason === "MANUAL"
-                              ? "Manual clock-out"
-                              : s.ongoing
-                                ? "Active"
-                                : "Recorded session"}{" "}
+                          : s.reason === "SCHEDULED_END"
+                            ? "Official day ended"
+                            : s.reason === "NEXT_DAY"
+                              ? "Extra play ended at the next daily start"
+                              : s.reason === "TIMEOUT"
+                                ? "Automatic clock-out"
+                                : s.reason === "MANUAL"
+                                  ? "Manual clock-out"
+                                  : s.ongoing
+                                    ? "Active"
+                                    : "Recorded session"}{" "}
                         {s.clockedSeconds != null &&
                           `· ${duration(s.clockedSeconds)} on this date`}
                       </small>

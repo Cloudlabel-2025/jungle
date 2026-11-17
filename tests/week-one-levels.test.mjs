@@ -50,7 +50,7 @@ export function attemptsFor(day) {
     },
   }));
 }
-test("Levels 2–5 score real submission evidence, effort, deadlines and 5x rewards", () => {
+test("Levels 2–5 score real submission evidence, effort, deadlines and progressive XP rewards", () => {
   for (const day of [2, 3, 4, 5]) {
     const rows = attemptsFor(day);
     assert.equal(scoreFlightLevel(day, rows.slice(0, 1)).stars, 0);
@@ -58,7 +58,7 @@ test("Levels 2–5 score real submission evidence, effort, deadlines and 5x rewa
     assert.equal(result.stars, 3, `Level ${day}`);
     assert.deepEqual(
       { trophies: result.trophies, xp: result.xp },
-      { trophies: 30, xp: 150 },
+      { trophies: 30, xp: 150 * day },
     );
     rows[0].data.submissions[0].late = true;
     assert.equal(scoreFlightLevel(day, rows).stars, 2);
@@ -67,7 +67,7 @@ test("Levels 2–5 score real submission evidence, effort, deadlines and 5x rewa
     );
     rows[0].data.submissions[0].answers[key] = "brief";
     assert.equal(scoreFlightLevel(day, rows).stars, 1);
-    assert.equal(scoreFlightLevel(day, rows).xp, 75);
+    assert.equal(scoreFlightLevel(day, rows).xp, 75 * day);
   }
   for (const n of [0, 1, 2, 3])
     assert.equal(levelReward(n).xp, levelReward(n).trophies * 5);

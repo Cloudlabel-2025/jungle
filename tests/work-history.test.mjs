@@ -59,15 +59,19 @@ test("work sessions preserve millisecond boundaries, repeat clock-ins and unknow
 test(
   "MongoDB saved work: reflection recovery, dated attendance, private history, cursor ties and per-day workspace checkpoints",
   { skip: !process.env.TEST_MONGODB_URI },
-  async () => {
+  async (t) => {
+    t.mock.timers.enable({
+      apis: ["Date"],
+      now: new Date("2026-11-16T03:30:00Z"),
+    });
     const uri = new URL(process.env.TEST_MONGODB_URI);
     uri.pathname = `work_history_${Date.now()}`;
     process.env.MONGODB_URI = uri.toString();
     await connect();
     for (const m of Object.values(models)) await m.init();
-    const now = new Date(),
-      zone = "Asia/Kolkata",
-      day = localParts(now, zone).day;
+    const zone = "Asia/Kolkata",
+      day = localParts(new Date(), zone).day,
+      now = new Date(scheduleInstant(day, "09:00", zone));
     const a = {
       _id: "history-a",
       name: "Player A",
@@ -97,7 +101,7 @@ test(
         startDate: day,
         currentWeek: 1,
       });
-      const end = new Date(now.getTime() + 2 * 3600000),
+      const end = new Date(scheduleInstant(day, "17:00", zone)),
         start = scheduleInstant(day, "00:00", zone);
       const config = {
         ...fixtureConfig(),

@@ -1,5 +1,5 @@
 import { Flame, Trophy } from "lucide-react";
-import { XP_PER_LEVEL, experienceLevel } from "@/lib/rewards";
+import { experienceProgress } from "@/lib/rewards";
 import PlayerVitals from "./PlayerVitals";
 import { characterFor } from "@/lib/characters";
 import { Avatar } from "./ui";
@@ -36,7 +36,7 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
         </span>
       </div>
     );
-  const progress = Math.max(0, player.xp || 0) % XP_PER_LEVEL;
+  const { level, progress, required } = experienceProgress(player.xp);
   const character = characterFor(player);
   const role = player.characterHidden
     ? "Character unknown"
@@ -53,19 +53,19 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
         </div>
       </div>
       <div className="player-experience">
-        <span>Level {experienceLevel(player.xp)}</span>
+        <span>Level {level}</span>
         <span
           className="player-xp-bar"
           role="progressbar"
           aria-label="Experience toward next level"
           aria-valuemin={0}
-          aria-valuemax={XP_PER_LEVEL}
+          aria-valuemax={required}
           aria-valuenow={progress}
         >
-          <i style={{ width: `${(progress / XP_PER_LEVEL) * 100}%` }} />
+          <i style={{ width: `${(progress / required) * 100}%` }} />
         </span>
         <small>
-          {progress} / {XP_PER_LEVEL} XP
+          {progress} / {required} XP
         </small>
       </div>
       <PlayerVitals player={player} />

@@ -110,7 +110,7 @@ export function Modal({
       <div className="panel-heading">
         <div>
           <span className="eyebrow">
-            {kicker || "CODEWILD / FIELD CONSOLE"}
+            {kicker || "VOW / FIELD CONSOLE"}
           </span>
           <h2>{title}</h2>
         </div>
@@ -136,7 +136,7 @@ export function Modal({
         >
           <aside
             className="modal-companion"
-            aria-label="Pip, your flight companion"
+            aria-label="Kiko, your flight companion"
           >
             {companion}
           </aside>

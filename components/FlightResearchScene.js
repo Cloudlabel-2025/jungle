@@ -202,10 +202,10 @@ export default function FlightResearchScene({
               <Compass size={160} strokeWidth={0.5} />
             </div>
             <div
-              className="flight-scout"
+              className={`flight-scout ${index >= 0 ? "is-above-genre" : ""}`}
               style={{
-                left: `${48 + (target[0] - 48) * 0.28}%`,
-                top: `${49 + (target[1] - 49) * 0.28}%`,
+                left: `${target[0]}%`,
+                top: `${target[1]}%`,
               }}
               aria-hidden="true"
             >

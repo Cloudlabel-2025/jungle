@@ -32,8 +32,15 @@ const submitted = {
   submissions: [{ id: "chat" }],
   verification: { status: "PENDING" },
 };
+test("Kiko continues saved mission guidance during extra play and explains the end-of-day choice", () => {
+  const extra = fixture(assigned, { playSession: { state: "EXTRA", available: false, hasClockedIn: true } });
+  assert.equal(mission(extra).id, mission(fixture(assigned)).id);
+  const choice = mission(fixture(assigned, { playSession: { state: "CHOICE", responseDeadline: "deadline" } }));
+  assert.equal(choice.id, "attendance-check");
+  assert.match(choice.message, /separate extra session/);
+});
 
-test("Pip starts with current attendance, even when the player has saved research", () => {
+test("Kiko starts with current attendance, even when the player has saved research", () => {
   assert.equal(
     mission(
       fixture(submitted, { playSession: { state: "NOT_IN", available: true } }),
@@ -104,7 +111,7 @@ test("saved selections resume at the exact checkpoint after reload", () => {
     assert.deepEqual(data, before, "guidance must not change saved progress");
   }
 });
-test("Pip ignores other players' progress and false verification without a submission", () => {
+test("Kiko ignores other players' progress and false verification without a submission", () => {
   const data = fixture({ verification: { status: "VERIFIED" } });
   data.dayOne.records.unshift({ userId: "other", ...submitted });
   assert.equal(mission(data).id, "genre");

@@ -1,0 +1,478 @@
+.first-discovery-journey {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  color: #edf1d8;
+}
+.first-discovery-journey button:focus-visible,
+.first-discovery-journey input:focus-visible,
+.first-discovery-journey textarea:focus-visible {
+  outline: 3px solid #dcecad;
+  outline-offset: 3px;
+}
+.discovery-back {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  z-index: 4;
+  border: 1px solid #a7bf6d77;
+  background: #153728d9;
+  color: #dbe9bc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 4px 20px;
+  font:
+    600 14px Rajdhani,
+    sans-serif;
+  cursor: pointer;
+}
+.discovery-mission-hub {
+  width: min(1120px, 95%);
+  margin: auto;
+  padding: 30px 24px;
+}
+.discovery-mission-hub > header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.discovery-mission-hub > header > span,
+.discovery-concept-cards > button > span,
+.claim-check-board > header span,
+.claim-evidence-pair section > span,
+.claim-judgement > span {
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1.8px;
+  color: #cbdfa1;
+}
+.discovery-mission-hub h3 {
+  font-size: 38px;
+  line-height: 1.1;
+  margin: 12px 0;
+}
+.discovery-mission-hub > header p {
+  font-size: 19px;
+  color: #cad7b5;
+}
+.discovery-concept-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+.discovery-concept-cards > button {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding: 32px;
+  border: 1px solid #b1c38188;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #264a33ee, #102e23f5);
+  color: #edf3d6;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 12px 30px #00140e55;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+.discovery-concept-cards > button:hover:not(:disabled) {
+  transform: translateY(-5px);
+  border-color: #e1efbc;
+}
+.discovery-concept-cards > button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.discovery-concept-cards > button > svg {
+  color: #d7e7a8;
+}
+.discovery-concept-cards h4 {
+  font-size: 30px;
+  margin: 0;
+  line-height: 1.1;
+}
+.discovery-concept-cards p {
+  font-size: 18px;
+  line-height: 1.4;
+  color: #c0d0ae;
+  margin: 0;
+}
+.discovery-concept-cards strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid #91a66b44;
+  margin-top: auto;
+  width: 100%;
+  font-size: 17px;
+}
+.discovery-concept-cards strong > svg:last-child {
+  margin-left: auto;
+}
+.discovery-mission-hub > footer {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  color: #c4d4ab;
+  font-size: 16px;
+}
+.discovery-hub-result {
+  margin-top: 22px;
+}
+.claim-check-board {
+  width: min(1160px, calc(100% - 36px));
+  margin: 8px auto 22px;
+  background: linear-gradient(135deg, #193e2de8, #0e2a20f5);
+  border: 1px solid #a8c07677;
+  border-radius: 24px;
+  padding: 26px;
+  overflow: auto;
+  min-height: 0;
+}
+.claim-check-board > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.claim-check-board > header h3 {
+  font-size: 32px;
+  line-height: 1.1;
+  margin: 10px 0;
+}
+.claim-check-board > header p {
+  font-size: 18px;
+  line-height: 1.4;
+  color: #bfceaf;
+  margin: 0;
+}
+.claim-check-board > header img {
+  object-fit: contain;
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 6px 12px #0005);
+  animation: claim-drone-hover 4s ease-in-out infinite;
+}
+.claim-evidence-pair {
+  display: grid;
+  grid-template-columns: 1fr 35px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+.claim-evidence-pair section {
+  align-self: stretch;
+  padding: 20px;
+  border: 1px solid #9eb47766;
+  border-radius: 16px;
+  background: #23483466;
+}
+.claim-evidence-pair label,
+.claim-judgement label {
+  display: block;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 12px 0;
+}
+.claim-check-board input,
+.claim-check-board textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #93ae6e77;
+  border-radius: 10px;
+  background: #0a291e;
+  color: #f0f1d8;
+  font:
+    17px/1.4 Rajdhani,
+    sans-serif;
+  resize: vertical;
+}
+.claim-check-board input::placeholder,
+.claim-check-board textarea::placeholder {
+  color: #91ac85;
+}
+.claim-evidence-pair section > p {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #a7bd9b;
+  margin-bottom: 0;
+}
+.claim-evidence-pair section > a {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 12px;
+  color: #d9e9ac;
+  font-size: 14px;
+}
+.claim-bridge {
+  display: grid;
+  place-items: center;
+  color: #d7e8a3;
+}
+.claim-judgement {
+  margin-top: 22px;
+}
+.claim-judgement > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+.claim-judgement button {
+  padding: 14px;
+  border: 1px solid #819c65;
+  border-radius: 12px;
+  color: #dfe9c4;
+  background: #193b2a;
+  text-align: left;
+  cursor: pointer;
+}
+.claim-judgement button[aria-pressed="true"] {
+  background: #d6e4a7;
+  color: #1c3928;
+  border-color: #f0f5cd;
+  box-shadow: 0 0 16px #c6dd7e22;
+}
+.claim-judgement button strong {
+  display: block;
+  font-size: 19px;
+}
+.claim-judgement button small {
+  display: block;
+  font-size: 13px;
+  margin-top: 6px;
+}
+.claim-judgement > small {
+  color: #b0c49e;
+  font-size: 13px;
+}
+.claim-check-board > footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+}
+.claim-check-board > footer > small {
+  font-size: 14px;
+  color: #b8cda6;
+}
+.discovery-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 18px;
+  border: 1px solid #e1edb6;
+  border-radius: 10px;
+  background: #cfe2a2;
+  color: #203b28;
+  font:
+    700 17px Rajdhani,
+    sans-serif;
+  box-shadow: 0 3px 0 #809959;
+  cursor: pointer;
+}
+.discovery-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.claim-error {
+  padding: 12px;
+  border: 1px solid #c2a76a;
+  background: #463e29;
+  color: #ffe8b9;
+  border-radius: 8px;
+}
+.claim-check-result {
+  text-align: center;
+  padding: 25px;
+  max-width: 760px;
+  margin: auto;
+}
+.claim-check-result > svg {
+  color: #d5e7a6;
+}
+.claim-check-result h4 {
+  font-size: 30px;
+  margin: 14px 0;
+}
+.claim-check-result > p {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #c4d1af;
+  white-space: pre-wrap;
+}
+.claim-check-result > div:last-child {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+.claim-check-result > div:last-child > button:not(.discovery-submit) {
+  padding: 10px 15px;
+  border: 1px solid #91a96b;
+  border-radius: 8px;
+  background: transparent;
+  color: #d5e2b3;
+}
+.claim-check-locked {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  padding: 50px;
+}
+.flight-mission-tab-content:has(.discovery-mission-hub),
+.flight-mission-tab-content:has(.claim-check-board) {
+  top: 138px;
+}
+.flight-mission-tab-content:has(.first-discovery-journey) .sky-mission {
+  min-height: 0;
+}
+.flight-mission-tab-content:has(.discovery-mission-hub) .sky-mission,
+.flight-mission-tab-content:has(.claim-check-board) .sky-mission {
+  overflow: auto;
+}
+.first-discovery-journey > .flight-discovery-fieldset {
+  min-height: 0;
+}
+.first-discovery-journey .mission-briefing-scene {
+  flex: 1;
+}
+@keyframes claim-drone-hover {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .flight-mission-tab-content:has(.discovery-mission-hub),
+  .flight-mission-tab-content:has(.claim-check-board) {
+    top: 66px;
+  }
+  .discovery-mission-hub {
+    padding: 12px 18px;
+    width: 96%;
+  }
+  .discovery-mission-hub > header {
+    margin-bottom: 16px;
+  }
+  .discovery-mission-hub h3 {
+    font-size: 26px;
+    margin: 7px 0;
+  }
+  .discovery-mission-hub > header p {
+    font-size: 15px;
+    margin: 6px;
+  }
+  .discovery-concept-cards {
+    gap: 18px;
+  }
+  .discovery-concept-cards > button {
+    gap: 10px;
+    padding: 18px;
+    border-radius: 16px;
+  }
+  .discovery-concept-cards > button > svg {
+    height: 26px;
+    width: 26px;
+  }
+  .discovery-concept-cards > button > span {
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+  .discovery-concept-cards h4 {
+    font-size: 22px;
+  }
+  .discovery-concept-cards p {
+    font-size: 14px;
+  }
+  .discovery-concept-cards strong {
+    padding-top: 10px;
+    font-size: 13px;
+  }
+  .discovery-mission-hub > footer {
+    font-size: 12px;
+    margin-top: 14px;
+  }
+  .discovery-back {
+    font-size: 11px;
+    padding: 5px 8px;
+    margin: 3px 12px;
+  }
+  .claim-check-board {
+    padding: 16px;
+    border-radius: 16px;
+    margin-top: 5px;
+  }
+  .claim-check-board > header {
+    margin-bottom: 14px;
+  }
+  .claim-check-board > header h3 {
+    font-size: 25px;
+    margin: 8px 0;
+  }
+  .claim-check-board > header p {
+    font-size: 15px;
+  }
+  .claim-check-board > header img {
+    width: 65px;
+    height: 65px;
+  }
+  .claim-check-board > header span,
+  .claim-evidence-pair section > span,
+  .claim-judgement > span {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+  .claim-evidence-pair {
+    gap: 10px;
+    grid-template-columns: 1fr 24px 1fr;
+  }
+  .claim-evidence-pair section {
+    padding: 14px;
+  }
+  .claim-evidence-pair label,
+  .claim-judgement label {
+    font-size: 17px;
+    margin: 8px 0;
+  }
+  .claim-check-board input,
+  .claim-check-board textarea {
+    padding: 9px;
+    font-size: 15px;
+  }
+  .claim-evidence-pair section > p {
+    font-size: 12px;
+  }
+  .claim-judgement {
+    margin-top: 15px;
+  }
+  .claim-judgement > div {
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .claim-judgement button {
+    padding: 10px;
+  }
+  .claim-judgement button strong {
+    font-size: 16px;
+  }
+  .claim-judgement button small {
+    font-size: 11px;
+  }
+  .discovery-submit {
+    font-size: 14px;
+    padding: 9px 12px;
+  }
+  .claim-check-board > footer > small {
+    font-size: 12px;
+  }
+}

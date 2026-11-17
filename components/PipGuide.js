@@ -1,7 +1,8 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight, X } from "lucide-react";
-import { pipScope, pipTutorial } from "@/lib/pip-tutorial";
+import { pipTutorial } from "@/lib/pip-tutorial";
+import usePipProgress from "./usePipProgress";
 import { pipImage } from "@/lib/pip-expressions";
 import PipSpeech from "./PipSpeech";
 import PipPointer from "./PipPointer";
@@ -27,16 +28,16 @@ export function PipDrone({ expression = "welcoming" }) {
 
 export function PipArrival({ returning = false, available = true }) {
   const dialogue = !available
-    ? "Hey, explorer! I'm Pip. Our flight is waiting for clearance. As soon as Command opens today's session, I'll help you get started."
+    ? "Hey, explorer! I'm Kiko. Our flight is waiting for clearance. As soon as Command opens today's session, I'll help you get started."
     : returning
       ? "You're back! Your discoveries are safe. Hit Clock in when you're ready, and let's keep exploring together!"
-      : "Hey, explorer! I'm Pip, your flight buddy. Ready for your first discovery? Hit Clock in, and we'll take off together!";
+      : "Hey, explorer! I'm Kiko, your flight buddy. Ready for your first discovery? Hit Clock in, and we'll take off together!";
   return (
     <div className="pip-arrival">
       <PipDrone expression={available ? "welcoming" : "thinking"} />
       <div className="pip-arrival-dialogue">
         <strong>
-          Pip <span>Your flight buddy</span>
+          Kiko <span>Your flight buddy</span>
         </strong>
         <PipSpeech text={dialogue} />
       </div>
@@ -54,13 +55,18 @@ export default function PipGuide({
   onNext,
 }) {
   const step = pipTutorial(data, { missionOpen, travelling, now });
-  const scope = pipScope(data);
-  const [preference, setPreference] = useState({ scope: "", dismissed: "" });
+  const progress = usePipProgress(data), scope = progress.account;
+  const [appearance, setAppearance] = useState({ account: "", id: "" });
   const [details, setDetails] = useState(false);
   const [notice, setNotice] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pointer, setPointer] = useState(null);
-  const [following, setFollowing] = useState(false);
+  const following = progress.following;
+  const completed = progress.completed.includes(step?.id);
+  const dismissedStep = progress.dismissed.includes(step?.id);
+  const seen = progress.seen.includes(step?.id);
+  const appearing = appearance.account === scope && appearance.id === step?.id;
+  const suppressed = completed || dismissedStep || (seen && !appearing);
   const pointedStep = useRef("");
   const highlighted = useRef(null);
   const highlightTimer = useRef(null);
@@ -71,27 +77,27 @@ export default function PipGuide({
     setPointer(null);
   }, []);
   useEffect(() => {
-    let dismissed = "";
-    let follow = false;
-    try {
-      dismissed = localStorage.getItem(scope) || "";
-      follow = localStorage.getItem(`${scope}:follow`) === "true";
-    } catch {
-      /* Help works without storage. */
+    if (!step || dialogOpen || document.querySelector('[aria-modal="true"]')) return;
+    if (appearance.id !== step.id || appearance.account !== scope)
+      setAppearance({ account: scope, id: "" });
+    if (!completed && !dismissedStep && !seen) {
+      setAppearance({ account: scope, id: step.id });
+      progress.patch({ seen: [step.id] });
     }
-    setPreference({ scope, dismissed });
-    setFollowing(follow);
-    pointedStep.current = "";
-  }, [scope]);
+  }, [scope, step?.id, dialogOpen, completed, dismissedStep, seen]);
   useEffect(() => {
     setDetails(false);
     setNotice("");
+    pointedStep.current = "";
     clearHighlight();
     return () => {
       clearTimeout(highlightTimer.current);
       highlighted.current?.classList.remove("pip-spotlight");
     };
-  }, [step?.id]);
+  }, [step?.id, scope]);
+  useEffect(() => {
+    if (!following || completed || (seen && !appearing)) clearHighlight();
+  }, [following, completed, seen, appearing]);
   useEffect(() => {
     const check = () =>
       setDialogOpen(Boolean(document.querySelector('[aria-modal="true"]')));
@@ -108,6 +114,7 @@ export default function PipGuide({
   useEffect(() => {
     if (
       !following ||
+      suppressed ||
       !step?.action ||
       dialogOpen ||
       pointedStep.current === step.id
@@ -140,7 +147,7 @@ export default function PipGuide({
       observer.disconnect();
       document.removeEventListener("input", continueGuide, true);
     };
-  }, [following, step?.id, dialogOpen]);
+  }, [following, step?.id, dialogOpen, suppressed]);
   useEffect(() => {
     if (!pointer) return;
     function clicked(event) {
@@ -164,30 +171,19 @@ export default function PipGuide({
     return () => document.removeEventListener("click", clicked, true);
   }, [pointer, step?.id]);
   if (!step || dialogOpen) return null;
+  if (suppressed && !pointer) return progress.error ? <p className="pip-save-status" role="status">{progress.error}</p> : null;
   const expression = notice
     ? "concerned"
     : details
       ? "guiding"
       : step.expression;
-  const dismissed =
-    preference.scope === scope && preference.dismissed === step.id;
+  const dismissed = suppressed;
   function remember(value) {
-    setPreference({ scope, dismissed: value });
-    try {
-      if (value) localStorage.setItem(scope, value);
-      else localStorage.removeItem(scope);
-    } catch {
-      /* Optional UI preference only. */
-    }
+    if (value) progress.patch({ seen: [value], dismissed: [value] });
   }
   function showTarget() {
     setNotice("");
-    setFollowing(true);
-    try {
-      localStorage.setItem(`${scope}:follow`, "true");
-    } catch {
-      /* Optional guide preference. */
-    }
+    progress.patch({ following: true });
     if (step.action === "mission") {
       onMission();
     }
@@ -256,25 +252,20 @@ export default function PipGuide({
         <PipStage>
           <aside
             className={`pip-guide ${!missionOpen ? "is-on-map" : ""}`}
-            aria-label="Pip tutorial companion"
+            aria-label="Kiko tutorial companion"
           >
             <PipDrone expression={expression} />
             <div className="pip-message" key={step.id}>
               <header>
-                <span>PIP / FLIGHT COMPANION</span>
+                <span>KIKO / FLIGHT COMPANION</span>
                 <button
                   type="button"
                   onClick={() => {
                     clearHighlight();
-                    setFollowing(false);
-                    try {
-                      localStorage.removeItem(`${scope}:follow`);
-                    } catch {
-                      /* Optional guide preference. */
-                    }
+                    progress.patch({ following: false });
                     remember(step.id);
                   }}
-                  aria-label="Minimize Pip guidance"
+                  aria-label="Minimize Kiko guidance"
                 >
                   <X size={15} />
                 </button>
@@ -292,6 +283,7 @@ export default function PipGuide({
                 </p>
               )}
               {notice && <p role="status">{notice}</p>}
+              {progress.error && <p role="status">{progress.error}</p>}
               <footer>
                 {step.action && (
                   <button

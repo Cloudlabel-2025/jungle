@@ -18,7 +18,7 @@ test("experience levels depend only on personal XP", () => {
   assert.equal(experienceLevel(0), 1);
   assert.equal(experienceLevel(99), 1);
   assert.equal(experienceLevel(100), 2);
-  assert.equal(experienceLevel(350), 4);
+  assert.equal(experienceLevel(350), 3);
 });
 test("leaderboard ranks trophies only, hides XP and treats trophy ties equally", () => {
   const standings = trophyStandings([

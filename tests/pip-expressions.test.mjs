@@ -15,7 +15,7 @@ import {
 } from "../lib/pip-expressions.js";
 import { pipTutorial } from "../lib/pip-tutorial.js";
 
-test("all five Pip expressions are distinct optimized transparent game assets", async () => {
+test("all five Kiko expressions are distinct optimized transparent game assets", async () => {
   const hashes = new Set();
   for (const expression of pipExpressions) {
     const file = new URL(`../public${pipImage(expression)}`, import.meta.url);
@@ -76,7 +76,7 @@ test("expressions follow saved progress, including review and correction states"
   assert.equal(pipExpression("map-submitted"), "thinking");
 });
 
-test("Pip renders the real expression images in guidance and first arrival", async () => {
+test("Kiko renders the real expression images in guidance and first arrival", async () => {
   const result = await build({
     entryPoints: ["components/PipGuide.js"],
     bundle: true,

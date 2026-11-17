@@ -7,7 +7,6 @@ import {
   attendanceSnapshot,
   syncAttendance,
   RESPONSE_MS,
-  CONTINUE_MS,
 } from "../lib/attendance.js";
 import { dayOneAction } from "../lib/day-one.js";
 import { weekOneAction, weekOneSnapshot } from "../lib/week-one.js";
@@ -20,7 +19,7 @@ test("attendance controls are available before boarding without unlocking resear
   assert.equal(flightApiAllowed("attendance/stay", "POST", false), true);
   assert.equal(flightApiAllowed("day1/genre", "POST", false), false);
   assert.equal(RESPONSE_MS, 120000);
-  assert.equal(CONTINUE_MS, 1800000);
+  assert.equal(flightApiAllowed("attendance/continue", "POST", false), true);
 });
 
 test(
@@ -109,6 +108,14 @@ test(
         { day: 1, revision: (await weekOneSnapshot(cc)).revision },
         at("08:00:00"),
       );
+      await assert.rejects(
+        act(a, "clock-in", at("08:59:59")),
+        (e) => e.status === 409 && e.message.includes("09:00"),
+      );
+      await assert.rejects(
+        dayOneAction(a, "clock", {}, at("08:59:59")),
+        (e) => e.status === 409 && e.message.includes("09:00"),
+      );
       await Promise.all([
         act(a, "clock-in", at("09:00:00")),
         act(a, "clock-in", at("09:00:00")),
@@ -116,11 +123,19 @@ test(
       // A manual clock-out on an earlier day still suppresses the tutorial,
       // even when today's snapshot has no attendance row or timeout receipt.
       await models.Attendance.create({
-        _id: "historical-manual-session", userId: b._id, cohortId: "alpha",
-        day: "2026-11-12", clockAt: at("09:00:00", "2026-11-12"),
-        sessionState: "OUT", clockOutAt: at("17:00:00", "2026-11-12"), clockOutReason: "MANUAL",
+        _id: "historical-manual-session",
+        userId: b._id,
+        cohortId: "alpha",
+        day: "2026-11-12",
+        clockAt: at("09:00:00", "2026-11-12"),
+        sessionState: "OUT",
+        clockOutAt: at("17:00:00", "2026-11-12"),
+        clockOutReason: "MANUAL",
       });
-      assert.equal((await attendanceSnapshot(b, at("08:59:00"))).hasClockedIn, true);
+      assert.equal(
+        (await attendanceSnapshot(b, at("08:59:00"))).hasClockedIn,
+        true,
+      );
       await models.Attendance.deleteOne({ _id: "historical-manual-session" });
       await act(b, "clock-in", at("09:00:00"));
       assert.equal(
@@ -132,7 +147,7 @@ test(
           .sessionEvents.length,
         1,
       );
-      const before = await attendanceSnapshot(a, at("16:59:00"));
+      const before = await attendanceSnapshot(a, at("16:59:59"));
       assert.equal(before.hasClockedIn, true);
       assert.equal(before.state, "ACTIVE");
       assert.equal(before.warningAt, null);
@@ -142,6 +157,14 @@ test(
       );
       const warning = await attendanceSnapshot(a, at("17:00:00"));
       assert.deepEqual(warning.responseDeadline, at("17:02:00"));
+      await assert.rejects(
+        act(b, "clock-in", at("17:00:00")),
+        (e) => e.status === 409 && e.message.includes("17:00"),
+      );
+      assert.equal(
+        (await attendanceSnapshot(b, at("17:01:59"))).state,
+        "CHOICE",
+      );
       await act(a, "stay", at("17:01:00"));
       assert.equal(
         (await attendanceSnapshot(a, at("17:02:00"))).responseDeadline,
@@ -153,10 +176,11 @@ test(
       ]);
       const out = await models.Attendance.findOne({ userId: b._id }).lean();
       assert.equal(out.sessionState, "OUT");
-      assert.deepEqual(out.clockOutAt, at("17:02:00"));
-      assert.equal(out.clockOutReason, "TIMEOUT");
+      assert.deepEqual(out.clockOutAt, at("17:00:00"));
+      assert.equal(out.clockOutReason, "SCHEDULED_END");
+      assert.equal(out.endDecision, "EXPIRED");
       assert.equal(out.sessionEvents.filter((e) => e.type === "OUT").length, 1);
-      assert.deepEqual(out.sessionEvents.at(-1).at, at("17:02:00"));
+      assert.deepEqual(out.sessionEvents.at(-1).at, at("17:00:00"));
       await assert.rejects(
         act(b, "stay", at("17:02:00")),
         (e) => e.status === 409,
@@ -166,12 +190,21 @@ test(
       assert.equal(
         (await models.Attendance.findOne({ userId: a._id }).lean())
           .clockOutReason,
-        "MANUAL",
+        "SCHEDULED_END",
+      );
+      await assert.rejects(
+        act(a, "clock-in", at("17:11:00")),
+        (e) => e.status === 409,
+      );
+      // Reopening the hours permits resuming, with original clock-in retained.
+      await models.Cohort.updateOne(
+        { _id: "alpha" },
+        { $set: { attendanceHours: { startTime: "09:00", endTime: "18:00" } } },
       );
       await act(a, "clock-in", at("17:11:00"));
       const resumed = await models.Attendance.findOne({ userId: a._id }).lean();
       assert.deepEqual(resumed.clockAt, at("09:00:00"));
-      assert.deepEqual(resumed.checkDueAt, at("17:41:00"));
+      assert.deepEqual(resumed.checkDueAt, at("18:00:00"));
       assert.equal(
         await models.DayOneRecord.countDocuments({ userId: a._id }),
         1,
@@ -179,17 +212,21 @@ test(
       await syncAttendance(at("18:30:00"));
       assert.deepEqual(
         (await attendanceSnapshot(a, at("18:30:00"))).clockOutAt,
-        at("17:43:00"),
+        at("18:00:00"),
       );
       assert.deepEqual(
         (await attendanceSnapshot(b, at("18:30:00"))).clockOutAt,
-        at("17:02:00"),
+        at("17:00:00"),
       );
       const next = await attendanceSnapshot(a, at("09:00:00", "2026-11-14"));
       assert.equal(next.hasClockedIn, true);
       assert.equal(next.state, "NOT_IN");
       assert.equal(next.available, false);
       // Day 2 uses a numeric activity day; the calendar date comes from its official start.
+      await models.Cohort.updateOne(
+        { _id: "alpha" },
+        { $unset: { attendanceHours: "" } },
+      );
       await models.WeekOneRelease.updateOne(
         { _id: "alpha" },
         {
@@ -232,7 +269,7 @@ test(
         a,
         at("00:01:00", "2026-11-15"),
       );
-      assert.equal(overnight.state, "ACTIVE");
+      assert.equal(overnight.state, "CHOICE");
       assert.deepEqual(
         overnight.responseDeadline,
         at("00:02:00", "2026-11-15"),
@@ -246,7 +283,7 @@ test(
             day: "2026-11-14",
           }).lean()
         ).clockOutReason,
-        "MANUAL",
+        "SCHEDULED_END",
       );
       // Expedition attendance retains the existing reward/lateness policy.
       await models.WeekOneProgram.deleteMany({});
@@ -268,7 +305,7 @@ test(
         b,
         at("09:00:00", "2026-11-15"),
       );
-      assert.deepEqual(midnight.cutoffAt, at("00:00:00", "2026-11-16"));
+      assert.deepEqual(midnight.cutoffAt, at("17:00:00", "2026-11-15"));
       await act(b, "clock-in", at("09:00:00", "2026-11-15"));
       await act(b, "clock-out", at("09:10:00", "2026-11-15"));
       await act(b, "clock-in", at("09:11:00", "2026-11-15"));

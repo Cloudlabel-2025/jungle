@@ -5,6 +5,8 @@ import { transform } from "esbuild";
 import React from "react";
 import { pipScope, pipTutorial } from "../lib/pip-tutorial.js";
 import { findPipTarget } from "../lib/pip-pointer.js";
+import { emptyPipProgress, mergePipProgress, pipAccountKey, completedPipSteps } from "../lib/pip-progress-rules.js";
+import { legacyPipProgress } from "../lib/pip-progress-client.js";
 
 // Run the real component's handlers with deterministic hooks and DOM controls.
 // No game API or real player mutation is available to the companion.
@@ -41,11 +43,11 @@ function text(node) {
   if (Array.isArray(node)) return node.map(text).join("");
   return typeof node === "object" ? text(node.props?.children) : String(node);
 }
-function harness(data, storage = new Map()) {
+function harness(data, storage = new Map(), initialProps = {}, accounts = storage) {
   let cursor = 0,
     dirty = false,
     effects = [],
-    modal = false,
+    modal = initialProps.modalInitiallyOpen || false,
     controlsReady = true;
   const observers = new Set();
   const hooks = [],
@@ -112,6 +114,21 @@ function harness(data, storage = new Map()) {
     setItem: (key, value) => storage.set(key, value),
     removeItem: (key) => storage.delete(key),
   };
+  const account = pipAccountKey(data), accountKey = `account:${account}`;
+  const original = accounts.get(accountKey) || data.pipProgress || emptyPipProgress();
+  accounts.set(accountKey, mergePipProgress(original, legacyPipProgress({ ...data, pipProgress: original }, localStorage)));
+  function usePipProgress(current) {
+    const previous = accounts.get(accountKey);
+    const saved = mergePipProgress(previous, { completed: completedPipSteps(current) });
+    accounts.set(accountKey, saved);
+    return { ...saved, account, patch(update) {
+      const old = accounts.get(accountKey), next = mergePipProgress(old, update);
+      if (JSON.stringify(old) !== JSON.stringify(next)) {
+        accounts.set(accountKey, { ...next, version: old.version + 1 });
+        dirty = true;
+      }
+    } };
+  }
   class Observer {
     constructor(callback) {
       this.callback = callback;
@@ -130,6 +147,7 @@ function harness(data, storage = new Map()) {
     "useCallback",
     "pipScope",
     "pipTutorial",
+    "usePipProgress",
     "PipSpeech",
     "PipPointer",
     "PipStage",
@@ -151,6 +169,7 @@ function harness(data, storage = new Map()) {
     (callback) => callback,
     pipScope,
     pipTutorial,
+    usePipProgress,
     "pip-speech",
     "pip-pointer",
     "pip-stage",
@@ -172,6 +191,7 @@ function harness(data, storage = new Map()) {
     onMission: () => counts.mission++,
     onMap: () => counts.map++,
     onNext: () => counts.next++,
+    ...initialProps,
   };
   function render() {
     for (let n = 0; n < 10; n++) {
@@ -228,9 +248,9 @@ test("Show me highlights and focuses a game control without clicking or advancin
     "Show me must display an animated pointer at the target",
   );
   assert.equal(
-    h.button("Ask Pip for help"),
+    h.button("Ask Kiko for help"),
     undefined,
-    "Pip leaves no floating launcher behind",
+    "Kiko leaves no floating launcher behind",
   );
   assert.deepEqual(data, before);
   h.clickTarget();
@@ -240,13 +260,13 @@ test("Show me highlights and focuses a game control without clicking or advancin
     "pointer clears when the player clicks the control",
   );
 });
-test("dismissed Pip disappears without a launcher and returns at the next saved checkpoint", () => {
+test("dismissed Kiko disappears without a launcher and returns at the next saved checkpoint", () => {
   const data = base(),
     storage = new Map(),
     h = harness(data, storage);
-  h.button("Minimize Pip guidance").props.onClick();
+  h.button("Minimize Kiko guidance").props.onClick();
   h.render();
-  assert.equal(h.button("Ask Pip for help"), undefined);
+  assert.equal(h.button("Ask Kiko for help"), undefined);
   assert.equal(h.button("Show me"), undefined);
   assert.equal(
     harness(data, storage).button("Show me"),
@@ -314,15 +334,12 @@ test("automatic guidance resumes on reload and can be dismissed", () => {
   h.button("Show me").props.onClick();
   h.render();
   const resumed = harness(JSON.parse(JSON.stringify(data)), storage);
-  assert.ok(
-    resumed.pointer(),
-    "reload follows saved progress without another Show me",
-  );
+  assert.equal(resumed.pointer(), undefined, "a previously shown step does not repeat on reload");
   resumed.props.data.dayOne.records[0].researchSelection = {
     genreId: "fitness",
   };
   resumed.render();
-  resumed.button("Minimize Pip guidance").props.onClick();
+  resumed.button("Minimize Kiko guidance").props.onClick();
   resumed.render();
   resumed.props.data.dayOne.records[0].genreId = "fitness-3";
   resumed.render();
@@ -332,12 +349,80 @@ test("automatic guidance resumes on reload and can be dismissed", () => {
     "manual dismissal stops the automatic arrows",
   );
 });
-test("Pip yields to dialogs and returns when they close", () => {
+
+test("a second browser reads account guidance history without browser storage", () => {
+  const data = base(), accounts = new Map(), first = harness(data, new Map(), {}, accounts);
+  first.button("Show me").props.onClick();
+  first.render();
+  const second = harness(structuredClone(data), new Map(), {}, accounts);
+  assert.equal(second.button("Show me"), undefined);
+  assert.equal(second.pointer(), undefined);
+  data.dayOne.records[0].researchSelection = { genreId: "fitness" };
+  const next = harness(data, new Map(), {}, accounts);
+  assert.match(next.text(), /Find your mission/);
+  assert.ok(next.pointer(), "automatic arrows carry over for the next unseen step");
+  assert.equal(harness(data, new Map(), {}, accounts).button("Show me"), undefined);
+});
+test("Kiko yields to dialogs and returns when they close", () => {
   const h = harness(base());
   h.setModal(true);
   assert.equal(h.render(), null);
   h.setModal(false);
   assert.match(h.text(), /Choose your world/);
+});
+
+test("Kiko introduces helicopter travel once, even after another step, reload or record scope change", () => {
+  const data = base(), storage = new Map(), h = harness(data, storage);
+  h.props.travelling = true;
+  h.render();
+  assert.match(h.text(), /Next stop: discovery/);
+  h.render();
+  assert.match(h.text(), /Next stop: discovery/, "keep the first appearance visible during this journey");
+  h.props.travelling = false;
+  data.dayOne.records[0].researchSelection = { genreId: "fitness" };
+  h.render();
+  h.button("Minimize Kiko guidance").props.onClick();
+  h.render();
+  h.props.travelling = true;
+  h.render();
+  assert.equal(h.render(), null, "later travel should be silent");
+  assert.equal(harness(data, storage, { travelling: true }).render(), null, "refresh must not repeat it");
+  data.dayOne.records[0]._id = "new-record-scope";
+  data.dayOne.records[0].config = { version: 2 };
+  assert.equal(harness(data, storage, { travelling: true }).render(), null);
+  const other = base();
+  other.user._id = "another-player";
+  other.dayOne.records[0].userId = "another-player";
+  assert.match(harness(other, storage, { travelling: true }).text(), /Next stop: discovery/);
+});
+
+test("travel guidance hidden by a dialog is not consumed before it can be seen", () => {
+  const h = harness(base());
+  h.setModal(true);
+  h.props.travelling = true;
+  assert.equal(h.render(), null);
+  h.setModal(false);
+  assert.match(h.text(), /Next stop: discovery/);
+});
+
+test("a dialog already open on first arrival does not consume hidden guidance", () => {
+  const accounts = new Map(), data = base();
+  const h = harness(data, new Map(), { modalInitiallyOpen: true }, accounts);
+  assert.equal(h.render(), null);
+  assert.ok(![...accounts.values()][0].seen.includes("genre"));
+  h.setModal(false);
+  assert.match(h.text(), /Choose your world/);
+});
+
+test("an existing dismissed travel message stays dismissed after subsequent guidance", () => {
+  const data = base(), storage = new Map([[pipScope(data), "travelling"]]);
+  const h = harness(data, storage, { travelling: true });
+  assert.equal(h.render(), null);
+  h.props.travelling = false;
+  h.render();
+  h.button("Minimize Kiko guidance").props.onClick();
+  h.render();
+  assert.equal(harness(data, storage, { travelling: true }).render(), null);
 });
 test("chat submission hides the redundant Click here label while other steps retain it", () => {
   const data = base(),

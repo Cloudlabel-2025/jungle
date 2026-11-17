@@ -78,7 +78,7 @@ function harness(initial, reduce = false) {
   };
 }
 const visible = (tree) => tree.props.children[2].props.children[0];
-test("Pip reveals dialogue gradually and stops the timer at the end", () => {
+test("Kiko reveals dialogue gradually and stops the timer at the end", () => {
   const h = harness("Hey, explorer!");
   assert.equal(visible(h.render()), "");
   assert.equal(visible(h.advance(4)), "Hey,");
@@ -107,7 +107,7 @@ test("reduced motion reads immediately and screen readers receive the complete d
   assert.equal(tree.props.children[2].props["aria-hidden"], "true");
 });
 
-test("arrival places Pip outside the clock-in panel and leaves Clock in enabled during speech", async () => {
+test("arrival places Kiko outside the clock-in panel and leaves Clock in enabled during speech", async () => {
   const result = await build({
     entryPoints: ["components/AttendancePrompt.js"],
     bundle: true,
@@ -144,7 +144,7 @@ test("arrival places Pip outside the clock-in panel and leaves Clock in enabled 
     );
   let html = render();
   assert.ok(html.indexOf('class="modal-companion"') < html.indexOf("<section"));
-  assert.ok(html.includes("I&#x27;m Pip, your flight buddy"));
+  assert.ok(html.includes("I&#x27;m Kiko, your flight buddy"));
   assert.equal((html.match(/aria-modal="true"/g) || []).length, 1);
   assert.match(html, /<button class="btn primary">Clock in<\/button>/);
   assert.ok(
@@ -155,7 +155,7 @@ test("arrival places Pip outside the clock-in panel and leaves Clock in enabled 
   html = render();
   assert.ok(
     !html.includes("modal-companion-layout"),
-    "a later day's clock-in must not repeat Pip's tutorial",
+    "a later day's clock-in must not repeat Kiko's tutorial",
   );
   assert.ok(html.includes("Clock in to play"));
   data.playSession.hasClockedIn = false;
@@ -165,6 +165,9 @@ test("arrival places Pip outside the clock-in panel and leaves Clock in enabled 
     "same-day return must not repeat the tutorial",
   );
   data.playSession.state = "NOT_IN";
+  data.pipProgress = { generation: 1, version: 1, seen: ["clock-in"], dismissed: [], completed: [], following: false };
+  assert.ok(!render().includes("modal-companion-layout"), "another browser must not repeat a saved first-arrival tutorial, even before the first clock-in");
+  delete data.pipProgress;
   data.story.flight = false;
   html = render();
   assert.ok(

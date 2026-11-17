@@ -1,0 +1,801 @@
+/* Story cards and the comic stage share the expedition's green-and-gold palette. */
+.l2-comic-art > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.is-game-library {
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+.is-game-library .l2-story-intro {
+  position: relative;
+  z-index: 1;
+}
+.is-game-library .l2-story-intro h3 {
+  font-size: clamp(26px, 3vw, 42px);
+  color: #f6e4af;
+  text-shadow: 0 4px 18px #071d14;
+}
+.is-game-library .l2-story-intro > svg {
+  color: #e7ce7c;
+}
+.is-game-library .l2-story-covers {
+  width: min(1080px, 96%);
+  height: clamp(210px, 39vh, 410px);
+  gap: clamp(12px, 2vw, 28px);
+  align-items: stretch;
+  perspective: 1200px;
+  padding: 10px 0 20px;
+}
+.is-game-library .l2-story-cover {
+  isolation: isolate;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 16px;
+  border: 2px solid #d2c17b99;
+  box-shadow:
+    0 17px 0 -9px #0c211a,
+    0 24px 36px #03140dbb,
+    inset 0 0 0 4px #e5d89f22;
+  transform: translateY(var(--card-lift)) rotate(var(--card-tilt));
+  transition:
+    transform 0.25s,
+    border-color 0.25s,
+    box-shadow 0.25s;
+  overflow: hidden;
+}
+.is-game-library .l2-story-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    #071c1d22 20%,
+    #061c1c33 40%,
+    #09271ae8 72%,
+    #08261b 100%
+  );
+  pointer-events: none;
+}
+.is-game-library .l2-story-cover > .l2-comic-art,
+.is-game-library .l2-story-cover > .l2-story-custom {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+.is-game-library .l2-story-cover:hover,
+.is-game-library .l2-story-cover:focus-visible {
+  transform: translateY(-12px) rotate(0);
+  border-color: #ffe3a1;
+  box-shadow:
+    0 20px 40px #03140dbb,
+    0 0 0 3px #f0dc8222,
+    0 0 34px #e6d57638;
+  z-index: 2;
+  outline: 0;
+}
+.is-game-library .l2-story-number {
+  top: 12px;
+  left: 12px;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #f6e5ae, #bfa65f);
+  border: 2px solid #fae8b3;
+  color: #263b27;
+  box-shadow: 0 3px 12px #05190c77;
+  font:
+    800 9px "Rajdhani",
+    sans-serif;
+  letter-spacing: 0;
+}
+.l2-story-pages-badge {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  padding: 5px 7px;
+  background: #0a271de6;
+  border: 1px solid #d4ce8555;
+  border-radius: 5px;
+  color: #e4dfac;
+  font:
+    7px/1 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.05em;
+}
+.is-game-library .l2-story-cover > strong {
+  padding: 0 16px 12px;
+  font:
+    700 clamp(20px, 2.05vw, 30px)/1.05 "Rajdhani",
+    sans-serif;
+  color: #f6e5b1;
+  text-shadow: 0 2px 8px #031b11;
+}
+.is-game-library .l2-story-read {
+  margin: 0 12px 12px;
+  padding: 9px 10px;
+  border-radius: 7px;
+  background: #9bb7601c;
+  border: 1px solid #d1d69566;
+  color: #eef0bf;
+  font-size: 13px;
+}
+.is-game-library .l2-scenario-hint {
+  justify-content: center;
+  max-width: 620px;
+  text-align: center;
+  margin: 0;
+  color: #b9cca8;
+  font-size: 12px;
+}
+
+.is-game-story .l2-comic-stage {
+  position: relative;
+  display: block;
+  min-height: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 2px solid #dac48799;
+  box-shadow: 0 18px 44px #071c14aa;
+}
+.is-game-story .l2-comic-illustration {
+  position: relative;
+  inset: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.is-game-story .l2-comic-illustration::after {
+  content: none;
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent 42%, #061c1840 66%, #061c18bd),
+    linear-gradient(0deg, #061c18b8, transparent 38%);
+  pointer-events: none;
+}
+.is-game-story .l2-comic-illustration > .l2-comic-art {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  aspect-ratio: auto;
+  transform: none;
+}
+.is-game-story .l2-comic-scene-tag {
+  inset: 14px auto auto 14px;
+  z-index: 1;
+  padding: 7px 11px;
+  font-size: 13px;
+  max-width: 55%;
+}
+.is-game-story .l2-comic-dialogue {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: min(37%, 380px);
+  max-height: calc(100% - 36px);
+  padding: 16px 18px;
+  gap: 10px;
+  justify-content: flex-start;
+  border: 2px solid #f4e6b8;
+  border-radius: 17px 17px 5px 17px;
+  background: linear-gradient(145deg, #f0e3b9f7, #d0d8a4f7);
+  box-shadow: 0 12px 30px #061b14bb;
+  z-index: 2;
+}
+.is-game-story .l2-comic-speaker {
+  font-size: 8px;
+  gap: 8px;
+}
+.is-game-story .l2-comic-speaker img {
+  width: 38px;
+  height: 38px;
+}
+.is-game-story .l2-comic-dialogue h3 {
+  font-size: clamp(19px, 1.8vw, 27px);
+}
+.is-game-story .l2-comic-speech {
+  font-size: clamp(17px, 1.4vw, 21px);
+  line-height: 1.3;
+}
+.is-game-story .l2-comic-clue {
+  padding: 9px 10px;
+  font-size: 13px;
+}
+.is-game-story .l2-comic-navigation {
+  gap: 14px;
+}
+.l2-comic-scene-cards {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-right: auto;
+  margin-left: auto;
+  min-width: 0;
+}
+.l2-comic-scene-cards > button {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  width: clamp(64px, 7vw, 102px);
+  height: 58px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #b4c58488;
+  border-radius: 8px;
+  background: #163e2b;
+  box-shadow: 0 4px 10px #03170c66;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+.l2-comic-scene-cards > button > .l2-comic-art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.l2-comic-scene-cards > button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(transparent, #061c17ec);
+}
+.l2-comic-scene-cards > button > span {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  background: #09241de6;
+  color: #e7e0aa;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font:
+    8px "JetBrains Mono",
+    monospace;
+}
+.l2-comic-scene-cards > button > strong {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  right: 5px;
+  color: #e5e7bd;
+  font:
+    600 10px/1.05 "Rajdhani",
+    sans-serif;
+  text-align: left;
+}
+.l2-comic-scene-cards > button.is-current {
+  border-color: #ffe1a0;
+  box-shadow:
+    0 0 0 2px #ddca7c55,
+    0 0 22px #d8cb6b33;
+  transform: translateY(-3px);
+}
+.l2-comic-scene-cards > button:hover,
+.l2-comic-scene-cards > button:focus-visible {
+  border-color: #fff0b6;
+  transform: translateY(-4px);
+  outline: 2px solid #f4e3a3;
+  outline-offset: 1px;
+}
+.is-game-story .l2-comic-timer {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.is-game-story .l2-comic-navigation {
+  position: relative;
+  padding-top: 16px;
+}
+
+@media (max-height: 700px) {
+  .is-game-library .l2-story-covers {
+    height: clamp(185px, 36vh, 300px);
+  }
+  .is-game-library {
+    gap: 15px;
+  }
+  .is-game-library .l2-story-intro p {
+    font-size: 13px;
+  }
+  .is-game-story .l2-comic-dialogue {
+    padding: 12px 14px;
+    gap: 8px;
+  }
+  .is-game-story .l2-comic-speech {
+    font-size: 17px;
+  }
+  .is-game-story .l2-comic-clue {
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .level-two-scene:has(.is-game-library) {
+    padding-top: 44px;
+  }
+  .level-two-scene:has(.is-game-library) > .week-level-rewards {
+    position: absolute;
+    right: 16px;
+    top: 83px;
+    padding: 0;
+    background: none;
+    border: 0;
+    z-index: 1;
+  }
+  .level-two-scene:has(.is-game-library) > .week-level-rewards > div,
+  .level-two-scene:has(.is-game-library) .l2-briefing-heading > div > span,
+  .level-two-scene:has(.is-game-library) .l2-topline > div:first-child > strong {
+    display: none;
+  }
+  .is-game-library {
+    gap: 10px;
+  }
+  .is-game-library .l2-story-intro {
+    gap: 3px 7px;
+  }
+  .is-game-library .l2-story-intro h3 {
+    font-size: 23px;
+  }
+  .is-game-library .l2-story-intro p {
+    font-size: 10px;
+  }
+  .is-game-library .l2-story-covers {
+    width: 95%;
+    height: clamp(125px, 38vh, 180px);
+    gap: 14px;
+    padding: 2px 0 12px;
+  }
+  .is-game-library .l2-story-cover {
+    border-width: 1px;
+    border-radius: 11px;
+    transform: translateY(calc(var(--card-lift) * 0.35))
+      rotate(calc(var(--card-tilt) * 0.5));
+  }
+  .is-game-library .l2-story-cover:hover,
+  .is-game-library .l2-story-cover:focus-visible {
+    transform: translateY(-4px) rotate(0);
+  }
+  .is-game-library .l2-story-number {
+    width: 25px;
+    height: 25px;
+    top: 7px;
+    left: 7px;
+    font-size: 6px;
+    border-width: 1px;
+  }
+  .l2-story-pages-badge {
+    top: 10px;
+    right: 6px;
+    padding: 4px;
+    font-size: 5px;
+  }
+  .is-game-library .l2-story-cover > strong {
+    padding: 0 9px 7px;
+    font-size: clamp(15px, 2vw, 19px);
+  }
+  .is-game-library .l2-story-read {
+    margin: 0 7px 7px;
+    padding: 5px 6px;
+    font-size: 10px;
+    gap: 5px;
+  }
+  .is-game-library .l2-scenario-hint {
+    font-size: 9px;
+    max-width: 590px;
+  }
+  .is-game-story .l2-comic-stage {
+    border-radius: 10px;
+    border-width: 1px;
+  }
+  .is-game-story .l2-comic-scene-tag {
+    inset: 7px auto auto 7px;
+    max-width: 52%;
+    font-size: 10px;
+    padding: 5px 7px;
+  }
+  .is-game-story .l2-comic-dialogue {
+    right: 9px;
+    bottom: 9px;
+    width: 38%;
+    max-height: calc(100% - 18px);
+    padding: 9px 11px;
+    gap: 6px;
+    border-width: 1px;
+    border-radius: 11px 11px 3px 11px;
+  }
+  .is-game-story .l2-comic-speaker {
+    font-size: 6px;
+  }
+  .is-game-story .l2-comic-speaker img {
+    width: 23px;
+    height: 23px;
+  }
+  .is-game-story .l2-comic-dialogue h3 {
+    font-size: 17px;
+  }
+  .is-game-story .l2-comic-speech {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+  .is-game-story .l2-comic-clue {
+    padding: 6px 7px;
+    font-size: 10px;
+  }
+  .is-game-story .l2-comic-clue > svg {
+    width: 12px;
+    height: 12px;
+  }
+  .l2-comic-scene-cards {
+    gap: 6px;
+  }
+  .l2-comic-scene-cards > button {
+    width: 60px;
+    height: 38px;
+    border-radius: 5px;
+  }
+  .l2-comic-scene-cards > button > span {
+    top: 2px;
+    left: 3px;
+    font-size: 6px;
+    padding: 1px 3px;
+  }
+  .l2-comic-scene-cards > button > strong {
+    bottom: 3px;
+    left: 4px;
+    right: 4px;
+    font-size: 8px;
+  }
+  .is-game-story .l2-comic-navigation {
+    gap: 9px;
+    padding-top: 0;
+  }
+  .is-game-story .l2-comic-timer {
+    position: static;
+    transform: none;
+    font-size: 9px;
+  }
+  .is-game-story .l2-comic-navigation > .l2-comic-timer {
+    display: block;
+    position: absolute;
+    left: 9px;
+    bottom: calc(100% + 10px);
+    top: auto;
+    padding: 4px 7px;
+    border: 1px solid #ced38a66;
+    border-radius: 4px;
+    background: #09271ee8;
+    color: #e0e5b4;
+    z-index: 3;
+  }
+}
+@media (orientation: landscape) and (max-width: 740px) and (max-height: 540px) {
+  .l2-comic-scene-cards > button {
+    width: 43px;
+    height: 32px;
+  }
+  .l2-comic-scene-cards > button > strong {
+    display: none;
+  }
+  .is-game-story .l2-comic-dialogue {
+    width: 41%;
+  }
+  .is-game-story .l2-comic-speech {
+    font-size: 13px;
+  }
+  .is-game-story .l2-comic-dialogue h3 {
+    font-size: 15px;
+  }
+  .is-game-library .l2-story-covers {
+    gap: 10px;
+  }
+  .l2-story-pages-badge {
+    display: none;
+  }
+}
+
+@media (orientation:landscape) and (min-height:501px) and (max-height:540px) { .level-two-scene:has(.is-game-library) { padding-top:108px; }.level-two-scene:has(.is-game-library) > .week-level-rewards { top:147px; } }
+/* Wide comic panels use the page width; the speech caption remains below. */
+.is-game-story {
+  position: relative;
+  container-type: normal;
+  gap: 8px;
+}
+.is-game-story .l2-comic-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  align-self: stretch;
+  margin: 0;
+  border: 3px solid #162d21;
+  border-radius: 3px;
+  background: #153a29;
+  box-shadow: 5px 5px 0 #071b16, 0 12px 32px #03150d88;
+}
+.is-game-story .l2-comic-illustration {
+  position: relative;
+  inset: auto;
+  border-radius: 0;
+  border: 0;
+  background:
+    radial-gradient(#b9bc7626 1px, transparent 1px) 0 0 / 7px 7px,
+    linear-gradient(90deg, #0d281f, #1b432f 50%, #0d281f);
+}
+.is-game-story .l2-comic-illustration::after { content: none; }
+.is-game-story .l2-comic-illustration::before {
+  content: "";
+  position: absolute;
+  inset: -30px;
+  background: var(--comic-ambient-image) center / cover;
+  filter: blur(30px);
+  opacity: .32;
+  pointer-events: none;
+}
+.is-game-story .l2-comic-illustration > .l2-comic-art {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  transform: none;
+  aspect-ratio: auto;
+  background: transparent;
+  z-index: 1;
+}
+.is-game-story .l2-comic-dialogue {
+  position: relative;
+  inset: auto;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  width: auto;
+  max-height: none;
+  padding: 12px 16px;
+  gap: 4px 16px;
+  border: 0;
+  border-top: 4px solid #162d21;
+  border-radius: 0;
+  overflow: visible;
+  color: #f7e7ad;
+  background: radial-gradient(#d6cb8733 1px, transparent 1px) 0 0 / 6px 6px, #153a29;
+  box-shadow: none;
+}
+.l2-comic-caption-number {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  padding: 9px 12px;
+  background: #eed18b;
+  color: #193c28;
+  border: 2px solid #102a1f;
+  box-shadow: 3px 3px 0 #081e16;
+  transform: rotate(-3deg);
+  font: 800 20px/1.1 "Rajdhani", sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.is-game-story .l2-comic-speaker { display: none; }
+.is-game-story .l2-comic-dialogue h3 {
+  grid-column: 2;
+  grid-row: 1;
+  color: #f7e0a1;
+  font: 800 23px/1.05 "Rajdhani", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .025em;
+}
+.is-game-story .l2-comic-speech {
+  grid-column: 2; grid-row: 2;
+  position: relative;
+  padding: 9px 14px;
+  border: 2px solid #163323;
+  border-radius: 3px 15px 15px 15px;
+  background: #f1daa2;
+  box-shadow: 3px 3px 0 #071e16;
+  color: #173b29;
+  font: 650 clamp(18px, 1.45vw, 25px)/1.2 "Rajdhani", sans-serif;
+}
+.is-game-story .l2-comic-speech::before {
+  content: ""; position: absolute; top: -9px; left: 18px;
+  width: 13px; height: 13px; background: #f1daa2;
+  border-top: 2px solid #163323; border-left: 2px solid #163323;
+  transform: skewY(35deg);
+}
+.is-game-story .l2-comic-clue {
+  grid-column: 3; grid-row: 1 / 3;
+  max-width: 200px;
+  border: 2px solid #d5c47c;
+  border-radius: 4px;
+  box-shadow: 3px 3px 0 #071e16;
+  padding: 10px;
+  font-size: 13px;
+}
+.is-game-story .l2-comic-clue > .l2-comic-clue-label { margin-left: 0; font: inherit; }
+.is-game-story .l2-comic-evidence {
+  grid-column: 2 / -1; grid-row: 3;
+  background: #f1daa2; color: #193c28;
+  border: 2px dashed #d9bd73; border-radius: 3px;
+}
+.is-game-story .l2-comic-stage:has(.l2-comic-evidence) {
+  overflow-y: auto;
+  grid-template-rows: minmax(140px, 1fr) auto;
+}
+.comic-typed-text { position: relative; display: block; }
+.comic-typed-reserve { visibility: hidden; display: block; }
+.comic-typed-ink { position: absolute; inset: 0; }
+.comic-typed-accessible {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.comic-typed-text[data-typing="true"] .comic-typed-ink::after { content: "▎"; opacity: .6; }
+.level-two-scene:has(.is-game-story) { gap: 7px; }
+.level-two-scene:has(.is-game-story) > .l2-topline { display: none; }
+.level-two-scene:has(.is-game-story) > .week-level-rewards {
+  position: absolute; right: 34px; top: 112px;
+  padding: 0; border: 0; background: none; z-index: 1;
+}
+.level-two-scene:has(.is-game-story) > .week-level-rewards > div { display: none; }
+.level-two-scene:has(.is-game-story) .l2-briefing { gap: 5px; }
+.level-two-scene:has(.is-game-story) .l2-briefing-heading h2 { font-size: 18px; }
+.l2-comic-selection:has(.is-game-story) { position: relative; }
+.l2-comic-selection:has(.is-game-story) > .l2-comic-other {
+  position: absolute; top: 4px; left: 0; z-index: 2;
+}
+.l2-comic-selection .is-game-story .l2-comic-top { padding-left: 110px; }
+.is-game-story .l2-comic-navigation { position: static; padding-top: 0; }
+.is-game-story .l2-comic-scene-cards > button { height: 44px; }
+.is-game-story .l2-comic-timer { top: 8px; right: 190px; left: auto; transform: none; font-size: 10px; }
+@media (orientation: landscape) and (max-height: 540px) {
+  .level-two-scene:has(.is-game-story) { padding-bottom: 8px; gap: 3px; }
+  .level-two-scene:has(.is-game-story) .l2-briefing-heading {
+    position: static; height: 21px; z-index: 2;
+  }
+  .level-two-scene:has(.is-game-story) .l2-briefing-heading h2 { display: none; }
+  .level-two-scene:has(.is-game-story) > .week-level-rewards { top: 44px; right: 16px; bottom: auto; }
+  .is-game-story { gap: 4px; }
+  .is-game-story .l2-comic-stage { width: 100%; border-width: 2px; }
+  .is-game-story .l2-comic-dialogue { padding: 6px 9px; gap: 3px 9px; border-top-width: 3px; }
+  .l2-comic-caption-number { padding: 5px 7px; font-size: 13px; }
+  .is-game-story .l2-comic-dialogue h3 { font-size: 14px; }
+  .is-game-story .l2-comic-speech { padding: 6px 9px; font-size: 14px; }
+  .is-game-story .l2-comic-clue-label {
+    position: absolute; width: 1px; height: 1px;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+  }
+  .is-game-story .l2-comic-clue-toggle { display: none; }
+  .is-game-story .l2-comic-clue { padding: 7px; min-width: 32px; }
+  .is-game-story .l2-comic-scene-cards > button { height: 28px; }
+  .is-game-story .l2-comic-navigation > .l2-comic-timer { display: none; }
+  .is-game-story .l2-comic-stage:has(.l2-comic-evidence) { grid-template-rows: minmax(95px, 1fr) auto; }
+  .is-game-story .l2-comic-evidence { padding: 6px; }
+}
+@media (orientation: landscape) and (min-height: 501px) and (max-height: 540px) {
+  .level-two-scene:has(.is-game-story) > .week-level-rewards { top: 108px; }
+}
+/* A spread shows two complete panels, each with its own caption below. */
+.l2-comic-spread {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  min-height: 0;
+  min-width: 0;
+}
+.is-game-story .l2-comic-spread .l2-comic-stage { width: auto; min-width: 0; }
+.is-game-story .l2-comic-spread .l2-comic-illustration::before { content: none; }
+.is-game-story .l2-comic-spread .l2-comic-dialogue {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 9px 11px;
+  gap: 4px 10px;
+}
+.is-game-story .l2-comic-spread .l2-comic-caption-number { font-size: 15px; padding: 6px 8px; }
+.is-game-story .l2-comic-spread .l2-comic-dialogue h3 { font-size: 19px; }
+.is-game-story .l2-comic-spread .l2-comic-speech { grid-column: 1 / -1; font-size: clamp(17px, 1.25vw, 23px); }
+.is-game-story .l2-comic-spread .l2-comic-caption-number { grid-row: 1; }
+.is-game-story .l2-comic-spread .l2-comic-clue { grid-row: 1; max-width: 150px; padding: 7px; font-size: 11px; }
+.is-game-story .l2-comic-spread .l2-comic-evidence { grid-column: 1 / -1; }
+@media (orientation: landscape) and (max-height: 540px) {
+  .l2-comic-spread { gap: 8px; }
+  .is-game-story .l2-comic-spread .l2-comic-dialogue { padding: 5px 7px; gap: 3px 6px; }
+  .is-game-story .l2-comic-spread .l2-comic-caption-number { font-size: 11px; padding: 4px 5px; }
+  .is-game-story .l2-comic-spread .l2-comic-dialogue h3 { font-size: 13px; }
+  .is-game-story .l2-comic-spread .l2-comic-speech { font-size: 13px; line-height: 1.15; padding: 5px 7px; }
+  .is-game-story .l2-comic-spread .l2-comic-clue { padding: 5px; min-width: 26px; }
+}
+/* Share the image, heading, dialogue and clue rows across both cards. */
+@supports (grid-template-rows: subgrid) {
+  .l2-comic-spread { grid-template-rows: minmax(0, 1fr) auto auto auto; row-gap: 0; }
+  .is-game-story .l2-comic-spread .l2-comic-stage {
+    grid-row: 1 / 5; grid-template-rows: subgrid; row-gap: 0;
+  }
+  .l2-comic-spread > .l2-comic-stage:first-child { grid-column: 1; }
+  .l2-comic-spread > .l2-comic-stage:nth-child(2) { grid-column: 2; }
+  .is-game-story .l2-comic-spread .l2-comic-illustration { grid-row: 1; }
+  .is-game-story .l2-comic-spread .l2-comic-dialogue {
+    grid-row: 2 / 5; grid-template-rows: subgrid; row-gap: 4px;
+    padding: 7px 9px;
+  }
+  .is-game-story .l2-comic-spread .l2-comic-speech { align-self: stretch; padding: 7px 10px; }
+  .is-game-story .l2-comic-spread .l2-comic-clue { white-space: nowrap; max-width: 170px; }
+  .is-game-story .l2-comic-spread .l2-comic-clue-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .l2-comic-spread:has(.l2-comic-evidence) { grid-template-rows: minmax(140px, 1fr) auto auto auto; overflow-y: auto; }
+  .is-game-story .l2-comic-spread .l2-comic-stage:has(.l2-comic-evidence) { overflow: visible; }
+  @media (orientation: landscape) and (max-height: 540px) {
+    .l2-comic-spread { column-gap: 6px; }
+    .is-game-story .l2-comic-spread .l2-comic-dialogue { padding: 4px 6px; row-gap: 3px; }
+    .is-game-story .l2-comic-spread .l2-comic-speech { padding: 5px 7px; }
+    .l2-comic-spread:has(.l2-comic-evidence) { grid-template-rows: minmax(95px, 1fr) auto auto auto; }
+  }
+}
+/* Replay's body must grow with its fixed-height dialog. Otherwise absolute
+   artwork has no intrinsic height and only the caption rows remain visible. */
+.jungle-world .modal-backdrop:has(.l2-comic-replay) {
+  padding: 20px;
+  overflow: hidden;
+}
+.jungle-world .modal.modal-dialog:has(.l2-comic-replay) {
+  width: min(1440px, calc(100vw - 40px));
+  max-width: min(1440px, calc(100vw - 40px));
+  height: min(900px, calc(100dvh - 40px));
+  max-height: calc(100dvh - 40px);
+}
+.jungle-world .modal.modal-dialog:has(.l2-comic-replay) > .panel-heading {
+  padding: 13px 20px;
+  gap: 12px;
+  min-height: 0;
+}
+.jungle-world .modal.modal-dialog:has(.l2-comic-replay) > .panel-heading > div { display: grid; gap: 3px; }
+.jungle-world .modal.modal-dialog:has(.l2-comic-replay) > .panel-heading .eyebrow { display: block; line-height: 1.3; }
+.jungle-world .modal.modal-dialog:has(.l2-comic-replay) > .panel-heading h2 { font-size: 24px; }
+.jungle-world .modal.modal-dialog > .modal-content:has(> .l2-comic-replay) {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin: 0;
+  padding: 12px 16px 16px;
+  overflow: hidden;
+  scrollbar-gutter: auto;
+}
+.l2-comic-replay {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+}
+.l2-comic-replay > .l2-comic-reader { flex: 1 1 0; min-height: 0; }
+@media (orientation: landscape) and (max-height: 540px) {
+  .jungle-world .modal-backdrop:has(.l2-comic-replay) { padding: 8px; }
+  .jungle-world .modal.modal-dialog:has(.l2-comic-replay) {
+    width: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
+    height: calc(100dvh - 16px);
+    max-height: calc(100dvh - 16px);
+    border-radius: 12px;
+  }
+  .jungle-world .modal.modal-dialog:has(.l2-comic-replay) > .panel-heading { padding: 6px 10px; }
+  .jungle-world .modal.modal-dialog:has(.l2-comic-replay) > .panel-heading h2 { font-size: 18px; margin-top: 2px; }
+  .jungle-world .modal.modal-dialog:has(.l2-comic-replay) > .panel-heading .eyebrow { font-size: 6px; }
+  .jungle-world .modal.modal-dialog:has(.l2-comic-replay) > .panel-heading .icon-btn {
+    flex-basis: 30px; width: 30px; height: 30px;
+  }
+  .jungle-world .modal.modal-dialog > .modal-content:has(> .l2-comic-replay) { padding: 6px 9px 9px; }
+}

@@ -53,7 +53,7 @@ async function shutdown(exitCode = 0) {
     await mongoose.disconnect();
     if (repl) await repl.stop({ doCleanup: false });
   } catch (error) {
-    console.error(`CODEWILD · Shutdown: ${error.message}`);
+    console.error(`VOW · Shutdown: ${error.message}`);
     exitCode = 1;
   } finally {
     if (releaseLock) await releaseLock();
@@ -77,8 +77,8 @@ async function main() {
     } catch {}
     console.log(
       codewild
-        ? `CODEWILD · Already running at ${url}.\nUse the existing preview, or press Ctrl+C in its terminal before starting again.`
-        : `CODEWILD · Port ${port} is already in use. Stop that server or choose another port with npm run dev -- --port 3002.`,
+        ? `VOW · Already running at ${url}.\nUse the existing preview, or press Ctrl+C in its terminal before starting again.`
+        : `VOW · Port ${port} is already in use. Stop that server or choose another port with npm run dev -- --port 3002.`,
     );
     return;
   }
@@ -94,11 +94,11 @@ async function main() {
         new URL(process.env.MONGODB_URI).searchParams.get("replicaSet") ||
         "testset";
       console.log(
-        "CODEWILD · Reusing the running MongoDB replica set for this workspace.",
+        "VOW · Reusing the running MongoDB replica set for this workspace.",
       );
     } else {
       console.log(
-        "CODEWILD · Starting a local, disk-backed MongoDB replica set…",
+        "VOW · Starting a local, disk-backed MongoDB replica set…",
       );
       process.env.MONGODB_URI = await startWorkspaceMongo();
     }
@@ -108,7 +108,7 @@ async function main() {
   const { seed } = await import("../lib/seed.js");
   await seed();
   await mongoose.disconnect();
-  console.log(`CODEWILD · 29 personas ready. Local preview: ${url}`);
+  console.log(`VOW · 29 personas ready. Local preview: ${url}`);
   attendanceWorker = spawn(
     process.execPath,
     [
@@ -119,7 +119,7 @@ async function main() {
     { stdio: "inherit", env: process.env, windowsHide: true },
   );
   attendanceWorker.once("error", () =>
-    console.error("CODEWILD · Attendance worker could not start."),
+    console.error("VOW · Attendance worker could not start."),
   );
   child = spawn(
     process.execPath,
@@ -141,7 +141,7 @@ async function main() {
     { stdio: "inherit", env: process.env, windowsHide: true },
   );
   child.once("error", (error) => {
-    console.error(`CODEWILD · ${error.message}`);
+    console.error(`VOW · ${error.message}`);
     void shutdown(1);
   });
   child.once("exit", (code) => void shutdown(code ?? 0));
@@ -151,17 +151,17 @@ async function main() {
       databaseRecovery = (async () => {
         if (!(await portInUse(27019)) && !stopping) {
           console.log(
-            "CODEWILD · Local MongoDB stopped. Recovering the workspace replica set…",
+            "VOW · Local MongoDB stopped. Recovering the workspace replica set…",
           );
           await startWorkspaceMongo();
           console.log(
-            "CODEWILD · MongoDB recovered. Existing game records preserved.",
+            "VOW · MongoDB recovered. Existing game records preserved.",
           );
         }
       })()
         .catch((error) =>
           console.error(
-            `CODEWILD · MongoDB recovery will retry: ${error.message}`,
+            `VOW · MongoDB recovery will retry: ${error.message}`,
           ),
         )
         .finally(() => {
@@ -173,6 +173,6 @@ async function main() {
 try {
   await main();
 } catch (error) {
-  console.error(`CODEWILD · ${error.message}`);
+  console.error(`VOW · ${error.message}`);
   await shutdown(1);
 }

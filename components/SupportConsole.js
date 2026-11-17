@@ -927,7 +927,7 @@ export default function SupportConsole({ screen, data, act, now }) {
     <div className="support-console">
       <Panel
         title="Campus support & discovery"
-        kicker="CODEWILD / HUMAN-LED LEARNING"
+        kicker="VOW / HUMAN-LED LEARNING"
       >
         <div className="tabs" role="tablist" aria-label="Support tools">
           {tabs.map(([id, title]) => (

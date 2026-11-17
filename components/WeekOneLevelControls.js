@@ -130,8 +130,8 @@ export default function WeekOneLevelControls({ data, act }) {
             >
               {[1, 2, 3].map((n) => (
                 <option key={n} value={n}>
-                  {n} stars · {levelReward(n).trophies} trophies /{" "}
-                  {levelReward(n).xp} XP
+                  {n} stars · {levelReward(n, day).trophies} trophies /{" "}
+                  {levelReward(n, day).xp} XP
                 </option>
               ))}
             </select>

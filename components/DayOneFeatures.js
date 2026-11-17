@@ -1,6 +1,7 @@
 "use client";
 import PlayerVitals from "./PlayerVitals";
 import ResearchGenrePicker from "./ResearchGenrePicker";
+import LevelOneJourney from "./LevelOneJourney";
 import FlightMissionBriefing from "./FlightMissionBriefing";
 import DayOneReviewEvidence from "./DayOneReviewEvidence";
 import LevelOneResult from "./LevelOneResult";
@@ -206,38 +207,51 @@ export function DiscoveryMission({
   const timer = `${String(Math.floor(remaining / 60000)).padStart(2, "0")}:${String(Math.floor(remaining / 1000) % 60).padStart(2, "0")}`;
   if (game && c.selectionMode === "research-2026-11-12")
     return (
-      <fieldset
-        disabled={data.dayOne?.state !== "OPEN"}
-        className="flight-discovery-fieldset"
+      <LevelOneJourneyGate
+        record={r}
+        act={act}
+        now={now}
+        open={data.dayOne?.state === "OPEN"}
+        nextLevel={nextLevel}
+        onContinue={onContinue}
       >
-        {!g ? (
-          data.dayOne?.state === "OPEN" ? (
-            <ResearchGenrePicker
-              act={act}
-              recordId={r._id}
-              interactive={c.questionSelection === "PLAYER_CHOICE"}
-              game
-            />
-          ) : (
-            <p className="flight-closed-notice">
-              This mission is closed. Your saved work remains in your profile.
-            </p>
-          )
-        ) : (
-          <FlightResearchMission
-            record={r}
-            config={c}
-            question={g}
-            act={act}
-            timer={timer}
-            remaining={remaining}
-            now={now}
-            nextLevel={nextLevel}
-            onContinue={onContinue}
-            open={data.dayOne?.state === "OPEN"}
-          />
+        {(onClaimCheck) => (
+          <fieldset
+            disabled={data.dayOne?.state !== "OPEN"}
+            className="flight-discovery-fieldset"
+          >
+            {!g ? (
+              data.dayOne?.state === "OPEN" ? (
+                <ResearchGenrePicker
+                  act={act}
+                  recordId={r._id}
+                  interactive={c.questionSelection === "PLAYER_CHOICE"}
+                  game
+                />
+              ) : (
+                <p className="flight-closed-notice">
+                  This mission is closed. Your saved work remains in your
+                  profile.
+                </p>
+              )
+            ) : (
+              <FlightResearchMission
+                onClaimCheck={onClaimCheck}
+                record={r}
+                config={c}
+                question={g}
+                act={act}
+                timer={timer}
+                remaining={remaining}
+                now={now}
+                nextLevel={nextLevel}
+                onContinue={onContinue}
+                open={data.dayOne?.state === "OPEN"}
+              />
+            )}
+          </fieldset>
         )}
-      </fieldset>
+      </LevelOneJourneyGate>
     );
   return (
     <fieldset
@@ -408,7 +422,17 @@ export function DiscoveryMission({
     </fieldset>
   );
 }
+function LevelOneJourneyGate({ children, record, ...props }) {
+  return record.levelOne?.claimCheckRequired ? (
+    <LevelOneJourney record={record} {...props}>
+      {children}
+    </LevelOneJourney>
+  ) : (
+    children(undefined)
+  );
+}
 function FlightResearchMission({
+  onClaimCheck,
   record: r,
   config: c,
   question: g,
@@ -446,6 +470,7 @@ function FlightResearchMission({
   };
   return (
     <FlightMissionBriefing
+      onClaimCheck={onClaimCheck}
       record={r}
       question={g}
       timer={timer}
@@ -544,7 +569,7 @@ function ResearchThreadForm({ record, act, open, game = false }) {
       </label>
       {automatic && (
         <small>
-          Use a public ChatGPT Share link for the full conversation. Pip reads
+          Use a public ChatGPT Share link for the full conversation. Kiko reads
           it automatically; no transcript is needed.
         </small>
       )}
@@ -754,7 +779,7 @@ export function DayOneDaily({ data, act, now }) {
       </div>
       <Panel title="Class by MC" kicker="CLASSROOM PLACEHOLDER">
         <p className="muted">
-          Your Mission Commander delivers the class outside CODEWILD. This
+          Your Mission Commander delivers the class outside VOW. This
           placeholder does not host lesson content.
         </p>
         {r.classAt ? (

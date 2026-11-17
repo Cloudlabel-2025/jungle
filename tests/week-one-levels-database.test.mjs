@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import { connect, models, transaction } from "../lib/db.js";
 import { programAction, programSnapshot } from "../lib/week-one-program.js";
 import { blankProgram } from "../lib/week-one-program-rules.js";
-import { flightLevelId, reconcileFlightLevel } from "../lib/week-one-levels.js";
+import { flightLevelId, reconcileFlightLevel, reconcileFlightReward } from "../lib/week-one-levels.js";
 import {
   config,
   start,
@@ -137,11 +137,50 @@ test(
           );
           const id = `alpha:p:${activity.id}`,
             saved = await models.WeekOneAttempt.findById(id).lean();
+          if (day === 3) assert.equal(saved.data.labState, undefined, "a new or staff-replayed lab never inherits old experiment state");
           const body = {
             attemptId: id,
             attemptVersion: saved.version,
             answers: evidenceFor(activity, saved.data.variant),
           };
+          if (activity.id === "D3-G01") {
+            await assert.rejects(programAction(p,"attempt-save",{...body,labState:{circuit:["claim","claim"]}},later(4)),/each reasoning module once/);
+            const labState={circuit:["evidence","claim"],fault:"none",prediction:"uncertain"};
+            await programAction(p,"attempt-save",{...body,labState},later(5));
+            const restored=(await programSnapshot(p,later(6))).attempts.find(a=>a._id===id);
+            assert.deepEqual(restored.data.labState,labState,"reasoning circuits restore from the player's account");
+            assert.equal(restored.data.startedAt,saved.data.startedAt);
+            assert.equal(restored.data.deadline,saved.data.deadline);
+            body.attemptVersion=restored.version;
+          }
+          if (activity.id === "D3-G02") {
+            const draft = { ...body.answers, sequence: saved.data.variant.cards.slice(0, 2) };
+            const labState={circuit:[],fault:"database",prediction:"no-response"};
+            await programAction(p, "attempt-save", { ...body, answers: draft, labState }, later(5));
+            const restored = (await programSnapshot(p, later(6))).attempts.find((a) => a._id === id);
+            assert.deepEqual(restored.data.draft, draft, "Level 3 restores typed STORY notes and the partial component board");
+            assert.deepEqual(restored.data.labState,labState,"faults and predictions restore alongside the saved route");
+            assert.equal(restored.data.deadline, saved.data.deadline, "reading/reloading does not restart the saved timer");
+            assert.equal(restored.data.startedAt, saved.data.startedAt);
+            assert.equal(restored.data.variant.brief, saved.data.variant.brief, "the comic cannot replace the player's pinned scenario");
+            assert.deepEqual(restored.data.variant.cards, saved.data.variant.cards);
+            assert.equal(restored.data.variant.reference, undefined, "the player snapshot must keep the assessor's reference private");
+            assert.deepEqual((await models.WeekOneAttempt.findById(id).lean()).data.variant, saved.data.variant);
+            body.attemptVersion = restored.version;
+          }
+          if ([4,5].includes(day)) {
+            const gameState = activity.id === "D4-G01" ? {plan:"fair",runs:1,mode:"report",cursor:2} : activity.id === "D4-G02" ? {actor:"other",policy:"owner",runs:1,mode:"report"} : {cursor:2};
+            await programAction(p,"attempt-save",{...body,gameState},later(5));
+            const restored=(await programSnapshot(p,later(6))).attempts.find(a=>a._id===id);
+            assert.deepEqual(restored.data.gameState,gameState,"flight board restores from the account");
+            assert.equal(restored.data.deadline,saved.data.deadline);
+            assert.equal(restored.data.startedAt,saved.data.startedAt);
+            assert.deepEqual(restored.data.draft,body.answers);
+            assert.equal(restored.data.variant?.reference,undefined,"assessor notes remain private");
+            await assert.rejects(programAction(q,"attempt-save",{...body,attemptVersion:restored.version,gameState},later(6)));
+            await assert.rejects(programAction(p,"attempt-save",{...body,attemptVersion:restored.version,gameState:{cursor:99999}},later(6)));
+            body.attemptVersion=restored.version;
+          }
           const outcomes = await Promise.allSettled([
             programAction(p, "attempt-submit", body, later(10)),
             programAction(p, "attempt-submit", body, later(10)),
@@ -158,9 +197,9 @@ test(
         const r = await row(day);
         assert.equal(r.data.automatic.stars, 3);
         assert.equal(r.data.creditedTrophies, 30);
-        assert.equal(r.data.creditedXp, 150);
+        assert.equal(r.data.creditedXp, 150 * day);
       }
-      assert.deepEqual(await balance(), [135, 675]);
+      assert.deepEqual(await balance(), [135, 2175]);
       const rewardCount = await models.WeekOneEvent.countDocuments({
         kind: "FLIGHT_LEVEL_REWARD",
       });
@@ -177,7 +216,7 @@ test(
       });
       assert.deepEqual(
         await balance(),
-        [135, 675],
+        [135, 2175],
         "backfill never credits an already-awarded level twice",
       );
       assert.equal(
@@ -205,14 +244,14 @@ test(
         (e) => e.status === 403,
       );
       await staff(mc, 2, "result", 1);
-      assert.deepEqual(await balance(), [120, 600]);
+      assert.deepEqual(await balance(), [120, 2025]);
       const v = (await row(2)).version;
       await assert.rejects(
         staff(cc, 2, "result", 3, { versions: { p: v - 1 } }),
         (e) => e.status === 409,
       );
       await staff(cc, 2, "replay");
-      assert.deepEqual(await balance(), [120, 600]);
+      assert.deepEqual(await balance(), [120, 2025]);
       assert.equal(
         await models.WeekOneAttempt.countDocuments({ userId: "p", day: 2 }),
         0,
@@ -224,7 +263,7 @@ test(
       );
       await assert.rejects(staff(cc, 2, "replay"), (e) => e.status === 409);
       await complete(2);
-      assert.deepEqual(await balance(), [135, 675]);
+      assert.deepEqual(await balance(), [135, 2175]);
       assert.equal((await row(2)).data.creditedTrophies, 30);
       const replayed =
         await models.WeekOneAttempt.findById("alpha:p:D2-G01").lean();
@@ -245,17 +284,17 @@ test(
       await complete(2);
       assert.deepEqual(
         await balance(),
-        [135, 675],
+        [135, 2175],
         "another successful replay does not farm rewards",
       );
       await staff(cc, 2, "reopen");
-      assert.deepEqual(await balance(), [105, 525]);
+      assert.deepEqual(await balance(), [105, 1875]);
       assert.equal(
         (await programSnapshot(p, later(15))).progression.levels[2].available,
         false,
       );
       await staff(mc, 2, "result", 2);
-      assert.deepEqual(await balance(), [130, 650]);
+      assert.deepEqual(await balance(), [130, 2125]);
       await assert.rejects(
         staff(mc, 3, "result", 3, {
           userId: undefined,
@@ -272,7 +311,7 @@ test(
         versions: { p: (await row(3)).version, q: 0 },
       });
       assert.equal((await row(3, "q")).data.creditedTrophies, 25);
-      assert.equal((await models.User.findById("q").lean()).xp, 125);
+      assert.equal((await models.User.findById("q").lean()).xp, 375);
       assert.ok(
         (await models.WeekOneEvent.countDocuments({
           kind: "FLIGHT_LEVEL_OVERRIDE",
@@ -298,6 +337,34 @@ test(
       await models.WeekOneProgram.updateOne({ _id: "alpha" }, { $set: { "data.correction": { reason: "CC authorised a factual result correction" } } });
       await staff(cc, 3, "result", 3);
       assert.equal((await row(3)).data.creditedTrophies, 30);
+      // A legacy completion keeps its trophies; upgrading adds only missing XP once.
+      await models.WeekOneLevel.create({
+        _id: flightLevelId("alpha", "q", 4), cohortId: "alpha", userId: "q", day: 4,
+        data: { creditedTrophies: 15, creditedXp: 75, awards: [], automatic: { completed: true, stars: 1 } },
+      });
+      await models.User.updateOne({ _id: "q" }, { $inc: { trophies: 15, xp: 75 } });
+      const reconcileLegacy = () => transaction(async (session) => {
+        const record = await models.WeekOneLevel.findById(flightLevelId("alpha", "q", 4)).session(session);
+        await reconcileFlightReward({ session, user: cc, now: later(16), at: later(16).toISOString() }, record);
+        record.markModified("data"); await record.save({ session });
+      });
+      await reconcileLegacy();
+      await reconcileLegacy();
+      const legacy = await row(4, "q");
+      assert.equal(legacy.data.creditedXp, 300);
+      assert.equal(legacy.data.awards.length, 1);
+      assert.equal(legacy.data.awards[0].trophies, 0);
+      assert.equal(legacy.data.awards[0].xp, 225);
+      assert.equal((await models.User.findById("q").lean()).xp, 675);
+      await models.WeekOneProgram.updateOne({_id:"alpha"},{$set:{"data.locked":false}});
+      const beforeLabReplay = await balance();
+      await staff(cc,3,"replay");
+      assert.equal(await models.WeekOneAttempt.countDocuments({userId:"p",day:3}),0);
+      const archivedLab=(await row(3)).data.history.at(-1).attempts;
+      assert.ok(archivedLab.every(a=>a.data.labState),"staff replay archives both saved experiments");
+      await complete(3);
+      assert.deepEqual(await balance(),beforeLabReplay,"replaying the lab does not farm trophies or XP");
+      assert.equal((await models.User.findById("q").lean()).xp,675,"another member's results remain unchanged");
     } finally {
       await mongoose.connection.dropDatabase();
       await mongoose.disconnect();

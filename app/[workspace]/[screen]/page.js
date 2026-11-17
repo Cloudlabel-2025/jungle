@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { playerObjectives } from "@/lib/player-objectives.js";
 import { currentUser } from "@/lib/auth.js";
 import { navigation, prefix } from "@/lib/catalog.js";
 import { weekOneNavigation } from "@/lib/week-one-catalog.js";
@@ -11,7 +12,7 @@ import WorkspaceScreen from "@/components/WorkspaceScreen";
 import { playerStage } from "@/lib/player-stage.js";
 import { flightScreens } from "@/lib/flight-rules.js";
 export const dynamic = "force-dynamic";
-export default async function Page({ params }) {
+export default async function Page({ params, searchParams }) {
   const { workspace, screen } = await params;
   const role = Object.keys(navigation).find((r) => prefix(r) === workspace);
   if (
@@ -32,5 +33,7 @@ export default async function Page({ params }) {
   }
   if (!isWorkspaceScreen(role, screen) && !validProgrammeScreen(role, screen))
     redirect(programmePath(role, screen));
-  return <WorkspaceScreen key={screen} screen={screen} />;
+  const objectives = screen === "objectives" && user?.role === "GAMER" ? await playerObjectives(user) : null;
+  const query = screen === "objectives" ? await searchParams : null;
+  return <WorkspaceScreen key={screen} screen={screen} objectives={objectives} objectiveLevel={query?.level} />;
 }

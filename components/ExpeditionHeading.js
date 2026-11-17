@@ -61,7 +61,7 @@ export default function ExpeditionHeading({ code, title, subtitle, action }) {
       </div>
       {action && <div className="scene-action">{action}</div>}
       <span className="scene-reference" aria-hidden="true">
-        {code} / CODEWILD EXPEDITION
+        {code} / VOW EXPEDITION
       </span>
     </header>
   );

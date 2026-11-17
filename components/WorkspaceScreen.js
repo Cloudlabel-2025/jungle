@@ -8,6 +8,7 @@ import { useWorkspace } from "./WorkspaceContext";
 import { Busy, Empty } from "./ui";
 import WorkflowOverview from "./WorkflowOverview";
 import SkyFlightMap from "./SkyFlightMap";
+import PlayerObjectives from "./PlayerObjectives";
 import CrashArrival from "./CrashArrival";
 import { flightScreens } from "@/lib/flight-rules.js";
 
@@ -23,8 +24,10 @@ const CodeLab = dynamic(() => import("./CodeLab"), {
 const NotificationInbox = dynamic(() => import("./NotificationInbox"), {
   loading: () => <Busy label="Opening notifications…" />,
 });
+const CohortCalendar = dynamic(() => import("./CohortCalendar"), { loading: () => <Busy label="Opening calendar…" /> });
+const AttendanceRegister = dynamic(() => import("./AttendanceRegister"), { loading: () => <Busy label="Opening attendance…" /> });
 
-export default function WorkspaceScreen({ screen }) {
+export default function WorkspaceScreen({ screen, objectives, objectiveLevel }) {
   const { data, user, act, clock, notify, error, refresh } = useWorkspace();
   useEffect(() => {
     if (user?._id) void import("./Views").catch(() => {});
@@ -48,6 +51,9 @@ export default function WorkspaceScreen({ screen }) {
     return <SkyFlightMap data={data} act={act} now={clock} />;
   if (data.story?.flight && screen === "week-one-games")
     return <SkyFlightMap data={data} act={act} now={clock} />;
+  if (screen === "objectives" && role === "GAMER") return <PlayerObjectives key={user._id} levels={objectives || []} initialLevel={objectiveLevel} />;
+  if (screen === "calendar") return <CohortCalendar key={user._id} />;
+  if (screen === "attendance" && role !== "GAMER") return <AttendanceRegister key={user._id} />;
   const squad = data.teams.find((team) => team._id === user.teamId);
   return (
     <>

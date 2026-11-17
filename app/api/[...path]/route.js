@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { boundedJson } from "@/lib/request-body.js";
 import { guardFlightApi, completeFlightIntro, completeCrashArrival, publicPlayer } from "@/lib/player-stage.js";
 import { attendanceAction } from "@/lib/attendance.js";
+import { pipProgressSnapshot, savePipProgress } from "@/lib/pip-progress.js";
+import { attendanceRegister, correctAttendance } from "@/lib/attendance-register.js";
+import { calendarAction, calendarSnapshot, requireWorkingDay } from "@/lib/cohort-calendar.js";
 import { saveLabWork } from "@/lib/lab-work.js";
 import { workHistory,workFile } from "@/lib/work-history.js";
 import {
@@ -176,15 +179,25 @@ async function handle(request, { params }) {
       });
     assertRole(user, all);
     await guardFlightApi(user, route, request.method);
+    if (route === "player/pip-progress" && ["GET", "POST"].includes(request.method))
+      return NextResponse.json(request.method === "GET" ? await pipProgressSnapshot(user) : await savePipProgress(user, body), { headers: { "Cache-Control": "private, no-store" } });
     if(route === "player/work-history" && request.method === "GET")return NextResponse.json(await workHistory(user,Object.fromEntries(new URL(request.url).searchParams)),{headers:{"Cache-Control":"private, no-store"}});
     if(route === "player/work-file" && request.method === "GET"){
       const saved=await workFile(user,new URL(request.url).searchParams.get("id"));
-      return NextResponse.json(saved,{headers:{"Cache-Control":"private, no-store","Content-Disposition":`attachment; filename="codewild-work-${saved.day}.json"`}});
+      return NextResponse.json(saved,{headers:{"Cache-Control":"private, no-store","Content-Disposition":`attachment; filename="vow-work-${saved.day}.json"`}});
     }
     if (route === "story/flight-intro" && request.method === "POST")
       return NextResponse.json(await completeFlightIntro(user, body), { headers: { "Cache-Control": "private, no-store" } });
     if (route === "story/crash-arrival" && request.method === "POST")
       return NextResponse.json(await completeCrashArrival(user, body), {headers:{"Cache-Control":"private, no-store"}});
+    if (route === "calendar" && request.method === "GET")
+      return NextResponse.json(await calendarSnapshot(user, new URL(request.url).searchParams.get("month")), { headers: { "Cache-Control": "private, no-store" } });
+    if (route === "calendar" && request.method === "POST")
+      return NextResponse.json(await calendarAction(user, body), { headers: { "Cache-Control": "private, no-store" } });
+    if (route === "attendance/register" && request.method === "GET")
+      return NextResponse.json(await attendanceRegister(user, new URL(request.url).searchParams.get("day")), { headers: { "Cache-Control": "private, no-store" } });
+    if (route === "attendance/correct" && request.method === "POST")
+      return NextResponse.json(await correctAttendance(user, body), { headers: { "Cache-Control": "private, no-store" } });
     if(path[0] === "attendance" && path.length === 2 && request.method === "POST")
       return NextResponse.json(await attendanceAction(user,path[1],body),{headers:{"Cache-Control":"private, no-store"}});
     if (route === "notifications/read" && request.method === "POST")
@@ -346,7 +359,7 @@ async function handle(request, { params }) {
           headers: {
             "Cache-Control": "no-store",
             "Content-Disposition":
-              'attachment; filename="codewild-verified-comparisons.json"',
+              'attachment; filename="vow-verified-comparisons.json"',
           },
         },
       );
@@ -357,7 +370,7 @@ async function handle(request, { params }) {
         headers: {
           "Cache-Control": "no-store",
           "Content-Disposition":
-            'attachment; filename="codewild-support-evidence.json"',
+            'attachment; filename="vow-support-evidence.json"',
         },
       });
     }
@@ -468,7 +481,7 @@ async function handle(request, { params }) {
               headers: {
                 "Content-Type": "text/csv; charset=utf-8",
                 "Content-Disposition":
-                  'attachment; filename="codewild-audit.csv"',
+                  'attachment; filename="vow-audit.csv"',
                 "Cache-Control": "no-store",
               },
             },
@@ -519,7 +532,9 @@ async function handle(request, { params }) {
       const day = ist(now).day;
       if (route === "gamer/clock-in") {
         assertRole(user, ["GAMER"]);
-        const { onTime } = attendanceRule(now, body.latenessReason || "");
+        const schedule = await requireWorkingDay(fresh, now, session);
+        const day = schedule.day;
+        const { onTime } = attendanceRule(now, body.latenessReason || "", schedule);
         if (
           await models.Attendance.exists({ userId: user._id, day }).session(
             session,
@@ -533,6 +548,10 @@ async function handle(request, { params }) {
               userId: user._id,
               day,
               clockAt: now,
+              officialStartAt: schedule.startAt,
+              cohortId: fresh.cohortId || "alpha", timeZone: schedule.timeZone,
+              sessionState: "ACTIVE", cutoffAt: schedule.cutoffAt, checkDueAt: schedule.cutoffAt,
+              sessionEvents: [{ type: "IN", at: now, source: "PLAYER" }],
               onTime,
               reason: body.latenessReason || "",
             },

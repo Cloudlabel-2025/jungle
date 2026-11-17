@@ -17,7 +17,6 @@ import {
   ShieldCheck,
   Zap,
   FileBarChart,
-  Flame,
   Activity,
   Menu,
   Command,
@@ -33,6 +32,7 @@ import {
   Compass,
   UserRound,
   Clock3,
+  CalendarDays,
 } from "lucide-react";
 import { navigation, prefix, personas } from "@/lib/catalog.js";
 import { weekOneNavigation } from "@/lib/week-one-catalog.js";
@@ -43,17 +43,21 @@ import {
 } from "@/lib/workspace-navigation.js";
 import { roleNames } from "@/lib/expedition";
 import { league } from "@/lib/rules.js";
-import { Avatar, Modal, HP, Badge, Form } from "./ui";
+import { Avatar, Modal, HP, Badge } from "./ui";
 import PlayerHeader from "./PlayerHeader";
 import PlayerProfile from "./PlayerProfile";
 import AttendancePrompt from "./AttendancePrompt";
 import { WorkspaceContext } from "./WorkspaceContext";
 import TeamCompletionAnnouncements from "./LevelCompletion";
+import ExperienceCelebration from "./ExperienceCelebration";
 import CharacterPicker from "./CharacterPicker";
 import { characterFor } from "@/lib/characters";
 import { monitoringRequired, claimSignInNotice } from "@/lib/notifications.js";
 import GameLoadingScreen, { useGameEntryLoading } from "./GameLoadingScreen";
+import ExpeditionLogin from "./ExpeditionLogin";
+import VowBrand, { VowEmblem } from "./VowBrand";
 const icons = {
+  CalendarDays,
   Compass,
   LayoutDashboard,
   BookOpen,
@@ -149,6 +153,7 @@ export default function Arena({
   const nav = flightMode ? [
     ["F0", "dashboard", "Sky journey", "Compass"],
     ...(data?.story?.introComplete ? weekOneNavigation.GAMER.map(([code, page, label, icon]) => [code, page === "dashboard" ? "week-one" : `week-one-${page}`, label, icon]) : [["F1", "week-one-ask-mc", "Ask for help", "Radio"]]),
+    ...(data?.story?.introComplete ? [["O1", "objectives", "Level objectives", "BookOpen"], ["C1", "calendar", "Calendar", "CalendarDays"]] : []),
     ["N1", "notifications", "Notifications", "Bell"],
   ] : workspaceNavigation(role);
   const weekOneMode = programmeScreen(screen) !== null;
@@ -498,71 +503,22 @@ export default function Arena({
   );
   if (!user)
     return (
-      <div className="entry">
-        <div className="entry-brand">
-          <span className="brand">
-            <Flame size={30} />
-            CODE<span>WILD</span>
-            <i />
-          </span>
-          <span className="eyebrow">AN EXPEDITION BEYOND THE ORDINARY</span>
-          <h1>
-            Lost in the wild.
-            <br />
-            <em>Found in each other.</em>
-          </h1>
-          <p>
-            Five explorers. A forgotten jungle. The only way home is through
-            it—together.
-          </p>
-          <div className="entry-coordinates">
-            12.9716° N / 77.5946° E <span>ALPHA COHORT / 2026</span>
-          </div>
-        </div>
-        <div className="entry-login">
-          <Badge tone="lime">
-            <span className="status-dot" />
-            THE EXPEDITION AWAITS
-          </Badge>
-          <h2>Enter your expedition.</h2>
-          <Form
-            fields={[
-              {
-                name: "identifier",
-                label: "Username or email",
-                placeholder: "Your username or email",
-              },
-              { name: "password", label: "Password", type: "password" },
-            ]}
-            submit="Sign in"
-            onSubmit={async (values) => {
-              try {
-                const response = await fetch("/api/auth/login", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(values),
-                });
-                const result = await response.json();
-                if (!response.ok) throw new Error(result.error);
-                enterWorkspace(result.user);
-                return true;
-              } catch (error) {
-                notify(error.message, "error");
-                return false;
-              }
-            }}
-          />
-          {demo ? (
-            launcherContent
-          ) : (
-            <p>
-              Use your individually provisioned account. Contact Centre Command
-              if your account needs provisioning or password recovery.
-            </p>
-          )}
-        </div>
+      <>
+        <ExpeditionLogin
+          demoAccess={demo ? launcherContent : null}
+          onSignIn={async (values) => {
+            const response = await fetch("/api/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(values),
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || "Unable to sign in. Please try again.");
+            enterWorkspace(result.user);
+          }}
+        />
         {toast && <div className={`toast ${toast.type}`}>{toast.message}</div>}
-      </div>
+      </>
     );
   const squad = data?.teams.find((t) => t._id === user.teamId);
   const headerPlayer = data ? (flightMode ? data.user : legacyWorkspaceData(data).user) : user;
@@ -590,7 +546,7 @@ export default function Arena({
             aria-controls="workspace-navigation"
             onClick={() => setMobile((open) => !open)}
           >
-            <Flame size={27} />
+            <VowEmblem decorative />
           </button>
         )}
         <aside
@@ -605,12 +561,10 @@ export default function Arena({
           <Link
             href={`/${prefix(role)}/dashboard`}
             className="brand"
-            aria-label="CODEWILD home"
+            aria-label="Voyage of Wilderness home"
             onClick={() => setMobile(false)}
           >
-            <Flame size={27} />
-            CODE<span>WILD</span>
-            <i />
+            <VowBrand />
           </Link>
           {playerMode && (
             <button
@@ -745,7 +699,7 @@ export default function Arena({
                 />
               )}
               {playerMode && <button className="icon-btn profile-trigger" aria-label="Open my profile" title="My profile" onClick={()=>setProfileOpen(true)}><UserRound size={18}/></button>}
-              {playerMode && <button className="icon-btn attendance-trigger" aria-label="Open clock-in and clock-out" title={data?.playSession?.state === "ACTIVE" ? "Clocked in · manage session" : "Clock in"} onClick={()=>setAttendanceOpen(true)}><Clock3 size={18}/></button>}
+              {playerMode && <button className="icon-btn attendance-trigger" aria-label="Open clock-in and clock-out" title={data?.playSession?.state === "EXTRA" ? "Extra play · manage session" : data?.playSession?.state === "ACTIVE" ? "Clocked in · manage session" : "Clock in"} onClick={()=>setAttendanceOpen(true)}><Clock3 size={18}/></button>}
               {role !== "GAMER" && (
                 <span className="server-clock">
                   <span className="status-dot" />
@@ -845,7 +799,7 @@ export default function Arena({
               <Wifi size={12} /> CAMP RADIO CONNECTED <i /> ASIA / KOLKATA
             </span>
             <span>EXPLORE. ADAPT. SURVIVE.</span>
-            <span>CODEWILD © 2026</span>
+            <span>Voyage of Wilderness · VOW © 2026</span>
           </footer>
         </div>
         {launcher && (
@@ -909,6 +863,7 @@ export default function Arena({
         )}
       </div>
       {showEntryLoading && <GameLoadingScreen onCancel={logout} flight={flightMode} />}
+      {playerMode && data?.user?._id === user?._id && <ExperienceCelebration key={data.user._id} player={data.user} ready={!showEntryLoading && !launcher && !characterPicker && !profileOpen && !attendanceOpen} />}
     </WorkspaceContext.Provider>
   );
 }

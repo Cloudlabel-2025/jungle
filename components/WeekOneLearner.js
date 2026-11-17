@@ -1,4 +1,5 @@
 "use client";
+import { companionText } from "@/lib/companion-name.js";
 import PlayerVitals from "./PlayerVitals";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -416,7 +417,7 @@ export function AttemptForm({ record, act, now, open, ownerId }) {
         </Badge>
       }
     >
-      <p style={{ whiteSpace: "pre-wrap" }}>{d.variant?.brief}</p>
+      <p style={{ whiteSpace: "pre-wrap" }}>{companionText(d.variant?.brief)}</p>
       {d.variant?.sourceUrl && (
         <a
           className="text-link"
@@ -922,7 +923,7 @@ export function Challenges({ data, act, now }) {
                 />
               ) : (
                 <>
-                  <p>{c.brief}</p>
+                  <p>{companionText(c.brief)}</p>
                   <button
                     className="btn primary"
                     onClick={() =>

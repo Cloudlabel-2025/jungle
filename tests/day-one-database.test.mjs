@@ -90,9 +90,13 @@ test(
         (e) => e.status === 403,
       );
       for (const g of gamers.slice(0, 3)) {
+        await assert.rejects(
+          call(g, "clock", {}, "2026-11-02T03:29:00Z"),
+          (e) => e.status === 409,
+        );
         await Promise.all(
           Array.from({ length: 4 }, () =>
-            call(g, "clock", {}, "2026-11-02T03:29:00Z"),
+            call(g, "clock", {}, "2026-11-02T03:30:00Z"),
           ),
         );
         await call(
@@ -321,7 +325,7 @@ test(
       await call(otherCC, "release", { config, revision: 0 });
       await publishFixtureRules(otherCC, new Date("2026-11-02T02:59:00Z"));
       await control(otherCC, "open", 1, "2026-11-02T03:00:00Z");
-      await call(other, "clock", {}, "2026-11-02T03:29:00Z");
+      await call(other, "clock", {}, "2026-11-02T03:30:00Z");
       await call(
         other,
         "genre",
