@@ -1,7 +1,8 @@
+import { collegeRoute } from "@/lib/college-request.js";
 import { currentUser } from "@/lib/auth.js";
 import { privateFileResponse } from "@/lib/pilot-storage.js";
 export const runtime = "nodejs";
-export async function GET(request, { params }) {
+async function handleGET(request, { params }) {
   try {
     const user = await currentUser();
     if (!user)
@@ -12,3 +13,5 @@ export async function GET(request, { params }) {
       headers: { "Cache-Control": "private, no-store" } });
   }
 }
+
+export const GET = collegeRoute(handleGET);

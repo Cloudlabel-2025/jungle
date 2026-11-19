@@ -17,3 +17,5 @@ jobs:
         env:
           SESSION_SECRET: ci-only-build-secret-never-used-for-live-sessions
           DEMO_MODE: 'false'
+      - run: npm run test:tenants:http
+      - run: npm run test:platform:http

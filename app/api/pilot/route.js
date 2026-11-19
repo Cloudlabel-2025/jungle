@@ -1,10 +1,11 @@
+import { collegeRoute } from "@/lib/college-request.js";
 import { currentUser } from "@/lib/auth.js";
 import { allowedWriteOrigin } from "@/lib/request-origin.js";
 import { pilotAction, pilotSnapshot } from "@/lib/pilot-engine.js";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store" };
-export async function GET(request) {
+async function handleGET(request) {
   try {
     const user = await currentUser();
     if (!user)
@@ -20,7 +21,7 @@ export async function GET(request) {
     );
   }
 }
-export async function POST(request) {
+async function handlePOST(request) {
   try {
     if (!allowedWriteOrigin(request))
       return Response.json(
@@ -56,3 +57,7 @@ export async function POST(request) {
     );
   }
 }
+
+export const GET = collegeRoute(handleGET);
+
+export const POST = collegeRoute(handlePOST);

@@ -1,5 +1,13 @@
 # CODEWILD
 
+## College tenancy
+
+The CMS also provides staff/learner account editing and deactivation, additional super admins and email password recovery. See [CMS access and recovery](docs/cms-access-and-recovery.md). Automatic mail requires the mailbox administrator's authorization; the portal shows its configuration and delivery status.
+
+CCs use **Manage college** (`/college`) to manage all their college's cohorts and teams and create MCs and players. MCs use **Manage players** to create players only in assigned teams. Super admins create additional CCs at the college level in `/platform`. Existing CC home cohorts and all learning history are preserved. See [college account management](docs/college-account-management.md) for permissions and workflows.
+
+College tenancy uses a central registry and one logical database per college. The existing database is registered as **College for test**, with internal reference **college-for-test**. The main URL opens the CMS. Each college gets a dedicated login URL, such as http://college-for-test.localhost:3000/ locally; /c/college-for-test is available on hosts without wildcard domains. Users enter only their username/email and password on that college portal. Existing accounts and learning history remain in place. Local tenant mode is enabled through `TENANCY_ENABLED=true`; hosted deployments require their own configuration and rollout. Super admins use **`/platform`** to manage colleges, cohorts, staff and teams. See [super admin access](docs/super-admin.md) and [college operations](docs/college-tenancy-operations.md) for provisioning, lifecycle controls, scoped operator scripts, backup and verification.
+
 ## Flight opening — first story unit
 
 Week 1 Players now arrive on an interactive sky map, travelling by helicopter with an unknown character slot. Enter **Level 1 · First discovery** directly on the map: **Begin flight learning** saves the boarding receipt, then the mission exposes genre selection, question choice and AI-chat evidence submission. Three saved checkpoints and a separate verification status appear on the map. Before boarding, navigation contains the flight, essential help and notifications. Afterward only the relevant Week 1 pages appear. The post-crash jungle/project map, workshop/team modules and character picker remain unavailable during this stage.

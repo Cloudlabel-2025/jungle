@@ -1,4 +1,6 @@
 "use client";
+import fetch from "@/lib/college-fetch.js";
+
 import { useState, useEffect } from "react";
 import { WeekPanel, weekTime } from "./WeekOneShared";
 

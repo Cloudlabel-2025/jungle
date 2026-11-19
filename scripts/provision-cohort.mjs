@@ -39,7 +39,7 @@ try {
       );
       await models.Credential.updateOne(
         { _id: user._id },
-        { $set: { passwordHash: hashes[i], failures: 0, lockedUntil: null } },
+        { $set: { passwordHash: hashes[i], mustChangePassword: true, failures: 0, lockedUntil: null } },
         { upsert: true, session, runValidators: true },
       );
     }

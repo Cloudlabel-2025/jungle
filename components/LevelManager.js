@@ -1,4 +1,6 @@
 "use client";
+import fetch from "@/lib/college-fetch.js";
+
 import { useState, useEffect } from "react";
 import { Plus, Save, Eye, Send, Pencil } from "lucide-react";
 import { Panel, Badge } from "./ui";

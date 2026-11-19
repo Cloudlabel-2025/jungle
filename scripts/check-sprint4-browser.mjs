@@ -1,3 +1,5 @@
+// This launcher is an isolated single-college fixture, never the live registry.
+process.env.TENANCY_ENABLED = "false";
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
@@ -25,7 +27,7 @@ const replica = await MongoMemoryReplSet.create({ binary: { version: "7.0.24" },
 const env = {
   PATH: process.env.PATH, SystemRoot: process.env.SystemRoot, USERPROFILE: process.env.USERPROFILE,
   TEMP: process.env.TEMP, TMP: process.env.TMP, APPDATA: process.env.APPDATA, LOCALAPPDATA: process.env.LOCALAPPDATA,
-  MONGODB_URI: replica.getUri("sprint4_browser_matrix"),
+  TENANCY_ENABLED: "false", MONGODB_URI: replica.getUri("sprint4_browser_matrix"),
   SESSION_SECRET: randomBytes(48).toString("hex"), APP_ORIGIN: base, DEMO_MODE: "false",
   BLOB_READ_WRITE_TOKEN: "", WEEK1_NOTIFICATION_WEBHOOK_URL: "", WEEK1_NOTIFICATION_WEBHOOK_TOKEN: "",
   NEXT_TELEMETRY_DISABLED: "1",

@@ -106,9 +106,9 @@ async function main() {
   process.env.SESSION_SECRET ||= randomBytes(48).toString("hex");
   process.env.DEMO_MODE ??= "true";
   const { seed } = await import("../lib/seed.js");
-  await seed();
+  if (process.env.TENANCY_ENABLED !== "true") await seed();
   await mongoose.disconnect();
-  console.log(`VOW · 29 personas ready. Local preview: ${url}`);
+  console.log(process.env.TENANCY_ENABLED === "true" ? `VOW · College sign-in ready: ${url}` : `VOW · 29 personas ready. Local preview: ${url}`);
   attendanceWorker = spawn(
     process.execPath,
     [

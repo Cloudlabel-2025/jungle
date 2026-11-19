@@ -42,19 +42,31 @@ const render = (C, p) => renderToStaticMarkup(React.createElement(C, p));
 test("VOW uses the supplied optimized emblem and correctly sized browser and home-screen icons", async () => {
   assert.equal(brand.name, "Voyage of Wilderness");
   const logo = await sharp(`public${brand.logo}`).metadata();
-  assert.equal(logo.width, 1024);
-  assert.equal(logo.height, 1024);
-  assert.equal(logo.format, "webp");
-  for (const size of [64, 180, 192, 512]) {
-    const icon = await sharp(`public/brand/vow-icon-v2-${size}.png`).metadata();
+  assert.equal(logo.width, 512);
+  assert.equal(logo.height, 512);
+  assert.equal(logo.format, "svg");
+  for (const size of [16, 32, 64, 180, 192, 512]) {
+    const asset = sharp(`public${brand.iconPrefix}-${size}.png`);
+    const icon = await asset.metadata();
     assert.equal(icon.width, size);
     assert.equal(icon.height, size);
+    assert.equal(icon.hasAlpha, true);
+    const { data, info } = await asset
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    assert.equal(data[3], 0, "round icons have transparent corners");
+    assert.equal(
+      data[((size >> 1) * size + (size >> 1)) * info.channels + 3],
+      255,
+    );
   }
   const m = manifest();
   assert.equal(m.name, brand.name);
   assert.equal(m.short_name, "VOW");
   assert.equal(m.orientation, "landscape");
   assert.equal(m.icons.length, 2);
+  assert.ok(m.icons.every((icon) => icon.src.startsWith(brand.iconPrefix)));
 });
 test("the loading screen shows VOW branding, real waiting text and an optional working exit", async () => {
   const Loader = await load("components/GameLoadingScreen.js"),

@@ -1,3 +1,4 @@
+import { collegeRoute } from "@/lib/college-request.js";
 import { currentUser } from "@/lib/auth.js";
 import { boundedJson } from "@/lib/request-body.js";
 import { allowedWriteOrigin } from "@/lib/request-origin.js";
@@ -8,7 +9,7 @@ import { models, connect } from "@/lib/db.js";
 import { cohortOf, demand, permitted } from "@/lib/access-scope.js";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export async function POST(request) {
+async function handlePOST(request) {
   try {
     demand(allowedWriteOrigin(request), "Cross-origin marks return denied.");
     const u = await currentUser();
@@ -34,7 +35,7 @@ export async function POST(request) {
     return Response.json({ error: e.message }, { status: e.status || 400 });
   }
 }
-export async function GET(request) {
+async function handleGET(request) {
   try {
     const u = await currentUser();
     demand(u, "Please sign in.", 401);
@@ -100,3 +101,7 @@ export async function GET(request) {
     return Response.json({ error: e.message }, { status: e.status || 400 });
   }
 }
+
+export const GET = collegeRoute(handleGET);
+
+export const POST = collegeRoute(handlePOST);

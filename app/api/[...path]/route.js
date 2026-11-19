@@ -1,3 +1,4 @@
+import { collegeRoute } from "@/lib/college-request.js";
 import { NextResponse } from "next/server";
 import { boundedJson } from "@/lib/request-body.js";
 import { guardFlightApi, completeFlightIntro, completeCrashArrival, publicPlayer } from "@/lib/player-stage.js";
@@ -21,7 +22,9 @@ import {
   demoEnabled,
   assertRole,
   currentSessionKey,
+  withPasswordStatus,
 } from "@/lib/auth.js";
+import { setPermanentPassword } from "@/lib/college-password.js";
 import { models, connect, transaction } from "@/lib/db.js";
 import { snapshot } from "@/lib/snapshot.js";
 import { markNotificationsRead } from "@/lib/notification-store.js";
@@ -140,8 +143,9 @@ async function handle(request, { params }) {
           { $set: { failures: 0, lockedUntil: null } },
         );
         await setSession(user._id);
-        await dayOneSignIn(user);
-        return NextResponse.json({ success: true, user: await publicPlayer(user) });
+        const account = await withPasswordStatus(user);
+        if (!account.mustChangePassword) await dayOneSignIn(user);
+        return NextResponse.json({ success: true, user: await publicPlayer(account) });
       }
       if (!demoEnabled())
         fail(
@@ -178,6 +182,13 @@ async function handle(request, { params }) {
         serverTime: new Date().toISOString(),
       });
     assertRole(user, all);
+    if (route === "auth/password" && request.method === "POST") {
+      await setPermanentPassword(user, body);
+      await setSession(user._id);
+      const account = await currentUser();
+      await dayOneSignIn(account);
+      return NextResponse.json({ success: true, user: await publicPlayer(account) });
+    }
     await guardFlightApi(user, route, request.method);
     if (route === "player/pip-progress" && ["GET", "POST"].includes(request.method))
       return NextResponse.json(request.method === "GET" ? await pipProgressSnapshot(user) : await savePipProgress(user, body), { headers: { "Cache-Control": "private, no-store" } });
@@ -1197,5 +1208,5 @@ async function handle(request, { params }) {
     );
   }
 }
-export const GET = handle;
-export const POST = handle;
+export const GET = collegeRoute(handle);
+export const POST = collegeRoute(handle);

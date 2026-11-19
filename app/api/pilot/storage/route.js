@@ -1,9 +1,10 @@
+import { collegeRoute } from "@/lib/college-request.js";
 import { currentUser } from "@/lib/auth.js";
 import { boundedJson } from "@/lib/request-body.js";
 import { allowedWriteOrigin } from "@/lib/request-origin.js";
 import { uploadIntent, finishUpload, storePrivateUpload } from "@/lib/pilot-storage.js";
 export const runtime = "nodejs";
-export async function PUT(request) {
+async function handlePUT(request) {
   const headers = { "Cache-Control": "private, no-store" };
   try {
     if (!allowedWriteOrigin(request)) return Response.json({ error: "Cross-origin upload denied." }, { status: 403, headers });
@@ -16,7 +17,7 @@ export async function PUT(request) {
     return Response.json({ error: error.message }, { status: error.status || 400, headers });
   }
 }
-export async function POST(request) {
+async function handlePOST(request) {
   try {
     if (!allowedWriteOrigin(request))
       return Response.json(
@@ -39,3 +40,7 @@ export async function POST(request) {
     return Response.json({ error: e.message }, { status: e.status || 400 });
   }
 }
+
+export const PUT = collegeRoute(handlePUT);
+
+export const POST = collegeRoute(handlePOST);

@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import mongoose from "mongoose";
 import { connect, models } from "../lib/db.js";
-import { tenantOf, scope, permitted } from "../lib/access-scope.js";
+import { cohortFilter, scope, permitted } from "../lib/access-scope.js";
 import { runProgram, editable, event } from "../lib/week-one-store.js";
 import { flightLevelId, reconcileFlightLevel } from "../lib/week-one-levels.js";
 import { programSnapshot } from "../lib/week-one-program.js";
@@ -13,7 +13,7 @@ const userId = "usr_g01", day = 2, activityId = "D2-G02";
 const hash = (v) => createHash("sha256").update(JSON.stringify(v)).digest("hex");
 async function protectedRecords(cohortId) {
   return {
-    users: await models.User.find(tenantOf({ cohortId })).sort({ _id: 1 }).lean(),
+    users: await models.User.find(cohortFilter({ cohortId })).sort({ _id: 1 }).lean(),
     dayOne: await models.DayOneRecord.find({ cohortId }).sort({ _id: 1 }).lean(),
     attempts: await models.WeekOneAttempt.find({ cohortId, $nor: [{ userId, activityId }] }).sort({ _id: 1 }).lean(),
     levels: await models.WeekOneLevel.find({ cohortId, $nor: [{ userId, day }] }).sort({ _id: 1 }).lean(),
@@ -32,7 +32,7 @@ try {
   assert.ok(level);
   assert.equal(level.data.creditedTrophies || 0, 0);
   assert.ok(!level.data.override?.completed);
-  const staff = await models.User.findOne({ ...tenantOf(player), role: "CENTRE_COMMAND", active: { $ne: false } }).lean();
+  const staff = await models.User.findOne({ ...cohortFilter(player), role: "CENTRE_COMMAND", active: { $ne: false } }).lean();
   assert.ok(staff);
   const before = hash(await protectedRecords(cohortId));
   await mkdir(".data/backups", { recursive: true });

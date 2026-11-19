@@ -1,4 +1,5 @@
 "use client";
+import { collegeStorageKey } from "@/lib/college-fetch.js";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ChevronsUp, Sparkles } from "lucide-react";
@@ -30,7 +31,7 @@ export default function ExperienceCelebration({ player, ready = true }) {
   const previous = useRef(undefined), [current, setCurrent] = useState(null);
   useEffect(() => {
     if (player.role !== "GAMER" || !Number.isFinite(player.xp)) return;
-    const key = experienceStorageKey(player._id);
+    const key = collegeStorageKey(experienceStorageKey(player._id));
     if (previous.current === undefined) {
       try { previous.current = JSON.parse(sessionStorage.getItem(key)); }
       catch { previous.current = null; }

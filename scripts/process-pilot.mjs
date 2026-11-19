@@ -1,9 +1,17 @@
 import mongoose from "mongoose";
+import { collegeJob } from "../lib/college-jobs.js";
+import { tenancyEnabled, collegeContext } from "../lib/college-context.js";
+import { deliverPendingRecovery } from "../lib/password-recovery.js";
 import { randomUUID } from "node:crypto";
 import { models, connect } from "../lib/db.js";
 import { pilotAction } from "../lib/pilot-engine.js";
 import { syncAttendance } from "../lib/attendance.js";
 export async function processPilot() {
+  const result = await collegeJob("pilot", processCollegePilot);
+  if (tenancyEnabled() && !collegeContext()) result.push({ recoveryMail: await deliverPendingRecovery() });
+  return result;
+}
+async function processCollegePilot() {
   await connect();
   const results = [];
   results.push({ attendance: await syncAttendance() });

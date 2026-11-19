@@ -1,4 +1,6 @@
 "use client";
+import fetch from "@/lib/college-fetch.js";
+
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import PlayerVitals from "./PlayerVitals";

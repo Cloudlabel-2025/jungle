@@ -7,7 +7,7 @@ import { connect, models } from "../lib/db.js";
 import { programSnapshot } from "../lib/week-one-program.js";
 import { flightLevelId, flightLevelStaffAction } from "../lib/week-one-levels.js";
 import { runProgram } from "../lib/week-one-store.js";
-import { tenantOf } from "../lib/access-scope.js";
+import { cohortFilter } from "../lib/access-scope.js";
 
 const userId = "usr_g01", day = 2;
 const digest = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -31,7 +31,7 @@ try {
   if (!process.argv.includes("--apply")) {
     console.log(JSON.stringify({ player: player.name, day, attempts: attempts.length, mode: "preview" }));
   } else {
-    const staff = await models.User.findOne({ ...tenantOf(player), role: "CENTRE_COMMAND", active: { $ne: false } }).lean();
+    const staff = await models.User.findOne({ ...cohortFilter(player), role: "CENTRE_COMMAND", active: { $ne: false } }).lean();
     assert.ok(staff, "An active CC account is required for the audited reset.");
     const before = digest(await unaffected(cohortId));
     await mkdir(".data/backups", { recursive: true });

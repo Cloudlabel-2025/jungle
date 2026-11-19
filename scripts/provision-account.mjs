@@ -22,6 +22,7 @@ try {
       {
         $set: {
           passwordHash: await hashPassword(password),
+          mustChangePassword: true,
           failures: 0,
           lockedUntil: null,
         },

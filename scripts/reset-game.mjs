@@ -5,6 +5,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { models, transaction } from "../lib/db.js";
+import { collegeContext, tenancyEnabled, requireCollegeContext } from "../lib/college-context.js";
 import { existingWorkspaceMongo } from "./dev-runtime.mjs";
 import { initialDays } from "../lib/week-one-rules.js";
 import { blankProgram } from "../lib/week-one-program-rules.js";
@@ -65,6 +66,8 @@ const progress = [
 ];
 
 try {
+  const context = tenancyEnabled() ? requireCollegeContext() : collegeContext();
+  if (!context) {
   process.env.MONGODB_URI ||= await existingWorkspaceMongo(
     27019,
     fileURLToPath(new URL("../.data/mongo", import.meta.url)),
@@ -72,10 +75,11 @@ try {
   await mongoose.connect(process.env.MONGODB_URI, {
     serverSelectionTimeoutMS: 10000,
   });
-  const db = mongoose.connection.db;
+  }
+  const db = context?.connection.db || mongoose.connection.db;
   assert.equal(
     db.databaseName,
-    "codewild",
+    context?.college.dbName || "codewild",
     "Reset is scoped to the configured codewild game.",
   );
   const players = await models.User.find({ role: "GAMER" }).lean();

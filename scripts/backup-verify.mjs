@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import mongoose from "mongoose";
 import { connect } from "../lib/db.js";
+import { collegeContext } from "../lib/college-context.js";
 if (!process.argv[2])
   throw new Error(
     "Provide an absolute output file path for the private backup.",
@@ -19,8 +20,9 @@ const digest = (documents) =>
 let restore;
 try {
   await connect();
-  const db = mongoose.connection.db;
-  const session = await mongoose.startSession();
+  const connection = collegeContext()?.connection || mongoose.connection;
+  const db = connection.db;
+  const session = await connection.startSession();
   const snapshot = [];
   try {
     await session.withTransaction(
@@ -57,10 +59,10 @@ try {
   // Read the serialized artifact back: verify a restore from the actual file.
   const { readFile } = await import("node:fs/promises");
   const saved = EJSON.parse(await readFile(output, "utf8"));
-  const restoreName = `codewild_restore_verify_${randomUUID().replaceAll("-", "")}`;
-  restore = mongoose.connection.useDb(restoreName, { useCache: false });
+  const restoreName = `jrv_${randomUUID().replaceAll("-", "")}`;
+  restore = connection.useDb(restoreName, { useCache: false });
   if (
-    !restore.name.startsWith("codewild_restore_verify_") ||
+    !restore.name.startsWith("jrv_") ||
     restore.name === db.databaseName
   )
     throw new Error("Unsafe restore target.");
@@ -100,7 +102,7 @@ try {
   );
 } finally {
   // Only the random, explicitly validated verification database is removed.
-  if (restore?.name.startsWith("codewild_restore_verify_"))
+  if (restore?.name.startsWith("jrv_"))
     await restore.dropDatabase();
   await mongoose.disconnect();
 }

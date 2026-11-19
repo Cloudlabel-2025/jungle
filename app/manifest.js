@@ -10,7 +10,7 @@ export default function manifest() {
     background_color: "#061b14",
     theme_color: "#102d20",
     icons: [192, 512].map((size) => ({
-      src: `/brand/vow-icon-v2-${size}.png`,
+      src: `${brand.iconPrefix}-${size}.png`,
       sizes: `${size}x${size}`,
       type: "image/png",
       purpose: "any",

@@ -1,4 +1,6 @@
 "use client";
+import fetch, { getActiveCollege } from "@/lib/college-fetch.js";
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPipProgressClient, legacyPipProgress } from "@/lib/pip-progress-client.js";
 import { completedPipSteps, emptyPipProgress, pipAccountKey } from "@/lib/pip-progress-rules.js";
@@ -21,7 +23,7 @@ export default function usePipProgress(data) {
   useEffect(() => { client.receive(data.pipProgress); }, [client, data.pipProgress]);
   useEffect(() => {
     try {
-      const patch = legacyPipProgress({ ...data, pipProgress: client.get() }, localStorage);
+      const patch = getActiveCollege() ? {} : legacyPipProgress({ ...data, pipProgress: client.get() }, localStorage);
       if (imported.current === account) delete patch.following;
       client.patch(patch);
       imported.current = account;

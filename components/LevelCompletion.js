@@ -1,4 +1,5 @@
 "use client";
+import { collegeStorageKey } from "@/lib/college-fetch.js";
 import { useEffect, useRef, useState } from "react";
 import { Star, Sparkles, Trophy, RotateCcw, Check } from "lucide-react";
 import XpIcon from "./XpIcon";
@@ -157,7 +158,7 @@ export default function TeamCompletionAnnouncements({ data }) {
     const next = pendingCompletions(data, (key) => {
       if (dismissed.current.has(key)) return true;
       try {
-        return localStorage.getItem(key) === "seen";
+        return localStorage.getItem(collegeStorageKey(key)) === "seen";
       } catch {
         return false;
       }
@@ -176,7 +177,7 @@ export default function TeamCompletionAnnouncements({ data }) {
     const key = completionKey(data.user._id, current);
     dismissed.current.add(key);
     try {
-      localStorage.setItem(key, "seen");
+      localStorage.setItem(collegeStorageKey(key), "seen");
     } catch {
       /* Memory still prevents repeats this session. */
     }

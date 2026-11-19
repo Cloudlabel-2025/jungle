@@ -1,4 +1,6 @@
 "use client";
+import fetch from "@/lib/college-fetch.js";
+
 import { useEffect, useRef, useState } from "react";
 import { Modal } from "./ui";
 

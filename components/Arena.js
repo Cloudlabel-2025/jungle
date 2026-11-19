@@ -1,4 +1,7 @@
 "use client";
+import { setActiveCollege, collegeStorageKey } from "@/lib/college-fetch.js";
+import fetch from "@/lib/college-fetch.js";
+
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -55,6 +58,7 @@ import { characterFor } from "@/lib/characters";
 import { monitoringRequired, claimSignInNotice } from "@/lib/notifications.js";
 import GameLoadingScreen, { useGameEntryLoading } from "./GameLoadingScreen";
 import ExpeditionLogin from "./ExpeditionLogin";
+import InitialPasswordChange from "./InitialPasswordChange";
 import VowBrand, { VowEmblem } from "./VowBrand";
 const icons = {
   CalendarDays,
@@ -76,6 +80,8 @@ const icons = {
   Bell,
 };
 export default function Arena({
+  college,
+  tenancy,
   screen,
   workspace,
   initialUser,
@@ -83,6 +89,7 @@ export default function Arena({
   demo,
   children,
 }) {
+  setActiveCollege(college?.id);
   const router = useRouter();
   const [user, setUser] = useState(initialUser),
     [data, setData] = useState(null),
@@ -112,7 +119,7 @@ export default function Arena({
   const role = user?.role || "GAMER";
   const playerMode = role === "GAMER";
   const flightMode = playerMode && (data?.story?.flight ?? user?.story?.flight ?? true);
-  const showEntryLoading = useGameEntryLoading(user?._id, Boolean(data), error);
+  const showEntryLoading = useGameEntryLoading(user?.mustChangePassword ? null : user?._id, Boolean(data), error);
   useEffect(()=>{
     if(data?.story?.characterSelectionRequired&&!flightMode&&!profileOpen&&!launcher)setCharacterPicker(true);
   },[data?.user?._id,data?.story?.characterSelectionRequired,flightMode,profileOpen,launcher]);
@@ -157,7 +164,9 @@ export default function Arena({
     ["N1", "notifications", "Notifications", "Bell"],
   ] : workspaceNavigation(role);
   const weekOneMode = programmeScreen(screen) !== null;
-  const current = weekOneMode
+  const current = screen === "college-management"
+    ? ["CM", screen, role === "CENTRE_COMMAND" ? "Manage college" : "Manage players"]
+    : weekOneMode
     ? weekOneNavigation[role].find((n) => n[1] === programmeScreen(screen)) ||
       nav.at(-1)
     : nav.find((n) => n[1] === screen) || nav[0];
@@ -280,6 +289,7 @@ export default function Arena({
             );
             return;
           }
+          if (result.code === "PASSWORD_CHANGE_REQUIRED") { setUser(previous => ({ ...previous, mustChangePassword: true })); setData(null); setError(""); return; }
           if (!response.ok) throw new Error(result.error);
           offset.current = new Date(result.serverTime).getTime() - Date.now();
           setData(result);
@@ -311,7 +321,7 @@ export default function Arena({
     [],
   );
   useEffect(() => {
-    if (!user) return;
+    if (!user || user.mustChangePassword) return;
     refresh();
     const balanceChanged = (event) => {
       if (event.detail?.source !== "workspace") refresh(true);
@@ -324,7 +334,7 @@ export default function Arena({
       clearInterval(timer);
       window.removeEventListener("codewild:balance-changed", balanceChanged);
     };
-  }, [user?._id, refresh]);
+  }, [user?._id, user?.mustChangePassword, refresh]);
   useEffect(() => {
     const t = setInterval(
       () => setClock(new Date(Date.now() + offset.current)),
@@ -414,6 +424,7 @@ export default function Arena({
         body: "{}",
       });
       if (!response.ok) throw new Error("Sign-out failed. Please try again.");
+      if (tenancy) { window.location.assign("/gamer/dashboard"); return; }
       setUser(null);
       setData(null);
       setError("");
@@ -505,6 +516,8 @@ export default function Arena({
     return (
       <>
         <ExpeditionLogin
+          college={college}
+          tenancy={tenancy}
           demoAccess={demo ? launcherContent : null}
           onSignIn={async (values) => {
             const response = await fetch("/api/auth/login", {
@@ -514,12 +527,14 @@ export default function Arena({
             });
             const result = await response.json();
             if (!response.ok) throw new Error(result.error || "Unable to sign in. Please try again.");
+            if (tenancy) { window.location.assign(`/${prefix(result.user.role)}/dashboard`); return; }
             enterWorkspace(result.user);
           }}
         />
         {toast && <div className={`toast ${toast.type}`}>{toast.message}</div>}
       </>
     );
+  if (user.mustChangePassword) return <InitialPasswordChange college={college} user={user} onSignOut={logout} />;
   const squad = data?.teams.find((t) => t._id === user.teamId);
   const headerPlayer = data ? (flightMode ? data.user : legacyWorkspaceData(data).user) : user;
   return (
@@ -576,6 +591,7 @@ export default function Arena({
             </button>
           )}
           <div className="sidebar-season">
+            {college && <span className="eyebrow">{college.name}</span>}
             <span className="eyebrow">
               {data?.cohort.name.toUpperCase() || "ARENA COHORT"}
             </span>
@@ -595,6 +611,7 @@ export default function Arena({
                 : "EXPEDITION COUNCIL"}
           </span>
           <nav aria-label="Workspace">
+            {tenancy && role !== "GAMER" && (!Array.isArray(user.permissions) || user.permissions.includes("roster:write")) && <Link href={`/${prefix(role)}/college-management`} className={`nav-item ${screen === "college-management" ? "active" : ""}`} aria-current={screen === "college-management" ? "page" : undefined} onClick={() => setMobile(false)}><ShieldCheck size={18} /><span>{role === "CENTRE_COMMAND" ? "Manage college" : "Manage players"}</span><small>CM</small>{screen === "college-management" && <i />}</Link>}
             {nav.map(([code, path, label, icon]) => {
               const Icon = icons[icon];
               return (

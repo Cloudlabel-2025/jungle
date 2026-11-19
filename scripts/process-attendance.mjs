@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import { collegeJob } from "../lib/college-jobs.js";
 import { syncAttendance } from "../lib/attendance.js";
 
 export async function processAttendance() {
-  return syncAttendance();
+  return collegeJob("attendance", () => syncAttendance());
 }
 if (
   process.argv[1]?.replaceAll("\\", "/").endsWith("/process-attendance.mjs")

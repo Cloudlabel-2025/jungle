@@ -1,3 +1,5 @@
+// This launcher is an isolated single-college fixture, never the live registry.
+process.env.TENANCY_ENABLED = "false";
 // Disposable Week 1 UI/API fixture. Does not connect to the workspace database.
 import { MongoMemoryReplSet } from "mongodb-memory-server";
 import { spawn } from "node:child_process";

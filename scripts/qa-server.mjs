@@ -1,3 +1,5 @@
+// This launcher is an isolated single-college fixture, never the live registry.
+process.env.TENANCY_ENABLED = "false";
 // Private browser QA: separate database and localhost cookie origin.
 import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";

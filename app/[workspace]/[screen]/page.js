@@ -1,3 +1,5 @@
+import { collegePage } from "@/lib/college-request.js";
+import { tenancyEnabled } from "@/lib/college-context.js";
 import { notFound, redirect } from "next/navigation";
 import { playerObjectives } from "@/lib/player-objectives.js";
 import { currentUser } from "@/lib/auth.js";
@@ -9,10 +11,11 @@ import {
   isWorkspaceScreen,
 } from "@/lib/workspace-navigation.js";
 import WorkspaceScreen from "@/components/WorkspaceScreen";
+import CollegeManagementPage from "@/components/CollegeManagementPage";
 import { playerStage } from "@/lib/player-stage.js";
 import { flightScreens } from "@/lib/flight-rules.js";
 export const dynamic = "force-dynamic";
-export default async function Page({ params, searchParams }) {
+async function renderPage({ params, searchParams }, college) {
   const { workspace, screen } = await params;
   const role = Object.keys(navigation).find((r) => prefix(r) === workspace);
   if (
@@ -24,8 +27,10 @@ export default async function Page({ params, searchParams }) {
     )
   )
     notFound();
-  const user = await currentUser();
+  const user = tenancyEnabled() && !college ? null : await currentUser();
   if (user && user.role !== role) redirect(`/${prefix(user.role)}/dashboard`);
+  if (user?.mustChangePassword) return null;
+  if (screen === "college-management") return <CollegeManagementPage role={role} />;
   if (user?.role === "GAMER") {
     const story = await playerStage(user);
     if (story.flight && (!flightScreens.has(screen) || (!story.introComplete && !["dashboard", "week-one-ask-mc", "notifications"].includes(screen))))
@@ -37,3 +42,5 @@ export default async function Page({ params, searchParams }) {
   const query = screen === "objectives" ? await searchParams : null;
   return <WorkspaceScreen key={screen} screen={screen} objectives={objectives} objectiveLevel={query?.level} />;
 }
+
+export default function Page(props) { return collegePage(college => renderPage(props, college)); }

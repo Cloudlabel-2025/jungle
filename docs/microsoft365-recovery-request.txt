@@ -1,0 +1,29 @@
+Subject: Authorize Jungle password-recovery email for cloudlabel@cloudheard.org
+
+Please configure Microsoft 365 application-based SMTP sending for Jungle.
+
+Sender mailbox: cloudlabel@cloudheard.org
+Application URL: https://voyageofwilderness-vow.vercel.app
+SMTP server: smtp.office365.com, port 587, TLS
+
+Please register a single-tenant Entra application with the Exchange Online
+SMTP.SendAsApp application permission, grant the appropriate administrator
+consent, register its service principal in Exchange, and scope the mailbox
+and SendAs permissions to the sender mailbox under our organization's policy.
+
+Microsoft's instructions:
+https://learn.microsoft.com/en-us/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth
+
+The application needs these server-side settings:
+SMTP_TENANT_ID
+SMTP_CLIENT_ID
+SMTP_CLIENT_SECRET
+
+Please provide the values through an approved private channel, or add them to
+the project's Vercel environment. Do not put secrets in Git, public files or
+chat. The app's default OAuth mode does not need the normal Outlook password.
+
+The updated application must be deployed before public reset links are used.
+After authorization and deployment, an authorized recipient should verify one
+complete recovery email and reset. No real email delivery has been certified
+by the local captured-message tests.

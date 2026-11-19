@@ -1,3 +1,5 @@
+// This launcher is an isolated single-college fixture, never the live registry.
+process.env.TENANCY_ENABLED = "false";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { randomBytes, randomUUID } from "node:crypto";
@@ -179,7 +181,7 @@ try {
     );
     await models.Credential.updateOne(
       { _id: u._id },
-      { $set: { passwordHash: await hashPassword(a.password) } },
+      { $set: { passwordHash: await hashPassword(a.password), mustChangePassword: true } },
       { upsert: true },
     );
   }

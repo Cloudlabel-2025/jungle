@@ -1,4 +1,6 @@
 "use client";
+import fetch from "@/lib/college-fetch.js";
+
 import { useState } from "react";
 import { Panel, Badge, Empty, Form } from "./ui";
 import { teamRoles, playerRole } from "@/lib/team-roles.js";

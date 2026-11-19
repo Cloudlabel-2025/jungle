@@ -1,3 +1,5 @@
+// This launcher is an isolated single-college fixture, never the live registry.
+process.env.TENANCY_ENABLED = "false";
 // Disposable browser/API QA fixture. Never connects to the workspace database.
 import { MongoMemoryReplSet } from "mongodb-memory-server";
 import mongoose from "mongoose";

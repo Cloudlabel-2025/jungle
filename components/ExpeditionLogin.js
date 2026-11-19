@@ -5,7 +5,12 @@ import { ArrowRight, Eye, EyeOff, AlertTriangle } from "lucide-react";
 import { VowEmblem } from "./VowBrand";
 import { brand } from "@/lib/brand.js";
 
-export default function ExpeditionLogin({ onSignIn, demoAccess }) {
+export default function ExpeditionLogin({
+  onSignIn,
+  demoAccess,
+  tenancy = false,
+  college = null,
+}) {
   const [visible, setVisible] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -14,12 +19,17 @@ export default function ExpeditionLogin({ onSignIn, demoAccess }) {
   async function submit(event) {
     event.preventDefault();
     if (pending.current) return;
+    if (tenancy && !college) {
+      setError("Open the college URL provided by your Centre Command.");
+      return;
+    }
     const values = new FormData(event.currentTarget);
     pending.current = true;
     setBusy(true);
     setError("");
     try {
       await onSignIn({
+        ...(tenancy ? { collegeId: college.id } : {}),
         identifier: String(values.get("identifier")).trim(),
         password: String(values.get("password")),
       });
@@ -39,6 +49,9 @@ export default function ExpeditionLogin({ onSignIn, demoAccess }) {
           <p className="vow-login-brand">{brand.name}</p>
           <h1 id="vow-login-title">Your adventure awaits.</h1>
           <p>Sign in to continue your voyage.</p>
+          {tenancy && college && (
+            <p className="vow-login-college">{college.name}</p>
+          )}
         </header>
         <form className="vow-login-form" onSubmit={submit} aria-busy={busy}>
           <div className="vow-login-field">
@@ -90,6 +103,12 @@ export default function ExpeditionLogin({ onSignIn, demoAccess }) {
         </form>
         <p className="vow-login-help">
           Need access or a password reset? Contact Centre Command.
+          {tenancy && (
+            <>
+              {" "}
+              <a href="/recover">Forgot password?</a>
+            </>
+          )}
         </p>
         {demoAccess && (
           <details className="vow-login-demo">

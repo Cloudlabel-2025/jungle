@@ -1,3 +1,5 @@
+// This launcher is an isolated single-college fixture, never the live registry.
+process.env.TENANCY_ENABLED = "false";
 // Disposable fictional browser QA. No .env.local, production DB or provider credentials.
 import { MongoMemoryReplSet } from "mongodb-memory-server";
 import { spawn } from "node:child_process";
@@ -83,7 +85,7 @@ if (process.argv.includes("--restore") || process.argv.includes("--report-checkp
 } else await seedStage(3);
 const child=spawn(process.execPath,["--import",pathToFileURL(resolve("scripts/part-b-browser-clock.mjs")).href,resolve("node_modules/next/dist/bin/next"),"start","--hostname","127.0.0.1","--port","3188"],{
   windowsHide:true,stdio:["ignore","pipe","pipe"],env:{PATH:process.env.PATH,SystemRoot:process.env.SystemRoot,USERPROFILE:process.env.USERPROFILE,TEMP:process.env.TEMP,TMP:process.env.TMP,APPDATA:process.env.APPDATA,LOCALAPPDATA:process.env.LOCALAPPDATA,
-    MONGODB_URI:process.env.MONGODB_URI,SESSION_SECRET:randomBytes(48).toString("hex"),APP_ORIGIN:"http://localhost:3188",DEMO_MODE:"false",BLOB_READ_WRITE_TOKEN:"",
+    TENANCY_ENABLED: "false", MONGODB_URI:process.env.MONGODB_URI,SESSION_SECRET:randomBytes(48).toString("hex"),APP_ORIGIN:"http://localhost:3188",DEMO_MODE:"false",BLOB_READ_WRITE_TOKEN:"",
     WEEK1_NOTIFICATION_WEBHOOK_URL:"",WEEK1_NOTIFICATION_WEBHOOK_TOKEN:"",WEEK1_COLLEGE_CONTACTS_JSON:"{}",CRON_SECRET:randomBytes(32).toString("hex"),
     PART_B_BROWSER_CLOCK_FILE:clock,NEXT_TELEMETRY_DISABLED:"1"}});
 child.stdout.on("data",d=>process.stdout.write(d));child.stderr.on("data",d=>process.stderr.write(d));

@@ -1,9 +1,12 @@
 import { connect } from "@/lib/db.js";
+import { tenancyEnabled } from "@/lib/college-context.js";
+import { registryModels } from "@/lib/college-registry.js";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function GET() {
   try {
-    await connect();
+    if (tenancyEnabled()) await (await registryModels()).connection.db.command({ ping: 1 });
+    else await connect();
     return Response.json(
       { status: "ok" },
       { headers: { "Cache-Control": "no-store" } },

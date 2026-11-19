@@ -52,12 +52,13 @@ import "./flight-finale.css";
 import "./first-discovery.css";
 import "./vow-brand.css";
 import "./expedition-login.css";
+import "./college-portal.css";
 import { brand } from "@/lib/brand.js";
 export const metadata = {
   title: brand.title,
   applicationName: brand.name,
   description: brand.description,
-  icons: {icon:[{url:"/brand/vow-icon-v2-64.png",sizes:"64x64",type:"image/png"},{url:"/brand/vow-icon-v2-192.png",sizes:"192x192",type:"image/png"}],apple:[{url:"/brand/vow-icon-v2-180.png",sizes:"180x180",type:"image/png"}]},
+  icons: {icon:[16,32,64,192].map(size=>({url:`${brand.iconPrefix}-${size}.png`,sizes:`${size}x${size}`,type:"image/png"})),apple:[{url:`${brand.iconPrefix}-180.png`,sizes:"180x180",type:"image/png"}]},
 };
 export default function RootLayout({ children }) {
   return (

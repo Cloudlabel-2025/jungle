@@ -1,4 +1,6 @@
 "use client";
+import fetch from "@/lib/college-fetch.js";
+
 import { useEffect, useState, useRef } from "react";
 import {
   Play,
