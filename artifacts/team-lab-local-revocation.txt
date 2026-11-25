@@ -1,0 +1,1 @@
+PASS: browser disconnect revoked the runner (HTTP 401); source retained; App.jsx matches the four-test implementation; final version 7 approved by CC; HP 5, energy 3 and trophies 0 unchanged.

@@ -1,6 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import TrophyLeague, { LeagueBadge } from "./TrophyLeague";
+import { experienceProgress } from "@/lib/rewards.js";
+import { trophyLeague } from "@/lib/trophy-leagues.js";
 import dynamic from "next/dynamic";
 import {
   Flame,
@@ -611,7 +614,7 @@ function GamerCore({ screen, data, act, now }) {
           code="G03"
           title="Expedition objectives"
           subtitle="Own the work. Share the status. Move the mission forward."
-          action={
+          action={data.tasks.length > 0 &&
             <Badge tone="lime">
               {data.tasks.filter((t) => t.status === "Done").length} /{" "}
               {data.tasks.length} SEALED
@@ -928,16 +931,17 @@ function Rewards({ data }) {
         action={
           <Badge tone="amber">
             <Trophy size={13} />
-            {league(data.user.trophies)} LEAGUE
+            {trophyLeague(data.user.trophies).ranked ? trophyLeague(data.user.trophies).displayName : "NO LEAGUE YET"}
           </Badge>
         }
       />
+      <TrophyLeague trophies={data.user.trophies}/>
       <div className="personal-experience">
         <Flame size={23} />
         <div>
           <h2>Your experience · Level {data.user.level}</h2>
           <p>
-            {data.user.xp} XP · {100 - (data.user.xp % 100)} XP to your next
+            {data.user.xp} XP · {experienceProgress(data.user.xp).remaining} XP to your next
             level. Experience has no leaderboard.
           </p>
         </div>
@@ -965,7 +969,7 @@ function Rewards({ data }) {
                     {data.teams.find((t) => t._id === u.teamId)?.name}
                   </small>
                 </span>
-                <Badge tone="amber">{league(u.trophies)}</Badge>
+                <LeagueBadge trophies={u.trophies}/>
                 <strong className="mono">
                   {u.trophies} <small>trophies</small>
                 </strong>
@@ -998,11 +1002,6 @@ function Rewards({ data }) {
               </Empty>
             )}
           </Panel>
-          <div className="league-guide">
-            <Badge>BRONZE · 0–299</Badge>
-            <Badge tone="cyan">SILVER · 300–699</Badge>
-            <Badge tone="amber">GOLD · 700+</Badge>
-          </div>
           <Panel
             title="Your unlocked perks"
             kicker="TWO COMMAND SEALS REQUIRED"
@@ -1076,7 +1075,7 @@ function Telemetry({ data, now, act, executive = false }) {
         subtitle={
           executive
             ? "The whole arena. One clear view."
-            : "Five squads. Twenty-five operatives. Keep the mission moving."
+            : `${data.teams.length} squads. ${data.roster.length} operatives. Keep the mission moving.`
         }
         action={
           <Badge tone="lime">
@@ -1091,11 +1090,11 @@ function Telemetry({ data, now, act, executive = false }) {
             label: "ATTENDANCE",
             value: (
               <>
-                {Math.round((attendance.length / 25) * 100)}
+                {data.roster.length ? Math.round((new Set(attendance.map((entry)=>entry.userId)).size / data.roster.length) * 100) : 0}
                 <small>%</small>
               </>
             ),
-            note: `${attendance.length} / 25 operatives checked in today`,
+            note: `${new Set(attendance.map((entry)=>entry.userId)).size} / ${data.roster.length} operatives checked in today`,
             icon: Users,
             tone: "lime",
           },
@@ -1128,7 +1127,7 @@ function Telemetry({ data, now, act, executive = false }) {
             value: (
               <>
                 {Math.round(
-                  (data.roster.reduce((s, u) => s + u.hp, 0) / 125) * 100,
+                  data.roster.length ? (data.roster.reduce((s, u) => s + (u.hp || 0), 0) / (data.roster.length * 5)) * 100 : 0,
                 )}
                 <small>%</small>
               </>
@@ -1718,22 +1717,10 @@ function Setup({ data, act }) {
               },
               {
                 name: "characterKey",
-                label: "Character identity · swaps with its current holder",
+                label: "Team role · swaps with its current holder",
                 options: [
-                  { value: "", label: "Keep current character" },
-                  ...characters.map((c) => ({
-                    value: c.key,
-                    label: `${c.label} · ${c.male} / ${c.female}`,
-                  })),
-                ],
-              },
-              {
-                name: "characterVariant",
-                label: "Character version",
-                options: [
-                  { value: "", label: "Keep current version" },
-                  { value: "male", label: "Male version" },
-                  { value: "female", label: "Female version" },
+                  { value: "", label: "Keep current team role" },
+                  ...characters.map(c => ({value:c.key,label:c.label})),
                 ],
               },
             ]}

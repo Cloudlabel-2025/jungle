@@ -56,19 +56,13 @@ export default function useFlightAttempt({ record, ownerId, now, open, act }) {
     if (readOnly || busy) return;
     setBoard((s) => ({ ...s, ...value }));
   };
-  const move = async (index) => {
+  const move = (index) => {
     if (busy) return;
     setError("");
-    try {
-      const next = { ...board, cursor: index };
-      if (!readOnly) {
-        await work.flush({ answers, board: next });
-        setBoard(next);
-      }
-      setCursor(index);
-    } catch (e) {
-      setError(e.message);
-    }
+    // Cursor changes join the existing debounced draft save. Rapid navigation
+    // must not enqueue one database transaction per card. Submit/leave flush it.
+    setCursor(index);
+    if (!readOnly) setBoard(previous => ({ ...previous, cursor: index }));
   };
   const submit = async () => {
     if (busy || !canWrite || sealed) return;

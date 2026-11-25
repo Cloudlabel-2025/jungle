@@ -97,7 +97,7 @@ export default function SimpleLevelThreeEntry({
         !(await act(
           "week1/program/attempt-start",
           { day: 3, activityId: selected, variantId: variant.id },
-          "Your mission has started. Your progress saves automatically.",
+          "Mission started. 1 energy spent; your progress saves automatically.",
         ))
       )
         throw Error("Starting was not confirmed. Try again.");
@@ -274,7 +274,7 @@ export default function SimpleLevelThreeEntry({
                         onClick={start}
                       >
                         <Play size={17} />
-                        {busy ? "Starting…" : "Play this case"}
+                        {busy ? "Starting…" : "Play this case · 1 energy"}
                       </button>
                       <small>
                         {activity?.durationMinutes} minutes · your saved timer

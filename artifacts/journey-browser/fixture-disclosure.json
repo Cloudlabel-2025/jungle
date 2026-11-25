@@ -1,0 +1,35 @@
+{
+  "base": "http://localhost:3190",
+  "accounts": [
+    {
+      "id": "journey-player",
+      "email": "explorer@journey.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "journey-recovery",
+      "email": "recovery@journey.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "journey-legacy-recovery",
+      "email": "legacy@journey.invalid",
+      "role": "GAMER"
+    },
+    {
+      "id": "journey-cc",
+      "email": "centre@journey.invalid",
+      "role": "CENTRE_COMMAND"
+    },
+    {
+      "id": "usr_mc01",
+      "email": "guide@journey.invalid",
+      "role": "MISSION_COMMANDER"
+    }
+  ],
+  "seeded": "Only accounts, curriculum and a separate exhausted recovery scenario. Main Journey Explorer has no mission completions or results. Two fixed shared-chat provider URLs are mocked in the server preload; no external AI provider is contacted for those fictional URLs.",
+  "sharedChatUrls": [
+    "https://chatgpt.com/share/11111111-1111-1111-1111-111111111111",
+    "https://chatgpt.com/share/11111111-1111-1111-1111-111111111112"
+  ]
+}

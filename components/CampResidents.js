@@ -1,4 +1,5 @@
 "use client";
+import AvatarPortrait from "./AvatarPortrait";
 import { useEffect, useId } from "react";
 import { Heart, Zap, X } from "lucide-react";
 import { campTeamMembers, campVitals } from "@/lib/camp-team";
@@ -19,19 +20,13 @@ export function CampResidents({ roster, user, selected, onSelect }) {
                 "--resident-color": character.color,
                 zIndex: Math.round(tent.y),
               }}
-              aria-label={`${player.name} as ${character.name}. View life and energy`}
+              aria-label={`${player.name}. View life and energy`}
               aria-expanded={selected === player._id}
               title="View player details"
               onClick={() => onSelect(player._id)}
             >
               <span className="camp-resident-shadow" aria-hidden="true" />
-              <span
-                className="camp-resident-art"
-                aria-hidden="true"
-                style={{
-                  backgroundImage: `url('/images/characters/camp/${character.key}-${character.variant}.webp')`,
-                }}
-              />
+              <span className="camp-resident-art" aria-hidden="true"><AvatarPortrait avatar={character.avatar} fullBody alt=""/></span>
               <span className="camp-resident-character">{character.name}</span>
             </button>
           ),
@@ -67,7 +62,7 @@ export function CampResidentInfo({ roster, user, selected, close }) {
         <X size={17} />
       </button>
       <div className="camp-resident-info-heading">
-        <img src={character.image} alt="" />
+        <AvatarPortrait avatar={character.avatar} alt="" />
         <div>
           <span>YOUR TEAMMATE{player._id === user._id ? " · YOU" : ""}</span>
           <h2 id={id}>{player.name}</h2>

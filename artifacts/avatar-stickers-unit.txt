@@ -1,0 +1,28 @@
+TAP version 13
+# Subtest: confirmed outcomes choose reactions without treating pending review or technical errors as losses
+ok 1 - confirmed outcomes choose reactions without treating pending review or technical errors as losses
+  ---
+  duration_ms: 0.9865
+  type: 'test'
+  ...
+# Subtest: every reaction preserves the selected face, hair and clothes without changing saved settings
+ok 2 - every reaction preserves the selected face, hair and clothes without changing saved settings
+  ---
+  duration_ms: 5.591
+  type: 'test'
+  ...
+# Subtest: both styles, all wardrobe and hair choices render for every sticker action
+ok 3 - both styles, all wardrobe and hair choices render for every sticker action
+  ---
+  duration_ms: 84.6664
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 261.1047

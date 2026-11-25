@@ -14,6 +14,7 @@ import WorkspaceScreen from "@/components/WorkspaceScreen";
 import CollegeManagementPage from "@/components/CollegeManagementPage";
 import { playerStage } from "@/lib/player-stage.js";
 import { flightScreens } from "@/lib/flight-rules.js";
+import FlightLockedPage from "@/components/FlightLockedPage";
 export const dynamic = "force-dynamic";
 async function renderPage({ params, searchParams }, college) {
   const { workspace, screen } = await params;
@@ -33,7 +34,8 @@ async function renderPage({ params, searchParams }, college) {
   if (screen === "college-management") return <CollegeManagementPage role={role} />;
   if (user?.role === "GAMER") {
     const story = await playerStage(user);
-    if (story.flight && (!flightScreens.has(screen) || (!story.introComplete && !["dashboard", "week-one-ask-mc", "notifications"].includes(screen))))
+    if (story.flight && !flightScreens.has(screen)) return <FlightLockedPage />;
+    if (story.flight && !story.introComplete && !["dashboard", "week-one-ask-mc", "notifications"].includes(screen))
       redirect("/gamer/dashboard");
   }
   if (!isWorkspaceScreen(role, screen) && !validProgrammeScreen(role, screen))

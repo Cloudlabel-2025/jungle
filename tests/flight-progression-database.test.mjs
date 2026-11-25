@@ -273,6 +273,13 @@ test(
         1,
       );
       const first = await models.DayOneRecord.findOne({ userId: p._id }).lean();
+      const completed = (await programSnapshot(p, now)).progression.levels.find(level => level.day === 2);
+      assert.equal(completed.completed, true);
+      await programAction(p, 'clock', { day: 2 }, now);
+      await programAction(p, 'sod', { day: 2, text: 'Review the evidence and record what changed after completing the mission.' }, now);
+      assert.ok((await models.WeekOneLearner.findOne({ userId: p._id }).lean()).data.days[2].sod);
+      await programAction(cc, "publish-challenge", { kind:"WEEKLY", title:"Evidence quest", brief:"Compare two independent sources and explain how the evidence changes your conclusion.", reward:"Approved verification badge" }, now);
+      assert.equal((await programSnapshot(p,now)).challenges.find((c)=>c.id === "W1-WEEKLY").title,"Evidence quest","prepared self-paced content permits an optional quest without opening a calendar day");
       await dayOneAction(
         cc,
         "level-result",

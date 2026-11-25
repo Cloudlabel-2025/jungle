@@ -48,12 +48,14 @@ import { roleNames } from "@/lib/expedition";
 import { league } from "@/lib/rules.js";
 import { Avatar, Modal, HP, Badge } from "./ui";
 import PlayerHeader from "./PlayerHeader";
+import TrophyLeague, { TrophyLeagueChange } from "./TrophyLeague";
 import PlayerProfile from "./PlayerProfile";
 import AttendancePrompt from "./AttendancePrompt";
 import { WorkspaceContext } from "./WorkspaceContext";
 import TeamCompletionAnnouncements from "./LevelCompletion";
 import ExperienceCelebration from "./ExperienceCelebration";
 import CharacterPicker from "./CharacterPicker";
+import AvatarPortrait from "./AvatarPortrait";
 import { characterFor } from "@/lib/characters";
 import { monitoringRequired, claimSignInNotice } from "@/lib/notifications.js";
 import GameLoadingScreen, { useGameEntryLoading } from "./GameLoadingScreen";
@@ -104,6 +106,8 @@ export default function Arena({
     [soundEnabled, setSoundEnabled] = useState(false);
   const [characterPicker, setCharacterPicker] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [leagueOpen,setLeagueOpen] = useState(false);
+  useEffect(()=>setLeagueOpen(false),[user?._id]);
   const [attendanceOpen,setAttendanceOpen]=useState(false);
   useEffect(()=>{setProfileOpen(false);setAttendanceOpen(false);},[user?._id]);
   const offset = useRef(0),
@@ -121,8 +125,8 @@ export default function Arena({
   const flightMode = playerMode && (data?.story?.flight ?? user?.story?.flight ?? true);
   const showEntryLoading = useGameEntryLoading(user?.mustChangePassword ? null : user?._id, Boolean(data), error);
   useEffect(()=>{
-    if(data?.story?.characterSelectionRequired&&!flightMode&&!profileOpen&&!launcher)setCharacterPicker(true);
-  },[data?.user?._id,data?.story?.characterSelectionRequired,flightMode,profileOpen,launcher]);
+    if(playerMode && (data?.story?.characterSelectionRequired || (data?.user && !data.user.avatar && !data.user.characterHidden))&&!flightMode&&!profileOpen&&!launcher)setCharacterPicker(true);
+  },[data?.user?._id,data?.user?.avatarVersion,data?.story?.characterSelectionRequired,playerMode,flightMode,profileOpen,launcher]);
   const playerNavigation = useRef(null);
   const playerNavigationTrigger = useRef(null);
   useEffect(() => {
@@ -543,6 +547,7 @@ export default function Arena({
     >
       <div
         className={`arena ${role === "GAMER" ? "player-arena" : ""} ${flightMode ? "flight-arena" : ""} ${flightMode && ["dashboard", "week-one-games"].includes(screen) ? "sky-map-mode" : ""} ${flightMode || !(role === "GAMER" && screen === "dashboard") ? "field-mode" : ""} ${screen === "ide" ? "lab-mode" : ""} ${!flightMode && role === "GAMER" && screen === "dashboard" ? "expedition-mode" : ""}`}
+        data-role={role}
         inert={showEntryLoading ? true : undefined}
       >
         {mobile && (
@@ -639,13 +644,12 @@ export default function Arena({
                 setCharacterPicker(true);
               }}
             >
-              <img
-                src={characterFor(data.user)?.image}
+              <AvatarPortrait avatar={characterFor(data.user)?.avatar}
                 alt=""
                 width={36}
                 height={36}
               />
-              Choose character
+              Customize avatar
             </button>
           )}
           <div className="sidebar-bottom">
@@ -713,6 +717,7 @@ export default function Arena({
                   player={headerPlayer}
                   part="rewards"
                   teamName={squad?.name}
+                  onOpenLeague={()=>setLeagueOpen(true)}
                 />
               )}
               {playerMode && <button className="icon-btn profile-trigger" aria-label="Open my profile" title="My profile" onClick={()=>setProfileOpen(true)}><UserRound size={18}/></button>}
@@ -880,7 +885,8 @@ export default function Arena({
         )}
       </div>
       {showEntryLoading && <GameLoadingScreen onCancel={logout} flight={flightMode} />}
-      {playerMode && data?.user?._id === user?._id && <ExperienceCelebration key={data.user._id} player={data.user} ready={!showEntryLoading && !launcher && !characterPicker && !profileOpen && !attendanceOpen} />}
+      {playerMode && data?.user?._id === user?._id && <><TrophyLeagueChange key={`league:${data.user._id}`} player={data.user} ready={!showEntryLoading && !launcher && !characterPicker && !profileOpen && !attendanceOpen && !leagueOpen} open={()=>setLeagueOpen(true)}/><ExperienceCelebration key={data.user._id} player={data.user} ready={!showEntryLoading && !launcher && !characterPicker && !profileOpen && !attendanceOpen && !leagueOpen} /></>}
+      {leagueOpen && data && <Modal title="Trophy leagues" kicker="THE TROPHY HALL" close={()=>setLeagueOpen(false)} wide><TrophyLeague trophies={data.user.trophies}/></Modal>}
     </WorkspaceContext.Provider>
   );
 }

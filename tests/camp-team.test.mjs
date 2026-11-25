@@ -27,7 +27,7 @@ test("camp residents use only the active current team and each selected variant"
     members.map(({ player }) => player._id),
     ["a", "b"],
   );
-  assert.equal(members[1].character.name, "Juno");
+  assert.equal(members[1].character.name, "Explorer b");
   assert.equal(members[1].character.variant, "female");
   assert.equal(members[1].tent.key, "glitch");
   assert.equal(campTeamMembers(roster, { teamId: null }).length, 0);
@@ -52,7 +52,7 @@ test("tent placement stays stable across roster order and variant changes", () =
     before.map(({ tent }) => tent),
     after.map(({ tent }) => tent),
   );
-  assert.equal(after[0].character.name, "Zara");
+  assert.equal(after[0].character.name, "Explorer a");
   assert.equal(after[0].player.hp, 2);
   assert.equal(new Set(after.map(({ tent }) => tent.key)).size, 5);
 });

@@ -1,3 +1,4 @@
+import { defaultAvatar } from "../lib/avatar.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import mongoose from "mongoose";
@@ -53,7 +54,7 @@ test("ten full-stack projects assign five distinct end-to-end features and every
         fullStackLevel(projectLevels[0]),
         players.map((p, i) => (i === 1 ? { ...p, characterKey: "blaze" } : p)),
       ),
-    /one .* character/,
+    /one .* team role/,
   );
   const malformed = fullStackLevel(projectLevels[0]);
   malformed.tasks[1] = malformed.tasks[0];
@@ -63,9 +64,9 @@ test("ten full-stack projects assign five distinct end-to-end features and every
   );
   assert.equal(
     characterFor({ ...players[0], characterVariant: "female" }).name,
-    "Zara",
+    "Player 0",
   );
-  assert.equal(characterFor({role:"GAMER",assignment:"Frontend Specialist"}).name,"Jett");
+  assert.equal(characterFor({role:"GAMER",assignment:"Frontend Specialist"}).name,"Explorer");
 });
 test("legacy attempts resolve their original definition when the published curriculum changes", () => {
   const newer = fullStackLevel(projectLevels[0]);
@@ -111,21 +112,29 @@ test(
       const guide = await models.User.findById("guide"),
         cc = await models.User.findById("cc");
       await assert.rejects(
-        chooseCharacter(guide, { characterKey: "blaze", variant: "female" }),
+        chooseCharacter(guide, { avatar: defaultAvatar("female"), version: 0 }),
         /Only an active player/,
       );
       await assert.rejects(
-        chooseCharacter(players[0], { characterKey: "shade", variant: "male" }),
-        /belongs to a teammate/,
+        chooseCharacter(players[0], { avatar: {...defaultAvatar(), photo: "forbidden"}, version: 0 }),
+        /Photos and scan data/,
       );
       await chooseCharacter(players[0], {
-        characterKey: "blaze",
-        variant: "female",
+        avatar: defaultAvatar("female"), version: 0,
       });
       assert.equal(
-        (await models.User.findById("p0")).characterVariant,
+        (await models.User.findById("p0")).avatar.style,
         "female",
       );
+      const savedAvatar = await models.User.findById("p0").lean();
+      assert.equal(savedAvatar.characterKey, "blaze");
+      assert.equal(savedAvatar.avatarVersion, 1);
+      assert.equal(savedAvatar.hp, 5);
+      assert.equal(savedAvatar.energy, 3);
+      assert.equal(savedAvatar.trophies, 0);
+      await chooseCharacter(players[1], { avatar: defaultAvatar("female"), version: 0 });
+      await assert.rejects(chooseCharacter(players[0], { avatar: defaultAvatar(), version: 0 }), e => e.status === 409);
+      await assert.rejects(chooseCharacter(players[0], { avatar: defaultAvatar(), version: 1, userId: "p1" }), e => e.status === 400);
       await Promise.all([
         projectAction(players[0], "start", { levelId: "project_1" }),
         projectAction(players[1], "start", { levelId: "project_1" }),

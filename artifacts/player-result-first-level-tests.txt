@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: MongoDB Level 1: automatic stars, atomic 5x rewards, overrides, scoped teams and replay
+ok 1 - MongoDB Level 1: automatic stars, atomic 5x rewards, overrides, scoped teams and replay
+  ---
+  duration_ms: 4909.9198
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7610.4711

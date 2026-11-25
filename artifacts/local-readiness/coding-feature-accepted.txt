@@ -1,0 +1,157 @@
+- button "Open expedition navigation":
+- banner:
+  - region "Player status":
+    - img "QA Gamer 0's personal avatar"
+    - strong: QA Gamer 0
+    - generic: Full-stack explorer
+    - generic: Level 1
+    - progressbar "Experience toward next level"
+    - generic: 0 / 100 XP
+    - generic "Current player balance":
+      - generic "5 of 5 lives":
+        - generic: Life
+        - generic: 5/5
+      - generic "2 of 3 energy":
+        - generic: Energy
+        - generic: 2/3
+  - generic "Player achievements":
+    - generic: pilot-team-0
+    - button "Open trophy leagues. Unranked, 0 trophies":
+      - strong: Unranked
+      - text: 0 trophies
+    - strong: "0"
+    - generic: Day streak
+  - button "Open my profile":
+  - button "Open clock-in and clock-out":
+  - link "Notifications (1 unread)":
+    - /url: /gamer/notifications
+    - generic: "1"
+  - button "Enable client alert sound":
+  - button "Sign out":
+- main:
+  - generic "Expedition briefing":
+    - text: pilot-team-0
+    - text: 0/5 Alumni Connect keys
+    - link "Return to map":
+      - /url: /gamer/dashboard
+      - text: Return to map
+  - text: THE CROSSING / SQUAD OBJECTIVES
+  - heading "Expedition objectives" [level=1]
+  - paragraph: Every completed objective brings your party closer to safety.
+  - generic: Own the work. Share the status. Move the mission forward.
+  - generic: G03 / VOW EXPEDITION
+  - paragraph:
+    - strong: Communication is part of delivery.
+    - text: Open a quest to transmit a pre-deadline status report. A Commander approves completed work.
+  - generic "Objective boards":
+    - link "Existing Objectives":
+      - /url: "?"
+    - link "Programme Sprint Work":
+      - /url: "?board=programme"
+    - paragraph: "Approved programme sprints: assigned work, evidence and independent reviews."
+  - region "Programme Sprint Work":
+    - navigation "Alumni Connect expedition trails":
+      - link "Trail 1 · You are here":
+        - /url: /gamer/sprint-board?board=programme&sprint=1
+      - link "Trail 2":
+        - /url: /gamer/sprint-board?board=programme&sprint=2
+      - link "Trail 3":
+        - /url: /gamer/sprint-board?board=programme&sprint=3
+      - link "Trail 4":
+        - /url: /gamer/sprint-board?board=programme&sprint=4
+      - link "Trail 5":
+        - /url: /gamer/sprint-board?board=programme&sprint=5
+    - region "Open the Gates mission progress":
+      - text: Alumni Connect / Sprint 1
+      - heading "Open the Gates" [level=2]
+      - progressbar "Approved mission progress"
+      - strong: 1/4 checkpoints
+      - paragraph: "Next mission: Alumni directory + profile read screens"
+      - button "Open my next mission":
+        - text: Open my next mission
+      - link "Enter Code Lab":
+        - /url: /gamer/ide
+      - link "Call your Guide":
+        - /url: /gamer/week-one-ask-mc
+      - img "QA Gamer 0, ready for the next mission"
+    - generic "Current player balance":
+      - generic "5 of 5 lives":
+        - generic: Life
+        - generic: 5/5
+      - generic "2 of 3 energy":
+        - generic: Energy
+        - generic: 2/3
+    - time: Last checked 07:22 pm IST
+    - button "Refresh programme" [active]
+    - status: Saved and verified by the server.
+    - heading "Sprint 1 · Alumni Connect" [level=2]
+    - generic: ACTIVE
+    - paragraph: "Original commitment: 13/11/2026, 5:00:00 pm. Task acceptance, client acceptance and competency marks are separate."
+    - generic "Approved acceptance tests and field contract"
+    - text: Team
+    - combobox "Team":
+      - option "pilot-team-0" [selected]
+    - paragraph: "TL: QA Gamer 0 · weekly CL limit: 3 · Kickoff recorded"
+    - generic "My Day, Daily Spark and handovers"
+    - generic "SOD, EOD, journal and rule acknowledgements"
+    - checkbox "My assigned work" [checked]
+    - text: My assigned work
+    - text: Status
+    - combobox "Status":
+      - option "All statuses" [selected]
+      - option "Ready"
+      - option "Working"
+      - option "In Review"
+      - option "Rework"
+      - option "Accepted"
+    - paragraph: 4 tasks shown
+    - region "Ready":
+      - heading "Ready 3" [level=3]:
+        - text: Ready
+        - generic: "3"
+      - button "FE-02 · Alumni directory + profile read screens QA Gamer 0 · TT1 · Estimate pending Due 13/11/2026, 5:00:00 pm":
+        - strong: FE-02 · Alumni directory + profile read screens
+        - generic: QA Gamer 0 · TT1 · Estimate pending
+        - generic: Due 13/11/2026, 5:00:00 pm
+      - 'button "FE-03 · Connect UI to login/directory/profile APIs QA Gamer 0 · TT2 · Estimate pending Due 13/11/2026, 5:00:00 pm Prerequisites: BE-02, BE-03"':
+        - strong: FE-03 · Connect UI to login/directory/profile APIs
+        - generic: QA Gamer 0 · TT2 · Estimate pending
+        - generic: Due 13/11/2026, 5:00:00 pm
+        - generic: "Prerequisites: BE-02, BE-03"
+      - button "QA-01 · Basic frontend component test checks QA Gamer 0 · TT1 · Estimate pending Due 13/11/2026, 5:00:00 pm":
+        - strong: QA-01 · Basic frontend component test checks
+        - generic: QA Gamer 0 · TT1 · Estimate pending
+        - generic: Due 13/11/2026, 5:00:00 pm
+    - region "Working":
+      - heading "Working 0" [level=3]:
+        - text: Working
+        - generic: "0"
+      - paragraph: No tasks
+    - region "In Review":
+      - heading "In Review 0" [level=3]:
+        - text: In Review
+        - generic: "0"
+      - paragraph: No tasks
+    - region "Rework":
+      - heading "Rework 0" [level=3]:
+        - text: Rework
+        - generic: "0"
+      - paragraph: No tasks
+    - region "Accepted":
+      - heading "Accepted 1" [level=3]:
+        - text: Accepted
+        - generic: "1"
+      - button "FE-01 · React login screen and validation/errors QA Gamer 0 · TT1 · Estimate pending Due 13/11/2026, 5:00:00 pm":
+        - strong: FE-01 · React login screen and validation/errors
+        - generic: QA Gamer 0 · TT1 · Estimate pending
+        - generic: Due 13/11/2026, 5:00:00 pm
+    - generic "Client interruptions and assistance"
+    - generic "Client acceptance, recovery and optional extensions"
+    - generic "Meetings and optional challenges"
+    - generic "Verified competency and separate programme ledgers"
+- contentinfo:
+  - text: CAMP RADIO CONNECTED
+  - text: ASIA / KOLKATA
+  - generic: EXPLORE. ADAPT. SURVIVE.
+  - generic: Voyage of Wilderness · VOW © 2026
+- alert

@@ -21,6 +21,7 @@ import LevelBriefing from "./LevelBriefing";
 import { projectState as missionState } from "./Projects";
 import { alumniLevels } from "@/lib/alumni-map.js";
 import WorkflowOverview from "./WorkflowOverview";
+import MissionAdventure from "./MissionAdventure";
 
 export default function JungleGame({
   data,
@@ -182,7 +183,7 @@ export default function JungleGame({
   const rescue = data.rescues.some(
     (r) => r.userId === data.user._id && r.status !== "CLOSED",
   );
-  const ready = completed.length === modules.length;
+  const ready = coreKeys === 5;
   function locate() {
     const target = next || modules.at(-1);
     const stop =
@@ -598,6 +599,22 @@ export default function JungleGame({
           )}
           {panel === "extraction" && (
             <>
+              {ready && (
+                <div className="expedition-finale">
+                  <MissionAdventure
+                    chapter="Expedition complete"
+                    title="You made it through the wilderness"
+                    brief="Five client acceptance keys. One shared project. Your team has earned all five keys."
+                    player={data.user}
+                    progress={{
+                      completed: 5,
+                      total: 5,
+                      cleared: true,
+                      next: "Your Alumni Connect journey is complete. Revisit your missions, show your project in Code Lab, or ask your Guide about the optional next expedition.",
+                    }}
+                  />
+                </div>
+              )}
               <p className="lesson-copy">
                 Complete Alumni Connect by earning all five client acceptance
                 keys. CC verifies each sprint and the final release,

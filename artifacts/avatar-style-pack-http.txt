@@ -1,0 +1,1 @@
+female: new hairstyle, costume and coordinated colours persisted; teammate/MC/CC visibility and unchanged balances passed.

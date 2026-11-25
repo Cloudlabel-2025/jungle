@@ -6,6 +6,8 @@ import { MyDay, Questions, Rules, MyResults } from "./WeekOneLearner";
 import { DayOneRewards } from "./DayOneFeatures";
 import Showcase from "./WeekOneShowcase";
 import { LevelOneStarGuideContent } from "./LevelOneStarGuide";
+import FlightJourneyStatus from "./FlightJourneyStatus";
+import TrophyLeague from "./TrophyLeague";
 
 const titles = {
   checkin: "Daily check-in",
@@ -104,6 +106,7 @@ export default function SkyMapPanels({
             )}
             {panel === "next" && (
               <>
+                <FlightJourneyStatus levels={levels} program={data.weekOneProgram} />
                 <p>
                   Follow your daily briefing, then complete the released
                   mission. Flight itself does not start your research timer.
@@ -119,7 +122,7 @@ export default function SkyMapPanels({
                     Game rules
                   </button>
                 </div>
-                <h3>First discovery · {discovery.completed}/3 checkpoints</h3>
+                <h3>First discovery · {discovery.completed}/{discovery.steps.length} checkpoints</h3>
                 <ol className="sky-next-checklist">
                   {discovery.steps.map((step) => (
                     <li key={step.id}>
@@ -176,6 +179,7 @@ export default function SkyMapPanels({
             )}
             {panel === "rules" && (
               <>
+                <p>Each new mission costs 1 energy. Opening pages, saving and continuing an existing mission are free. Spending your third energy removes one life and refills energy to 3. At zero lives, finish saved work and ask Help Desk for recovery before starting another mission. Mission costs do not count as conduct penalties.</p>
                 {!boarded && (
                   <p>
                     You can read the rules now. Board Level 1 before
@@ -193,6 +197,7 @@ export default function SkyMapPanels({
             )}
             {panel === "rewards" && (
               <>
+                <TrophyLeague trophies={data.user.trophies}/>
                 <p>
                   Rankings are paused during Week 1. These are your own rewards
                   and released private results.

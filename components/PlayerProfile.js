@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Modal } from "./ui";
 import PlayerHeader from "./PlayerHeader";
+import TrophyLeague from "./TrophyLeague";
 import PlayerWorkHistory from "./PlayerWorkHistory";
 import { experienceProgress, experienceLevel } from "@/lib/rewards.js";
 export default function PlayerProfile({ data, close, onChooseCharacter }) {
@@ -27,6 +28,7 @@ export default function PlayerProfile({ data, close, onChooseCharacter }) {
     >
       <div className="player-profile-card">
         <PlayerHeader player={player} />
+        <TrophyLeague trophies={player.trophies}/>
         <button className="btn" onClick={() => setHistoryOpen(true)}>
           View work by date
         </button>
@@ -64,17 +66,17 @@ export default function PlayerProfile({ data, close, onChooseCharacter }) {
           <p className="profile-character-state">
             Character unknown.{" "}
             {data.story?.characterSelectionRequired
-              ? "You can now choose your character."
+              ? "You can now create your personal avatar."
               : "Your character will be revealed later in the story."}
           </p>
         ) : (
           <p className="profile-character-state">
-            Your character is part of your expedition identity.
+            Your personal avatar is part of your expedition identity.
           </p>
         )}
         {!data.story?.flight && (
           <button className="btn primary" onClick={onChooseCharacter}>
-            Choose character
+            Customize avatar
           </button>
         )}
       </div>

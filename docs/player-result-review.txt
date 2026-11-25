@@ -1,0 +1,47 @@
+PLAYER RESULT REVIEW
+
+MC: Week 1 > Results. CC: Week 1 & Recovery > Final Results & Allocation.
+Use "Review a player's result", choose the player and Flight Level 1–5.
+
+Inspect the saved conversation/claim check or mission answers, scoring checks
+and experiments. Enter the evidence review and reason, acknowledge the review,
+then choose:
+- Validate current result: retain existing stars and record human validation.
+- Correct result: set 1–3 stars and reconcile trophies/XP by the difference.
+- Return for revision: revoke that level's completion/reward for revision.
+
+No player energy is spent by a staff result decision. Existing team/replay
+controls remain under their own disclosure. Flight stars are separate from
+readiness rubric marks and publication; the Assessment Control workflow still
+handles those marks. Validation does not publish marks or bypass staff signoff.
+
+Only active, authorised CC/MC accounts with game:write can save. MC targets are
+limited to assigned teams; CC targets stay in their cohort/college. Reviewing a
+single player requires submitted evidence. Changes to the result or mission
+evidence since loading are rejected for another review. Finalised publication
+requires CC's existing correction revision before editing; the released Day 1
+winner lock also remains in force.
+
+Audit events retain the actor, reason, time, before/after result and reviewed
+evidence revision. The latest review appears alongside the result; changed
+evidence is labelled as a previous review. Previous audit events are preserved.
+
+There is no AA role. The separate platform Super Admin has not been granted
+college result-editing access by this feature.
+
+VERIFICATION — 24 NOVEMBER 2026
+17 targeted tests passed, zero failures/skips: level-one-database,
+week-one-levels-database (and imported rule cases), day-one-database and
+week-one-program suites. Production build passed. Logs are artifacts/player-
+result-*.txt. The preceding full flight change had 350 passing tests; this
+result-review follow-up used the targeted regression suites above.
+
+Browser: CC validated Level 1 after opening its transcript/scoring checks and
+reading the claim check. An MC without assigned players had no selectable
+targets. In a disposable fixture with --review-crew (fictional organisational
+assignment, not final team publication), MC reviewed Level 2, changed three
+stars to two, restored three, validated, then refreshed and confirmed the
+persisted review. Both corrections and the validation retain their audit.
+Final fictional player balance remained 150 trophies, 2250 XP, 2 lives and
+2 energy. Screenshots: artifacts/journey-browser/mc-result-correction.jpg and
+mc-result-validated.jpg. No real player record was modified or published.

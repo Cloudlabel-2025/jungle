@@ -1,0 +1,81 @@
+GAME STATIONS AND TROPHY LEAGUES — BROWSER VERIFICATION
+24 November 2026
+
+Local production build, disposable Mongo replica, fictional accounts. The
+existing completed flight was restored only from previously observed browser
+actions. --review-crew supplies a fictional organisational team for MC scope;
+it does not publish final expedition teams. Two research share responses remain
+mocked as disclosed in fixture-disclosure.json. No production cohort changed.
+
+Player
+- At 150 total trophies the HUD displayed the Ranger emblem and league name.
+- HUD opened the league trail: all six thresholds, current league, next target,
+  progress bar, retention threshold and expandable promotion/demotion rules.
+- Profile/reward/staff components share the same balance-derived rules.
+- After an MC correction, player signed in at 145 trophies in Trailblazer.
+  The league trail displayed five trophies needed to regain Ranger.
+- CC restored the reviewed three-star result. Player signed back in and the
+  promotion message displayed "Promoted to Ranger", 150 trophies and the move
+  from Trailblazer to Ranger. Refresh did not invent another promotion.
+- Final challenge page displayed FLIGHT REWARDS, the actual Level 2–5 rewards
+  and league trail. The incorrect 140-trophy cap was removed for this mode.
+- The expedition XP display now uses the same progressive-level calculation
+  as the HUD rather than the former fixed 100-XP remainder.
+
+MC
+- Landing page displayed the Guide's Lookout mission board with three working
+  station links and actual scoped counts. Duplicate action-desk links removed.
+- Opened Journey Explorer's dossier from the crew list and selected Level 2
+  with a game-style radio card. Read the mission evidence and selected a result
+  correction using decision/star cards. 3-to-2 stars changed 150 to 145 trophies.
+- Final-build preview showed 150 -> 145 and "Demotion: Ranger -> Trailblazer".
+  This final preview was not submitted; the saved player remains at 150.
+- Staff result controls retain evidence-version, scope and audit protection.
+
+CC
+- Council board displayed the same station system and accurate roster metrics:
+  1/3 attendance, not the previous hard-coded 1/25 figure.
+- Configuration action showed one of 13 checkpoints. Moving forward and back
+  retained the calendar time-zone value.
+- Optional quest action showed four checkpoints. Empty title blocked Next.
+  Title and brief persisted when moving back/forward. The first server rejection
+  kept entered values rather than resetting the action.
+- That rejection exposed a self-paced OPEN-day gate. Fixed it, passed a targeted
+  database regression and repeated the full four-checkpoint action successfully.
+- Exported state confirms kind WEEKLY, the full title/brief/reward and CC actor.
+  Player's quest station displayed the saved title and complete brief.
+- CC result preview showed 145 -> 150 and "Promotion: Trailblazer -> Ranger";
+  saving restored the original result with an audit entry.
+
+Responsive and accessibility
+- Desktop screenshots inspected for player league trail, MC/CC boards and crew
+  dossiers. Mobile landscape checked at 916x412: league dialog, player quest
+  station and staff result cards stayed within the viewport, without page-wide
+  horizontal overflow. Station navigation has its own horizontal scroll area.
+- Choices use native radio groups with legends; native keyboard semantics,
+  checked states and FormData remain intact. Focus styles and reduced-motion
+  rules are included. Native field validity is checked before moving/submitting.
+- The temporary viewport override was reset after testing.
+
+Results
+355 disposable-database tests passed, zero failures/skips; additional self-paced
+quest regression passed; final production build passed. Logs are in
+artifacts/game-ui-leagues-*.txt. Core source: lib/trophy-leagues.js,
+components/TrophyLeague.js, GameChoices.js, CommandMissionBoard.js,
+PlayerResultReview.js, ui.js and app/game-stations.css.
+
+Final saved player: 150 trophies, 2250 XP, 2 lives, 2 energy, all five flight
+levels still complete. Leagues never consume trophies or mission energy.
+No live-host latency benchmark or exhaustive screenshot review of every later
+staff-managed sprint/report screen is claimed. Shared controls apply there,
+but this browser verification focused on the flight/support/review workflows.
+
+Screenshots
+player-trophy-leagues.jpg          Final player league trail
+mc-mission-board.jpg              Final guide mission stations
+cc-mission-board.jpg              Council mission stations and actual counts
+game-style-player-dossiers.jpg    Player dossier cards and mission navigation
+trophy-league-demotion.jpg        145 trophies, Trailblazer, five to regain Ranger
+trophy-league-promotion.jpg       Actual promotion notification after restoration
+mobile-trophy-leagues.jpg         Mobile landscape league dialog
+mobile-result-impact.jpg          Mobile staff decision cards/impact preview

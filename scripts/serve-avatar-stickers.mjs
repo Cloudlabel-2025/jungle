@@ -1,0 +1,6 @@
+import { createServer } from 'node:http';
+import { stickerImage } from '../lib/avatar-stickers.js';
+import { defaultAvatar } from '../lib/avatar.js';
+let a={...defaultAvatar('female'),hair:'long',outfit:'sari',topColor:'#aa526c'};
+const html=`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Explorer sticker art review</title><style>body{margin:0;background:#102b20;color:#ead7a6;font:16px Georgia;padding:30px}h1{font-weight:400}main{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}article{border:1px solid #899e5b88;border-radius:24px;background:radial-gradient(ellipse,#56753b66,#18392a);padding:20px;text-align:center}img{width:100%;height:480px;object-fit:contain}strong{font-size:24px}</style></head><body><h1>Explorer character stickers · fictional art review</h1><main>${[['ready','Your explorer'],['celebrate','Congratulations!'],['sad','Try again, explorer']].map(([mood,label])=>`<article><img src="${stickerImage(a,{mood,animated:true})}" alt="${label}"><strong>${label}</strong></article>`).join('')}</main></body></html>`;
+createServer((req,res)=>{res.writeHead(200,{'Content-Type':'text/html'});res.end(html);}).listen(3192,'127.0.0.1',()=>console.log('Fictional illustrated sticker art http://127.0.0.1:3192'));

@@ -1,0 +1,43 @@
+DIVISIONS AND REMOVED CONDUCT PENALTIES — 24 NOVEMBER 2026
+
+New conduct-based deductions and trophy warnings are removed from the UI and
+rejected by the server with 410, including requests made by an older client.
+The former -5/-10/-25 rule list is empty. Original result/reward corrections
+remain available with their audit/version/scope checks. HP/energy were not changed.
+
+Each league has Division I, II and III, ascending in that order. There are
+18 divisions; current balance drives the HUD, medal stars/numeral, next-rank
+progress, promotion/demotion notices and staff result-impact previews. Under
+300 remains Unranked with no awarded badge. Legend III begins at 12000 and is
+the highest division. Full thresholds: docs/trophy-policy.txt.
+
+Historical conduct receipts are not deleted. CC may undo an outstanding older
+deduction exactly once. MC/player access remains read-only; originalId checks
+also recognise reversals produced by the former software's different key format.
+
+Browser checks: local production build, fictional accounts/disposable data.
+- Dedicated --league-divisions fixture starts Division Explorer at 449, with a
+  seeded historical one-trophy debit for the boundary check. No mission results
+  or newly supported penalties are created by that fixture.
+- Scout I displayed Division I 300+, II 450+, III 600+, current position and one
+  trophy to Scout II. The medal used one star and Roman numeral I.
+- MC Results: expanded historical records, confirmed no Apply deduction or
+  Record warning controls and no access to CC's historical undo.
+- CC Results: only the outstanding historical one-trophy record was selectable.
+  Restored it with a reason and evidence. The undo selector disappeared once
+  all historical cases were reversed; no further deduction controls appeared.
+- Player signed back in: Promoted to Scout II, 450 trophies, Scout I -> Scout II.
+  Trophy hall displayed two medal stars, Roman numeral II, highlighted Division
+  II and 150 trophies needed for Scout III. Next league begins at 750.
+- Mobile landscape: no document overflow; temporary viewport override reset.
+- Primary five-level campaign account and real production data were untouched.
+
+Validation: normal test suite 290 passed, 51 database-dependent skips. Separate
+disposable-database conduct-retirement test passed without skips. Explicit
+league/rule tests: 12 passed, including every division boundary, large jumps,
+within-league promotion, top division and correction-driven demotion. Production
+build passed. Later text-only polish corrected singular trophy wording.
+
+Logs: artifacts/trophy-divisions-build.txt, trophy-divisions-regression.txt,
+trophy-divisions-rules.txt and trophy-divisions-legacy-tests.txt.
+Screenshot: trophy-divisions-scout-ii.jpg.

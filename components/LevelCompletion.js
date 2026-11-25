@@ -7,6 +7,7 @@ import { Modal } from "./ui";
 import { completionKey, pendingCompletions } from "@/lib/level-celebration";
 import { teamRoles } from "@/lib/team-roles";
 import { characterFor } from "@/lib/characters";
+import AvatarReaction from "./AvatarReaction";
 
 export function CompletionCelebration({ attempt, data, close }) {
   const [revealed, setRevealed] = useState(0);
@@ -46,6 +47,7 @@ export function CompletionCelebration({ attempt, data, close }) {
       variant="level-completion"
     >
       <div className="completion-content">
+        <AvatarReaction player={data.user} mood="celebrate" caption="Congratulations, explorer!" detail="Your team cleared this level."/>
         <p className="completion-level">
           LEVEL {String(attempt.number).padStart(2, "0")} ·{" "}
           {level?.name || "Team project"}

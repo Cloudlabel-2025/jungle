@@ -1,5 +1,5 @@
 "use client";
-import FlightFinale from "./FlightFinale";
+import dynamic from "next/dynamic";
 import ViewObjectivesLink from "./ViewObjectivesLink";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -21,9 +21,7 @@ import {
   LifeBuoy,
   Trophy,
 } from "lucide-react";
-import { Modal } from "./ui";
-import { DiscoveryMission } from "./DayOneFeatures";
-import { Games } from "./WeekOneLearner";
+import { Modal, Busy } from "./ui";
 import { skyDiscovery, skyLevels } from "@/lib/sky-journey.js";
 import {
   createSkyFlight,
@@ -32,11 +30,15 @@ import {
   skyAircraftRest,
 } from "@/lib/sky-flight.js";
 import useFlightMapNavigation from "./useFlightMapNavigation";
-import SkyMapPanels from "./SkyMapPanels";
 import PipGuide from "./PipGuide";
 import MissionStars from "./MissionStars";
-import LevelTwoMissionScene from "./LevelTwoMissionScene";
-import PipSignalLab from "./PipSignalLab";
+const missionLoading = () => <Busy label="Opening your mission…" />;
+const FlightFinale = dynamic(() => import("./FlightFinale"), { loading: missionLoading });
+const DiscoveryMission = dynamic(() => import("./DayOneFeatures").then(m => m.DiscoveryMission), { loading: missionLoading });
+const Games = dynamic(() => import("./WeekOneLearner").then(m => m.Games), { loading: missionLoading });
+const SkyMapPanels = dynamic(() => import("./SkyMapPanels"), { loading: missionLoading });
+const LevelTwoMissionScene = dynamic(() => import("./LevelTwoMissionScene"), { loading: missionLoading });
+const PipSignalLab = dynamic(() => import("./PipSignalLab"), { loading: missionLoading });
 
 const mapWidth = 2800;
 
@@ -332,7 +334,10 @@ export default function SkyFlightMap({ data, act, now = new Date() }) {
           <div>
             <span className="sky-eyebrow">CHAPTER 01 / THE FLIGHT</span>
             <h1>Your flight</h1>
-            <p>Select a checkpoint to enter your mission.</p>
+            <p>Choose a checkpoint. New missions cost 1 energy.</p>
+            {(data.user.hp === 0 || data.user.energy === 0) && (
+              <p role="status">Continue saved work or <Link href="/gamer/week-one-ask-mc">ask Help Desk for energy recovery</Link>.</p>
+            )}
           </div>
           <div className="sky-header-tools">
             <ViewObjectivesLink level={selectedDay || 1} ownerId={data.user._id} />
@@ -451,7 +456,7 @@ export default function SkyFlightMap({ data, act, now = new Date() }) {
                           ? discovery.verified
                             ? "Completed"
                             : "Awaiting verification"
-                          : `${discovery.completed}/3 checkpoints`
+                          : `${discovery.completed}/${discovery.steps.length} checkpoints`
                         : level.completed
                           ? "Completed"
                           : level.open
@@ -516,13 +521,14 @@ export default function SkyFlightMap({ data, act, now = new Date() }) {
             <span className="sky-eyebrow">
               LEVEL {dockDay} /{" "}
               {dockDay === 1
-                ? `${discovery.completed} OF 3 CHECKPOINTS`
+                ? `${discovery.completed} OF ${discovery.steps.length} CHECKPOINTS`
                 : "FLIGHT MISSION"}
             </span>
             <h2>{current.title}</h2>
             <p role="status" aria-live="polite">
               {flightMessage || current.status}
             </p>
+            {levels.every(level => level.completed) && <Link className="text-link" href="/gamer/week-one-results">Check results &amp; next chapter</Link>}
           </div>
           <button
             className="sky-enter"
@@ -564,7 +570,7 @@ export default function SkyFlightMap({ data, act, now = new Date() }) {
           </button>
         </div>
       </div>
-      <SkyMapPanels
+      {equipment && <SkyMapPanels
         panel={equipment}
         close={() => setEquipment(null)}
         open={setEquipment}
@@ -574,7 +580,7 @@ export default function SkyFlightMap({ data, act, now = new Date() }) {
         levels={levels}
         discovery={discovery}
         onFly={flyTo}
-      />
+      />}
       {[4,5].includes(mission) && <FlightFinale key={`finale:${mission}:${data.user._id}`} dayNumber={mission} data={data} act={act} now={now} onMap={closeMission} onNext={()=>continueTo(5)} nextLevel={levels[mission]}/>}
       {mission === 3 && <PipSignalLab key={`signal-lab:${data.user._id}`} data={data} act={act} now={now} onMap={closeMission} onNext={()=>continueTo(4)} nextLevel={levels[3]}/>}
       {mission === 2 && (

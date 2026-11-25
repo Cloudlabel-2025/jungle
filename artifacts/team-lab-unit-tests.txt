@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: merges independent edits within the same source file
+ok 1 - merges independent edits within the same source file
+  ---
+  duration_ms: 2.8505
+  type: 'test'
+  ...
+# Subtest: overlapping changes retain both source versions for explicit review
+ok 2 - overlapping changes retain both source versions for explicit review
+  ---
+  duration_ms: 0.3883
+  type: 'test'
+  ...
+# Subtest: merges additions, deletions and identical edits without resurrecting deleted files
+ok 3 - merges additions, deletions and identical edits without resurrecting deleted files
+  ---
+  duration_ms: 0.2227
+  type: 'test'
+  ...
+# Subtest: workspace validation rejects traversal, sensitive folders, oversized files and missing entries
+ok 4 - workspace validation rejects traversal, sensitive folders, oversized files and missing entries
+  ---
+  duration_ms: 1.1659
+  type: 'test'
+  ...
+# Subtest: many independent edits produce both authors changes regardless of save order
+ok 5 - many independent edits produce both authors changes regardless of save order
+  ---
+  duration_ms: 7.1347
+  type: 'test'
+  ...
+# Subtest: recovering a device draft retains unresolved conflicts across reloads
+ok 6 - recovering a device draft retains unresolved conflicts across reloads
+  ---
+  duration_ms: 0.2703
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 222.7954

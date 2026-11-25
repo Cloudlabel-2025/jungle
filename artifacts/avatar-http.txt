@@ -1,0 +1,5 @@
+g1@pilot.invalid: saved personal avatar visible in scoped roster
+mc@pilot.invalid: saved personal avatar visible in scoped roster
+cc@pilot.invalid: saved personal avatar visible in scoped roster
+Avatar reload, proportions, team/MC/CC visibility, ownership, stale save, photo rejection, unchanged balances and camera policy passed.
+Production face model and all WASM loader assets served successfully.

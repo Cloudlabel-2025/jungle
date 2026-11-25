@@ -12,6 +12,7 @@ import {
 } from "./week-one-program-fixture.mjs";
 import { fixtureConfig } from "./day-one-fixture.mjs";
 import { checkPassword } from "../lib/password.js";
+import { localQaCheckpoint } from "./local-qa-checkpoint.mjs";
 
 test(
   "complete 25-Gamer Week 1: releases, privacy, Rules, queries, games, AI batches, Showcase, readiness, publication and rescue",
@@ -885,6 +886,7 @@ test(
         before.results.find((r) => r.userId === gamers[0]._id).distinction,
         true,
       );
+      await localQaCheckpoint("week-one-review", at(5, 488));
       await call(
         mc,
         "signoff",

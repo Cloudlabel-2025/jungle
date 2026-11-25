@@ -1,7 +1,7 @@
 .landscape-required {
   display: none;
 }
-@media (orientation: portrait) and (max-width: 1024px) {
+@media (orientation: portrait) and (max-width: 1024px) and (hover: none) and (pointer: coarse) {
   .landscape-app-content {
     display: none !important;
   }
@@ -18,7 +18,7 @@
     color: #e7efcb;
     background: radial-gradient(ellipse at center, #244733, #071d14 75%);
   }
-  .landscape-required h1 {
+  .landscape-required h2 {
     font-size: 28px;
     margin: 24px 0 12px;
   }

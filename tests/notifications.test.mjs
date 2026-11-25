@@ -25,6 +25,15 @@ const fixture = () => ({
   rescues: [],
   energy: [],
 });
+test("trophy warnings, deductions and reversals are private, readable in-app notices",()=>{
+  const data=fixture();data.user.drops=0;
+  data.trophyConduct=[{_id:"warning",userId:"self",action:"WARNING",amount:0,reason:"A documented warning",createdAt:"2026-11-24T09:00Z"},{_id:"debit",userId:"self",action:"DEDUCT",amount:-5,reason:"An agreed deadline was missed",createdAt:"2026-11-24T10:00Z"},{_id:"other",userId:"other",action:"DEDUCT",amount:-25,reason:"Private other case"}];
+  const view=buildNotifications(data);
+  assert.equal(view.items.length,2);
+  assert.equal(view.items.find((r)=>r.id === "trophy-conduct:debit").title,"Trophies reduced");
+  assert.ok(view.items.every((r)=>r.href === "/gamer/week-one-ask-mc"));
+  assert.equal(buildNotifications(data,[{notificationId:"trophy-conduct:warning"},{notificationId:"trophy-conduct:debit"}]).unread,0);
+});
 
 test("monitoring notifications use the affected player, never a teammate's condition", () => {
   const data = fixture();

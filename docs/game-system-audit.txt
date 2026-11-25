@@ -1,0 +1,137 @@
+PLAYER JOURNEY AND PAGE AUDIT — 24 NOVEMBER 2026
+
+Scope: repository audit, local regression and an actual browser playthrough of
+all five flight levels using fictional accounts and disposable data. Later
+staff-managed expedition stages were not played end to end in the browser.
+
+THE JOURNEY, START TO FINISH
+
+1. College login, initial password change, scheduled check-in and flight welcome.
+2. Flight Level 1: investigate a research question, then independently check a
+   claim. Both missions must complete before Level 2 opens.
+3. Flight Level 2: diagnose conflicting instructions and the lost signal.
+4. Flight Level 3: investigate evidence and trace a system through the signal lab.
+5. Flight Level 4: test claims and investigate access boundaries in the case deck.
+6. Flight Level 5: revisit original research with a fresh conversation and
+   complete the knowledge quiz. Required evidence controls level completion;
+   effort and timing determine stars. These are separate from final marks.
+7. MC reviews evidence/signs off; CC approves and publishes personal results.
+8. Where required: attendance, recovery exams, verification and an approved
+   recovery result. The flight's stars do not bypass this stage.
+9. Staff approve and publish final teams. Player completes crash arrival and
+   selects a character. This is the entry into the expedition chapter.
+10. Approved team sprint work, evidence, independent review and accepted keys.
+    The Alumni Connect map has five milestones. Later Part B workflows include
+    persona demonstrations, private defence, marking, optional cross-team work
+    and report review/issuance. Release and acceptance remain staff decisions.
+
+ENERGY CONTRACT IMPLEMENTED
+
+- Each NEW flight mission start costs 1 shared account energy. Level 1 charges
+  research and claim-check separately; Levels 2–5 charge each activity start.
+- A fresh player has 5 lives and 3 energy. The third spent energy removes a life
+  and refills energy to 3, except at zero lives, where energy remains zero.
+  The ten opening missions therefore leave a fresh player at 2 lives/2 energy,
+  before any other penalties, recovery or authorised replay starts.
+- The attempt, balance and energy ledger commit together. Invalid starts and
+  rolled-back transactions cost nothing. Repeated start requests, page visits,
+  autosaves, refinements and resumed attempts do not charge again.
+- A staff-authorised fresh replay costs energy again. Historical attempts are
+  not billed retroactively. Historical Level 1 claim checks remain usable.
+- Spending energy is normal gameplay: it does not add conduct drops, clear
+  streaks or count as a clean-day infraction. Zero lives creates one rescue case,
+  including for players who do not yet have a published team.
+- At zero energy players can finish existing work, read results and visit Help
+  Desk. Mission exhaustion permits a three-question recovery drill; other cases
+  require scoped staff approval with a recorded reason. Older zero-energy
+  accounts can request a case even when none exists. Recovery restores three
+  energy and at least one life, preserving higher life balances and progress.
+  Repeated requests cannot refill twice. Recovery is recorded in the ledger.
+
+PAGES TO REVIEW TOGETHER
+
+Flight pages that belong in the opening experience:
+  /gamer/dashboard                 Map, five levels, mission entry and next chapter
+  /gamer/objectives                Published level goals and locks
+  /gamer/week-one-announcements    Staff briefings and schedules
+  /gamer/week-one-games            Map entry; should not be a duplicate form hub
+  /gamer/week-one-results          Personal published results and recovery
+  /gamer/week-one-ask-mc           Help Desk, including energy recovery questions
+  /gamer/week-one-game-rules       Rules and acknowledgement
+  /gamer/week-one-showcase         Published showcase arrangements
+  /gamer/week-one-challenges       Optional challenge evidence/rewards
+  /gamer/calendar                 Official schedule
+  /gamer/notifications            Personal notices
+
+Pages intentionally unavailable until the expedition chapter:
+  /gamer/before-you-board          Field Guide
+  /gamer/sprint-board              Approved individual/team sprint work
+  /gamer/team-room                 Campfire/team collaboration
+  /gamer/daily-journal             Expedition reflections and history
+  /gamer/rewards                   Expedition relics and honours
+  /gamer/ide                       Field workshop
+These pages are stage-specific, not proven obsolete. They now explain the lock
+and link to the flight, results and Help Desk instead of silently showing the map.
+Their underlying APIs remain protected. Do not delete them merely because a
+flight account cannot use them.
+
+Staff pages central to a complete playthrough:
+  /centre-command/week-one-setup   Content, policies, release and readiness
+  /commander/week-one             Teaching and review workflow
+  /commander/week-one-results     Signoff, recovery and team review
+  /centre-command/week-one-results Publication, recovery decisions and final teams
+  /commander/coaching              Rescue plans
+  /commander/sprints               Later work and independent reviews
+  /centre-command/reports          Later report/assessment records
+
+FIXES IN THIS CHANGE
+
+- Added transactional, idempotent energy spending for new flight missions and
+  a separate explicit start for the Level 1 independent claim check.
+- Exposed the cost before starting and added a Help Desk path at zero balance.
+- Removed unnecessary loading of the expedition/staff Views module on entry.
+- Load flight missions, crash arrival and equipment panels only when required.
+- Move between finale cards immediately while preserving the save queue and
+  flushing saved work before submission and navigation out of the mission.
+- Reuse already-fetched attempt/level rows in programme snapshots, avoiding two
+  duplicate database reads. Parallel reads are used outside Mongo transactions;
+  transaction operations remain sequential.
+- Corrected the generic activity hub's false 'Activity closed' label when
+  completion-based progression permits a prepared activity to start.
+- Added an explicit post-Level-5 handoff and useful explanations for gated pages.
+- Replaced long learner forms with guided checkpoints: reflections, generic
+  attempts, rules, support questions, briefing selection and challenge selection.
+- Fixed legacy Level 1 content so research and independent claim checking both
+  have playable entry points. Fixed the map covering the final results link.
+- Made signal-lab answer navigation immediate while retaining queued saves.
+- Kept check-in and journals editable after self-paced mission completion,
+  subject to final publication locks. Verified SOD, EOD and Compass submission.
+- Added player recovery drills, staff recovery approval, legacy case requests,
+  scope checks, concurrent-request protection and audited restoration.
+
+REMAINING PRODUCT WORK / RELEASE LIMITS
+
+- The first four levels' authored content and game boards are retained. This
+  change does not invent or replace their curriculum. Free-text research,
+  explanation, reflection and evidence remain part of the educational workflow.
+- Guided evidence entry still requires learner reasoning. The underlying
+  authored curriculum has not been replaced or independently certified.
+- Rehearse a real learner through MC review, CC publication, recovery when
+  needed, final team publication and every later sprint. Automated fixtures
+  verify controls but cannot certify teaching content or human assessment.
+- Player drills and staff recovery were rehearsed with fictional accounts,
+  including a legacy account with four lives, zero energy and no rescue case.
+  Existing programme recovery exams and conduct decisions remain separate.
+- Desktop and mobile-landscape results navigation were checked. Measure live
+  navigation/input latency against the target hosting/database; no before/after
+  production speed figure is claimed here.
+- No production data migration, remote deployment, account changes or publication
+  of a real cohort is performed by this change.
+
+VALIDATION FILES
+  Full disposable-database run: 350 passed, 0 failed, 0 skipped.
+  Final production build: passed.
+  artifacts/journey-system-regression.txt  Full disposable-database regression
+  artifacts/mission-energy-regression.txt  New start/charge/concurrency/zero tests
+  artifacts/journey-system-build.txt       Production build
+  artifacts/journey-browser/playthrough-report.txt  Browser scope and evidence

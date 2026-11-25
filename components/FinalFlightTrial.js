@@ -153,7 +153,7 @@ export default function FinalFlightTrial({
                 ? "Begin knowledge run"
                 : "Open discovery passport"}
           </button>
-          <small>Your timer starts after the server confirms.</small>
+          <small>Starting costs 1 energy. Your timer starts after the server confirms. Continuing saved work is free.</small>
         </div>
       )}
     </div>

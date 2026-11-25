@@ -1,0 +1,75 @@
+PART II TEAM LAB — VERIFICATION, 24 NOVEMBER 2026
+
+All browser accounts and teams were fictional. Browser QA used a disposable MongoDB
+replica on port 3191, with approved-team setup from pilotFixture. Prior flight clearance
+was fixture setup, not a claimed first-to-last playthrough of the whole curriculum.
+No real learner records, production database or external repository were changed.
+
+Observed browser workflow
+PASS: g0@pilot.invalid and g1@pilot.invalid opened the same team project using separate
+      localhost origins for independent cookie sessions.
+PASS: saving a README change appeared in the second player's editor without reload.
+PASS: independent edits to the same README merged and preserved both contributions.
+PASS: overlapping replacements retained both versions and disabled publication until
+      explicit resolution. The resolved version appeared in shared history.
+PASS: version history showed both authors; an earlier snapshot could be inspected.
+PASS: Download ZIP produced wilderness-team-v5.zip in the browser download directory.
+PASS: a new source file was created in the editor and saved to the team project.
+PASS: the real browser Node terminal reported Node v24.22.2, installed packages and
+      executed the four actual ledger tests successfully.
+PASS: npm run dev served Vite 6.4.6 and the app rendered in the first player's Node
+      preview. A teammate's CSS change arrived through team saving and the runtime
+      filesystem; the running heading's computed colour became rgb(160, 90, 40).
+PASS: while the local server was stopped, a source edit remained in the device draft.
+      After restart/login, Recover draft appeared. Closing that new studio without
+      recovering did not discard the prompt: another opening still offered recovery.
+      Recovery and save preserved the disconnected edit as project version 8.
+PASS: optional source deletion produced version 9; restoring version 8 produced a new
+      version 10 with the file present and its recovered content intact.
+PASS: Stop / fresh shell retained source and stopped a tracked install (exit 143).
+      A subsequent Install packages run completed successfully (15 packages, 37s).
+PASS: an echo command created src/terminal-note.js in the runtime; Import terminal files
+      brought its actual contents into the editor and team save (version 11).
+PASS: Run Node tests completed with four passes, no failures and process exit 0.
+PASS: the second team's player g5 opened Code Lab from /gamer/ide and saw its separate
+      version-0 project without the first team's custom source files.
+PASS: the in-game lab had no horizontal page overflow at an actual 916px landscape
+      viewport (document clientWidth=scrollWidth=916). The temporary override was reset.
+PASS: final editor syntax colours were corrected for readable contrast. The final
+      production studio loaded the editor and quick preview with no console errors.
+
+Observed compatibility limit
+The later localhost Node preview encountered the provider's browser storage/service-
+worker restriction. A separately opened preview did not connect in that restricted
+session either. No privacy settings were changed. The quick preview remained usable.
+The earlier 127.0.0.1 Node preview and teammate-driven live update succeeded. Full Node
+preview compatibility is therefore a deployment/browser rollout check, not a claim of
+universal support. Node command execution, package installation and tests succeeded.
+
+Automated verification
+- npm run build: PASS, including /api/team-lab and /code-studio.
+- npm test: 348 total, 296 passed, zero failures, 52 database-dependent skips.
+- Dedicated disposable-DB team-lab test: PASS, zero skips; concurrent first opening,
+  concurrent saves, same-file merging, conflicts without overwrites, missing/future
+  base versions, other-team protection, staff/inactive/unassigned-account denial,
+  membership changes, history and presence isolation. Rerun after the explicit
+  missing-team guard. The guard was added after the final UI build and covered by
+  this targeted database run.
+- Merge/draft/path unit tests: six passes (included in npm test).
+- Exported starter: installed dependencies and passed all four Node ledger tests
+  locally; final run had no dependency-scan shutdown warning.
+- git diff --check: PASS; Git reports existing LF/CRLF normalization warnings.
+
+Evidence
+artifacts/team-lab-build.txt
+artifacts/team-lab-regression.txt
+artifacts/team-lab-database.txt
+artifacts/team-lab-unit-tests.txt
+artifacts/team-lab-export-tests.txt
+artifacts/team-lab-browser/shared-node-preview.jpg
+artifacts/team-lab-browser/landscape-in-game.jpg
+artifacts/team-lab-browser/final-team-studio.jpg
+
+Observed fictional source/history was retained privately in .data/team-lab-browser
+for the fixture's --restore flag. This restores observed code edits, not invented
+quest completions. Legacy personal lab data remains intact in the product models.

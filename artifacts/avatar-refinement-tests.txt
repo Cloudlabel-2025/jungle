@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: confirmed outcomes choose reactions without treating pending review or technical errors as losses
+ok 1 - confirmed outcomes choose reactions without treating pending review or technical errors as losses
+  ---
+  duration_ms: 1.3557
+  type: 'test'
+  ...
+# Subtest: every reaction preserves the selected face, hair and clothes without changing saved settings
+ok 2 - every reaction preserves the selected face, hair and clothes without changing saved settings
+  ---
+  duration_ms: 9.6161
+  type: 'test'
+  ...
+# Subtest: both styles, all wardrobe and hair choices render for every sticker action
+ok 3 - both styles, all wardrobe and hair choices render for every sticker action
+  ---
+  duration_ms: 1628.7555
+  type: 'test'
+  ...
+# Subtest: existing saved avatars retain their likeness when new personality settings are added
+ok 4 - existing saved avatars retain their likeness when new personality settings are added
+  ---
+  duration_ms: 2.5823
+  type: 'test'
+  ...
+# Subtest: sculpted geometry stays finite across body types, expressions and saved poses
+ok 5 - sculpted geometry stays finite across body types, expressions and saved poses
+  ---
+  duration_ms: 1383.147
+  type: 'test'
+  ...
+# Subtest: male and female avatars support every wardrobe choice with strict, image-free settings
+ok 6 - male and female avatars support every wardrobe choice with strict, image-free settings
+  ---
+  duration_ms: 18031.7492
+  type: 'test'
+  ...
+# Subtest: personal identity replaces preset portraits while preserving task slots
+ok 7 - personal identity replaces preset portraits while preserving task slots
+  ---
+  duration_ms: 3.6724
+  type: 'test'
+  ...
+# Subtest: scan rejects no face, groups, small faces, cut off faces and turned heads
+ok 8 - scan rejects no face, groups, small faces, cut off faces and turned heads
+  ---
+  duration_ms: 2.4934
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19842.5765

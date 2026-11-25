@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: Level 1 gives 1/2/3 stars for completion, meaningful effort and deadline respectively
+ok 1 - Level 1 gives 1/2/3 stars for completion, meaningful effort and deadline respectively
+  ---
+  duration_ms: 32.1159
+  type: 'test'
+  ...
+# Subtest: time alone, missing evidence and unrelated chat cannot clear a level
+ok 2 - time alone, missing evidence and unrelated chat cannot clear a level
+  ---
+  duration_ms: 4.5623
+  type: 'test'
+  ...
+# Subtest: all new level rewards maintain exactly five XP per trophy
+ok 3 - all new level rewards maintain exactly five XP per trophy
+  ---
+  duration_ms: 11.8302
+  type: 'test'
+  ...
+# Subtest: a future research start cannot qualify as completed effort
+ok 4 - a future research start cannot qualify as completed effort
+  ---
+  duration_ms: 3.2943
+  type: 'test'
+  ...
+# Subtest: the claim check accepts justified uncertainty and rejects AI links, invented verdicts and empty explanations
+ok 5 - the claim check accepts justified uncertainty and rejects AI links, invented verdicts and empty explanations
+  ---
+  duration_ms: 18.4338
+  type: 'test'
+  ...
+# Subtest: new Level 1 needs both concepts, binds the check to the research revision and preserves old results
+ok 6 - new Level 1 needs both concepts, binds the check to the research revision and preserves old results
+  ---
+  duration_ms: 2.8412
+  type: 'test'
+  ...
+# Subtest: the first-level hub exposes two concepts with a locked second mission, and saved checks restore their verdict
+ok 7 - the first-level hub exposes two concepts with a locked second mission, and saved checks restore their verdict
+  ---
+  duration_ms: 1928.384
+  type: 'test'
+  ...
+# Subtest: mission starts charge once, roll back, preserve conduct and allow saved work at zero
+ok 8 - mission starts charge once, roll back, preserve conduct and allow saved work at zero
+  ---
+  duration_ms: 11340.6744
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 36077.8341

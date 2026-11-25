@@ -1,4 +1,6 @@
 import { collegeRoute } from "@/lib/college-request.js";
+import { missionRecoverySnapshot, recoverMissionEnergy } from "@/lib/mission-energy.js";
+import { trophyConductSnapshot, trophyConductAction } from "@/lib/trophy-conduct.js";
 import { NextResponse } from "next/server";
 import { boundedJson } from "@/lib/request-body.js";
 import { guardFlightApi, completeFlightIntro, completeCrashArrival, publicPlayer } from "@/lib/player-stage.js";
@@ -190,6 +192,10 @@ async function handle(request, { params }) {
       return NextResponse.json({ success: true, user: await publicPlayer(account) });
     }
     await guardFlightApi(user, route, request.method);
+    if(route === "trophies/conduct" && ["GET","POST"].includes(request.method))
+      return NextResponse.json(request.method === "GET" ? await trophyConductSnapshot(user,new URL(request.url).searchParams.get("userId")) : await trophyConductAction(user,body),{headers:{"Cache-Control":"private, no-store"}});
+    if (route === "player/mission-recovery" && ["GET", "POST"].includes(request.method))
+      return NextResponse.json(request.method === "GET" ? await missionRecoverySnapshot(user) : await recoverMissionEnergy(user, body), { headers: { "Cache-Control": "private, no-store" } });
     if (route === "player/pip-progress" && ["GET", "POST"].includes(request.method))
       return NextResponse.json(request.method === "GET" ? await pipProgressSnapshot(user) : await savePipProgress(user, body), { headers: { "Cache-Control": "private, no-store" } });
     if(route === "player/work-history" && request.method === "GET")return NextResponse.json(await workHistory(user,Object.fromEntries(new URL(request.url).searchParams)),{headers:{"Cache-Control":"private, no-store"}});
@@ -1089,7 +1095,7 @@ async function handle(request, { params }) {
         }
         if (body.characterKey) {
           if (!characters.some((c) => c.key === body.characterKey))
-            fail("Unknown character.");
+            fail("Unknown team role.");
           const currentKey = characterKey(operative);
           const peers = await models.User.find({
             teamId: nextTeamId,
@@ -1102,12 +1108,12 @@ async function handle(request, { params }) {
           );
           if (holders.length > 1)
             fail(
-              "Resolve duplicate character identities in this squad first.",
+              "Resolve duplicate team roles in this squad first.",
               409,
             );
           if (holders.length && operative.teamId !== nextTeamId)
             fail(
-              "Choose an unused character when moving a player to another squad.",
+              "Choose an unused team role when moving a player to another squad.",
               409,
             );
           if (holders.length && body.characterKey !== currentKey) {
@@ -1119,7 +1125,7 @@ async function handle(request, { params }) {
         }
         if (body.characterVariant) {
           if (!["male", "female"].includes(body.characterVariant))
-            fail("Choose a valid character version.");
+            fail("Choose a valid legacy avatar style.");
           operative.characterVariant = body.characterVariant;
         }
         operative.teamId = nextTeamId;

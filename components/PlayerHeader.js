@@ -3,8 +3,9 @@ import { experienceProgress } from "@/lib/rewards";
 import PlayerVitals from "./PlayerVitals";
 import { characterFor } from "@/lib/characters";
 import { Avatar } from "./ui";
+import { LeagueBadge } from "./TrophyLeague";
 
-export default function PlayerHeader({ player, part = "identity", teamName }) {
+export default function PlayerHeader({ player, part = "identity", teamName, onOpenLeague }) {
   if (part === "rewards")
     return (
       <div className="player-honours" aria-label="Player achievements">
@@ -13,22 +14,7 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
             {teamName || "Your expedition"}
           </span>
         )}
-        <span className="player-trophy-count">
-          <Trophy size={18} />
-          <strong>
-            {player.weekOneTrophies ??
-              player.dayOneTrophies ??
-              player.trophies ??
-              0}
-          </strong>
-          <small>
-            {player.weekOneTrophies != null
-              ? "Week 1 trophies"
-              : player.dayOneTrophies != null
-                ? "Day 1 trophies"
-                : "Trophies"}
-          </small>
-        </span>
+        <LeagueBadge trophies={player.trophies} onClick={onOpenLeague}/>
         <span className="player-streak-count">
           <Flame size={17} />
           <strong>{player.streak || 0}</strong>
@@ -41,7 +27,7 @@ export default function PlayerHeader({ player, part = "identity", teamName }) {
   const role = player.characterHidden
     ? "Character unknown"
     : character
-      ? `${character.name} · ${character.label} · Full stack`
+      ? character.label
       : "Full-stack explorer";
   return (
     <section className="player-identity" aria-label="Player status">

@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: confirmed outcomes choose reactions without treating pending review or technical errors as losses
+ok 1 - confirmed outcomes choose reactions without treating pending review or technical errors as losses
+  ---
+  duration_ms: 0.7938
+  type: 'test'
+  ...
+# Subtest: every reaction preserves the selected face, hair and clothes without changing saved settings
+ok 2 - every reaction preserves the selected face, hair and clothes without changing saved settings
+  ---
+  duration_ms: 3.9317
+  type: 'test'
+  ...
+# Subtest: both styles, all wardrobe and hair choices render for every sticker action
+ok 3 - both styles, all wardrobe and hair choices render for every sticker action
+  ---
+  duration_ms: 2848.5772
+  type: 'test'
+  ...
+# Subtest: existing characters retain their likeness when hair colour styles are introduced
+ok 4 - existing characters retain their likeness when hair colour styles are introduced
+  ---
+  duration_ms: 2.3904
+  type: 'test'
+  ...
+# Subtest: 24 distinct saved profile poses preserve appearance and do not change mission reactions
+ok 5 - 24 distinct saved profile poses preserve appearance and do not change mission reactions
+  ---
+  duration_ms: 29.5652
+  type: 'test'
+  ...
+# Subtest: hair colour treatments and accessories render safely in portraits and reactions
+ok 6 - hair colour treatments and accessories render safely in portraits and reactions
+  ---
+  duration_ms: 286.5024
+  type: 'test'
+  ...
+# Subtest: existing saved avatars retain their likeness when new personality settings are added
+ok 7 - existing saved avatars retain their likeness when new personality settings are added
+  ---
+  duration_ms: 2.6506
+  type: 'test'
+  ...
+# Subtest: sculpted geometry stays finite across body types, expressions and saved poses
+ok 8 - sculpted geometry stays finite across body types, expressions and saved poses
+  ---
+  duration_ms: 712.0306
+  type: 'test'
+  ...
+# Subtest: male and female avatars support every wardrobe choice with strict, image-free settings
+ok 9 - male and female avatars support every wardrobe choice with strict, image-free settings
+  ---
+  duration_ms: 20716.2765
+  type: 'test'
+  ...
+# Subtest: personal identity replaces preset portraits while preserving task slots
+ok 10 - personal identity replaces preset portraits while preserving task slots
+  ---
+  duration_ms: 3.4294
+  type: 'test'
+  ...
+# Subtest: scan rejects no face, groups, small faces, cut off faces and turned heads
+ok 11 - scan rejects no face, groups, small faces, cut off faces and turned heads
+  ---
+  duration_ms: 1.7867
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21660.8953

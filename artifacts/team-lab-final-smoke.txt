@@ -1,0 +1,1 @@
+PASS: final production build; current approval survives bounded history; scoped source-only response; unchanged-version response omits files; bundled runner keeps the downloaded source across unchanged polls; revocation returns 401. No connection secrets logged.

@@ -1,3 +1,4 @@
+import { defaultAvatar } from "../lib/avatar.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import mongoose from "mongoose";
@@ -33,6 +34,7 @@ test("unknown character masks identity only, preserving the player's profile and
     energy: 2,
     characterKey: "blaze",
     characterVariant: "male",
+    avatar: defaultAvatar("male"),
     teamId: "future",
   };
   const profile = flightIdentity(user, { flight: true, stage: "FLIGHT" });
@@ -48,6 +50,7 @@ test("unknown character masks identity only, preserving the player's profile and
   assert.equal(profile.level, 2);
   assert.equal(profile.characterHidden, true);
   assert.equal(profile.characterKey, null);
+  assert.equal(profile.avatar, null);
   assert.equal(profile.teamId, null);
   const afterCrash = flightIdentity(user, {
     flight: false,
@@ -228,7 +231,7 @@ test(
       );
       assert.equal((await publicPlayer(player)).characterHidden, true);
       await assert.rejects(
-        chooseCharacter(player, { characterKey: "blaze", variant: "female" }),
+        chooseCharacter(player, { avatar: defaultAvatar("female"), version: 0 }),
         (e) => e.status === 403,
       );
       await Promise.all(
@@ -250,8 +253,7 @@ test(
       );
       assert.equal((await publicPlayer(player)).characterHidden, true);
       await chooseCharacter(player, {
-        characterKey: "blaze",
-        variant: "female",
+        avatar: defaultAvatar("female"), version: 0,
       });
       assert.equal(
         (await playerStage(player)).characterSelectionRequired,

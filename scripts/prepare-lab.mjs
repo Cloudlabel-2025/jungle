@@ -1,5 +1,7 @@
 import { build } from "esbuild";
-import { mkdir } from "node:fs/promises";
+import { mkdir, cp } from "node:fs/promises";
+await mkdir("public/vendor/face", { recursive: true });
+await cp("node_modules/@mediapipe/tasks-vision/wasm", "public/vendor/face/wasm", { recursive: true });
 await mkdir("public/vendor", { recursive: true });
 await build({
   stdin: {
@@ -15,3 +17,13 @@ await build({
   legalComments: "eof",
 });
 console.log("Isolated React runtime bundled locally.");
+await build({
+  entryPoints: ["scripts/local-code-sync.mjs"],
+  outfile: "public/vendor/local-code-sync.mjs",
+  bundle: true,
+  platform: "node",
+  format: "esm",
+  target: "node22",
+  legalComments: "eof",
+});
+console.log("Project-only local sync runner bundled.");

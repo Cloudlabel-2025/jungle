@@ -6,3 +6,6 @@ node_modules/
 *.log
 coverage/
 .vercel/
+
+# Rebuilt from the pinned on-device vision package during prepare.
+public/vendor/face/

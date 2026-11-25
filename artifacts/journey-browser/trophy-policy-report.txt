@@ -1,0 +1,59 @@
+TROPHY POLICY VERIFICATION — 24 NOVEMBER 2026
+
+Approved policy: no league below 300. Scout 300, Trailblazer 750, Ranger 1500,
+Pathfinder 3000, Guardian 5000, Legend 8000. Current balance determines rank.
+Shared source: lib/trophy-leagues.js. Published conduct rules: docs/trophy-policy.txt.
+
+New conduct mechanism
+- Scoped MC/CC may record a warning or evidence-based fixed deduction.
+- Missed agreed deadline -5; repeated violation after an earlier matching warning
+  -10; human-verified plagiarism/fabrication -25. No caller-chosen amount.
+- Require a unique incident reference, supporting evidence, reason and a current
+  balance preview. Repeat cases reference a separate earlier warning for the
+  same player and rule. Retry keys and incident keys prevent duplicate debits.
+- Zero is the floor. Actual debit is min(rule amount, current balance), no debt.
+- CC alone may reverse a deduction, once, restoring the actual debit rather
+  than the nominal penalty. Original records are retained. XP, HP, energy,
+  streaks and mission work are not changed by these decisions.
+- Private in-app notifications link to the player's Help Desk decision receipts.
+- Result corrections remain the mechanism for reversing invalid earned rewards.
+  See the policy's sequencing guidance when conduct and result corrections overlap.
+
+Browser rehearsal (fictional local accounts, disposable database only)
+- Existing campaign player: 150 trophies, Unranked, no league medal, 150 needed
+  for Scout. All five flight completions and account balances preserved.
+- Dedicated --trophy-policy account starts with a disclosed artificial balance
+  of 305 to exercise league boundaries. It has no seeded mission completions.
+- MC recorded an agreed-deadline deduction: 305 -> 300, still Scout.
+- MC recorded a zero-cost warning, then a separate matching-rule repeat incident:
+  300 -> 290. Player saw Returned to unranked and three unread in-app notices.
+- Player opened Help Desk before flight intro, saw only their own decisions,
+  opened the repeat receipt and read reason, evidence, balance and reviewer.
+- CC restored the repeat deduction: 290 -> 300. Original penalty remained visible.
+- Final build: CC restored the separate deadline debit: 300 -> 305. The completed
+  state displayed the saved receipt and Record another decision; the old live
+  preview did not imply a second debit. New decision opened a blank warning flow.
+- Restoration choices omitted the already-restored repeat case. The new receipt
+  used the original incident name rather than exposing the internal hash.
+- All test deductions were reversed. The test account ends at its initial 305,
+  with its warnings and original/reversal receipts retained. Primary campaign
+  account remains at 150, XP2250, HP2, energy2.
+
+The QA clock is fictional. Restore now includes conduct timestamps when choosing
+the next clock value, preventing time moving backward during future rebuilds.
+No real cohort, email, external notification or production account was changed.
+
+Validation
+- Full disposable-database regression: 357 passed, zero failed or skipped.
+- Additional targeted conduct rerun passed, including normalised duplicate
+  incident references and concurrent reversals.
+- League/rule tests: 10 passed. Notification projection checks passed; the full
+  database regression also exercised persistent private read receipts.
+- Final production build passed. Logs: artifacts/trophy-policy-*.txt and
+  artifacts/trophy-conduct-tests.txt.
+
+Evidence
+trophy-policy-unranked.jpg: new ladder and no league medal below 300.
+trophy-policy-deduction-preview.jpg: evidenced repeat-case decision in MC UI.
+trophy-policy-restored-receipt.jpg: completed CC receipt and next-decision control.
+observed-state.json: exported fictional state only, for resuming this rehearsal.

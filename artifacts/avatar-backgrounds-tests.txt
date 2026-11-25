@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: confirmed outcomes choose reactions without treating pending review or technical errors as losses
+ok 1 - confirmed outcomes choose reactions without treating pending review or technical errors as losses
+  ---
+  duration_ms: 1.1391
+  type: 'test'
+  ...
+# Subtest: every reaction preserves the selected face, hair and clothes without changing saved settings
+ok 2 - every reaction preserves the selected face, hair and clothes without changing saved settings
+  ---
+  duration_ms: 7.4103
+  type: 'test'
+  ...
+# Subtest: both styles, all wardrobe and hair choices render for every sticker action
+ok 3 - both styles, all wardrobe and hair choices render for every sticker action
+  ---
+  duration_ms: 3848.0873
+  type: 'test'
+  ...
+# Subtest: existing characters retain their likeness when hair colour styles are introduced
+ok 4 - existing characters retain their likeness when hair colour styles are introduced
+  ---
+  duration_ms: 2.6361
+  type: 'test'
+  ...
+# Subtest: profile backgrounds preserve the selected pose and character and leave mission reactions unchanged
+ok 5 - profile backgrounds preserve the selected pose and character and leave mission reactions unchanged
+  ---
+  duration_ms: 21.7486
+  type: 'test'
+  ...
+# Subtest: 24 distinct saved profile poses preserve appearance and do not change mission reactions
+ok 6 - 24 distinct saved profile poses preserve appearance and do not change mission reactions
+  ---
+  duration_ms: 42.6285
+  type: 'test'
+  ...
+# Subtest: hair colour treatments and accessories render safely in portraits and reactions
+ok 7 - hair colour treatments and accessories render safely in portraits and reactions
+  ---
+  duration_ms: 365.3659
+  type: 'test'
+  ...
+# Subtest: refined gestures retain the exact selected hair, garments and accessories across every pose
+ok 8 - refined gestures retain the exact selected hair, garments and accessories across every pose
+  ---
+  duration_ms: 39.6602
+  type: 'test'
+  ...
+# Subtest: existing saved avatars retain their likeness when new personality settings are added
+ok 9 - existing saved avatars retain their likeness when new personality settings are added
+  ---
+  duration_ms: 1.0018
+  type: 'test'
+  ...
+# Subtest: sculpted geometry stays finite across body types, expressions and saved poses
+ok 10 - sculpted geometry stays finite across body types, expressions and saved poses
+  ---
+  duration_ms: 1086.2954
+  type: 'test'
+  ...
+# Subtest: male and female avatars support every wardrobe choice with strict, image-free settings
+ok 11 - male and female avatars support every wardrobe choice with strict, image-free settings
+  ---
+  duration_ms: 29013.6369
+  type: 'test'
+  ...
+# Subtest: personal identity replaces preset portraits while preserving task slots
+ok 12 - personal identity replaces preset portraits while preserving task slots
+  ---
+  duration_ms: 12.2942
+  type: 'test'
+  ...
+# Subtest: scan rejects no face, groups, small faces, cut off faces and turned heads
+ok 13 - scan rejects no face, groups, small faces, cut off faces and turned heads
+  ---
+  duration_ms: 5.315
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30405.337

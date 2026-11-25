@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: trophy warnings, deductions and reversals are private, readable in-app notices
+ok 1 - trophy warnings, deductions and reversals are private, readable in-app notices
+  ---
+  duration_ms: 5.4246
+  type: 'test'
+  ...
+# Subtest: monitoring notifications use the affected player, never a teammate's condition
+ok 2 - monitoring notifications use the affected player, never a teammate's condition
+  ---
+  duration_ms: 1.3398
+  type: 'test'
+  ...
+# Subtest: read status does not resolve monitoring; a later penalty produces a new notification
+ok 3 - read status does not resolve monitoring; a later penalty produces a new notification
+  ---
+  duration_ms: 1.7112
+  type: 'test'
+  ...
+# Subtest: sign-in notices are claimed once per session, and each real sign-in has a fresh identity
+ok 4 - sign-in notices are claimed once per session, and each real sign-in has a fresh identity
+  ---
+  duration_ms: 8.2117
+  type: 'test'
+  ...
+# Subtest: inbox combines announcements, own assignments, replies and scoped sprint notices without marks
+ok 5 - inbox combines announcements, own assignments, replies and scoped sprint notices without marks
+  ---
+  duration_ms: 1.9038
+  type: 'test'
+  ...
+# Subtest: MongoDB notification read receipts persist, remain private and never clear monitoring
+ok 6 - MongoDB notification read receipts persist, remain private and never clear monitoring # SKIP
+  ---
+  duration_ms: 0.8274
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 4567.8995

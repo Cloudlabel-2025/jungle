@@ -1,0 +1,142 @@
+PART II — COLLABORATIVE CODE LAB
+Implemented 24 November 2026
+
+Player journey
+1. Complete the existing flight clearance/final-team publication transition.
+2. Open Code Lab from the expedition, then Open coding studio for Node commands.
+3. Work on the team's shared source. The editor supports syntax highlighting,
+   autocomplete, indentation, search, undo, new files and removal of optional files.
+4. Changes save automatically after a short pause. Active teammates receive saved
+   updates in about 2–3 seconds. Presence shows who is in the lab and their file.
+5. Independent edits merge, including edits on different lines in one file.
+   Overlapping edits pause publication and show both versions. Players may combine
+   them in the editor and keep the combined version, or use the saved team version.
+6. Run quick ledger tests or start Node, install packages, run the preview server
+   and run full project tests. Each player has a separate terminal/runtime; all use
+   the team's source. A teammate cannot stop another player's commands.
+7. Use Download local sync connection, extract its two files into a dedicated project
+   folder and run node .vow-sync.mjs with Node 22 or later. Team and local editor edits
+   sync automatically while that runner runs, including with the browser closed.
+   An existing folder needs an explicit --use-local or --use-team first-sync choice.
+   The browser-native Connect local folder option is also available where its picker
+   works; it needs a one-time folder permission and an open lab. ZIP downloads remain
+   available. Local Git/VS Code work is supported; remote Git pushes are separate.
+8. Inspect recent history, download any inspected snapshot or restore it as a new
+   team version. Existing history remains intact.
+9. Request MC / CC review after saving. MC and CC open Project reviews from their
+   navigation, inspect a pinned version and its output, and leave a comment, request
+   changes or approve. Optional file and line references locate feedback precisely.
+   New source versions require a new decision; older approvals stay in history.
+10. Use Fullscreen on the whole lab, editor, output or terminal. Escape exits. The
+    existing editor/runtime stays mounted, so fullscreen does not reset your work.
+
+Implemented architecture
+- TeamLab is keyed by cohort and team inside the existing college database scope.
+  Every request reloads active account, expedition clearance and current team.
+  The browser cannot select another team's project through a supplied project ID.
+- TeamLabRevision stores source snapshots, changed paths and author for each save.
+  The UI lists the most recent 20 revisions; earlier snapshots remain addressable
+  by version through the same authenticated endpoint. No new conduct deductions,
+  trophy awards or energy charges are attached to editing or practice tests.
+- TeamLabPresence expires automatically. Visible tabs poll for changes every two
+  seconds and heartbeat every 15 seconds. Unchanged versions omit source contents.
+  This works with the existing HTTP deployment; no WebSocket server is required.
+- Save operations use transactions and stored base revisions. A three-way line
+  merge prevents silent replacement of other authors' concurrent work. This is
+  saved-edit collaboration, not character-level CRDT editing or shared cursors.
+- Unsynced drafts are stored on the current device, scoped to account and college.
+  Recovery is explicit. Unresolved overlap markers survive recovery; an untouched
+  recovery draft is retained until the player recovers or dismisses it. Network
+  failures retry while the lab is visible. A request times out after ten seconds.
+- The full studio is a separate document at /code-studio with COOP/COEP headers.
+  WebContainer runs Node in the player's browser. xterm supports interactive input;
+  buttons run package installation, development server and tests. Stop / fresh shell
+  stops tracked processes and opens a new shell without removing source files.
+- Runtime source follows editor/team changes. Conflicting edits made in the terminal
+  are retained instead of being overwritten. Import terminal files brings command-
+  generated source back into the editor and normal team save flow. Dependencies,
+  hidden files and lockfiles are excluded from that import. This is a Node shell,
+  not Windows CMD. No learner shell commands run on the Next.js production host.
+- The fast preview and quick tests retain the existing isolated single-module
+  starter runner. Node supports package imports and multi-file applications. Vite's
+  internal HMR-only port is excluded from automatic application preview selection.
+- The existing Apex banking starter is packaged as a runnable Vite/React project.
+  This change does not replace the approved Alumni Connect curriculum or invent
+  completions. The team's source can evolve within the existing Part II quests.
+- Project limits: 32 files, 50,000 characters per file, 200,000 source characters
+  total. Required entry/test files remain. Paths cannot traverse outside the project
+  or collide with a directory. Legacy personal Lab records and work checkpoints
+  remain available to the existing evidence/history features.
+- Native local syncing uses the File System Access API, with an explicitly chosen
+  folder and a persisted directory handle in IndexedDB scoped to account, college
+  and team. Reopening resumes only when browser permission remains granted. The
+  local marker also binds the folder to its college/project to prevent cross-team
+  or cross-college reuse. Disconnect removes automatic reconnection for that folder.
+- Source is scanned every 1.5 seconds. Dependencies, Git metadata, hidden/private
+  files, build output and generated lockfiles are excluded. Every replacement or
+  deletion of local source keeps a backup in .vow-sync-backups. Changes observed
+  during a write are rejected and retried. Overlapping local/editor edits pause
+  writes and show both versions; a decision is invalidated if either version changes.
+  The browser may throttle background work; it cannot sync while closed or suspended.
+- The standalone runner uses the same merge/backup engine with actual local files
+  and a source-only HTTP endpoint. A connection lasts 12 hours, is revocable and is
+  bound to the active user, team, account auth version and college access revision.
+  Only its SHA-256 digest is stored in the database. It cannot review projects,
+  update player stats or access another team's source. It never executes learner
+  commands automatically. Local replacements are atomic; network failures retry,
+  and revoked, expired or out-of-scope connections stop the runner.
+- Runner conflicts retain both versions in .vow-sync-conflicts.json. Compare them,
+  then set choose to local or team for each entry. A choice is accepted only while
+  the compared versions still match. Local overwritten content is backed up.
+- MC scope follows assigned teams; CC scope follows its cohort. Existing sprint
+  permissions control review writes; report readers can inspect without deciding.
+  Staff source views are read only. Decisions are append-only, idempotent, attributed
+  and version-bound. Transactions serialize review decisions with source edits.
+  The server rejects stale approvals and change requests. Historical comments remain
+  possible on a pinned version. Reviews do not directly award or deduct player stats.
+
+Delivery sequence
+DONE: persistent team source, scoped API, safe concurrent saves, presence, history.
+DONE: coding editor, new/delete optional files, draft recovery and ZIP downloads.
+DONE: real browser Node runtime, terminal, package installs, tests and live preview.
+DONE: disposable database and two-player browser verification; see test report.
+DONE: native automatic local-folder syncing, conflict recovery and local backups.
+DONE: standalone automatic local syncing with the browser closed, revocable source-
+      only connections and Git exclusion of private connection files.
+DONE: player review requests, scoped MC/CC source/output review and versioned decisions.
+DONE: fullscreen controls for the lab, editor, output and terminal.
+
+Further rollout decisions (not represented as completed features)
+- External repository pushes, branch policy and runner startup at OS login. Syncing
+  with a closed browser is implemented while the local runner is running.
+- Character-level collaboration and live cursor positions if teams need same-line
+  pairing. The current review flow deliberately protects overlapping source edits.
+- Curriculum-specific starter packs. Staff project review is implemented; existing
+  MC/CC assessment remains separate and learner-controlled tests grant no rewards.
+- Remote backend/database services needed by full MERN deployments. Browser Node
+  does not provision a shared MongoDB service or a persistent production deployment.
+- Revision retention/storage monitoring and class-size load testing before rollout.
+
+Runtime requirements
+The editor/team saving works without starting Node. Browser Node needs a supported
+browser, a secure origin (localhost is supported), cross-origin isolation and network
+access to the WebContainer service/package registry. The runtime and installed
+dependencies are ephemeral per tab; saved team source survives reloads. A separate
+preview link and the quick preview are available. Restricted browser storage can
+block Node preview connections, including a separately opened preview; deployment
+browser compatibility remains a rollout check. The lab does not change browser
+privacy settings.
+Local folder syncing needs a desktop browser with showDirectoryPicker support,
+such as Chrome or Edge. A user must grant folder access in its native picker. The
+browser never receives unrestricted disk access and the lab does not require a
+password or session cookie stored in the source folder.
+The standalone runner works around restricted embedded-browser folder pickers. Its
+private project-only token stays in .vow-sync-config.json, excluded from source
+syncing and automatically added to .gitignore with runner metadata and backups.
+Verify provider usage terms for the actual deployment before public rollout.
+
+Official runtime implementation references
+https://webcontainers.io/guides/quickstart
+https://webcontainers.io/guides/configuring-headers
+https://webcontainers.io/api
+https://developer.mozilla.org/en-US/docs/Web/API/Window/showDirectoryPicker

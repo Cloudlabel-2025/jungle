@@ -1,0 +1,1 @@
+PASS: real downloaded connection read team source; absent bearer, foreign Origin, another project and review action were denied. No connection secrets were logged.

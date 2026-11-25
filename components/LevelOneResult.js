@@ -3,6 +3,8 @@ import XpIcon from "./XpIcon";
 import LevelOneReview from "./LevelOneReview";
 import MissionStars from "./MissionStars";
 import { levelOneReward } from "@/lib/level-one-rules.js";
+import AvatarReaction from "./AvatarReaction";
+import { resultSticker } from "@/lib/avatar-stickers";
 
 export default function LevelOneResult({ level, compact = false }) {
   if (!level) return null;
@@ -13,6 +15,9 @@ export default function LevelOneResult({ level, compact = false }) {
       className={`level-one-result${compact ? " is-compact" : ""}`}
       aria-label="Level 1 result"
     >
+      {resultSticker(result) && (
+        <AvatarReaction mood={resultSticker(result)} compact={compact} />
+      )}
       <MissionStars stars={stars} size="result" />
       <h4>
         {level.practice

@@ -79,7 +79,7 @@ export default function FlightFinale({
             activityId: activity.id,
             ...(variantId ? { variantId } : {}),
           },
-          "Your mission timer has started.",
+          "Mission started. 1 energy spent; your timer and progress are saved.",
         ))
       )
         throw Error("Mission start was not confirmed. Try again.");

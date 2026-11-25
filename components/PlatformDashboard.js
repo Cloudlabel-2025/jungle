@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Building2, ChevronDown, ChevronRight, CircleHelp
 import { platformApi as api } from "@/lib/platform-client.js";
 import { Field } from "./PlatformFields";
 import PlatformAccounts from "./PlatformAccounts";
+import { characters } from "@/lib/characters.js";
 import { brand } from "@/lib/brand.js";
 import CollegeProfile from "./CollegeProfile";
 import CollegeLoginUrl from "./CollegeLoginUrl";
@@ -26,33 +27,37 @@ const countLabel = (n, noun) => `${n} ${noun}${n === 1 ? "" : "s"}`;
 function Status({ value }) { return <span className={`pa-status pa-status-${value?.toLowerCase()}`}><i />{statusName(value)}</span>; }
 function Login({ onLogin }) {
   const [busy, setBusy] = useState(false), [error, setError] = useState("");
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
   return <main className="platform-admin pa-login"><section className="pa-login-intro">
     <PlatformBrand />
     <div><span className="pa-kicker">VOYAGE OF WILDERNESS · CMS</span><h1>Every voyage<br />starts with a team.</h1><p>Bring your colleges together. Build cohorts, support your Guides and prepare each team for its journey.</p>
       <div className="pa-login-hierarchy"><Building2 /><span>Colleges</span><ChevronRight /><GraduationCap /><span>Cohorts</span><ChevronRight /><Users /><span>Teams</span></div></div>
     <small>Explore. Question. Grow together.</small></section>
     <section className="pa-login-side"><div className="pa-login-form"><span className="pa-kicker">EXPEDITION ADMINISTRATION</span><ShieldCheck size={30} /><h2>Super admin sign-in</h2><p>Manage your colleges and their learning journeys.</p>
-      <form onSubmit={async e => { e.preventDefault(); if (busy) return; const data = Object.fromEntries(new FormData(e.currentTarget)); setBusy(true); setError("");
+      <form method="post" onSubmit={async e => { e.preventDefault(); if (busy) return; const data = Object.fromEntries(new FormData(e.currentTarget)); setBusy(true); setError("");
         try { await onLogin(data); } catch (error) { setError(error.message); } finally { setBusy(false); } }}>
         <Field label="Email address"><input name="email" type="email" required autoComplete="username" placeholder="you@college.com" maxLength={254} /></Field>
         <Field label="Password"><input name="password" type="password" required autoComplete="current-password" maxLength={256} /></Field>
         {error && <p className="pa-error" role="alert">{error}</p>}
-        <button className="pa-primary" disabled={busy}>{busy ? "Signing in…" : "Sign in"}<ArrowRight size={17} /></button>
+        <button className="pa-primary" disabled={busy || !ready}>{busy ? "Signing in…" : "Sign in"}<ArrowRight size={17} /></button>
       </form><a className="pa-text-link" href="/recover?realm=platform">Forgot password?</a><p className="pa-note">College accounts sign in at their college’s own URL.</p>
     </div></section></main>;
 }
 function PasswordForm({ forced, onSave }) {
   const [busy, setBusy] = useState(false), [error, setError] = useState("");
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
   return <section className="pa-password"><KeyRound size={27} /><h2>{forced ? "Set your super admin password" : "Change password"}</h2>
     <p>{forced ? "Replace the temporary password before opening your dashboard." : "Changing your password signs out your other platform sessions."}</p>
-    <form onSubmit={async e => { e.preventDefault(); if (busy) return; const form = e.currentTarget, data = Object.fromEntries(new FormData(form)); setError("");
+    <form method="post" onSubmit={async e => { e.preventDefault(); if (busy) return; const form = e.currentTarget, data = Object.fromEntries(new FormData(form)); setError("");
       if (data.newPassword !== data.confirmPassword) { setError("The new passwords do not match."); return; } setBusy(true);
       try { await onSave(data); form.reset(); } catch (error) { setError(error.message); } finally { setBusy(false); } }}>
       <Field label={forced ? "Temporary password" : "Current password"}><input name="currentPassword" type="password" autoComplete="current-password" required maxLength={256} /></Field>
       <Field label="New password" hint="Use at least 8 characters."><input name="newPassword" type="password" autoComplete="new-password" required minLength={8} maxLength={256} /></Field>
       <Field label="Confirm new password"><input name="confirmPassword" type="password" autoComplete="new-password" required minLength={8} maxLength={256} /></Field>
       {error && <p className="pa-error" role="alert">{error}</p>}
-      <button className="pa-primary" disabled={busy}>{busy ? "Saving…" : "Save password"}<ArrowRight size={16} /></button>
+      <button className="pa-primary" disabled={busy || !ready}>{busy ? "Saving…" : "Save password"}<ArrowRight size={16} /></button>
     </form></section>;
 }
 export function ManagementDialog({ dialog, detail, cohort, onClose, onSave, staffRoles = ["MISSION_COMMANDER", "CENTRE_COMMAND"], allowRoleChange = true }) {
@@ -66,7 +71,7 @@ export function ManagementDialog({ dialog, detail, cohort, onClose, onSave, staf
   const taken = detail?.people.filter(p => p.teamId === initial.id).map(p => p.character) || [];
   return <dialog ref={ref} className="pa-dialog" aria-labelledby="pa-dialog-title" onCancel={e => { e.preventDefault(); if (!busy) onClose(); }} onClick={e => { if (e.target === e.currentTarget && !busy) onClose(); }}>
     <div className="pa-dialog-content"><header><div><span className="pa-kicker">{detail?.college.name || "JUNGLE PLATFORM"}</span><h2 id="pa-dialog-title">{titles[type]}</h2><p>{hints[type]}</p></div><button className="pa-icon" onClick={onClose} disabled={busy} aria-label="Close dialog"><X size={20} /></button></header>
-    <form onSubmit={async e => { e.preventDefault(); if (busy) return; const data = Object.fromEntries(new FormData(e.currentTarget)); setBusy(true); setError(""); requestId.current ||= crypto.randomUUID();
+    <form method="post" onSubmit={async e => { e.preventDefault(); if (busy) return; const data = Object.fromEntries(new FormData(e.currentTarget)); setBusy(true); setError(""); requestId.current ||= crypto.randomUUID();
       try { await onSave(type, { ...data, requestId: requestId.current }, initial); } catch (error) { setError(error.message); if (error.status >= 400 && error.status < 500) requestId.current = null; } finally { setBusy(false); } }}>
       {type === "cc" && <><Field label="Full name"><input name="name" required maxLength={120} autoFocus /></Field><Field label="Email address"><input name="email" type="email" required maxLength={120} autoComplete="off" /></Field>
         <Field label="Home cohort" hint="Used when opening the game workspace. College management includes all cohorts."><select name="cohortId" defaultValue={cohort?.id}>{detail?.cohorts.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></Field>
@@ -83,8 +88,7 @@ export function ManagementDialog({ dialog, detail, cohort, onClose, onSave, staf
         {type === "staff" ? <><Field label="Email address"><input name="email" type="email" required maxLength={120} autoComplete="off" /></Field>
           <Field label="Role"><select name="role">{staffRoles.map(role => <option key={role} value={role}>{role === "MISSION_COMMANDER" ? "Guide (Mission Commander)" : "Centre Command"}</option>)}</select></Field></> : <>
           <Field label="Recovery email (optional)" hint="A real address enables automatic password recovery."><input name="email" type="email" maxLength={120} /></Field><Field label="Username"><input name="username" required minLength={3} maxLength={32} pattern="[a-zA-Z0-9][a-zA-Z0-9_.-]{2,31}" autoComplete="off" /></Field>
-          <div className="pa-form-two"><Field label="Character"><select name="characterKey">{["blaze", "glitch", "shade", "pulse", "rune"].map(c => <option key={c} value={c} disabled={taken.includes(c)}>{c[0].toUpperCase() + c.slice(1)}{taken.includes(c) ? " · assigned" : ""}</option>)}</select></Field>
-            <Field label="Character version"><select name="variant"><option value="male">Male</option><option value="female">Female</option></select></Field></div></>}
+          <Field label="Team role" hint="The player creates their own avatar after signing in."><select name="characterKey">{characters.map(c => <option key={c.key} value={c.key} disabled={taken.includes(c.key)}>{c.label}{taken.includes(c.key) ? " · assigned" : ""}</option>)}</select></Field><input type="hidden" name="variant" value="male"/></>}
         <Field label="Initial password" hint="Share credentials privately with the account owner."><input name="password" type="password" required minLength={8} maxLength={256} autoComplete="new-password" /></Field></>}
       {type === "person" && <><Field label="Full name"><input name="name" required maxLength={120} defaultValue={initial.name} /></Field>
         <Field label="Email address" hint="Password recovery is sent to this registered address."><input name="email" type="email" required maxLength={120} defaultValue={initial.email} /></Field>

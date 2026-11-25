@@ -1,0 +1,36 @@
+TROPHIES, LEAGUES AND DIVISIONS — 24 NOVEMBER 2026
+
+Conduct-based trophy penalties have been removed. No -5/-10/-25 deductions or
+new trophy warnings can be created, including by older clients. HP and energy
+remain the gameplay consequence systems; trophies recognise validated work.
+Failed attempts, deadlines, asking for help and recovery do not cause trophy loss.
+
+Below 300: Unranked, with no league badge or division.
+Each earned league progresses I -> II -> III -> the next league's Division I.
+
+League          Division I       Division II       Division III
+Scout           300–449          450–599           600–749
+Trailblazer     750–999          1000–1249         1250–1499
+Ranger          1500–1999        2000–2499         2500–2999
+Pathfinder      3000–3749        3750–4499         4500–4999
+Guardian        5000–5999        6000–6999         7000–7999
+Legend          8000–9999        10000–11999       12000+
+
+The current account trophy balance determines both league and division. The
+HUD, medal details, progress bar, staff correction preview and promotion /
+demotion messages share one calculation. Medal stars and Roman numeral show
+the current division. XP levels remain separate. There is no seasonal reset,
+automatic decay or mission-entry trophy fee.
+
+Only original result/reward correction can reduce trophies. MC/CC must review
+the work and record the decision; invalid work loses its corresponding reward
+without an additional conduct penalty. A correction can demote a division,
+move to a lower league, or return the player to Unranked. All evidence and
+previous decisions remain in the existing result audit.
+
+Historical conduct receipts are retained. They are labelled as historical;
+there are no new warning or deduction controls. CC may reverse an outstanding
+historical deduction once, restoring only its actual debit. MC/players cannot
+perform that reversal. Scope, stale-balance checks, duplicate protection and
+the original/reversal receipts remain intact. No production balances are
+automatically changed by this code update.

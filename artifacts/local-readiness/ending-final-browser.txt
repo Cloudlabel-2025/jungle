@@ -1,0 +1,82 @@
+- main:
+  - region "Expedition game map":
+    - generic "Uncharted jungle. Use left and right arrow keys, drag, or scroll to explore the forest.":
+      - 'button "Level 1: Open the Gates, Key 1 earned"':
+        - generic: "01"
+        - generic: LEVEL 01
+        - generic: Open the Gates
+        - generic: Key 1 earned
+      - 'button "Level 2: Build the Registry, Key 2 earned"':
+        - generic: "02"
+        - generic: LEVEL 02
+        - generic: Build the Registry
+        - generic: Key 2 earned
+      - 'button "Level 3: Repair the Trail, Key 3 earned"':
+        - generic: "03"
+        - generic: LEVEL 03
+        - generic: Repair the Trail
+        - generic: Key 3 earned
+      - 'button "Level 4: Prove the Portal, Key 4 earned"':
+        - generic: "04"
+        - generic: LEVEL 04
+        - generic: Prove the Portal
+        - generic: Key 4 earned
+      - 'button "Level 5: Deliver Alumni Connect, Key 5 earned"':
+        - generic: "05"
+        - generic: LEVEL 05
+        - generic: Deliver Alumni Connect
+        - generic: Key 5 earned
+    - button "Scroll map left":
+    - button "Scroll map right" [disabled]:
+    - generic: ALUMNI CONNECT · 5 LEVELS
+    - heading "The Verdant Wilds" [level=1]
+    - button "Open Alumni Connect levels":
+      - generic: 5 / 5 KEYS
+    - generic "Expedition controls":
+      - button "Open daily check-in":
+        - generic: Check-in
+      - button "Open next steps":
+        - generic: Next steps
+      - button "Open my work":
+        - generic: My work
+      - button "Open team":
+        - generic: Team
+      - button "Open help":
+        - generic: Help
+    - button "Review clearance"
+    - generic: Your personal clearance is complete
+    - dialog "Expedition clearance":
+      - generic: EXPEDITION / FIELD EQUIPMENT
+      - heading "Expedition clearance" [level=2]
+      - button "Close dialog" [active]:
+      - region "You made it through the wilderness mission progress":
+        - text: Expedition complete
+        - heading "You made it through the wilderness" [level=2]
+        - paragraph: Five client acceptance keys. One shared project. Your team has earned all five keys.
+        - progressbar "Approved mission progress"
+        - strong: 5/5 checkpoints
+        - paragraph: Your Alumni Connect journey is complete. Revisit your missions, show your project in Code Lab, or ask your Guide about the optional next expedition.
+        - link "Enter Code Lab":
+          - /url: /gamer/ide
+        - link "Call your Guide":
+          - /url: /gamer/week-one-ask-mc
+        - img "QA Gamer 0, ready for the next mission"
+      - paragraph: Complete Alumni Connect by earning all five client acceptance keys. CC verifies each sprint and the final release, demonstrations and individual defences.
+      - paragraph:
+        - text: Alumni Connect keys
+        - strong: 5/5 earned
+      - paragraph:
+        - text: My sprint contributions
+        - strong: 4/4 approved
+      - paragraph:
+        - text: Health
+        - strong: 5/5 HP
+      - paragraph:
+        - text: Rescue case
+        - strong: No open case
+      - paragraph:
+        - text: Your team has completed the core Alumni Connect journey.
+      - link "Week 1 & recovery":
+        - /url: /gamer/week-one
+      - paragraph: "After Key 5, CC can release the optional Phase 2 branch: Events & API Integration, Paid Events & Payment Links, and Payment Reconciliation & Recovery."
+- alert

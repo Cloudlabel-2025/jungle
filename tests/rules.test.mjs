@@ -68,9 +68,13 @@ test("finishing on time does not substitute for a pre-deadline report", () => {
   );
   assert.equal(deadlineInfraction({ dueAt, reportedAt: dueAt }), true);
 });
-test("league thresholds match the brief", () => {
-  assert.equal(league(299), "BRONZE");
-  assert.equal(league(300), "SILVER");
-  assert.equal(league(699), "SILVER");
-  assert.equal(league(700), "GOLD");
+test("league names use the shared trophy ladder", () => {
+  assert.equal(league(0), "UNRANKED");
+  assert.equal(league(299), "UNRANKED");
+  assert.equal(league(300), "SCOUT");
+  assert.equal(league(750), "TRAILBLAZER");
+  assert.equal(league(1500), "RANGER");
+  assert.equal(league(3000), "PATHFINDER");
+  assert.equal(league(5000), "GUARDIAN");
+  assert.equal(league(8000), "LEGEND");
 });

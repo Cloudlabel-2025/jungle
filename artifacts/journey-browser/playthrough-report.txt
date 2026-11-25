@@ -1,0 +1,79 @@
+FLIGHT BROWSER PLAYTHROUGH — 24 NOVEMBER 2026
+
+Environment: local production build on 127.0.0.1:3190, disposable Mongo replica
+set, fictional accounts and curriculum. Main player started with no completed
+missions. All ten mission completions were performed through the browser UI.
+The two public research share URLs in fixture-disclosure.json use fixed mocked
+provider responses. This does not verify the live external chat provider.
+
+ACTUAL PLAYTHROUGH
+1. Login, clock-in, flight welcome and arrival at the first mission.
+2. Level 1: choose research genre, start research, submit shared conversation;
+   start independent claim check, supply claim/source/verdict/finding. 3 stars.
+3. Level 2: conflicting-instructions comic, clue inspection and six diagnostic
+   notes; lost-signal comic, receiver/display evidence and five notes. 3 stars.
+4. Level 3: nature investigation, alternative-factor test and STORY evidence;
+   login-system sequence, prediction, simulation and explanations. Initially
+   1 star exposed delayed navigation overwriting a note. Fixed navigation,
+   revised saved evidence, resubmitted for 3 stars without another energy debit.
+5. Level 4: impossible-claim clues and fair comparison experiment; access-control
+   investigation comparing signed-in-only against ownership validation. 3 stars.
+6. Level 5: fresh research conversation, twelve evidence/reflection checkpoints,
+   fifteen-question knowledge run, review and seal. 3 stars.
+7. Reloaded: all five levels complete, 150 trophies, 2250 total XP, 2 lives and
+   2 energy. Ten new-mission debit entries; revising did not charge again.
+8. Results handoff clicked successfully on desktop and mobile landscape.
+   Results correctly wait for human signoff/publication. No real assessment,
+   team allocation, cohort release or production publication was fabricated.
+9. Rules card reader acknowledged; guided essential-support question submitted;
+   expandable thread reviewed and answered with the fictional staff account.
+10. After all levels: Level 5 check-in, SOD, three-step EOD and three-step Compass
+    saved through the browser. Latest build also checked journal title fallback
+    and the corrected Level 1 two-of-two checkpoint counter.
+
+RECOVERY REHEARSALS
+- Exhausted mission account: wrong drill answer rejected with balance retained;
+  correct choices restored at least one life and three energy; reload retained
+  recovery. Existing work remained accessible at zero balance.
+- Scoped Centre Command approval: recorded reason, restoration, queue removal.
+- Legacy account: four lives, zero energy, no rescue case. Help Desk request
+  created a staff-review case; staff approval restored three energy and retained
+  all four lives. Signed back in to verify the displayed balance.
+- Automated tests additionally cover concurrent starts/recovery, repeated refill
+  prevention, scope rejection, wrong answers, rollback and starting after rescue.
+
+FORM AND RESPONSIVENESS CHANGES
+Learner evidence and reflections now use individual checkpoints. Rules use
+cards; questions use topic selection followed by one message; briefings and
+challenges select one item. Saves remain versioned/queued; final submission
+flushes pending work. Missions and equipment load when needed. Navigation
+between signal answers no longer waits for a server save. These are verified
+behavior improvements, not a measured live-host performance claim.
+
+VALIDATION
+350 automated tests passed, zero failures, zero skips; production build passed.
+Logs: ../journey-system-regression.txt and ../journey-system-build.txt.
+Full later expedition/sprint/report browser rehearsal remains outside this
+five-level flight run; those stages still require real staff actions/content.
+
+EVIDENCE
+completed-flight-map.jpg: latest production build, final balance and final level.
+five-levels-complete.jpg: completed-level list and after-flight guidance.
+level-1/2/4/5-complete.jpg: intermediate completion screenshots.
+level-3-complete.jpg: historical first submission before the corrected revision.
+recovery-complete.jpg: player drill restoration.
+legacy-recovery-complete.jpg: legacy four-life/three-energy restored balance.
+mobile-results.jpg: results page at mobile landscape.
+observed-state.json: exported fictional database after observed UI actions;
+used only to resume this local rehearsal between production rebuilds.
+
+LOCAL REPRODUCTION
+Build: npm run build
+Fresh fixture: node scripts/serve-journey-browser.mjs --production
+Resume observed fixture: add --restore
+Accounts: explorer@journey.invalid, recovery@journey.invalid,
+legacy@journey.invalid, centre@journey.invalid, guide@journey.invalid.
+Fictional local password: Fictional-QA-2026!
+The server overrides database/session/delivery settings for this disposable
+fixture. It does not deploy or change a real cohort. See fixture-disclosure.json
+and scripts/journey-browser-preload.mjs for the two mocked research URLs.

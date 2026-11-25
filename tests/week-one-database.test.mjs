@@ -186,7 +186,8 @@ test(
         ),
       );
       await reconcile([gamer._id]);
-      assert.equal(await models.Energy.countDocuments(), 1);
+      assert.equal(await models.Energy.countDocuments({ eventKey: /^mission:/ }), 1);
+      assert.equal(await models.Energy.countDocuments({ eventKey: { $not: /^mission:/ } }), 1);
       assert.equal(await weekOneProtected(gamer), true);
       await models.Cohort.updateOne(
         { _id: "alpha" },
@@ -202,7 +203,7 @@ test(
           session,
         ),
       );
-      assert.equal(await models.Energy.countDocuments(), 2);
+      assert.equal(await models.Energy.countDocuments({ eventKey: { $not: /^mission:/ } }), 2);
       const events = await models.WeekOneEvent.find({
         cohortId: "alpha",
       }).lean();

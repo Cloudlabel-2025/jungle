@@ -1,0 +1,11 @@
+{
+  "base": "http://localhost:3190",
+  "source": "week-one-review.json",
+  "seeded": "Synthetic integration-test accounts and evidence. This is not the recorded first-five-level browser player.",
+  "pending": "Actual browser MC signoff and CC publication",
+  "accounts": [
+    "mc@example.invalid",
+    "cc@example.invalid",
+    "g0@example.invalid"
+  ]
+}

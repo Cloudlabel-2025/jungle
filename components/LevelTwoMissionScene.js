@@ -126,7 +126,7 @@ export default function LevelTwoMissionScene({
           activityId: selected,
           variantId: selectedScenario.id,
         },
-        "Your investigation has started. Your timer and notes are saved.",
+        "Mission started. 1 energy spent; your timer and notes are saved.",
       );
       if (!result)
         throw Error(
@@ -267,7 +267,7 @@ export default function LevelTwoMissionScene({
             <p>
               {complete === 2
                 ? "Both discoveries secured. Your next flight mission is unlocked."
-                : "Kiko: Pick either mission. Your research timer starts when you launch a scenario."}
+                : "Kiko: Pick either mission. Launching costs 1 energy and starts your timer. Continuing saved work is free."}
             </p>
             {complete === 2 && nextLevel?.available && (
               <button type="button" onClick={onNext}>

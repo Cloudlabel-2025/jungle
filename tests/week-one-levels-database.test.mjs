@@ -200,6 +200,16 @@ test(
         assert.equal(r.data.creditedXp, 150 * day);
       }
       assert.deepEqual(await balance(), [135, 2175]);
+      const evidenceVersions = Object.fromEntries((await models.WeekOneAttempt.find({userId:"p", day:2}).lean()).map((a) => [a._id,a.version]));
+      await assert.rejects(staff(mc,2,"validate"), /Review the saved evidence/);
+      await assert.rejects(staff(mc,2,"validate",3,{reviewedEvidence:true,evidenceVersions:{}}), /evidence changed/);
+      await staff(mc,2,"validate",3,{reviewedEvidence:true,evidenceVersions});
+      assert.deepEqual(await balance(), [135,2175], "validation preserves rewards");
+      assert.equal((await row(2)).data.validation.actorId,mc._id);
+      assert.equal((await models.WeekOneEvent.findOne({kind:"FLIGHT_LEVEL_VALIDATED"}).lean()).details.review.role,"MISSION_COMMANDER");
+      await staff(cc,2,"validate",3,{reviewedEvidence:true,evidenceVersions});
+      assert.equal((await row(2)).data.validation.actorId,cc._id);
+      await assert.rejects(staff(mc,2,"validate",3,{reviewedEvidence:true,evidenceVersions, userId:"outside",members:["outside"],versions:{outside:0}}), (e) => e.status === 403);
       const rewardCount = await models.WeekOneEvent.countDocuments({
         kind: "FLIGHT_LEVEL_REWARD",
       });

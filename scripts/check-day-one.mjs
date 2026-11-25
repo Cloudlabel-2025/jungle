@@ -40,10 +40,10 @@ try {
   const concurrency = process.argv.find((a) =>
     /^--test-concurrency=[1-8]$/.test(a),
   );
-  const requestedTest = process.argv.find(a => /^--test-file=[\w-]+\.test\.mjs$/.test(a));
+  const requestedTests = process.argv.filter(a => /^--test-file=[\w-]+\.test\.mjs$/.test(a));
   const child = spawn(
     process.execPath,
-    ["--test", ...(concurrency ? [concurrency] : []), ...(requestedTest ? [`tests/${requestedTest.slice(12)}`] : testFiles)],
+    ["--test", ...(concurrency ? [concurrency] : []), ...(requestedTests.length ? requestedTests.map(arg => `tests/${arg.slice(12)}`) : testFiles)],
     {
       stdio: "inherit",
       windowsHide: true,

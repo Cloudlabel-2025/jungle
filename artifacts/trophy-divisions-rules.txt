@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: IST attendance boundaries are evaluated from server UTC timestamps
+ok 1 - IST attendance boundaries are evaluated from server UTC timestamps
+  ---
+  duration_ms: 89.0668
+  type: 'test'
+  ...
+# Subtest: daily trophy cap cannot be exceeded or become negative
+ok 2 - daily trophy cap cannot be exceeded or become negative
+  ---
+  duration_ms: 0.1424
+  type: 'test'
+  ...
+# Subtest: every third energy penalty costs one life and resets energy
+ok 3 - every third energy penalty costs one life and resets energy
+  ---
+  duration_ms: 1.7906
+  type: 'test'
+  ...
+# Subtest: finishing on time does not substitute for a pre-deadline report
+ok 4 - finishing on time does not substitute for a pre-deadline report
+  ---
+  duration_ms: 0.1515
+  type: 'test'
+  ...
+# Subtest: league names use the shared trophy ladder
+ok 5 - league names use the shared trophy ladder
+  ---
+  duration_ms: 0.344
+  type: 'test'
+  ...
+# Subtest: every league boundary promotes at its floor and demotes one trophy below
+ok 6 - every league boundary promotes at its floor and demotes one trophy below
+  ---
+  duration_ms: 3.2677
+  type: 'test'
+  ...
+# Subtest: progress and retention use current balance, with a safe starting and top league
+ok 7 - progress and retention use current balance, with a safe starting and top league
+  ---
+  duration_ms: 0.3923
+  type: 'test'
+  ...
+# Subtest: baseline, refresh, same-league gains and reset never invent a change
+ok 8 - baseline, refresh, same-league gains and reset never invent a change
+  ---
+  duration_ms: 0.2548
+  type: 'test'
+  ...
+# Subtest: staff correction and restoration move down and up without a historical high-water rank
+ok 9 - staff correction and restoration move down and up without a historical high-water rank
+  ---
+  duration_ms: 0.2497
+  type: 'test'
+  ...
+# Subtest: large balance changes skip directly to the correct league
+ok 10 - large balance changes skip directly to the correct league
+  ---
+  duration_ms: 0.5133
+  type: 'test'
+  ...
+# Subtest: all eighteen divisions promote and demote at exact boundaries
+ok 11 - all eighteen divisions promote and demote at exact boundaries
+  ---
+  duration_ms: 0.6909
+  type: 'test'
+  ...
+# Subtest: division progress points to the next division, then the next league
+ok 12 - division progress points to the next division, then the next league
+  ---
+  duration_ms: 0.1558
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 282.0915

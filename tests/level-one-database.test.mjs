@@ -196,6 +196,14 @@ test(
       const automatic = (await read(players[0])).data.levelOne.automatic;
       assert.equal(automatic.stars, 3);
       assert.equal(automatic.source, "SYSTEM");
+      await assert.rejects(override(mc,[players[0]],"validate",3), /Review the saved evidence/);
+      const beforeValidation = await balance(players[0]);
+      await override(mc,[players[0]],"validate",3,{reviewedEvidence:true});
+      assert.deepEqual(await balance(players[0]),beforeValidation,"human validation does not mint rewards");
+      assert.equal((await read(players[0])).data.levelOne.validation.actorId, mc._id);
+      await override(cc,[players[0]],"validate",3,{reviewedEvidence:true});
+      assert.equal((await dayOneSnapshot(cc,at(46))).records.find((r) => r.userId === players[0]._id).levelOne.validation.actorId,cc._id);
+      assert.equal(await models.DayOneEvent.countDocuments({kind:"LEVEL_ONE_VALIDATED"}),2);
       assert.equal(
         (await read(players[0])).data.verification.status,
         "VERIFIED",
@@ -323,6 +331,9 @@ test(
       );
       replay = await read(players[0]);
       assert.equal((await balance(players[0])).xp,125,"Mission 1 alone cannot improve replay rewards");
+      await dayOneAction(players[0], "claim-check-start", {
+        ownerId: players[0]._id, researchRevisionId: replay.data.submissions.at(-1).id,
+      }, at(51));
       await dayOneAction(players[0],"claim-check-submit",{
         ownerId:players[0]._id,researchRevisionId:replay.data.submissions.at(-1).id,draftVersion:0,
         answers:{claim:"The AI claims that electric vehicles always cost less to operate.",source:"https://example.org/independent-study",verdict:"UNCERTAIN",finding:"I compared the source with the AI claim and found the costs depend on local electricity prices, driving distance and maintenance. I would check those assumptions before trusting this conclusion."}

@@ -1,0 +1,94 @@
+CODING FLOW COMPLETION — 24 NOVEMBER 2026
+
+Scope: automatic local source sync, MC/CC project review and fullscreen workspaces.
+All users, teams, reviews and code edits in this report are fictional. Approved-team
+clearance is disposable fixture setup, not a claim of replaying the entire flight
+curriculum. Production learner data and external repositories were not changed.
+
+Observed start-to-end coding flow
+1. Player opened the shared project and saved README (version 1).
+2. Player requested MC/CC review. MC inspected the pinned source and isolated output,
+   attached feedback to README.md:1, and requested verification steps. Player received
+   that version-bound feedback without reloading.
+3. Browser-native folder access was attempted with user assistance. The embedded
+   browser did not record a connected directory; that native picker path is not
+   claimed as end-to-end verified. Its filesystem engine is covered by real-file
+   tests. A standalone runner was built and exercised as the reliable alternative.
+4. Player downloaded the real connection ZIP through the app. Its bundled Node runner
+   was extracted into .data/local-sync-browser. The private config was not logged.
+   Running node .vow-sync.mjs pulled the actual saved team source automatically.
+5. A local README edit appeared automatically in the game as version 2. A browser
+   edit then reached the real local README automatically (versions 3/4). Git ignore
+   rules excluded connection config, metadata, backups and temporary files.
+6. Player requested validation of the revised project. Browser Node installed its
+   packages (24 seconds), ran the actual ledger tests and reported four passes,
+   zero failures and process exit 0. The fullscreen terminal retained its output.
+7. CC inspected the revised source/output and approved version 4. Approval appeared
+   in the player's review feed without reloading.
+8. Player browser was closed. A new local source file still synced to the team.
+   Reopening showed src/local-check.js and version 5 as not reviewed. CC retained
+   the old pinned version 4, saw a newer-version banner, and its stale approval
+   button was disabled. Historical approval stayed visible instead of transferring.
+9. Runner was stopped; different README replacements were made locally and in the
+   browser. On restart, the runner paused and retained both versions in the conflict
+   report. Neither side was silently discarded. Explicitly choosing the team copy
+   updated the local file and retained the local copy in .vow-sync-backups.
+10. Verified README content was restored through local editing. It synced as version 7;
+    CC inspected and approved that version. Player saw the final current approval.
+11. Player disconnected the local runner through the app. The running client stopped
+    with its disconnected-connection message, and its bearer was rejected with HTTP
+    401. Source files remained intact. App.jsx still matched the implementation that
+    passed the four Node tests. HP=5, energy=3 and trophies=0 remained unchanged.
+
+Fullscreen and layout
+PASS: whole lab, editor, output and terminal filled the tested viewport. The embedded
+browser used the viewport-filling fallback when native Fullscreen API was unavailable.
+Observed panels measured 1280x800; the final terminal measured 1280x720 at that viewport.
+Exit controls and Escape returned to the existing workspace without resetting source.
+Staff editor and staff output also expanded correctly. The dedicated coding studio
+remained visible in portrait, with no horizontal overflow (clientWidth=scrollWidth=585
+for a 600px-wide viewport). Temporary viewport overrides were reset.
+
+Automated and final production checks
+- Production build: PASS, including /api/team-lab/local and /code-studio.
+- Regression: 353 tests, 301 passes, zero failures, 52 database-dependent skips.
+- Dedicated disposable database case: PASS, zero skips. Covers concurrent opening and
+  saves, scoped MC/CC reads/writes, read-only permissions, stale review rejection,
+  review idempotency, valid file/line references, source/review races, connection hash
+  storage, revocation/expiry, college revision binding, and approval state retained
+  even when more than 40 historical comments fill the bounded feedback list.
+- Local filesystem/merge/runner tests: 11 passes (included in regression). Real temp
+  files cover both sync directions, ignored private files, backups, concurrent local
+  changes, conflict decisions, safe deletions and unchanged-version cache responses.
+- Real downloaded-connection HTTP checks: missing bearer, foreign Origin, another
+  project and review actions were denied. No connection secrets were logged.
+- Final production build smoke: authoritative current approval, source-only response,
+  omission of files for an unchanged version, the exact bundled runner across repeated
+  unchanged polls, and explicit revocation returning HTTP 401 all passed.
+- git diff --check: PASS with existing LF/CRLF normalization notices.
+
+Use in the product
+Open Field workshop / coding studio. Download local sync connection, extract the two
+files into a dedicated local project folder, and run node .vow-sync.mjs with Node 22+.
+Keep the runner running for automatic local/VS Code syncing. Its 12-hour connection
+can be disconnected in the lab; it is limited to the current team's source. MC and
+CC open Project reviews in their navigation or the coding studio. Reviews are source-
+version decisions and do not directly alter player rewards. Remote Git pushes,
+deployment services and shared external databases are separate operations.
+
+Evidence
+artifacts/team-lab-extension-build.txt
+artifacts/team-lab-extension-regression.txt
+artifacts/team-lab-extension-db.txt
+artifacts/team-lab-extension-unit.txt
+artifacts/team-lab-local-http.txt
+artifacts/team-lab-local-revocation.txt
+artifacts/team-lab-final-smoke.txt
+artifacts/team-lab-extension-browser/staff-fullscreen-editor.jpg
+artifacts/team-lab-extension-browser/cc-fullscreen-output.jpg
+artifacts/team-lab-extension-browser/fullscreen-node-tests.jpg
+artifacts/team-lab-extension-browser/stale-review-protected.jpg
+artifacts/team-lab-extension-browser/final-project-review.jpg
+
+Observed source and review receipts are retained in the private disposable fixture
+checkpoint for --restore-flow. Connection secrets are not included in that checkpoint.

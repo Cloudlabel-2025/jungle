@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: conduct penalties removed: stale writes rejected, historical audit scoped, CC restoration once including older ID formats
+ok 1 - conduct penalties removed: stale writes rejected, historical audit scoped, CC restoration once including older ID formats
+  ---
+  duration_ms: 3133.791
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5187.2784

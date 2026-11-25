@@ -470,13 +470,11 @@ export function LabAttempt({
             <button
               className="lab-secondary"
               disabled={busy || paused}
-              onClick={() =>
-                navigate(() => {
+              onClick={() => {
                   if (step === 0 || fields[step - 1] === "sequence")
                     setMode("build");
                   else setStep(step - 1);
-                })
-              }
+              }}
             >
               <ArrowLeft size={14} /> Back
             </button>
@@ -496,7 +494,7 @@ export function LabAttempt({
                   (!readOnly &&
                     !missionAnswerPresent(key, visible[key], d.variant.cards))
                 }
-                onClick={() => navigate(() => setStep(step + 1))}
+                onClick={() => setStep(step + 1)}
               >
                 Next answer <ArrowRight size={15} />
               </button>

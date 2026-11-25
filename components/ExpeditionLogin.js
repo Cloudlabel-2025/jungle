@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Eye, EyeOff, AlertTriangle } from "lucide-react";
 import { VowEmblem } from "./VowBrand";
 import { brand } from "@/lib/brand.js";
@@ -15,6 +15,8 @@ export default function ExpeditionLogin({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const pending = useRef(false);
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
 
   async function submit(event) {
     event.preventDefault();
@@ -53,7 +55,7 @@ export default function ExpeditionLogin({
             <p className="vow-login-college">{college.name}</p>
           )}
         </header>
-        <form className="vow-login-form" onSubmit={submit} aria-busy={busy}>
+        <form method="post" className="vow-login-form" onSubmit={submit} aria-busy={busy || !ready}>
           <div className="vow-login-field">
             <label htmlFor="vow-identifier">Username or email</label>
             <input
@@ -96,7 +98,7 @@ export default function ExpeditionLogin({
               {error}
             </p>
           )}
-          <button className="vow-login-submit" disabled={busy} type="submit">
+          <button className="vow-login-submit" disabled={busy || !ready} type="submit">
             {busy ? "Signing in…" : "Sign in"}
             <ArrowRight size={19} aria-hidden="true" />
           </button>

@@ -41,7 +41,15 @@ export default function PilotBoardSlot({ data, children }) {
             : "Expedition quests and project levels. Programme sprints have their own board and records."}
         </p>
       </div>
-      {show ? <PilotWorkspace key={params.get("sprint") || "current"} user={data.user} /> : children}
+      {show ? (
+        <PilotWorkspace
+          key={params.get("sprint") || "current"}
+          user={data.user}
+          levels={data.alumniMap || []}
+        />
+      ) : (
+        children
+      )}
     </>
   );
 }

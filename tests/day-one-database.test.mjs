@@ -133,7 +133,7 @@ test(
       let p = (await dayOneSnapshot(gamers[0])).records[0];
       assert.equal(p.trophies, 14);
       assert.equal(p.badge, false);
-      assert.equal(p.energy, 3);
+      assert.equal(p.energy, 2, "starting research spends one shared energy");
       assert.equal(p.eod.mode, "VOICE");
       assert.equal(p.startedAt, "2026-11-02T03:34:00.000Z");
       assert.equal((await dayOneSnapshot(gamers[0])).records.length, 1);
@@ -377,8 +377,9 @@ test(
       assert.equal(p.firstQualifyingSubmissionAt, "2026-11-02T03:40:00.000Z");
       assert.equal(p.badge, true);
       assert.equal(await models.Trophy.countDocuments(), 0);
-      assert.equal(await models.Energy.countDocuments(), 0);
-      // Week 1 records keep their independent 5/5 energy while legacy gameplay continues.
+      assert.equal(await models.Energy.countDocuments({ eventKey: /^mission:/ }), 4);
+      assert.equal(await models.Energy.countDocuments({ eventKey: { $not: /^mission:/ } }), 0);
+      // Mission starts and conduct penalties spend the same account balance.
       await control(otherCC, "close", 1, config.closingCutoff);
       await models.DayOneSetup.updateOne(
         { _id: "corrections" },
@@ -404,8 +405,8 @@ test(
         dueAt: new Date(Date.now() - 60000),
       });
       await reconcile([other._id]);
-      assert.equal((await models.User.findById(other._id)).hp, 5);
-      assert.equal(await models.Energy.countDocuments(), 2);
+      assert.equal((await models.User.findById(other._id)).hp, 4);
+      assert.equal(await models.Energy.countDocuments({ eventKey: { $not: /^mission:/ } }), 2);
       assert.equal(
         (await models.Task.findById("day1-old-task")).deadlineChecked,
         true,
@@ -419,7 +420,7 @@ test(
           session,
         ),
       );
-      assert.equal(await models.Energy.countDocuments(), 3);
+      assert.equal(await models.Energy.countDocuments({ eventKey: { $not: /^mission:/ } }), 3);
       assert.equal(
         await models.DayOneRecord.countDocuments({ energy: { $ne: 3 } }),
         0,

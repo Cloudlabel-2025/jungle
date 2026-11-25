@@ -205,7 +205,7 @@ export function DiscoveryMission({
     ? Math.max(0, new Date(r.deadline) - new Date(now))
     : 90 * 60000;
   const timer = `${String(Math.floor(remaining / 60000)).padStart(2, "0")}:${String(Math.floor(remaining / 1000) % 60).padStart(2, "0")}`;
-  if (game && c.selectionMode === "research-2026-11-12")
+  if (game)
     return (
       <LevelOneJourneyGate
         record={r}
@@ -222,12 +222,12 @@ export function DiscoveryMission({
           >
             {!g ? (
               data.dayOne?.state === "OPEN" ? (
-                <ResearchGenrePicker
+                c.selectionMode === "research-2026-11-12" ? <ResearchGenrePicker
                   act={act}
                   recordId={r._id}
                   interactive={c.questionSelection === "PLAYER_CHOICE"}
                   game
-                />
+                /> : <div className="discovery-mission-hub" data-pip-target="genres"><h3>Choose your research world</h3><div className="button-row">{c.genres.map(genre => <button className="btn" key={genre.id} onClick={() => send(act, "genre", r, { genreId: genre.id })}>{genre.name}</button>)}</div></div>
               ) : (
                 <p className="flight-closed-notice">
                   This mission is closed. Your saved work remains in your
@@ -354,7 +354,7 @@ export function DiscoveryMission({
               className="btn primary"
               onClick={() => send(act, "start", r)}
             >
-              Begin 90-minute research
+              Begin 90-minute research · 1 energy
             </button>
           </>
         )}

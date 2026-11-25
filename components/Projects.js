@@ -7,6 +7,10 @@ import ProjectPreview from "./ProjectPreview";
 import LevelStars from "./LevelStars";
 import { CompletionCelebration } from "./LevelCompletion";
 import FullStackTasks from "./FullStackTasks";
+import AvatarReaction from "./AvatarReaction";
+import MissionAdventure from "./MissionAdventure";
+import { projectMissionProgress } from "@/lib/mission-experience";
+import { levelImage } from "@/lib/level-images";
 import {
   projectTaskLabel,
   characterKey,
@@ -126,21 +130,25 @@ export function ProjectTaskDetails({
       )}
       {owner && !staff && !["Review", "Done"].includes(task.status) && (
         <>
-          <Form
-            fields={[
-              {
-                name: "preDeadlineStatus",
-                label: "Report before the deadline",
-                options: ["On Track", "At Risk", "Delayed", "Complete"].map(
-                  (value) => ({ value, label: value }),
-                ),
-              },
-            ]}
-            submit="Send status report"
-            onSubmit={(v) =>
-              act("gamer/task-status", { taskId: task._id, ...v })
-            }
-          />
+          <details className="quest-status-signal">
+            <summary>Send a progress signal to your Guide</summary>
+            <Form
+              quest
+              fields={[
+                {
+                  name: "preDeadlineStatus",
+                  label: "Report before the deadline",
+                  options: ["On Track", "At Risk", "Delayed", "Complete"].map(
+                    (value) => ({ value, label: value }),
+                  ),
+                },
+              ]}
+              submit="Send status report"
+              onSubmit={(v) =>
+                act("gamer/task-status", { taskId: task._id, ...v })
+              }
+            />
+          </details>
           {task.status === "Backlog" && (
             <button
               className="btn"
@@ -155,6 +163,7 @@ export function ProjectTaskDetails({
             </button>
           )}
           <Form
+            quest
             fields={submissionFields}
             submit="Submit contribution for review"
             onSubmit={({ evidence, ...v }) =>
@@ -315,6 +324,7 @@ export function ProjectDialog({
   const submitted = tasks.filter((t) =>
     ["Review", "Done"].includes(t.status),
   ).length;
+  const mission = projectMissionProgress(level, attempt, tasks, data.user._id);
   const [openTask, setOpenTask] = useState(null);
   const [celebrating, setCelebrating] = useState(false);
   const [checks, setChecks] = useState({});
@@ -350,6 +360,19 @@ export function ProjectDialog({
       >
         {drawer && <ProjectPreview level={level} />}
         <div className={drawer ? "level-work-content" : "project-dialog-body"}>
+          {!staff && (
+            <MissionAdventure
+              chapter={`Expedition / Level ${level.number}`}
+              title={level.name}
+              player={data.user}
+              progress={mission}
+              objectives={mission.objectives}
+              art={levelImage(level).src}
+              onContinue={(task) =>
+                onQuest ? (close(), onQuest(task)) : setOpenTask(task._id)
+              }
+            />
+          )}
           <div className="project-summary">
             <Badge>{state}</Badge>
           </div>
@@ -372,12 +395,15 @@ export function ProjectDialog({
             Monday–Friday. Build locally in your shared repository; submit
             evidence here.
           </p>
-          <h3>Complete project acceptance</h3>
-          <ul className="project-criteria">
-            {level.criteria.map((c) => (
-              <li key={c}>{c}</li>
-            ))}
-          </ul>
+          <details className="quest-status-signal" open={staff}>
+            <summary>What clears this level?</summary>
+            <h3>Complete project acceptance</h3>
+            <ul className="project-criteria">
+              {level.criteria.map((c) => (
+                <li key={c}>{c}</li>
+              ))}
+            </ul>
+          </details>
           <p className="muted">
             Base reward per member: {level.baseXp} XP / {level.baseTrophies}{" "}
             trophies × star multiplier (1× / 1.25× / 1.5×) × contribution score
@@ -495,14 +521,27 @@ export function ProjectDialog({
                 </div>
               )}
               {attempt.feedback && (
-                <p className="callout">
-                  Integrated project feedback: {attempt.feedback}
-                </p>
+                <>
+                  {!staff &&
+                    attempt.status === "ACTIVE" &&
+                    attempt.reviewedBy && (
+                      <AvatarReaction
+                        player={data.user}
+                        mood="sad"
+                        caption="Take a breath. Try again."
+                        detail="Use your Guide's feedback to improve the next attempt."
+                      />
+                    )}
+                  <p className="callout">
+                    Integrated project feedback: {attempt.feedback}
+                  </p>
+                </>
               )}
               {!staff &&
                 attempt.status === "ACTIVE" &&
                 submitted === level.tasks.length && (
                   <Form
+                    quest
                     fields={submissionFields}
                     submit="Submit integrated team project"
                     onSubmit={({ evidence, ...v }) =>

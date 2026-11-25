@@ -4,6 +4,9 @@ import { Badge, Form, Receipt } from "./ui";
 import { DayOneGameSetup, DayOneCohort } from "./DayOneFeatures";
 import WeekOneRelease from "./WeekOneRelease";
 import WeekOneLevelControls from "./WeekOneLevelControls";
+import PlayerResultReview from "./PlayerResultReview";
+import TrophyConduct from "./TrophyConduct";
+import CommandMissionBoard from "./CommandMissionBoard";
 import { activities } from "@/lib/week-one-catalog.js";
 import { emptyDayContent } from "@/lib/week-one-program-rules.js";
 import {
@@ -1108,7 +1111,8 @@ export function StaffDashboard({ data, act, now }) {
   const p = data.weekOneProgram;
   return (
     <>
-      <WeekOneRelease data={data} act={act} now={now} />
+      <CommandMissionBoard data={data}/>
+      <details className="game-rule-disclosure"><summary>Mission release and schedule controls</summary><WeekOneRelease data={data} act={act} now={now} /></details>
       <WeekPanel title="Week 1 evidence overview">
         <div className="button-row">
           <Badge>{p.results.length} GAMERS</Badge>
@@ -1138,7 +1142,7 @@ export function StaffDashboard({ data, act, now }) {
           </p>
         ))}
       </WeekPanel>
-      <DayOneCohort data={data} act={act} now={now} />
+      <details className="game-rule-disclosure"><summary>Level 1 evidence and operational controls</summary><DayOneCohort data={data} act={act} now={now} /></details>
     </>
   );
 }
@@ -1219,7 +1223,9 @@ export function StaffResults({ data, act }) {
     cc = data.user.role === "CENTRE_COMMAND";
   return (
     <>
-      <WeekOneLevelControls data={data} act={act} />
+      <PlayerResultReview data={data} act={act} />
+      <TrophyConduct data={data} act={act}/>
+      <details><summary>Team result controls and replay</summary><WeekOneLevelControls data={data} act={act} /></details>
       <WeekPanel
         title="Week 1 readiness and publication"
         action={

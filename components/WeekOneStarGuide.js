@@ -4,6 +4,7 @@ import { Sparkles, Trophy, Check, Clock3, Compass } from "lucide-react";
 import { Modal } from "./ui";
 import MissionStars from "./MissionStars";
 import XpIcon from "./XpIcon";
+import AvatarReaction from "./AvatarReaction";
 import { levelReward, weekOneLevelGuides } from "@/lib/week-one-level-rules.js";
 
 export function WeekOneStarGuideContent({ day, result }) {
@@ -162,10 +163,21 @@ export function FlightLevelRewards({ data, day, compact = false }) {
             <strong>{row.creditedXp} XP</strong>
           </>
         ) : (
-          <span>Earn 15–30 trophies · {levelReward(1, day).xp}–{levelReward(3, day).xp} XP · {day}× flight XP</span>
+          <span>
+            Earn 15–30 trophies · {levelReward(1, day).xp}–
+            {levelReward(3, day).xp} XP · {day}× flight XP
+          </span>
         )}
       </div>
       <WeekOneStarGuide day={day} result={result} />
+      {result?.completed && !compact && (
+        <AvatarReaction
+          player={data.user}
+          mood="celebrate"
+          caption={`Level ${day} secured!`}
+          compact
+        />
+      )}
       {!compact && result && (
         <p>
           {result.reason}

@@ -1,3 +1,4 @@
+import { defaultAvatar, avatarOptions } from "../lib/avatar.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { Box3, Vector3 } from "three";
@@ -7,16 +8,16 @@ import {
   poseExplorer,
 } from "../lib/camp-explorer-3d.js";
 
-test("all ten explorers are dimensional models with articulated arms and distinct variants", () => {
-  for (const key of ["blaze", "glitch", "shade", "pulse", "rune"])
+test("personal wardrobe models retain volume and articulated arms for both styles", () => {
+  for (const key of avatarOptions.outfit)
     for (const variant of ["male", "female"]) {
-      const rig = createExplorer(key, variant);
+      const rig = createExplorer("personal", variant, {...defaultAvatar(variant),outfit:key});
       const size = new Box3().setFromObject(rig.root).getSize(new Vector3());
       assert.ok(
         size.x > 0.4 && size.y > 2 && size.z > 0.3,
         `${key}-${variant} has volume`,
       );
-      assert.equal(rig.root.name, `${key}-${variant}`);
+      assert.equal(rig.root.name, `personal-${variant}`);
       assert.equal(rig.arms.length, 2);
       assert.ok(rig.arms.every((arm) => arm.hand.children.length >= 5));
       assert.equal(

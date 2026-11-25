@@ -166,7 +166,7 @@ export default function InvestigationDeck({
               onClick={() => start(variant.id)}
             >
               <LockKeyhole size={16} />
-              {busy ? "Opening…" : "Open investigation"}
+              {busy ? "Opening…" : "Open investigation · 1 energy"}
             </button>
             <small>
               {activity?.durationMinutes} minutes · case locks on confirmed

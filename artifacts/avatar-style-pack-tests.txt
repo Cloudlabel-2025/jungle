@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: confirmed outcomes choose reactions without treating pending review or technical errors as losses
+ok 1 - confirmed outcomes choose reactions without treating pending review or technical errors as losses
+  ---
+  duration_ms: 0.6949
+  type: 'test'
+  ...
+# Subtest: every reaction preserves the selected face, hair and clothes without changing saved settings
+ok 2 - every reaction preserves the selected face, hair and clothes without changing saved settings
+  ---
+  duration_ms: 5.1592
+  type: 'test'
+  ...
+# Subtest: both styles, all wardrobe and hair choices render for every sticker action
+ok 3 - both styles, all wardrobe and hair choices render for every sticker action
+  ---
+  duration_ms: 1984.9697
+  type: 'test'
+  ...
+# Subtest: existing characters retain their likeness when hair colour styles are introduced
+ok 4 - existing characters retain their likeness when hair colour styles are introduced
+  ---
+  duration_ms: 1.3726
+  type: 'test'
+  ...
+# Subtest: hair colour treatments and accessories render safely in portraits and reactions
+ok 5 - hair colour treatments and accessories render safely in portraits and reactions
+  ---
+  duration_ms: 102.7316
+  type: 'test'
+  ...
+# Subtest: existing saved avatars retain their likeness when new personality settings are added
+ok 6 - existing saved avatars retain their likeness when new personality settings are added
+  ---
+  duration_ms: 1.3597
+  type: 'test'
+  ...
+# Subtest: sculpted geometry stays finite across body types, expressions and saved poses
+ok 7 - sculpted geometry stays finite across body types, expressions and saved poses
+  ---
+  duration_ms: 705.2158
+  type: 'test'
+  ...
+# Subtest: male and female avatars support every wardrobe choice with strict, image-free settings
+ok 8 - male and female avatars support every wardrobe choice with strict, image-free settings
+  ---
+  duration_ms: 38808.3666
+  type: 'test'
+  ...
+# Subtest: personal identity replaces preset portraits while preserving task slots
+ok 9 - personal identity replaces preset portraits while preserving task slots
+  ---
+  duration_ms: 3.7839
+  type: 'test'
+  ...
+# Subtest: scan rejects no face, groups, small faces, cut off faces and turned heads
+ok 10 - scan rejects no face, groups, small faces, cut off faces and turned heads
+  ---
+  duration_ms: 2.0349
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 39824.4582

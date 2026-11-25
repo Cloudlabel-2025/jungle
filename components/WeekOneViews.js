@@ -1,5 +1,16 @@
 "use client";
 import Link from "next/link";
+import {
+  Compass,
+  Radio,
+  Trophy,
+  ShieldCheck,
+  ScrollText,
+  Users,
+  Settings2,
+  Crosshair,
+  ArrowLeft,
+} from "lucide-react";
 import { weekOneNavigation } from "@/lib/week-one-catalog.js";
 import {
   MyDay,
@@ -85,28 +96,61 @@ export default function WeekOneView({ screen, data, act, now }) {
   if (gamer && recoveryStage && ["dashboard", "games"].includes(screen))
     content = null;
   return (
-    <div className="week-one-views">
+    <div
+      className={`week-one-views game-stations ${gamer ? "crew-stations" : "command-stations"}`}
+    >
       <ExpeditionHeading
         code={route[0]}
         title={route[2]}
         subtitle="Week 1 · Discover, Explore, STORY, FIRE and Prove"
       />
-      <nav
-        className="tabs"
-        aria-label="Week 1 programme"
-        style={{ display: "flex", flexWrap: "wrap", gap: 8 }}
-      >
-        {gamer && data.story?.flight && <Link className="btn small" href="/gamer/dashboard">Return to sky map</Link>}
-        {weekOneNavigation[data.user.role].filter(([,page]) => !data.story?.flight || data.story.introComplete || page === "ask-mc").map(([code, page, label]) => (
+      <nav className="mission-station-nav" aria-label="Week 1 programme">
+        {gamer && data.story?.flight && (
           <Link
-            key={code}
-            className={`btn small ${page === screen ? "primary" : ""}`}
-            aria-current={page === screen ? "page" : undefined}
-            href={programmePath(data.user.role, page)}
+            className="mission-station return-station"
+            href="/gamer/dashboard"
           >
-            {label}
+            <ArrowLeft size={18} />
+            <span>Return to sky map</span>
           </Link>
-        ))}
+        )}
+        {weekOneNavigation[data.user.role]
+          .filter(
+            ([, page]) =>
+              !data.story?.flight ||
+              data.story.introComplete ||
+              page === "ask-mc",
+          )
+          .map(([code, page, label], index) => {
+            const Icon =
+              {
+                dashboard: Compass,
+                setup: Settings2,
+                announcements: Radio,
+                questions: Radio,
+                "ask-mc": Radio,
+                results: Trophy,
+                assessments: Crosshair,
+                showcase: Users,
+                challenges: Crosshair,
+                rewards: Trophy,
+                "game-rules": ScrollText,
+                behaviour: ShieldCheck,
+                "rules-approvals": ShieldCheck,
+              }[page] || Compass;
+            return (
+              <Link
+                key={code}
+                className={`mission-station ${page === screen ? "is-active" : ""}`}
+                aria-current={page === screen ? "page" : undefined}
+                href={programmePath(data.user.role, page)}
+              >
+                <Icon size={18} />
+                <span>{label}</span>
+                <small>{String(index + 1).padStart(2, "0")}</small>
+              </Link>
+            );
+          })}
       </nav>
       {gamer ? (
         (screen === "results" ||

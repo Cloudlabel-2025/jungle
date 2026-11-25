@@ -48,6 +48,7 @@ export default function PasswordRecovery({ college = null }) {
           </>
         ) : (
           <form
+            method="post"
             onSubmit={async (e) => {
               e.preventDefault();
               if (busy) return;

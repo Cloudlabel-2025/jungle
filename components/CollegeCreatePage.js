@@ -179,7 +179,7 @@ export default function CollegeCreatePage({
             </p>
           </div>
         </div>
-        <form onSubmit={submit} aria-busy={busy} className="pa-create-layout">
+        <form method="post" onSubmit={submit} aria-busy={busy} className="pa-create-layout">
           <div className="pa-create-sections">
             <fieldset disabled={busy} className="pa-create-fields">
               <section className="pa-create-section">

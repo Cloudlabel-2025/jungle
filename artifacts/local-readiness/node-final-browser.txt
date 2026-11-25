@@ -1,0 +1,253 @@
+- link "← Return to your expedition":
+  - /url: /gamer/ide
+- generic: QA Gamer 0 · Coding studio
+- banner:
+  - generic: PART II / THE BUILDING GROUNDS
+  - heading "Your crew. One project." [level=1]
+  - paragraph: Build, test and ship together. Every saved change joins your team’s project.
+  - text: TEAM WORKSHOP
+- strong: pilot-team-0
+- generic: v7
+- button "Expand lab":
+  - generic: Fullscreen
+- button "Request MC / CC review"
+- button "Save team project":
+  - text: Save team project
+- button "Download ZIP":
+  - text: Download ZIP
+- button "History":
+  - text: History
+- status: Team project synced
+- generic "Teammates in the lab":
+  - generic "src/App.jsx": QA Gamer 0 (you)App.jsx
+- button "Expand editor":
+  - generic: Fullscreen
+- strong:
+  - text: Source
+- button "New file":
+  - text: New file
+- navigation "Project files":
+  - button "src/App.jsx":
+    - generic: src/App.jsx
+  - button "src/styles.css":
+    - generic: src/styles.css
+  - button "tests/ledger.test.js":
+    - generic: tests/ledger.test.js
+  - button "package.json":
+    - generic: package.json
+  - button "index.html":
+    - generic: index.html
+  - button "src/main.jsx":
+    - generic: src/main.jsx
+  - button "tests/register.mjs":
+    - generic: tests/register.mjs
+  - button "README.md":
+    - generic: README.md
+  - button "src/local-check.js":
+    - generic: src/local-check.js
+- text: src/App.jsx
+- generic: Tab to indent · Ctrl/⌘ S to sync
+- generic: "1"
+- generic: "2"
+- generic: "3"
+- generic: "4"
+- generic: "5"
+- generic: "6"
+- generic: "7"
+- generic: "8"
+- generic: "9"
+- generic: "10"
+- generic: "11"
+- generic: "12"
+- generic: "13"
+- generic: "14"
+- generic: "15"
+- generic: "16"
+- generic: "17"
+- generic: "18"
+- generic: "19"
+- generic: "20"
+- generic: "21"
+- generic: "22"
+- generic: "23"
+- generic: "24"
+- generic: "25"
+- generic: "26"
+- generic: "27"
+- generic: "28"
+- generic: "29"
+- generic: "30"
+- generic: "31"
+- generic: "32"
+- generic: "33"
+- generic: "34"
+- generic: "35"
+- generic: "36"
+- generic: ⌄
+- generic: ⌄
+- generic: ⌄
+- generic: ⌄
+- generic: ⌄
+- textbox "Edit src/App.jsx":
+  - generic: import React from 'react';
+  - generic: "const { useState } = React;"
+  - generic: // All balances are integer paise. This prevents float rounding errors.
+  - generic: "export function parseAmount(value) {"
+  - generic: "if (typeof value !== 'string' || !/^[0-9]+([.][0-9]{1,2})?$/.test(value))"
+  - generic: throw new Error('Use a positive INR amount with at most two decimals.');
+  - generic: const [whole, fraction = ''] = value.split('.');
+  - generic: const paise = Number(whole) * 100 + Number(fraction.padEnd(2, '0'));
+  - generic: if (!Number.isSafeInteger(paise) || paise <= 0)
+  - generic: throw new Error('Amount is outside the supported range.');
+  - generic: return paise;
+  - generic: "}"
+  - generic: "export function transfer(accounts, from, to, amount) {"
+  - generic: if (!Number.isSafeInteger(amount) || amount <= 0)
+  - generic: throw new Error('Enter a positive amount in paise.');
+  - generic: if (from === to) throw new Error('Choose different accounts.');
+  - generic: if (!(from in accounts) || !(to in accounts))
+  - generic: throw new Error('Account not found.');
+  - generic: if (![accounts[from], accounts[to]].every(balance => Number.isSafeInteger(balance) && balance >= 0))
+  - generic: throw new Error('Invalid account balance.');
+  - generic: if (accounts[from] < amount) throw new Error('Insufficient funds.');
+  - generic: if (!Number.isSafeInteger(accounts[to] + amount))
+  - generic: throw new Error('Balance limit exceeded.');
+  - generic: "return { ...accounts, [from]: accounts[from] - amount,"
+  - generic: "[to]: accounts[to] + amount };"
+  - generic: "}"
+  - generic: "export default function App() {"
+  - generic: "const [accounts, setAccounts] = useState({ primary: 1245000, savings: 850000 });"
+  - generic: const [amount, setAmount] = useState('250');
+  - generic: const [error, setError] = useState('');
+  - generic: const [transactions, setTransactions] = useState([]);
+  - generic: "const money = (paise) => new Intl.NumberFormat('en-IN', {"
+  - generic: "style: 'currency', currency: 'INR'"
+- button "Expand output":
+  - generic: Fullscreen
+- button "Preview"
+- button "Tests"
+- button "Quick test":
+  - text: Quick test
+- button "Refresh preview":
+- generic: Quick preview · App.jsx + styles.css · Start Node for packages and multiple modules.
+- iframe:
+  - main:
+    - generic: APEX
+    - generic: PERSONAL BANKING
+    - text: YOUR MONEY. IN MOTION.
+    - heading "Good things ahead." [level=1]
+    - paragraph: Your financial overview, all in one place.
+    - article:
+      - generic: PRIMARY ACCOUNT
+      - heading "₹12,450.00" [level=2]
+      - text: AVAILABLE BALANCE
+    - article:
+      - generic: SAVINGS ACCOUNT
+      - heading "₹8,500.00" [level=2]
+      - text: AVAILABLE BALANCE
+    - heading "Move money, effortlessly." [level=3]
+    - paragraph: Primary to Savings · Instant internal transfer
+    - text: Amount in INR
+    - spinbutton "Amount in INR": "250"
+    - button "Transfer funds"
+    - heading "Recent activity" [level=3]
+    - paragraph: No transfers yet. Your next move starts above.
+    - generic: APEX FINANCIAL · CODEWILD SANDBOX · NO REAL MONEY
+- region "Automatic local code sync":
+  - strong: Local code sync
+  - button "Connect local folder"
+  - status: Connect a dedicated project folder to sync edits from VS Code and this lab.
+  - heading "Sync with your local editor" [level=3]
+  - paragraph:
+    - text: Download a connection package, extract it into a dedicated project folder and run
+    - code: node .vow-sync.mjs
+    - text: with Node.js 22 or later. Source then syncs automatically while the runner is running, even when this browser is closed.
+  - button "Download local sync connection"
+  - generic: The connection lasts 12 hours, accesses only your current team’s source and can be disconnected below. Connection files are excluded from local Git commits. Use one sync method per folder.
+  - generic: Choose a dedicated folder once. Keep this lab open for automatic two-way syncing. Git metadata, dependencies, build output and hidden files stay local. Replaced source is backed up in .vow-sync-backups.
+- region "Project review feedback":
+  - heading "Team project review v7 · Approved" [level=2]:
+    - text: Team project review
+    - generic: v7 · Approved
+  - article:
+    - strong: Approved · v7
+    - generic: QA CC · CC · 24/11/2026, 17:29:00
+    - paragraph: Reviewed the latest saved source, restored verification steps and local sync conflict recovery. The transfer implementation retains its four verified ledger tests. Approved.
+  - article:
+    - strong: Approved · v4
+    - generic: QA CC · CC · 24/11/2026, 17:03:20
+    - paragraph: Verified the revised README, transfer preview and four passing Node ledger tests. This saved version is approved.
+  - article:
+    - strong: Review requested · v4
+    - generic: QA Gamer 0 · Player · 24/11/2026, 17:00:45
+    - paragraph: The requested verification steps are now in README, including tests and browser checks. Please validate this saved version.
+  - article:
+    - strong: Changes requested · v1
+    - generic: QA MC · MC · 24/11/2026, 16:52:49
+    - button "README.md:1"
+    - paragraph: "Add verification steps to README before approval: install dependencies, run the ledger tests and check the transfer preview."
+  - article:
+    - strong: Review requested · v1
+    - generic: QA Gamer 0 · Player · 24/11/2026, 16:52:26
+    - paragraph: Please review our banking transfer flow and source before we continue.
+- button "Exit terminal fullscreen" [pressed]:
+  - generic: Exit fullscreen
+- strong: Your terminal
+- generic: Node.js · independent session
+- button "Import terminal files"
+- button "Stop / fresh shell"
+- button "Install packages"
+- button "Run preview server"
+- button "Run Node tests"
+- generic: Ctrl+C interrupts a shell command. Stop / fresh shell recovers a stuck terminal.
+- generic "Interactive Node terminal":
+  - textbox "Terminal input" [active]
+  - generic: "at #l (node:internal/modules/esm/loader:181:7115)"
+  - generic: at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:181:6297)
+  - generic: "at ModuleJob.syncLink (node:internal/modules/esm/module_job:182:4029) {"
+  - generic: "code: 'ERR_MODULE_NOT_FOUND'"
+  - generic: "}"
+  - generic: Node.js v24.22.2
+  - generic: ✖
+  - generic: tests/ledger.test.js
+  - generic: (999.65ms)
+  - generic: ℹ
+  - generic: tests 1
+  - generic: ℹ
+  - generic: suites 0
+  - generic: ℹ
+  - generic: pass 0
+  - generic: ℹ
+  - generic: fail 1
+  - generic: ℹ
+  - generic: cancelled 0
+  - generic: ℹ
+  - generic: skipped 0
+  - generic: ℹ
+  - generic: todo 0
+  - generic: ℹ
+  - generic: duration_ms 1116.770001
+  - generic: ✖
+  - generic: "failing tests:"
+  - generic: test at tests/ledger.test.js:1:1
+  - generic: ✖
+  - generic: tests/ledger.test.js
+  - generic: (999.65ms)
+  - generic: "'test failed'"
+  - generic: ❯
+  - generic: $ npm install --fetch-retries=0 --fetch-timeout=20000
+  - generic: "|"
+  - generic: Stopped tracked commands and opened a fresh shell. Your source is retained.
+  - generic: "n"
+  - generic: ~/wilderness-team
+  - generic: ❯
+  - generic: "no"
+  - generic: "[install exited 143]"
+  - generic: de --version
+  - generic: v24.22.2
+  - generic: ~/wilderness-team
+  - generic: 1s
+  - generic: ❯
+- generic: Editor changes update these files automatically. After commands create or change source, use Import terminal files to share those changes. This is a Node shell, not Windows CMD.
+- contentinfo: Saved changes reach teammates in about 2–3 seconds while the lab is open. Overlapping edits need review. ZIP downloads are snapshots; connect a local folder for automatic two-way source syncing while the lab is open.
+- alert

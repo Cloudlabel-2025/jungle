@@ -1,0 +1,463 @@
+- complementary "Expedition navigation":
+  - link "Voyage of Wilderness home":
+    - /url: /centre-command/dashboard
+    - strong: VOW
+    - generic: Voyage of Wilderness
+  - generic: WEEK 1 TEST COHORT
+  - text: EXPEDITION LIVE
+  - generic: W01
+  - generic: EXPEDITION COUNCIL
+  - navigation "Workspace":
+    - link "Expedition setup CC01":
+      - /url: /centre-command/setup
+      - generic: Expedition setup
+      - generic: CC01
+    - link "Council overview CC02":
+      - /url: /centre-command/dashboard
+      - generic: Council overview
+      - generic: CC02
+    - link "Expedition code CC03":
+      - /url: /centre-command/rules-approvals
+      - generic: Expedition code
+      - generic: CC03
+    - link "Jungle events CC04":
+      - /url: /centre-command/client-control
+      - generic: Jungle events
+      - generic: CC04
+    - link "Expedition records CC05":
+      - /url: /centre-command/reports
+      - generic: Expedition records
+      - generic: CC05
+    - link "Project reviews CC06":
+      - /url: /centre-command/ide
+      - generic: Project reviews
+      - generic: CC06
+    - link "Week 1 & Recovery W1":
+      - /url: /centre-command/week-one
+      - generic: Week 1 & Recovery
+      - generic: W1
+    - link "Calendar C1":
+      - /url: /centre-command/calendar
+      - generic: Calendar
+      - generic: C1
+    - link "Attendance A1":
+      - /url: /centre-command/attendance
+      - generic: Attendance
+      - generic: A1
+    - link "Notifications N1":
+      - /url: /centre-command/notifications
+      - generic: Notifications
+      - generic: N1
+  - text: Read the wild.
+  - strong: Leave no one behind.
+  - generic: YOUR CLEARANCE
+  - generic: CMD
+  - strong: Expedition Council
+  - generic: CAMP SIGNAL ACTIVE
+  - generic: v1.0
+- banner:
+  - generic: Expedition
+  - strong: Final Results & Allocation
+  - text: 17:18:02
+  - generic: IST
+  - link "Notifications (0 unread)":
+    - /url: /centre-command/notifications
+  - button "Enable client alert sound":
+  - button "Sign out":
+- main:
+  - text: EXPEDITION CONTROL / FIELD OPERATIONS
+  - heading "Final Results & Allocation" [level=1]
+  - paragraph: Week 1 · Discover, Explore, STORY, FIRE and Prove
+  - generic: C7 / VOW EXPEDITION
+  - navigation "Week 1 programme":
+    - link "Command Centre 01":
+      - /url: /centre-command/week-one
+      - generic: Command Centre
+      - generic: "01"
+    - link "Game Configuration 02":
+      - /url: /centre-command/week-one-setup
+      - generic: Game Configuration
+      - generic: "02"
+    - link "Assessment Control 03":
+      - /url: /centre-command/week-one-assessments
+      - generic: Assessment Control
+      - generic: "03"
+    - link "Questions & Escalations 04":
+      - /url: /centre-command/week-one-questions
+      - generic: Questions & Escalations
+      - generic: "04"
+    - link "Showcases & Rewards 05":
+      - /url: /centre-command/week-one-rewards
+      - generic: Showcases & Rewards
+      - generic: "05"
+    - link "Rules & Audit 06":
+      - /url: /centre-command/week-one-rules-approvals
+      - generic: Rules & Audit
+      - generic: "06"
+    - link "Final Results & Allocation 07":
+      - /url: /centre-command/week-one-results
+      - generic: Final Results & Allocation
+      - generic: "07"
+  - heading "Activate Saturday Recovery · Pack 3A" [level=2]
+  - paragraph: Apply the approved 60% policy. Existing published results require fresh MC signoff and CC publication; historical scores are preserved.
+  - generic: FIELD ACTION
+  - generic: YOUR MOVE
+  - generic: Reason and supporting evidence
+  - textbox "Reason and supporting evidence"
+  - button "Activate Pack 3A policy":
+    - generic: Activate Pack 3A policy
+  - heading "Review a player's result" [level=2]
+  - paragraph: Choose a player and level. Inspect the submitted work, then validate the current stars or record a correction. Every decision keeps the reviewer, reason and previous result.
+  - text: Find a player
+  - searchbox "Find a player"
+  - generic "Choose a player dossier":
+    - button "Review Learner 1":
+      - generic: L1
+      - strong: Learner 1
+      - generic: OPEN DOSSIER
+    - button "Review Learner 2":
+      - generic: L2
+      - strong: Learner 2
+      - generic: OPEN DOSSIER
+    - button "Review Learner 3":
+      - generic: L3
+      - strong: Learner 3
+      - generic: OPEN DOSSIER
+    - button "Review Learner 4":
+      - generic: L4
+      - strong: Learner 4
+      - generic: OPEN DOSSIER
+    - button "Review Learner 5":
+      - generic: L5
+      - strong: Learner 5
+      - generic: OPEN DOSSIER
+    - button "Review Learner 6":
+      - generic: L6
+      - strong: Learner 6
+      - generic: OPEN DOSSIER
+    - button "Review Learner 7":
+      - generic: L7
+      - strong: Learner 7
+      - generic: OPEN DOSSIER
+    - button "Review Learner 8":
+      - generic: L8
+      - strong: Learner 8
+      - generic: OPEN DOSSIER
+    - button "Review Learner 9":
+      - generic: L9
+      - strong: Learner 9
+      - generic: OPEN DOSSIER
+    - button "Review Learner 10":
+      - generic: L1
+      - strong: Learner 10
+      - generic: OPEN DOSSIER
+    - button "Review Learner 11":
+      - generic: L1
+      - strong: Learner 11
+      - generic: OPEN DOSSIER
+    - button "Review Learner 12":
+      - generic: L1
+      - strong: Learner 12
+      - generic: OPEN DOSSIER
+    - button "Review Learner 13":
+      - generic: L1
+      - strong: Learner 13
+      - generic: OPEN DOSSIER
+    - button "Review Learner 14":
+      - generic: L1
+      - strong: Learner 14
+      - generic: OPEN DOSSIER
+    - button "Review Learner 15":
+      - generic: L1
+      - strong: Learner 15
+      - generic: OPEN DOSSIER
+    - button "Review Learner 16":
+      - generic: L1
+      - strong: Learner 16
+      - generic: OPEN DOSSIER
+    - button "Review Learner 17":
+      - generic: L1
+      - strong: Learner 17
+      - generic: OPEN DOSSIER
+    - button "Review Learner 18":
+      - generic: L1
+      - strong: Learner 18
+      - generic: OPEN DOSSIER
+    - button "Review Learner 19":
+      - generic: L1
+      - strong: Learner 19
+      - generic: OPEN DOSSIER
+    - button "Review Learner 20":
+      - generic: L2
+      - strong: Learner 20
+      - generic: OPEN DOSSIER
+    - button "Review Learner 21":
+      - generic: L2
+      - strong: Learner 21
+      - generic: OPEN DOSSIER
+    - button "Review Learner 22":
+      - generic: L2
+      - strong: Learner 22
+      - generic: OPEN DOSSIER
+    - button "Review Learner 23":
+      - generic: L2
+      - strong: Learner 23
+      - generic: OPEN DOSSIER
+    - button "Review Learner 24":
+      - generic: L2
+      - strong: Learner 24
+      - generic: OPEN DOSSIER
+    - button "Review Learner 25":
+      - generic: L2
+      - strong: Learner 25
+      - generic: OPEN DOSSIER
+  - group "Flight level":
+    - generic: Flight level
+    - radio "Level 1" [checked]
+    - strong: Level 1
+    - radio "Level 2"
+    - strong: Level 2
+    - radio "Level 3"
+    - strong: Level 3
+    - radio "Level 4"
+    - strong: Level 4
+    - radio "Level 5"
+    - strong: Level 5
+  - generic "Team result controls and replay"
+  - option "Level 2" [selected]
+  - option "Level 3"
+  - option "Level 4"
+  - option "Level 5"
+  - option "Select a member or team" [selected]
+  - option "Learner 1"
+  - option "Learner 2"
+  - option "Learner 3"
+  - option "Learner 4"
+  - option "Learner 5"
+  - option "Learner 6"
+  - option "Learner 7"
+  - option "Learner 8"
+  - option "Learner 9"
+  - option "Learner 10"
+  - option "Learner 11"
+  - option "Learner 12"
+  - option "Learner 13"
+  - option "Learner 14"
+  - option "Learner 15"
+  - option "Learner 16"
+  - option "Learner 17"
+  - option "Learner 18"
+  - option "Learner 19"
+  - option "Learner 20"
+  - option "Learner 21"
+  - option "Learner 22"
+  - option "Learner 23"
+  - option "Learner 24"
+  - option "Learner 25"
+  - option "Complete level / change stars" [selected]
+  - option "Reopen · revoke this level’s reward"
+  - option "Allow replay · keep best reward"
+  - option "1 stars · 15 trophies / 150 XP"
+  - option "2 stars · 25 trophies / 250 XP"
+  - option "3 stars · 30 trophies / 300 XP" [selected]
+  - heading "Week 1 readiness and publication" [level=2]
+  - generic: LOCKED · REVISION 1
+  - table:
+    - rowgroup:
+      - row "Gamer Readiness Status":
+        - columnheader "Gamer"
+        - columnheader "Readiness"
+        - columnheader "Status"
+    - rowgroup:
+      - row "Learner 1 99.67 / 100 CLEARED":
+        - cell "Learner 1"
+        - cell "99.67 / 100"
+        - cell "CLEARED"
+      - row "Learner 2 80.42 / 100 CLEARED":
+        - cell "Learner 2"
+        - cell "80.42 / 100"
+        - cell "CLEARED"
+      - row "Learner 3 80.75 / 100 CLEARED":
+        - cell "Learner 3"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 4 80.42 / 100 CLEARED":
+        - cell "Learner 4"
+        - cell "80.42 / 100"
+        - cell "CLEARED"
+      - row "Learner 5 80.42 / 100 CLEARED":
+        - cell "Learner 5"
+        - cell "80.42 / 100"
+        - cell "CLEARED"
+      - row "Learner 6 80.75 / 100 CLEARED":
+        - cell "Learner 6"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 7 80.75 / 100 CLEARED":
+        - cell "Learner 7"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 8 80.75 / 100 CLEARED":
+        - cell "Learner 8"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 9 80.75 / 100 CLEARED":
+        - cell "Learner 9"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 10 80.75 / 100 CLEARED":
+        - cell "Learner 10"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 11 80.75 / 100 CLEARED":
+        - cell "Learner 11"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 12 80.75 / 100 CLEARED":
+        - cell "Learner 12"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 13 80.75 / 100 CLEARED":
+        - cell "Learner 13"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 14 80.75 / 100 CLEARED":
+        - cell "Learner 14"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 15 80.75 / 100 CLEARED":
+        - cell "Learner 15"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 16 80.75 / 100 CLEARED":
+        - cell "Learner 16"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 17 80.75 / 100 CLEARED":
+        - cell "Learner 17"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 18 80.75 / 100 CLEARED":
+        - cell "Learner 18"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 19 80.75 / 100 CLEARED":
+        - cell "Learner 19"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 20 80.75 / 100 CLEARED":
+        - cell "Learner 20"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 21 80.75 / 100 CLEARED":
+        - cell "Learner 21"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 22 80.75 / 100 CLEARED":
+        - cell "Learner 22"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 23 80.75 / 100 CLEARED":
+        - cell "Learner 23"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 24 80.75 / 100 CLEARED":
+        - cell "Learner 24"
+        - cell "80.75 / 100"
+        - cell "CLEARED"
+      - row "Learner 25 43.25 / 100 RESCUE_PENDING":
+        - cell "Learner 25"
+        - cell "43.25 / 100"
+        - cell "RESCUE_PENDING"
+  - paragraph:
+    - text: MC signoff 6 Nov, 05:10 pm
+  - generic: FIELD ACTION
+  - generic: YOUR MOVE
+  - generic: Reason for an immutable score correction revision
+  - textbox "Reason for an immutable score correction revision"
+  - status:
+    - generic: Saved successfully.
+  - button "Authorise correction revision":
+    - generic: Authorise correction revision
+  - generic "Review component evidence and capability recommendations"
+  - generic "Nominate 13 distinct award recipients and three examples"
+  - option "Learner 1" [selected]
+  - option "Learner 2"
+  - option "Learner 3"
+  - option "Learner 4"
+  - option "Learner 5"
+  - option "Learner 6"
+  - option "Learner 7"
+  - option "Learner 8"
+  - option "Learner 9"
+  - option "Learner 10"
+  - option "Learner 11"
+  - option "Learner 12"
+  - option "Learner 13"
+  - option "Learner 14"
+  - option "Learner 15"
+  - option "Learner 16"
+  - option "Learner 17"
+  - option "Learner 18"
+  - option "Learner 19"
+  - option "Learner 20"
+  - option "Learner 21"
+  - option "Learner 22"
+  - option "Learner 23"
+  - option "Learner 24"
+  - option "Learner 25"
+  - generic "Private Day 1 Champion decision"
+  - option "Select a member or team" [selected]
+  - option "Learner 1"
+  - option "Learner 2"
+  - option "Learner 3"
+  - option "Learner 4"
+  - option "Learner 5"
+  - option "Learner 6"
+  - option "Learner 7"
+  - option "Learner 8"
+  - option "Learner 9"
+  - option "Learner 10"
+  - option "Learner 11"
+  - option "Learner 12"
+  - option "Learner 13"
+  - option "Learner 14"
+  - option "Learner 15"
+  - option "Learner 16"
+  - option "Learner 17"
+  - option "Learner 18"
+  - option "Learner 19"
+  - option "Learner 20"
+  - option "Learner 21"
+  - option "Learner 22"
+  - option "Learner 23"
+  - option "Learner 24"
+  - option "Learner 25"
+  - option "Complete level / change stars" [selected]
+  - option "Reopen · revoke completion and level rewards"
+  - option "Allow replay · keep previous rewards"
+  - option "1 star · 15 trophies / 75 XP"
+  - option "2 stars · 25 trophies / 125 XP"
+  - option "3 stars · 30 trophies / 150 XP" [selected]
+  - option "All Gamers" [selected]
+  - option "Missing submission"
+  - option "Missing EOD"
+  - option "Review submissions"
+  - heading "Saturday rescue and provisional teams" [level=2]
+  - paragraph: Learner 25 · BOOKED · 7 Nov, 09:00 am
+  - paragraph: "week1-team-1: Learner 1, Learner 5, Learner 9, Learner 18, Learner 19 · Provisional until Saturday outcomes"
+  - paragraph: "week1-team-2: Learner 3, Learner 4, Learner 10, Learner 17, Learner 20 · Provisional until Saturday outcomes"
+  - paragraph: "week1-team-3: Learner 6, Learner 2, Learner 11, Learner 16, Learner 21 · Provisional until Saturday outcomes"
+  - paragraph: "week1-team-4: Learner 7, Learner 24, Learner 12, Learner 15, Learner 22 · Provisional until Saturday outcomes"
+  - paragraph: "week1-team-5: Learner 8, Learner 23, Learner 13, Learner 14 · Provisional until Saturday outcomes"
+  - paragraph: Approved providers receive college scheduling notices after publication. Configure the authorised contacts and webhook before delivery; pending or failed notices can be retried.
+  - button "Download college scheduling notices"
+  - paragraph: Learner 25 · CONFIGURATION_REQUIRED · Configure an approved notification webhook before delivery.
+  - button "Retry configured college notice delivery"
+- contentinfo:
+  - text: CAMP RADIO CONNECTED
+  - text: ASIA / KOLKATA
+  - generic: EXPLORE. ADAPT. SURVIVE.
+  - generic: Voyage of Wilderness · VOW © 2026
+- button "Open Next.js Dev Tools":
+- alert

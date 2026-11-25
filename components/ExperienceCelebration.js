@@ -1,11 +1,12 @@
 "use client";
 import { collegeStorageKey } from "@/lib/college-fetch.js";
 import { useEffect, useRef, useState } from "react";
+import AvatarReaction from "./AvatarReaction";
 import { createPortal } from "react-dom";
 import { ChevronsUp, Sparkles } from "lucide-react";
 import { advanceExperience, experienceStorageKey, RANK_CELEBRATION_MS } from "@/lib/experience-celebration.js";
 
-export function RankCelebration({ result, close }) {
+export function RankCelebration({ result, close, player }) {
   const closeRef = useRef(close);
   closeRef.current = close;
   useEffect(() => {
@@ -20,7 +21,7 @@ export function RankCelebration({ result, close }) {
         </div>
         <div className="rank-halo" />
         <div className="rank-medallion"><Sparkles /><small>LEVEL</small><span>{result.to}</span><ChevronsUp /></div>
-        <strong className="rank-up-title">LEVEL UP!</strong>
+        <strong className="rank-up-title">LEVEL UP!</strong><AvatarReaction player={player} mood="celebrate" compact caption="Congratulations, explorer!"/>
       </div>
     </div>
   );
@@ -45,5 +46,5 @@ export default function ExperienceCelebration({ player, ready = true }) {
       return old;
     });
   }, [player._id, player.role, player.xp]);
-  return ready && current ? <RankCelebration key={current.to} result={current} close={() => setCurrent(null)} /> : null;
+  return ready && current ? <RankCelebration player={player} key={current.to} result={current} close={() => setCurrent(null)} /> : null;
 }

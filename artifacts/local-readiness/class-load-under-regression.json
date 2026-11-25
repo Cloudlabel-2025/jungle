@@ -1,0 +1,33 @@
+{
+  "disclosure": "Local production build, synthetic 25-player/5-team cohort; 3 waves of authenticated HTTP reads. This does not measure WebContainer compilation or production network conditions.",
+  "actors": 25,
+  "waves": 3,
+  "requests": 305,
+  "crossTeamDenials": 5,
+  "endpoints": {
+    "player-state": {
+      "requests": 75,
+      "p50ms": 17091,
+      "p95ms": 21451,
+      "maxMs": 21902
+    },
+    "sprint": {
+      "requests": 75,
+      "p50ms": 7916,
+      "p95ms": 13662,
+      "maxMs": 14036
+    },
+    "team-project": {
+      "requests": 75,
+      "p50ms": 2858,
+      "p95ms": 10123,
+      "maxMs": 11729
+    },
+    "unchanged-project": {
+      "requests": 75,
+      "p50ms": 2472,
+      "p95ms": 3514,
+      "maxMs": 4286
+    }
+  }
+}

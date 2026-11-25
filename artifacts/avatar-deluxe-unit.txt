@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: existing saved avatars retain their likeness when new personality settings are added
+ok 1 - existing saved avatars retain their likeness when new personality settings are added
+  ---
+  duration_ms: 4.1604
+  type: 'test'
+  ...
+# Subtest: sculpted geometry stays finite across body types, expressions and saved poses
+ok 2 - sculpted geometry stays finite across body types, expressions and saved poses
+  ---
+  duration_ms: 2487.3042
+  type: 'test'
+  ...
+# Subtest: male and female avatars support every wardrobe choice with strict, image-free settings
+ok 3 - male and female avatars support every wardrobe choice with strict, image-free settings
+  ---
+  duration_ms: 12182.7085
+  type: 'test'
+  ...
+# Subtest: personal identity replaces preset portraits while preserving task slots
+ok 4 - personal identity replaces preset portraits while preserving task slots
+  ---
+  duration_ms: 2.6848
+  type: 'test'
+  ...
+# Subtest: scan rejects no face, groups, small faces, cut off faces and turned heads
+ok 5 - scan rejects no face, groups, small faces, cut off faces and turned heads
+  ---
+  duration_ms: 7.5678
+  type: 'test'
+  ...
+# Subtest: personal wardrobe models retain volume and articulated arms for both styles
+ok 6 - personal wardrobe models retain volume and articulated arms for both styles
+  ---
+  duration_ms: 2330.6903
+  type: 'test'
+  ...
+# Subtest: idle gestures continuously reposition joints instead of swapping images
+ok 7 - idle gestures continuously reposition joints instead of swapping images
+  ---
+  duration_ms: 102.7868
+  type: 'test'
+  ...
+# Subtest: greeting overrides the idle pose then returns to the independent idle cycle
+ok 8 - greeting overrides the idle pose then returns to the independent idle cycle
+  ---
+  duration_ms: 150.9245
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15453.0826

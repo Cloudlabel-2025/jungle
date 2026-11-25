@@ -14,6 +14,8 @@ import "./player-levels.css";
 import "./map-navigation.css";
 import "./level-briefing.css";
 import "./characters.css";
+import "./avatar-studio.css";
+import "./avatar-sticker-studio.css";
 import "./campfire.css";
 import "./mobile-orientation.css";
 import "./camp-residents.css";
@@ -22,6 +24,7 @@ import "./workflow.css";
 import "./notifications.css";
 import "./alumni-map.css";
 import "./game-forms.css";
+import "./mission-adventure.css";
 import "./blended-header.css";
 import "./mission-map.css";
 import "./game-loading.css";
@@ -53,6 +56,9 @@ import "./first-discovery.css";
 import "./vow-brand.css";
 import "./expedition-login.css";
 import "./college-portal.css";
+import "./game-stations.css";
+import "./league-medals.css";
+import "./team-lab.css";
 import { brand } from "@/lib/brand.js";
 export const metadata = {
   title: brand.title,
@@ -71,7 +77,7 @@ export default function RootLayout({ children }) {
           <span className="landscape-phone" aria-hidden="true">
             ↻
           </span>
-          <h1>Turn your phone to play</h1>
+          <h2>Turn your phone to play</h2>
           <p>
             VOW is played in landscape. Rotate your phone to continue your
             journey.

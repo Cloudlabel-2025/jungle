@@ -31,6 +31,10 @@ const fifth = { ...mc, _id:"browser-fifth",email:"fifth@pilot.invalid" }; await 
 const password = "Fictional-QA-2026!";
 for (const user of [cc,cc2,mc,otherMC,fifth,...gamers]) await models.Credential.create({ _id:user._id,passwordHash:await hashPassword(password) });
 await models.User.updateMany({ cohortId }, { $set: { rewardVersion:2, hp:5,energy:3 } });
+if (process.argv.includes("--restore-avatar")) {
+  const saved = JSON.parse(await readFile(resolve(".data/avatar-qa/observed-avatar.json"), "utf8"));
+  await models.User.updateOne({_id:gamers[0]._id},{$set:{avatar:saved.avatar,avatarVersion:saved.avatarVersion}});
+}
 const programme = await models.WeekOneProgram.findById(cohortId).lean();
 const evidence="https://example.invalid/browser-evidence";
 const seedStage = async number => {
@@ -83,6 +87,21 @@ if (process.argv.includes("--restore") || process.argv.includes("--report-checkp
   await writeFile(clock,"2026-12-11T09:00:00Z");
   console.log("RESTORED OBSERVED BROWSER CHECKPOINT for post-fix retest");
 } else await seedStage(3);
+// Old isolated checkpoints omitted membership on synthetic prior sprints. Keep
+// that repair opt-in: it demonstrates the ending, not an observed playthrough.
+if (process.argv.includes("--complete-map-fixture")) {
+  for (const number of [1, 2]) {
+    await models.PilotSprint.updateOne({ cohortId, "data.number": number }, {
+      $set: { "data.teams": teams.map(team => ({
+        teamId: team.id, members: team.members, commanderId: mc._id,
+        leaderId: team.members[0],
+      })) },
+    });
+  }
+  await writeFile(resolve(dir, "ending-fixture-disclosure.json"), JSON.stringify({
+    synthetic: "Sprint 1 and 2 prerequisite acceptances and memberships are fixture setup. This verifies the ending screen; it is not a continuous browser playthrough.",
+  }, null, 2));
+}
 const child=spawn(process.execPath,["--import",pathToFileURL(resolve("scripts/part-b-browser-clock.mjs")).href,resolve("node_modules/next/dist/bin/next"),"start","--hostname","127.0.0.1","--port","3188"],{
   windowsHide:true,stdio:["ignore","pipe","pipe"],env:{PATH:process.env.PATH,SystemRoot:process.env.SystemRoot,USERPROFILE:process.env.USERPROFILE,TEMP:process.env.TEMP,TMP:process.env.TMP,APPDATA:process.env.APPDATA,LOCALAPPDATA:process.env.LOCALAPPDATA,
     TENANCY_ENABLED: "false", MONGODB_URI:process.env.MONGODB_URI,SESSION_SECRET:randomBytes(48).toString("hex"),APP_ORIGIN:"http://localhost:3188",DEMO_MODE:"false",BLOB_READ_WRITE_TOKEN:"",

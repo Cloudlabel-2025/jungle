@@ -1,0 +1,403 @@
+/* Earned insignia: stamped metal, enamel, woven ribbons and laurel branches. */
+.league-divisions {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 23px;
+  padding: 0;
+}
+.league-divisions li {
+  display: grid;
+  gap: 5px;
+  padding: 13px 16px;
+  border: 1px solid #9baa7855;
+  border-radius: 6px;
+  background: #1a3426;
+  color: #aebe9f;
+}
+.league-divisions li.is-current {
+  background: #344b2d;
+  border-color: #e0d2a0;
+  color: #f0e6ba;
+  box-shadow: inset 0 0 0 1px #d5d09c44;
+}
+.league-divisions li.is-earned {
+  color: #cbd5b1;
+}
+.league-divisions strong {
+  font-size: 19px;
+}
+.league-divisions small {
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.league-emblem .medal-division {
+  position: absolute;
+  z-index: 2;
+  top: 77%;
+  left: 38%;
+  width: 24%;
+  text-align: center;
+  padding: 1% 0;
+  color: #2d3124;
+  background: linear-gradient(var(--metal-light), var(--metal-mid));
+  border: 1px solid var(--metal-dark);
+  border-radius: 2px;
+  font:
+    700 calc(var(--emblem-size) * 0.12)/1.15 "Rajdhani",
+    sans-serif;
+  box-shadow: 0 1px 2px #0008;
+}
+.league-unranked-mark {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 125px;
+  height: 145px;
+  border: 1px dashed #a0ac864d;
+  border-radius: 50%;
+  color: #a9b094;
+  background: #a0ac8606;
+}
+.league-unranked-mark svg {
+  width: 40%;
+  height: 40%;
+  opacity: 0.65;
+}
+.league-unranked-mark.is-small {
+  width: 35px;
+  height: 40px;
+  border: 0;
+  background: none;
+}
+.league-unranked-mark.is-small svg {
+  width: 70%;
+  height: 70%;
+}
+.league-trail {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.league-emblem {
+  --emblem-size: 138px;
+  --metal-light: #ffe2a0;
+  --metal-mid: #b77b36;
+  --metal-dark: #63391b;
+  --enamel-light: #8c613b;
+  --enamel-dark: #3c291c;
+  --ribbon: #7f3830;
+  --medal-shape: polygon(
+    8% 4%,
+    50% 0,
+    92% 4%,
+    98% 34%,
+    88% 76%,
+    50% 100%,
+    12% 76%,
+    2% 34%
+  );
+  position: relative;
+  display: inline-block;
+  width: var(--emblem-size);
+  height: calc(var(--emblem-size) * 1.16);
+  flex-shrink: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--metal-light);
+  isolation: isolate;
+  filter: drop-shadow(0 5px 3px #0007);
+}
+.league-emblem::before {
+  display: none;
+}
+.league-emblem > span {
+  position: absolute;
+  bottom: auto;
+  font: inherit;
+  letter-spacing: normal;
+}
+.league-emblem.medal-scout {
+  --metal-light: #f2d5a2;
+  --metal-mid: #ad7845;
+  --metal-dark: #59391f;
+  --enamel-light: #89724b;
+  --enamel-dark: #493a29;
+  --ribbon: #69553c;
+  --medal-shape: polygon(
+    15% 3%,
+    85% 3%,
+    100% 23%,
+    93% 78%,
+    50% 100%,
+    7% 78%,
+    0 23%
+  );
+}
+.league-emblem.medal-trailblazer {
+  --metal-light: #ffe7a7;
+  --metal-mid: #c88641;
+  --metal-dark: #753f21;
+  --enamel-light: #b15d31;
+  --enamel-dark: #592a1d;
+  --ribbon: #9a4130;
+}
+.league-emblem.medal-ranger {
+  --metal-light: #f4edce;
+  --metal-mid: #aab7a2;
+  --metal-dark: #586a58;
+  --enamel-light: #4a9160;
+  --enamel-dark: #163f2b;
+  --ribbon: #386147;
+}
+.league-emblem.medal-pathfinder {
+  --metal-light: #e6f6ff;
+  --metal-mid: #a0bbc5;
+  --metal-dark: #4d6678;
+  --enamel-light: #3b8fba;
+  --enamel-dark: #163d65;
+  --ribbon: #2e567b;
+}
+.league-emblem.medal-guardian {
+  --metal-light: #fff0b9;
+  --metal-mid: #c8a45f;
+  --metal-dark: #7f572e;
+  --enamel-light: #9670bb;
+  --enamel-dark: #43275e;
+  --ribbon: #644278;
+}
+.league-emblem.medal-legend {
+  --metal-light: #fff5b8;
+  --metal-mid: #e7b54f;
+  --metal-dark: #966022;
+  --enamel-light: #ba5443;
+  --enamel-dark: #671e25;
+  --ribbon: #93353d;
+}
+.league-emblem .medal-ribbons {
+  inset: 49% 17% 0;
+  z-index: -1;
+  display: flex;
+  justify-content: space-between;
+  filter: drop-shadow(0 2px 1px #0008);
+}
+.medal-ribbons i {
+  width: 38%;
+  height: 100%;
+  display: block;
+  background:
+    linear-gradient(
+      90deg,
+      #0004,
+      transparent 18%,
+      #fff2 22%,
+      transparent 28%,
+      #0003 80%
+    ),
+    var(--ribbon);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
+  transform: rotate(14deg);
+}
+.medal-ribbons i:last-child {
+  transform: rotate(-14deg);
+}
+.league-emblem .medal-rim {
+  inset: 7% 15% 16%;
+  padding: 5%;
+  background: linear-gradient(
+    135deg,
+    var(--metal-light) 4%,
+    var(--metal-mid) 24%,
+    var(--metal-light) 38%,
+    var(--metal-mid) 60%,
+    var(--metal-dark) 88%,
+    var(--metal-light)
+  );
+  clip-path: var(--medal-shape);
+}
+.medal-rim::before {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  background: var(--metal-dark);
+  clip-path: var(--medal-shape);
+}
+.medal-face {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  clip-path: var(--medal-shape);
+  background:
+    radial-gradient(ellipse at 28% 17%, #fff3, transparent 55%),
+    repeating-linear-gradient(105deg, transparent 0 4px, #ffffff06 5px 6px),
+    linear-gradient(150deg, var(--enamel-light), var(--enamel-dark) 82%);
+  box-shadow:
+    inset 0 5px 8px #fff4,
+    inset 0 -7px 8px #0007;
+}
+.medal-face::after {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-top: 1px solid #fff6;
+  border-left: 1px solid #fff2;
+  clip-path: var(--medal-shape);
+}
+.league-emblem .medal-symbol {
+  width: 47%;
+  height: 47%;
+  margin-top: -12%;
+  color: var(--metal-light);
+  filter: drop-shadow(0 2px 0 var(--metal-dark)) drop-shadow(0 -1px 0 #fff8);
+  fill: color-mix(in srgb, var(--metal-light) 17%, transparent);
+}
+.league-emblem .medal-stars {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3%;
+  bottom: 18%;
+  width: 76%;
+  color: var(--metal-light);
+  filter: drop-shadow(0 1px 0 #0007);
+}
+.medal-stars svg {
+  width: 15%;
+  height: auto;
+  fill: currentColor;
+  stroke-width: 1;
+}
+.league-emblem .medal-laurels {
+  inset: 25% 0 21%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--metal-mid);
+  filter: drop-shadow(0 1px 0 var(--metal-dark))
+    drop-shadow(0 -1px 0 var(--metal-light));
+}
+.medal-laurels svg {
+  width: 35%;
+  height: 91%;
+  stroke-width: 1.9;
+  transform: rotate(-28deg);
+}
+.medal-laurels svg:last-child {
+  transform: scaleX(-1) rotate(-28deg);
+}
+.league-emblem > svg.medal-crown {
+  position: absolute;
+  width: 35%;
+  height: 28%;
+  left: 32.5%;
+  top: -3%;
+  margin: 0;
+  color: var(--metal-light);
+  fill: var(--metal-mid);
+  filter: drop-shadow(0 2px 1px var(--metal-dark));
+}
+.league-emblem.is-small {
+  --emblem-size: 43px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.league-trail .league-emblem.is-small {
+  --emblem-size: 74px;
+}
+.league-trail .is-locked .league-emblem {
+  opacity: 0.8;
+  filter: saturate(0.7) drop-shadow(0 4px 2px #0006);
+}
+.league-trail li {
+  border: 0;
+  border-radius: 8px;
+  padding: 18px 5px 14px;
+  background: radial-gradient(ellipse at 50% 25%, #80956b15, transparent 70%);
+}
+.league-trail li.is-current {
+  border: 1px solid #c5b77c;
+  background:
+    radial-gradient(ellipse at 50% 20%, #d8c98a22, transparent 80%), #24392a;
+  box-shadow:
+    inset 0 1px 0 #f2e2af33,
+    0 3px 0 #071a13;
+}
+.league-trail strong {
+  font-size: 16px;
+  color: #e1dcc0;
+}
+.league-trail li > span:not(.league-emblem) {
+  font:
+    600 14px "Rajdhani",
+    sans-serif;
+  color: #bdbb9f;
+}
+.league-trail li > small {
+  font:
+    600 10px "Rajdhani",
+    sans-serif;
+  letter-spacing: 1px;
+  color: #c6ca9b;
+}
+.league-hall-label {
+  display: block;
+  font:
+    600 13px "Rajdhani",
+    sans-serif;
+  color: #d9cda4;
+  letter-spacing: 1px;
+}
+.trophy-league {
+  border-top: 1px solid #abac7a;
+  background:
+    radial-gradient(ellipse at 12% 10%, #bfa86b14, transparent 55%), #102b21;
+}
+.league-feature {
+  gap: 23px;
+}
+.league-feature h2 {
+  color: #ece0b8;
+}
+.league-total small,
+.league-progress-copy > span {
+  font-family: "Rajdhani", sans-serif;
+}
+.league-progress {
+  height: 13px;
+  border-radius: 8px;
+  border-color: #8d8c61;
+  padding: 2px;
+}
+.league-progress i {
+  border-radius: 5px;
+  background: linear-gradient(
+    180deg,
+    #eef2bf,
+    var(--league-color) 45%,
+    #7a9650
+  );
+  box-shadow: inset 0 1px 0 #fff7;
+}
+.league-change .league-emblem {
+  --emblem-size: 58px;
+}
+.crew-dossier .league-emblem.is-small {
+  --emblem-size: 45px;
+}
+@media (max-width: 700px) {
+  .league-feature > .league-emblem {
+    --emblem-size: 96px;
+  }
+  .league-trail .league-emblem.is-small {
+    --emblem-size: 63px;
+  }
+  .league-hud .league-emblem.is-small {
+    --emblem-size: 35px;
+  }
+}

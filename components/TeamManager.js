@@ -20,7 +20,6 @@ export default function TeamManager({ data, act }) {
     username: "",
     password: "",
     characterKey: key,
-    variant: "male",
   });
   const [members, setMembers] = useState([]),
     [busy, setBusy] = useState(false);
@@ -87,10 +86,11 @@ export default function TeamManager({ data, act }) {
     >
       <p className="detail-copy">
         Create a party with up to five members. Each member gets a username,
-        password, character avatar and a fixed support ability.
+        password and a team role. Each player creates their own personal avatar.
       </p>
       {editing && (
         <form
+          method="post"
           className="field-form team-create-form"
           onSubmit={save}
           aria-busy={busy}
@@ -116,8 +116,7 @@ export default function TeamManager({ data, act }) {
             </label>
           )}
           <p className="support-copy">
-            Each character occupies one slot; male and female versions share the
-            same ability. Teams with fewer than five members can sign in and
+            Each team role occupies one slot. Players choose their own appearance. Teams with fewer than five members can sign in and
             explore, and show as forming until ready for five-feature levels.
           </p>
           <div className="team-member-forms">
@@ -145,7 +144,7 @@ export default function TeamManager({ data, act }) {
                     />
                     <span>
                       <strong>
-                        {character.name} · {character.label}
+                        {character.label}
                       </strong>
                       <small>
                         {character.ability.name} · static support ability
@@ -214,26 +213,9 @@ export default function TeamManager({ data, act }) {
                       </small>
                     </label>
                     <label>
-                      Character avatar
-                      <select
-                        value={`${member.characterKey}:${member.variant}`}
-                        onChange={(e) => {
-                          const [key, variant] = e.target.value.split(":");
-                          update(member.id, "characterKey", key);
-                          update(member.id, "variant", variant);
-                        }}
-                      >
-                        {characters.flatMap((c) =>
-                          ["male", "female"].map((variant) => (
-                            <option
-                              key={`${c.key}:${variant}`}
-                              value={`${c.key}:${variant}`}
-                              disabled={taken.includes(c.key)}
-                            >
-                              {c[variant]} · {c.label} ({variant})
-                            </option>
-                          )),
-                        )}
+                      Team role
+                      <select value={member.characterKey} onChange={(e) => update(member.id, "characterKey", e.target.value)}>
+                        {characters.map(c => <option key={c.key} value={c.key} disabled={taken.includes(c.key)}>{c.label}</option>)}
                       </select>
                     </label>
                   </div>
@@ -306,7 +288,7 @@ export default function TeamManager({ data, act }) {
                         {player.username
                           ? `@${player.username}`
                           : "Existing account"}{" "}
-                        · {characterFor(player)?.name || "Explorer"}
+                        · {characterFor(player)?.label || "Explorer"}
                       </small>
                       <small>{characterFor(player)?.ability.name}</small>
                     </span>

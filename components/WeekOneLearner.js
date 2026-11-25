@@ -1,6 +1,9 @@
 "use client";
 import { companionText } from "@/lib/companion-name.js";
 import PlayerVitals from "./PlayerVitals";
+import MissionRecovery from "./MissionRecovery";
+import TrophyLeague from "./TrophyLeague";
+import TrophyConduct from "./TrophyConduct";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Badge, Receipt, Form } from "./ui";
@@ -88,6 +91,7 @@ function Reflection({
     [busy, setBusy] = useState(false),
     [voice, setVoice] = useState(draft?.mode === "VOICE");
   const recognition = useRef(null);
+  const [step, setStep] = useState(() => Math.max(0, initial.findIndex(answer => !String(answer).trim())));
   const work = useSavedWork({
     value: { answers, mode: voice ? "VOICE" : "TEXT" },
     initialValue: { answers: initial, mode: draft?.mode || "TEXT" },
@@ -151,7 +155,8 @@ function Reflection({
             }
           }}
         >
-          {questions.map((q, i) => (
+          <p role="status">Reflection {step + 1} of {questions.length} · {answers.filter(answer => String(answer).trim()).length} recorded</p>
+          {questions.map((q, i) => i === step && (
             <label key={q}>
               {q}
               <textarea
@@ -183,9 +188,12 @@ function Reflection({
               · Drafts are not submitted work.
             </p>
           )}
-          <button className="btn primary" disabled={busy}>
+          <div className="button-row">
+          <button type="button" className="btn" disabled={busy || step === 0} onClick={() => setStep(s => s - 1)}>Previous reflection</button>
+          {step < questions.length - 1 ? <button type="button" className="btn primary" disabled={busy || !answers[step]?.trim()} onClick={() => setStep(s => s + 1)}>Next reflection</button> : <button className="btn primary" disabled={busy || answers.some(answer => !String(answer).trim())}>
             Save reflection
-          </button>
+          </button>}
+          </div>
         </form>
       )}
     </WeekPanel>
@@ -193,14 +201,17 @@ function Reflection({
 }
 export function MyDay({ data, act }) {
   const p = data.weekOneProgram,
-    day = p.days.find((d) => d.state === "OPEN") || p.days.at(-1),
     l = p.learners[0];
+  const [selectedDay, setSelectedDay] = useState(() => p.days.find(d => d.state === 'OPEN')?.day || p.days.at(-1)?.day);
+  const day = p.days.find(d => d.day === selectedDay) || p.days.at(-1);
   if (!day) return <EmptyWeek />;
+  const canReflect = day.state === 'OPEN' || (p.progression?.mode === 'COMPLETION' && !p.publication);
   const d = day.day === 1 ? data.dayOne.records[0] : l?.data.days[day.day];
   return (
     <>
+      <nav className="button-row" aria-label="Choose a level journal">{p.days.map(level => <button className={`btn ${day.day === level.day ? 'primary' : ''}`} key={level.day} aria-pressed={day.day === level.day} onClick={() => setSelectedDay(level.day)}>Level {level.day} journal</button>)}</nav>
       <WeekPanel
-        title={`Day ${day.day} · ${day.title}`}
+        title={`Level ${day.day} · ${day.title || 'Your flight journal'}`}
         kicker="MY DAY"
         action={<Badge>{day.state}</Badge>}
       >
@@ -211,7 +222,7 @@ export function MyDay({ data, act }) {
         <div className="button-row">
           <PlayerVitals player={data.user} />
           <Badge tone="amber">
-            {data.user.weekOneTrophies || 0} / 140 WEEK 1 TROPHIES
+            {data.user.weekOneTrophies || 0} {p.progression?.mode === 'COMPLETION' ? 'FLIGHT TROPHIES' : '/ 140 WEEK 1 TROPHIES'}
           </Badge>
         </div>
         <div className="button-row">
@@ -232,7 +243,7 @@ export function MyDay({ data, act }) {
           ) : (
             <button
               className="btn primary"
-              disabled={day.state !== "OPEN"}
+              disabled={!canReflect}
               onClick={() => runProgram(act, "clock", { day: day.day })}
             >
               Check in
@@ -241,7 +252,7 @@ export function MyDay({ data, act }) {
         </WeekPanel>
       )}
       <fieldset
-        disabled={day.state !== "OPEN"}
+        disabled={!canReflect}
         style={{ border: 0, margin: 0, padding: 0, minWidth: 0 }}
       >
         <WeekPanel title="Start-of-day reflection">
@@ -291,10 +302,15 @@ export function MyDay({ data, act }) {
 export function Announcements({ data, act }) {
   const p = data.weekOneProgram,
     l = p.learners[0];
+  const [selected, setSelected] = useState(() => p.days.find(day => day.state === "OPEN")?.day || p.days.at(-1)?.day);
+  const [opened, setOpened] = useState([]);
   if (!p.days.length) return <EmptyWeek />;
   return (
     <>
-      {[...p.days].reverse().map((day) => {
+      <nav className="button-row" aria-label="Choose a briefing">
+        {p.days.map(day => <button className={`btn ${selected === day.day ? 'primary' : ''}`} key={day.day} aria-pressed={selected === day.day} onClick={() => setSelected(day.day)}>Level {day.day} briefing</button>)}
+      </nav>
+      {p.days.filter(day => day.day === selected).map((day) => {
         const d =
           day.day === 1 ? data.dayOne.records[0] : l?.data.days[day.day];
         const run = (action, values = {}) =>
@@ -306,11 +322,10 @@ export function Announcements({ data, act }) {
           >
             {!day.agenda ? (
               <p className="muted">Today's agenda has not been published.</p>
-            ) : !d?.agendaViewedAt ? (
+            ) : !d?.agendaViewedAt && !opened.includes(day.day) ? (
               <button
                 className="btn"
-                disabled={day.state !== "OPEN"}
-                onClick={() => run("agenda-view")}
+                onClick={() => { setOpened(previous => [...previous, day.day]); if (day.state === 'OPEN') void run("agenda-view"); }}
               >
                 Open the agenda
               </button>
@@ -335,7 +350,7 @@ export function Announcements({ data, act }) {
             {day.recaps.map((recap) => (
               <article key={recap.session} className="history-entry">
                 <h3>Class {recap.session} recap</h3>
-                {d?.recapViews?.[recap.session] ||
+                {day.state !== "OPEN" || d?.recapViews?.[recap.session] ||
                 d?.recaps?.[recap.session] ? (
                   <p>{recap.text}</p>
                 ) : (
@@ -408,6 +423,8 @@ export function AttemptForm({ record, act, now, open, ownerId }) {
     setAnswers((old) => ({ ...old, [key]: value }));
   };
   const remaining = Math.max(0, new Date(d.deadline) - new Date(now));
+  const [step, setStep] = useState(0);
+  const steps = quiz ? activity.questions.length : activity.fields.length;
   return (
     <WeekPanel
       title={activity.name}
@@ -455,6 +472,7 @@ export function AttemptForm({ record, act, now, open, ownerId }) {
           }
         }}
       >
+        <p role="status">Checkpoint {step + 1} of {steps}. Your answers stay saved as you move.</p>
         <fieldset
           disabled={
             !canWrite || busy || expired || (quiz && Boolean(d.submittedAt))
@@ -469,7 +487,7 @@ export function AttemptForm({ record, act, now, open, ownerId }) {
           }}
         >
           {quiz
-            ? activity.questions.map((q) => (
+            ? activity.questions.filter((_, i) => i === step).map((q) => (
                 <fieldset key={q.id}>
                   <legend>{q.question}</legend>
                   {q.options.map((option, index) => (
@@ -489,7 +507,7 @@ export function AttemptForm({ record, act, now, open, ownerId }) {
                   ))}
                 </fieldset>
               ))
-            : activity.fields.map((key) =>
+            : activity.fields.filter((_, i) => i === step).map((key) =>
                 key === "sequence" ? (
                   <fieldset key={key}>
                     <legend>Order the components</legend>
@@ -575,7 +593,9 @@ export function AttemptForm({ record, act, now, open, ownerId }) {
             ? work.status || status
             : status || work.status}
         </small>
-        <button
+        <div className="button-row">
+        <button type="button" className="btn" disabled={busy || step === 0} onClick={() => setStep(s => s - 1)}>Previous checkpoint</button>
+        {step < steps - 1 ? <button type="button" className="btn primary" disabled={busy} onClick={() => setStep(s => s + 1)}>Next checkpoint</button> : <button
           className="btn primary"
           disabled={busy || !canWrite || (quiz && Boolean(d.submittedAt))}
         >
@@ -586,7 +606,8 @@ export function AttemptForm({ record, act, now, open, ownerId }) {
               : submitted
                 ? "Submit evidence revision"
                 : "Submit attempt"}
-        </button>
+        </button>}
+        </div>
       </form>
       {submitted && (
         <Receipt>
@@ -663,7 +684,7 @@ export function Games({ data, act, now }) {
                 >
                   <p>
                     Your timer begins when you start. This is one persistent
-                    attempt.
+                    attempt. Starting costs 1 energy; continuing saved work is free.
                   </p>
                   <WeekForm
                     action="attempt-start"
@@ -684,7 +705,7 @@ export function Games({ data, act, now }) {
                           ]
                     }
                     submit={
-                      day.state === "OPEN"
+                      day.state === "OPEN" || p.progression?.mode === "COMPLETION"
                         ? "Start activity"
                         : "Activity closed"
                     }
@@ -702,6 +723,10 @@ export function Rules({ data, act }) {
   const p = data.weekOneProgram,
     rule = p.rules.at(-1),
     ack = p.learners[0]?.data.ruleAcks[rule?.version];
+  const cards = rule?.text.split(/\n\s*\n/).filter(Boolean) || [];
+  const [page, setPage] = useState(0);
+  useEffect(() => setPage(0), [rule?.version]);
+  const current = Math.min(page, Math.max(0, cards.length - 1));
   return (
     <>
       <WeekPanel
@@ -710,7 +735,12 @@ export function Rules({ data, act }) {
       >
         {rule ? (
           <>
-            <p style={{ whiteSpace: "pre-wrap" }}>{rule.text}</p>
+            <p role="status">Field guide card {current + 1} of {cards.length}</p>
+            <p style={{ whiteSpace: "pre-wrap" }}>{cards[current]}</p>
+            <div className="button-row">
+              <button className="btn" disabled={current === 0} onClick={() => setPage(current - 1)}>Previous rule</button>
+              <button className="btn" disabled={current === cards.length - 1} onClick={() => setPage(current + 1)}>Next rule</button>
+            </div>
             {ack ? (
               <Receipt>
                 Acknowledged {weekTime(ack.at)}. Clarification window ends{" "}
@@ -719,6 +749,7 @@ export function Rules({ data, act }) {
             ) : (
               <button
                 className="btn primary"
+                disabled={current < cards.length - 1}
                 onClick={() =>
                   runProgram(act, "rules-ack", {
                     ruleVersion: rule.version,
@@ -729,13 +760,13 @@ export function Rules({ data, act }) {
                 Yes, I understand
               </button>
             )}
-            <WeekForm
+            <details><summary>Ask about a rule</summary><WeekForm
               action="ask"
               act={act}
               values={{ category: "RULES" }}
               fields={[textField("text", "Need clarification?")]}
               submit="Ask MC about the Rules"
-            />
+            /></details>
             <p className="muted">
               No clarification request is not proof of comprehension. Rules
               tickets are separate from the two daily class questions.
@@ -749,10 +780,10 @@ export function Rules({ data, act }) {
         {p.faq
           .filter((f) => f.category !== "CLASS")
           .map((f) => (
-            <article key={f.id}>
-              <h3>{f.question}</h3>
+            <details key={f.id}>
+              <summary>{f.question}</summary>
               <p>{f.answer}</p>
-            </article>
+            </details>
           ))}
       </WeekPanel>
     </>
@@ -762,6 +793,8 @@ export function Questions({ data, act, staff = false }) {
   const p = data.weekOneProgram;
   return (
     <>
+      <MissionRecovery data={data} act={act} />
+      {!staff && <TrophyConduct data={data} act={act}/>}
       <WeekPanel title={staff ? "Questions & escalations" : "Ask MC"}>
         {staff && (
           <WeekForm
@@ -786,28 +819,12 @@ export function Questions({ data, act, staff = false }) {
               Two ordinary class questions per day. Rules, access and essential
               support remain available separately.
             </p>
-            <WeekForm
-              action="ask"
-              act={act}
-              fields={[
-                {
-                  name: "category",
-                  label: "Question type",
-                  options: [
-                    { value: "CLASS", label: "Class learning question" },
-                    { value: "RULES", label: "Rules clarification" },
-                    { value: "ACCESS", label: "Urgent access issue" },
-                    { value: "ESSENTIAL", label: "Essential support" },
-                  ],
-                },
-                textField("text", "Your question"),
-              ]}
-              submit="Send question to MC"
-            />
+            <QuestionComposer act={act} />
           </>
         )}
         {p.tickets.map((t) => (
-          <article className="history-entry" key={t._id}>
+          <details className="history-entry" key={t._id}>
+            <summary>{t.data.question} · {t.data.status}</summary>
             {staff && <p>Ticket ID: {t._id}</p>}
             <Badge>
               {t.category} · {t.data.status}
@@ -872,7 +889,7 @@ export function Questions({ data, act, staff = false }) {
                 />
               </>
             )}
-          </article>
+          </details>
         ))}
       </WeekPanel>
       <WeekPanel title="Anonymous classroom answers">
@@ -888,6 +905,23 @@ export function Questions({ data, act, staff = false }) {
     </>
   );
 }
+function QuestionComposer({ act }) {
+  const [category, setCategory] = useState(null), [text, setText] = useState(''), [busy, setBusy] = useState(false), [error, setError] = useState('');
+  const choices = [['CLASS', 'Understand a concept'], ['RULES', 'Clarify a rule'], ['ACCESS', 'Fix access or a blocked screen'], ['ESSENTIAL', 'Get essential support']];
+  return <div className="question-composer">
+    <h3>What do you need help with?</h3>
+    <div className="button-row">{choices.map(([id, label]) => <button key={id} className={`btn ${category === id ? 'primary' : ''}`} aria-pressed={category === id} disabled={busy} onClick={() => setCategory(id)}>{label}</button>)}</div>
+    {category && <form className="field-form" onSubmit={async event => {
+      event.preventDefault(); setBusy(true); setError('');
+      try { if (!await runProgram(act, 'ask', { category, text })) throw Error('Your question was not confirmed. It is kept here so you can retry.'); setText(''); setCategory(null); }
+      catch (e) { setError(e.message); } finally { setBusy(false); }
+    }}>
+      <label>Tell your MC what happened<textarea autoFocus required minLength={5} maxLength={4000} value={text} onChange={event => setText(event.target.value)} placeholder="I was trying to… I expected… Instead…" /></label>
+      {error && <p role="alert">{error}</p>}
+      <button className="btn primary" disabled={busy}>{busy ? 'Sending…' : 'Send question to MC'}</button>
+    </form>}
+  </div>;
+}
 export function Challenges({ data, act, now }) {
   const p = data.weekOneProgram,
     choices = p.days
@@ -899,6 +933,7 @@ export function Challenges({ data, act, now }) {
         kind: "DAILY",
       }))
       .concat(p.challenges);
+  const [selected, setSelected] = useState(null);
   return (
     <>
       <WeekPanel title="Challenges & Rewards">
@@ -911,9 +946,9 @@ export function Challenges({ data, act, now }) {
           const record = p.attempts.find((a) => a.activityId === c.id);
           return (
             <div key={c.id}>
-              <h3>{c.title}</h3>
+              <button className={`btn ${selected === c.id ? 'primary' : ''}`} aria-expanded={selected === c.id} onClick={() => setSelected(selected === c.id ? null : c.id)}>{c.title} · {record?.data.submittedAt ? 'Evidence saved' : record ? 'Continue attempt' : 'Inspect challenge'}</button>
               <Badge>{c.kind}</Badge>
-              {record ? (
+              {selected === c.id && (record ? (
                 <AttemptForm
                   ownerId={data.user._id}
                   record={record}
@@ -933,7 +968,7 @@ export function Challenges({ data, act, now }) {
                     Start 60-minute attempt
                   </button>
                 </>
-              )}
+              ))}
               {record?.data.review && (
                 <p>
                   {record.data.review.genuine
@@ -947,8 +982,10 @@ export function Challenges({ data, act, now }) {
         })}
       </WeekPanel>
       <DayOneRewards data={data} />
+      <TrophyLeague trophies={data.user.trophies}/>
       <WeekPanel title="Week 1 trophy evidence">
-        <Badge>MAXIMUM 140 TROPHIES</Badge>
+        <Badge>{p.progression?.mode === "COMPLETION" ? "FLIGHT REWARDS" : "MAXIMUM 140 PROGRAMME TROPHIES"}</Badge>
+        {p.progression?.mode === "COMPLETION" && p.days.filter((day)=>day.day > 1).map((day)=><FlightLevelRewards key={day.day} data={data} day={day.day} compact/>)}
         <PlayerVitals player={data.user} />
         {(p.learners[0]?.data.ledger || []).map((e) => (
           <p key={e.id}>

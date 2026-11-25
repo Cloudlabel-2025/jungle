@@ -1,0 +1,38 @@
+
+> wilderness-team-project@1.0.0 test
+> node --import ./tests/register.mjs --test tests/ledger.test.js
+
+TAP version 13
+# Subtest: moves funds between two accounts
+ok 1 - moves funds between two accounts
+  ---
+  duration_ms: 1.6703
+  type: 'test'
+  ...
+# Subtest: rejects overdrafts and preserves non-negative balances
+ok 2 - rejects overdrafts and preserves non-negative balances
+  ---
+  duration_ms: 0.541
+  type: 'test'
+  ...
+# Subtest: conserves total funds without mutating the input
+ok 3 - conserves total funds without mutating the input
+  ---
+  duration_ms: 0.21
+  type: 'test'
+  ...
+# Subtest: rejects zero, negative, fractional and invalid transfers
+ok 4 - rejects zero, negative, fractional and invalid transfers
+  ---
+  duration_ms: 0.688
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1501.479

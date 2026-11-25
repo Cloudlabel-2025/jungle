@@ -1,0 +1,61 @@
+GAME INTERFACE AND TROPHY LEAGUES — 24 NOVEMBER 2026
+
+Interface changes
+- Player HUD: current league emblem and account trophy total open a league trail.
+  Profile, flight rewards and expedition honours use the same league component.
+- MC/CC landing pages: three mission stations for crew validation, support radio
+  and preparation/assessment. Repeated action-desk navigation is removed from
+  these landing pages. Attendance/health metrics use actual roster size.
+- Week 1 navigation: numbered stations with a visible active destination.
+- Results: searchable player dossiers, a five-level selector, decision cards,
+  star cards and a trophy/league impact preview before saving a correction.
+- Shared action forms: short selections become keyboard-accessible radio cards.
+  Actions with four or more fields use focused checkpoints. All fields remain
+  mounted so backward navigation retains entries and final submission includes
+  every checkpoint. Native validation runs before progressing or submitting.
+  Server errors keep the entered work. Bulk and replay controls remain available.
+- Flight rewards no longer advertise a false 140-trophy maximum. They show
+  actual level rewards alongside the league. Expedition XP-to-next-level uses
+  the same progressive calculation as the HUD.
+- Release/setup and historical evidence remain available under disclosures.
+  Text explanations and authorised staff reasons are still required where the
+  workflow needs evidence; they are not replaced by decorative game controls.
+
+League rules (shared source: lib/trophy-leagues.js)
+Unranked       0–299 (no league badge)
+Scout          300–749
+Trailblazer    750–1499
+Ranger         1500–2999
+Pathfinder     3000–4999
+Guardian       5000–7999
+Legend         8000+
+
+The canonical account trophy balance determines the current league. Programme
+subtotals, XP, lives and energy do not set a league. No stored league or lifetime
+high-water rank can prevent demotion after a result/reward correction. Promote
+at the exact next threshold; demote below the current threshold. Large changes
+move directly to the matching league. Below 300, no league is awarded. No seasonal reset,
+daily decay, entry fee or new mission-failure trophy penalty is introduced.
+Conduct trophy penalties have been removed. Each league now has Divisions
+I, II and III. Only reviewed result corrections can reduce trophies; the
+current rules and all eighteen division ranges are in trophy-policy.txt.
+
+The HUD, ladder, retention text, standings and staff decision preview share one
+rule definition. Client notifications compare the last seen balance per college
+and player. First observation creates a baseline; subsequent rank changes show
+a dismissible promotion/demotion message. Browser storage is only presentation
+history, never authority for membership, rewards or permissions. A new browser
+shows the current league without inventing a past promotion.
+
+Additional browser-discovered fix
+Self-paced optional quests now accept prepared level content rather than
+requiring an OPEN calendar day. Scheduled programmes keep their original gate.
+The progression database test verifies this case.
+
+Validation
+- 355 disposable-database regression tests passed, zero failed/skipped.
+- The subsequent optional-quest fix passed its targeted progression regression.
+- Production build passed; browser evidence and final checks are recorded in
+  artifacts/journey-browser/game-ui-leagues-report.txt.
+- All browser writes used fictional local accounts and disposable data. Real
+  cohorts, messages and production publication were not changed.

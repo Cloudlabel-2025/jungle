@@ -1,4 +1,5 @@
 "use client";
+import AvatarPortrait from "./AvatarPortrait";
 import {
   X,
   Check,
@@ -15,9 +16,10 @@ import {
   AlertTriangle,
   UserRound,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useId } from "react";
 import { createPortal } from "react-dom";
 import { characterFor } from "@/lib/characters";
+import GameChoices from "./GameChoices";
 export function Badge({ children, tone = "" }) {
   return <span className={`badge ${tone}`}>{children}</span>;
 }
@@ -109,9 +111,7 @@ export function Modal({
     >
       <div className="panel-heading">
         <div>
-          <span className="eyebrow">
-            {kicker || "VOW / FIELD CONSOLE"}
-          </span>
+          <span className="eyebrow">{kicker || "VOW / FIELD CONSOLE"}</span>
           <h2>{title}</h2>
         </div>
         <button className="icon-btn" aria-label="Close dialog" onClick={close}>
@@ -175,9 +175,9 @@ export function Avatar({ name = "", player, small = false }) {
       {player?.characterHidden ? (
         <UserRound aria-label="Unknown character" size={small ? 20 : 32} />
       ) : portrait ? (
-        <img
-          src={character.image}
-          alt={`${displayName ? `${displayName} as ` : ""}${character.name}`}
+        <AvatarPortrait
+          avatar={character.avatar}
+          alt={`${displayName || character.name}'s personal avatar`}
           width={80}
           height={80}
           decoding="async"
@@ -200,19 +200,41 @@ export function Form({
   initial = {},
   children,
   onDraftChange,
+  quest = false,
 }) {
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const pending = useRef(false);
+  const formRef = useRef(null);
+  const formId = useId();
+  const [step, setStep] = useState(0);
+  const guided = fields.length >= (quest ? 2 : 4);
+  const currentStep = Math.min(step, Math.max(0, fields.length - 1));
+  const next = () => {
+    const active = formRef.current?.querySelector(
+      `[data-checkpoint="${currentStep}"]`,
+    );
+    const invalid = Array.from(
+      active?.querySelectorAll("input,textarea,select") || [],
+    ).find((element) => !element.checkValidity());
+    if (invalid) {
+      invalid.reportValidity();
+      return;
+    }
+    setStep(Math.min(currentStep + 1, fields.length - 1));
+  };
   return (
     <form
+      method="post"
+      ref={formRef}
+      noValidate
       onInput={
         onDraftChange
           ? (e) =>
               onDraftChange(Object.fromEntries(new FormData(e.currentTarget)))
           : undefined
       }
-      className="field-form"
+      className={`field-form${quest ? " quest-action" : ""}`}
       data-has-fields={fields.length > 0 ? "true" : "false"}
       data-feedback={
         feedback ? (feedback.error ? "error" : "success") : undefined
@@ -221,6 +243,21 @@ export function Form({
       onSubmit={async (e) => {
         e.preventDefault();
         if (pending.current) return;
+        if (guided && currentStep < fields.length - 1) {
+          next();
+          return;
+        }
+        const invalid = Array.from(
+          e.currentTarget.querySelectorAll("input,textarea,select"),
+        ).find((element) => !element.checkValidity());
+        if (invalid) {
+          const checkpoint = Number(
+            invalid.closest("[data-checkpoint]")?.dataset.checkpoint,
+          );
+          if (guided && Number.isInteger(checkpoint)) setStep(checkpoint);
+          requestAnimationFrame(() => invalid.reportValidity());
+          return;
+        }
         pending.current = true;
         setSubmitting(true);
         setFeedback(null);
@@ -242,6 +279,7 @@ export function Form({
             });
           } else {
             form.reset();
+            setStep(0);
             setFeedback({ error: false, message: "Saved successfully." });
           }
         } catch (error) {
@@ -262,12 +300,33 @@ export function Form({
           <span className="form-crest">
             <Compass size={25} strokeWidth={2.5} />
           </span>
-          <span className="form-record-title">Mission details</span>
+          <span className="form-record-title">
+            {quest ? submit : guided ? "MISSION CHECKPOINT" : "FIELD ACTION"}
+          </span>
           <span className="form-field-rule" />
-          <span className="form-field-count">{fields.length} fields</span>
+          <span className="form-field-count">
+            {guided ? `${currentStep + 1} / ${fields.length}` : "YOUR MOVE"}
+          </span>
         </div>
       )}
-      {fields.map((f) => {
+      {guided && (
+        <div
+          className="checkpoint-track"
+          role="progressbar"
+          aria-label="Action checkpoints"
+          aria-valuemin={0}
+          aria-valuemax={fields.length}
+          aria-valuenow={currentStep + 1}
+        >
+          {fields.map((field, index) => (
+            <i
+              key={field.name}
+              className={index <= currentStep ? "is-reached" : ""}
+            />
+          ))}
+        </div>
+      )}
+      {fields.map((f, index) => {
         const FieldIcon = f.options
           ? ListChecks
           : f.type === "number"
@@ -282,56 +341,93 @@ export function Form({
                     ? LockKeyhole
                     : PencilLine;
         return (
-          <label key={f.name} className="expedition-field">
-            <span className="form-field-caption">
-              <span className="form-field-number" aria-hidden="true">
-                <FieldIcon size={17} strokeWidth={2.6} />
-              </span>
-              <span>{f.label}</span>
-              {f.optional && <small aria-hidden="true">Optional</small>}
-            </span>
-            {f.options ? (
-              <select
-                disabled={submitting}
+          <div
+            key={f.name}
+            className="expedition-field"
+            data-checkpoint={index}
+            style={
+              guided && index !== currentStep ? { display: "none" } : undefined
+            }
+          >
+            {f.options && f.options.length <= 6 ? (
+              <GameChoices
+                label={f.label}
                 name={f.name}
-                defaultValue={initial[f.name] ?? f.options[0]?.value}
+                options={f.options}
+                defaultValue={initial[f.name]}
+                disabled={submitting}
                 required={!f.optional && !f.options.some((o) => o.value === "")}
-              >
-                {f.options.map((o) => (
-                  <option value={o.value} key={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-            ) : f.type === "textarea" ? (
-              <textarea
-                disabled={submitting}
-                name={f.name}
-                rows={f.rows || 3}
-                minLength={f.min || 1}
-                maxLength={f.maxLength || 4000}
-                defaultValue={initial[f.name] || ""}
-                required={!f.optional}
-                placeholder={f.placeholder}
               />
             ) : (
-              <input
-                disabled={submitting}
-                name={f.name}
-                type={f.type || "text"}
-                defaultValue={initial[f.name] ?? ""}
-                min={f.min}
-                max={f.max}
-                step={f.type === "number" ? f.step || "any" : undefined}
-                minLength={f.type === "number" ? undefined : f.min}
-                required={!f.optional}
-                placeholder={f.placeholder}
-              />
+              <>
+                <label htmlFor={`${formId}-${f.name}`}>
+                  <span className="form-field-caption">
+                    <span className="form-field-number" aria-hidden="true">
+                      <FieldIcon size={17} strokeWidth={2.6} />
+                    </span>
+                    <span>{f.label}</span>
+                    {f.optional && <small aria-hidden="true">Optional</small>}
+                  </span>
+                </label>
+                {f.options ? (
+                  <select
+                    id={`${formId}-${f.name}`}
+                    disabled={submitting}
+                    name={f.name}
+                    defaultValue={initial[f.name] ?? f.options[0]?.value}
+                    required={
+                      !f.optional && !f.options.some((o) => o.value === "")
+                    }
+                  >
+                    {f.options.map((o) => (
+                      <option value={o.value} key={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                ) : f.type === "textarea" ? (
+                  <textarea
+                    id={`${formId}-${f.name}`}
+                    disabled={submitting}
+                    name={f.name}
+                    rows={f.rows || 3}
+                    minLength={f.min || 1}
+                    maxLength={f.maxLength || 4000}
+                    defaultValue={initial[f.name] || ""}
+                    required={!f.optional}
+                    placeholder={f.placeholder}
+                  />
+                ) : (
+                  <input
+                    id={`${formId}-${f.name}`}
+                    disabled={submitting}
+                    name={f.name}
+                    type={f.type || "text"}
+                    defaultValue={initial[f.name] ?? ""}
+                    min={f.min}
+                    max={f.max}
+                    step={f.type === "number" ? f.step || "any" : undefined}
+                    minLength={f.type === "number" ? undefined : f.min}
+                    required={!f.optional}
+                    placeholder={f.placeholder}
+                  />
+                )}
+              </>
             )}
-          </label>
+          </div>
         );
       })}
-      {children}
+      {children && (
+        <div
+          style={
+            guided && currentStep !== fields.length - 1
+              ? { display: "none" }
+              : undefined
+          }
+        >
+          {children}
+        </div>
+      )}
       {feedback && (
         <p
           className={`workflow-form-feedback ${feedback.error ? "is-error" : ""}`}
@@ -347,7 +443,38 @@ export function Form({
           <span>{feedback.message}</span>
         </p>
       )}
-      <button className="btn primary" type="submit" disabled={submitting}>
+      {guided && (
+        <div className="checkpoint-navigation">
+          <button
+            className="btn"
+            type="button"
+            disabled={submitting || currentStep === 0}
+            onClick={() => setStep(currentStep - 1)}
+          >
+            Previous checkpoint
+          </button>
+          {currentStep < fields.length - 1 && (
+            <button
+              className="btn primary"
+              type="button"
+              disabled={submitting}
+              onClick={next}
+            >
+              Next checkpoint
+            </button>
+          )}
+        </div>
+      )}
+      <button
+        className="btn primary"
+        type="submit"
+        disabled={submitting}
+        style={
+          guided && currentStep !== fields.length - 1
+            ? { display: "none" }
+            : undefined
+        }
+      >
         <span className="form-action-icon" aria-hidden="true">
           {submitting ? (
             <LoaderCircle className="spin" size={16} aria-hidden="true" />
