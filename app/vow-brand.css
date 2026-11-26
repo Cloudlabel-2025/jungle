@@ -154,8 +154,8 @@
   inset: 10%;
   z-index: -1;
   border-radius: 50%;
-  background: #b3c87116;
-  box-shadow: 0 0 85px 18px #a4b66518;
+  background: #b5f36c12;
+  box-shadow: 0 0 85px 18px #b5f36c22;
   animation: vow-breathe 4s ease-in-out infinite;
 }
 .vow-loading-crest .vow-emblem {
@@ -169,7 +169,7 @@
 .vow-loading-orbit {
   position: absolute;
   inset: -4%;
-  border: 1px solid #bdc17c33;
+  border: 1px solid #b5f36c33;
   border-radius: 50%;
 }
 .vow-loading-orbit::after {
@@ -177,9 +177,10 @@
   position: absolute;
   inset: -1px;
   border: 2px solid transparent;
-  border-top-color: #dcc77b;
-  border-left-color: #b4cb8244;
+  border-top-color: var(--loading-neon, #b5f36c);
+  border-left-color: #b5f36c77;
   border-radius: 50%;
+  filter: drop-shadow(0 0 5px #b5f36caa) drop-shadow(0 0 12px #b5f36c55);
   animation: vow-orbit 12s linear infinite;
 }
 .vow-loading-copy {
@@ -226,12 +227,13 @@
   max-width: 85%;
   height: 3px;
   margin: 4px 0 0;
-  background: #d7d99a1c;
-  box-shadow: 0 0 0 1px #c4bd7411;
+  background: #b5f36c1c;
+  box-shadow: 0 0 0 1px #b5f36c18;
+  filter: drop-shadow(0 0 5px #b5f36c88);
 }
 .game-entry-track > i {
-  background: linear-gradient(90deg, #91ad67, #e1d48a, #91ad67);
-  box-shadow: 0 0 12px #e4cf7a55;
+  background: var(--loading-neon, #b5f36c);
+  box-shadow: 0 0 8px #b5f36ccc, 0 0 18px #b5f36c66;
 }
 .vow-loading-caption {
   font:
@@ -369,14 +371,22 @@
   }
 }
 @media (forced-colors: active) {
+  .vow-loading-orbit::after {
+    border-top-color: Highlight;
+    border-left-color: transparent;
+    filter: none;
+  }
   .game-entry-scene {
     background: Canvas;
   }
   .game-entry-track {
     border: 1px solid CanvasText;
+    filter: none;
+    box-shadow: none;
   }
   .game-entry-track > i {
     background: Highlight;
+    box-shadow: none;
   }
 }
 @media (orientation: landscape) and (max-height: 540px) {

@@ -999,6 +999,35 @@ body .platform-admin .pa-field input::placeholder {
   border-color: #36513d;
   box-shadow: 0 0 0 3px #b4ce9840;
 }
+.pa-password-input {
+  position: relative;
+  display: block;
+}
+body .platform-admin .pa-password-input input {
+  padding-right: 50px;
+}
+.pa-password-toggle {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  width: 42px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #c8d6b8;
+  cursor: pointer;
+}
+.pa-password-toggle:hover {
+  color: #f1dfa6;
+  background: #b4ce981a;
+}
+.pa-password-toggle:focus-visible {
+  outline: 2px solid #d4bd79;
+  outline-offset: -2px;
+}
 .pa-field small {
   font-size: 10px;
   color: #b3c2a8;

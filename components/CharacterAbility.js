@@ -1,7 +1,7 @@
 import { Sparkles } from "lucide-react";
-import { characterFor } from "@/lib/characters";
+import { assignmentSlotFor } from "@/lib/team-slots";
 export default function CharacterAbility({ player, feature, tasks = [] }) {
-  const character = characterFor(player);
+  const character = assignmentSlotFor(player);
   if (!character?.ability) return null;
   return (
     <details
@@ -11,7 +11,7 @@ export default function CharacterAbility({ player, feature, tasks = [] }) {
       <summary>
         <Sparkles size={16} />
         <span>
-          <small>STATIC SUPPORT ABILITY</small>
+          <small>WORKSHOP GUIDE</small>
           <strong>{character.ability.name}</strong>
         </span>
       </summary>
@@ -30,7 +30,7 @@ export default function CharacterAbility({ player, feature, tasks = [] }) {
         </ol>
         <small>
           Optional support guidance. Your tasks, deadlines, XP and trophies
-          follow the same rules as every other character.
+          follow the same rules for every player.
         </small>
       </div>
     </details>

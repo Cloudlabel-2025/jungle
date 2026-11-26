@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Check, ChevronRight, GraduationCap, Pencil, Plus, RefreshCw, Users, X } from "lucide-react";
 import { ManagementDialog } from "./PlatformDashboard";
 import { prefix } from "@/lib/catalog.js";
+import { teamRoles } from "@/lib/team-roles.js";
 
 export default function CollegeManagement({ college, actor }) {
   const cc = actor.role === "CENTRE_COMMAND";
@@ -57,7 +58,7 @@ export default function CollegeManagement({ college, actor }) {
           <div className="pa-section-heading"><h3>Teams <span>{teams.length}</span></h3>{cc && <button className="pa-secondary" onClick={() => setDialog({ type: "team" })}><Plus size={16} />Add team</button>}</div>
           <section className="pa-teams">{teams.map(t => { const players = detail.people.filter(p => p.role === "GAMER" && p.teamId === t.id), guide = detail.people.find(p => p.id === t.commanderId); return <article className="pa-team" key={t.id}>
             <header className="pa-team-header"><div className="pa-team-toggle"><Users size={18} /><span><strong>{t.name}</strong><small>{t.code}</small></span></div><span className="pa-guide-name">{guide?.name || "Guide unassigned"}</span><span className="pa-team-count">{players.length}/5</span>{cc && <button className="pa-icon" aria-label={`Edit ${t.name}`} onClick={() => setDialog({ type: "edit-team", initial: t })}><Pencil size={16} /></button>}</header>
-            <div className="pa-team-members">{players.map(p => <div className="pa-member" key={p.id}><span className="pa-avatar">{p.name[0]}</span><div><strong>{p.name}{!p.active && " · Inactive"}</strong><small>{p.username || p.email} · {p.character}</small></div>{cc && <button className="pa-icon" aria-label={`Edit account for ${p.name}`} onClick={() => setDialog({ type: "person", initial: p })}><Pencil size={16} /></button>}</div>)}
+            <div className="pa-team-members">{players.map(p => <div className="pa-member" key={p.id}><span className="pa-avatar">{p.name[0]}</span><div><strong>{p.name}{!p.active && " · Inactive"}</strong><small>{p.username || p.email} · {teamRoles.find(r => r.code === p.teamRoleCode)?.label || "Full-stack explorer"}</small></div>{cc && <button className="pa-icon" aria-label={`Edit account for ${p.name}`} onClick={() => setDialog({ type: "person", initial: p })}><Pencil size={16} /></button>}</div>)}
               {!players.length && <p className="pa-note">No players yet.</p>}<button className="pa-text-link" disabled={players.length >= 5} onClick={() => setDialog({ type: "member", initial: t })}><Plus size={16} />{players.length >= 5 ? "Team is full" : "Create player"}</button></div>
           </article>; })}{!teams.length && <div className="pa-empty pa-empty-small">{cc ? "Add a team to this cohort, then create its player accounts." : "No teams assigned in this cohort."}</div>}</section>
         </>}</section></div>

@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { campTeamMembers, campVitals } from "../lib/camp-team.js";
+import { defaultAvatar } from "../lib/avatar.js";
 
 const player = (id, key, variant = "male", teamId = "camp-a") => ({
   _id: id,
@@ -9,6 +10,7 @@ const player = (id, key, variant = "male", teamId = "camp-a") => ({
   teamId,
   characterKey: key,
   characterVariant: variant,
+  avatar: defaultAvatar(variant),
   hp: 5,
   energy: 3,
   active: true,
@@ -29,7 +31,7 @@ test("camp residents use only the active current team and each selected variant"
   );
   assert.equal(members[1].character.name, "Explorer b");
   assert.equal(members[1].character.variant, "female");
-  assert.equal(members[1].tent.key, "glitch");
+  assert.equal(members[1].tent.key, "tent-2");
   assert.equal(campTeamMembers(roster, { teamId: null }).length, 0);
 });
 

@@ -59,6 +59,7 @@ import "./college-portal.css";
 import "./game-stations.css";
 import "./league-medals.css";
 import "./team-lab.css";
+import "./cc-dashboard.css";
 import { brand } from "@/lib/brand.js";
 export const metadata = {
   title: brand.title,

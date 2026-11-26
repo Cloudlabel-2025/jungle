@@ -76,6 +76,7 @@ test("male and female avatars support every wardrobe choice with strict, image-f
 });
 test("personal identity replaces preset portraits while preserving task slots", () => {
   const p = {
+    _id: "asha",
     name: "Asha",
     characterKey: "blaze",
     avatar: defaultAvatar("female"),
@@ -86,8 +87,12 @@ test("personal identity replaces preset portraits while preserving task slots", 
   assert.equal(avatarFor({ ...p, avatar: { photo: "discard" } }).version, 1);
   assert.equal(
     characterFor({ ...p, avatar: { ...p.avatar, outfit: "sari" } }).key,
-    "blaze",
+    "asha",
   );
+  assert.equal(characterFor({ characterKey: "blaze", name: "New player" }), null);
+  assert.equal(characterFor({ ...p, avatar: { photo: "discard" } }), null);
+  assert.equal(characterFor({ teamRoleCode: "BACKEND", name: "New player" }), null);
+  assert.equal(characterFor({ ...p, teamRoleCode: "BACKEND" }).image, characterFor(p).image);
 });
 function mesh() {
   const p = Array.from({ length: 478 }, () => ({ x: 0.5, y: 0.5, z: 0 }));

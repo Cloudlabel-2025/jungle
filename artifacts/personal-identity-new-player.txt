@@ -1,0 +1,272 @@
+- button "Open expedition navigation":
+- banner:
+  - region "Player status":
+    - generic: QG
+    - strong: QA Gamer 1
+    - generic: Full-stack explorer
+    - generic: Level 1
+    - progressbar "Experience toward next level"
+    - generic: 0 / 100 XP
+    - generic "Current player balance":
+      - generic "5 of 5 lives":
+        - generic: Life
+        - generic: 5/5
+      - generic "3 of 3 energy":
+        - generic: Energy
+        - generic: 3/3
+  - generic "Player achievements":
+    - generic: pilot-team-0
+    - button "Open trophy leagues. Unranked, 0 trophies":
+      - strong: Unranked
+      - text: 0 trophies
+    - strong: "0"
+    - generic: Day streak
+  - button "Open my profile":
+  - button "Open clock-in and clock-out":
+  - link "Notifications (1 unread)":
+    - /url: /gamer/notifications
+    - generic: "1"
+  - button "Enable client alert sound":
+  - button "Sign out":
+- main:
+  - region "Expedition game map":
+    - generic "Uncharted jungle. Use left and right arrow keys, drag, or scroll to explore the forest.":
+      - 'button "Level 1: Open the Gates, Waiting for Commander release"':
+        - generic: "01"
+        - generic: LEVEL 01
+        - generic: Open the Gates
+        - generic: Waiting for Commander release
+      - 'button "Level 2: Build the Registry, Earn Key 1 first"':
+        - generic: "02"
+        - generic: LEVEL 02
+        - generic: Build the Registry
+        - generic: Earn Key 1 first
+      - 'button "Level 3: Repair the Trail, Earn Key 1, Key 2 first"':
+        - generic: "03"
+        - generic: LEVEL 03
+        - generic: Repair the Trail
+        - generic: Earn Key 1, Key 2 first
+      - 'button "Level 4: Prove the Portal, Earn Key 1, Key 2, Key 3 first"':
+        - generic: "04"
+        - generic: LEVEL 04
+        - generic: Prove the Portal
+        - generic: Earn Key 1, Key 2, Key 3 first
+      - 'button "Level 5: Deliver Alumni Connect, Earn Key 1, Key 2, Key 3, Key 4 first"':
+        - generic: "05"
+        - generic: LEVEL 05
+        - generic: Deliver Alumni Connect
+        - generic: Earn Key 1, Key 2, Key 3, Key 4 first
+    - button "Scroll map left" [disabled]:
+    - button "Scroll map right":
+    - generic: ALUMNI CONNECT · 5 LEVELS
+    - heading "The Verdant Wilds" [level=1]
+    - button "Open Alumni Connect levels":
+      - generic: 0 / 5 KEYS
+    - generic "Expedition controls":
+      - button "Open daily check-in":
+        - generic: Check-in
+      - button "Open next steps":
+        - generic: Next steps
+      - button "Open my work":
+        - generic: My work
+      - button "Open team":
+        - generic: Team
+      - button "Open help":
+        - generic: Help
+    - button "Open team level 1"
+    - generic: Open the Gates
+- alert
+- dialog "Clock in to play":
+  - generic: PLAYER ATTENDANCE
+  - heading "Clock in to play" [level=2]
+  - button "Close dialog":
+  - paragraph: Welcome back. Clock in to start your play session.
+  - text: Reason if you are arriving late
+  - textbox "Reason if you are arriving late"
+  - button "Clock in"
+  - button "Not now"
+  - paragraph: Clocking out does not submit your EOD reflection.
+- dialog "Your explorer. Every emotion.":
+  - generic: THE EXPLORER'S HIDEOUT
+  - heading "Your explorer. Every emotion." [level=2]
+  - button "Close dialog" [active]:
+  - region "Live avatar preview":
+    - text: MADE FOR YOUR VOYAGE
+    - generic: CHARACTER STICKERS
+    - img "QA Gamer 1's ready character sticker"
+    - generic "Preview controls":
+      - button "Full look" [pressed]
+      - button "Face detail"
+    - generic "Preview character reactions":
+      - button "Ready" [pressed]
+      - button "Celebrate"
+      - button "Try again"
+    - text: EXPLORER PROFILE
+    - heading "QA Gamer 1" [level=3]
+    - paragraph: Trail jacket · Side swept
+    - text: Your look. Your reactions. Your adventure.
+    - generic "Studio background":
+      - button "Forest background" [pressed]
+      - button "Camp background"
+      - button "Nightfall background"
+  - navigation "Avatar customization":
+    - button "Wardrobe" [pressed]:
+      - text: Wardrobe
+    - button "Face & hair":
+      - text: Face & hair
+    - button "Expressions":
+      - text: Expressions
+    - button "Profile picture":
+      - text: Profile picture
+    - button "Face scan":
+      - text: Face scan
+  - group "Choose your style":
+    - generic: Choose your style
+    - button "Male" [pressed]:
+      - text: Male
+    - button "Female":
+      - text: Female
+    - paragraph: Your style. Every look is yours to try.
+  - text: THE EVERYDAY COLLECTION
+  - heading "Find your signature look." [level=3]
+  - paragraph: Trail-ready layers, easy streetwear and a little occasion dressing.
+  - group "Your wardrobe":
+    - generic: Your wardrobe
+    - button "Trail jacket" [pressed]:
+      - generic: Trail jacket
+    - button "Cozy hoodie":
+      - generic: Cozy hoodie
+    - button "Varsity jacket":
+      - generic: Varsity jacket
+    - button "Everyday shirt":
+      - generic: Everyday shirt
+    - button "Tailored suit":
+      - generic: Tailored suit
+    - button "Embroidered kurta":
+      - generic: Embroidered kurta
+    - button "Day dress":
+      - generic: Day dress
+    - button "Draped sari":
+      - generic: Draped sari
+    - button "Street bomber":
+      - generic: Street bomber
+    - button "Denim layers":
+      - generic: Denim layers
+    - button "Retro tracksuit":
+      - generic: Retro tracksuit
+    - button "Utility cargos":
+      - generic: Utility cargos
+    - button "Denim overalls":
+      - generic: Denim overalls
+    - button "Team jersey":
+      - generic: Team jersey
+    - button "Festive lehenga":
+      - generic: Festive lehenga
+    - button "Celestial mage":
+      - generic: Celestial mage
+    - button "Layered cardigan":
+      - generic: Layered cardigan
+    - button "Puffer vest":
+      - generic: Puffer vest
+    - button "Cable-knit sweater":
+      - generic: Cable-knit sweater
+    - button "Sport polo":
+      - generic: Sport polo
+    - button "Utility jumpsuit":
+      - generic: Utility jumpsuit
+    - button "Festive sherwani":
+      - generic: Festive sherwani
+  - group "Outfit colour combinations":
+    - generic: Outfit colour combinations
+    - button "Forest gold": Forest gold
+    - button "Cobalt club": Cobalt club
+    - button "Sunset": Sunset
+    - button "Lilac dream": Lilac dream
+    - button "Midnight": Midnight
+    - button "Rose bloom": Rose bloom
+  - group "Outfit color":
+    - generic: Outfit color
+    - 'button "Outfit color #d78642"'
+    - 'button "Outfit color #588d76" [pressed]':
+    - 'button "Outfit color #4d7597"'
+    - 'button "Outfit color #aa526c"'
+    - 'button "Outfit color #795d9b"'
+    - 'button "Outfit color #e0c797"'
+    - 'button "Outfit color #303d48"'
+    - 'button "Outfit color #e9e0ce"'
+    - 'button "Outfit color #3264c8"'
+    - 'button "Outfit color #be373f"'
+    - 'button "Outfit color #258b88"'
+    - 'button "Outfit color #c0a3df"'
+    - 'button "Outfit color #eb9dba"'
+    - 'button "Outfit color #a9bd64"'
+    - 'button "Outfit color #f2b645"'
+    - 'button "Outfit color #322b45"'
+    - text: Custom
+    - textbox "Custom outfit color": "#588d76"
+  - group "Trousers color":
+    - generic: Trousers color
+    - 'button "Trousers color #293a46" [pressed]':
+    - 'button "Trousers color #535544"'
+    - 'button "Trousers color #755645"'
+    - 'button "Trousers color #dad0b9"'
+    - 'button "Trousers color #272b32"'
+    - 'button "Trousers color #466f9d"'
+    - 'button "Trousers color #ddd5e8"'
+    - 'button "Trousers color #874354"'
+    - 'button "Trousers color #f1e5ce"'
+    - 'button "Trousers color #304d42"'
+    - text: Custom
+    - textbox "Custom trousers color": "#293a46"
+  - group "Details color":
+    - generic: Details color
+    - 'button "Details color #e7bd70" [pressed]':
+    - 'button "Details color #d9e6df"'
+    - 'button "Details color #e48c92"'
+    - 'button "Details color #80c5bc"'
+    - 'button "Details color #aa9dd1"'
+    - 'button "Details color #f4f0e6"'
+    - 'button "Details color #e78345"'
+    - 'button "Details color #c5dc72"'
+    - 'button "Details color #477dcc"'
+    - 'button "Details color #e55777"'
+    - text: Custom
+    - textbox "Custom details color": "#e7bd70"
+  - group "Footwear":
+    - generic: Footwear
+    - button "Trail boots" [pressed]:
+      - generic: Trail boots
+    - button "Sneakers":
+      - generic: Sneakers
+    - button "Dress shoes":
+      - generic: Dress shoes
+  - group "Accessories":
+    - generic: Accessories
+    - button "None" [pressed]:
+      - generic: None
+    - button "Hoop earrings":
+      - generic: Hoop earrings
+    - button "Headphones":
+      - generic: Headphones
+    - button "Trail cap":
+      - generic: Trail cap
+    - button "Ribbed beanie":
+      - generic: Ribbed beanie
+    - button "Bucket hat":
+      - generic: Bucket hat
+    - button "Artist beret":
+      - generic: Artist beret
+    - button "Ribbon bow":
+      - generic: Ribbon bow
+    - button "Flower clip":
+      - generic: Flower clip
+    - button "Star studs":
+      - generic: Star studs
+    - button "Explorer crown":
+      - generic: Explorer crown
+    - button "Camp scarf":
+      - generic: Camp scarf
+  - button "Reset look":
+    - text: Reset look
+  - button "Save my avatar":
+    - text: Save my avatar

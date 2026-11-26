@@ -19,6 +19,8 @@ import PlayerVitals from "./PlayerVitals";
 import { Panel, Modal, Form, Badge } from "./ui";
 import { sprint4Discipline } from "../lib/sprint4-help.js";
 import AlumniSprintHistory from "./AlumniSprintHistory";
+import ProgrammeSetupForm from "./ProgrammeSetupForm";
+import { sprintRoleAssignments } from "@/lib/role-rotation.js";
 const field = (name, label, type = "textarea", optional = false) => ({
   name,
   label,
@@ -629,14 +631,19 @@ export default function PilotWorkspace({ user, mode = "board", levels = [] }) {
               separate approved weekly sprint after Week 1 recovery teams are
               published. Current state: {s?.state || "NOT CONFIGURED"}.
             </p>
-            {format && (
+            {format && (!s || ["DRAFT", "CLOSED"].includes(s.state)) && (
+              <ProgrammeSetupForm key={setupNumber} format={format} setup={data.setup} sprint={s} run={run} />
+            )}
+            {s && !["DRAFT", "CLOSED"].includes(s.state) && <p role="status">This sprint has already been loaded. Use the operations controls to manage it; the next sprint can be configured after this one is closed.</p>}
+            {format && (!s || ["DRAFT", "CLOSED"].includes(s.state)) && <details>
+              <summary>Advanced: import a sprint configuration file</summary>
               <JsonAction
                 run={run}
                 action="draft"
                 label="Stage approved sprint configuration"
                 example={format}
               />
-            )}
+            </details>}
             <details>
               <summary>
                 Frozen task manifests and configuration reference
@@ -777,6 +784,11 @@ export default function PilotWorkspace({ user, mode = "board", levels = [] }) {
                     ))}
                   </select>
                 </label>
+                {activeTeam && (
+                  <ul className="programme-role-rotation" aria-label={`Sprint ${s.data.number} team roles`}>
+                    {(activeTeam.roleAssignments || sprintRoleAssignments(activeTeam.members, s.data.number)).map(role => <li key={role.userId}><strong>{names[role.userId] || role.userId}{role.userId === user._id ? " (you)" : ""}</strong><span>{role.label}</span></li>)}
+                  </ul>
+                )}
                 {activeTeam && (
                   <p>
                     TL: {names[activeTeam.leaderId] || "Selected at kickoff"} ·

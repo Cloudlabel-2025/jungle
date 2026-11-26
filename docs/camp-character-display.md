@@ -1,5 +1,7 @@
 # Campfire character display
 
+Archived implementation. The preset portraits and sprites below were retired on November 26, 2026. Camp residents now render each player's saved personal avatar; players without an avatar are not assigned a stock face. See [Personal player identity](personal-identity-retirement.md).
+
 The active display uses the original full-body character artwork beside each
 team member's tent. It selects the neutral first frame from the corresponding
 male or female sheet in `public/images/characters/camp/`, without playing sprite

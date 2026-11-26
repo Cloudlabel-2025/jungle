@@ -166,7 +166,10 @@ export default function Arena({
     ...(data?.story?.introComplete ? weekOneNavigation.GAMER.map(([code, page, label, icon]) => [code, page === "dashboard" ? "week-one" : `week-one-${page}`, label, icon]) : [["F1", "week-one-ask-mc", "Ask for help", "Radio"]]),
     ...(data?.story?.introComplete ? [["O1", "objectives", "Level objectives", "BookOpen"], ["C1", "calendar", "Calendar", "CalendarDays"]] : []),
     ["N1", "notifications", "Notifications", "Bell"],
-  ] : workspaceNavigation(role);
+  ] : workspaceNavigation(role, {
+    includeManagement: tenancy && role !== "GAMER" &&
+      (!Array.isArray(user?.permissions) || user.permissions.includes("roster:write")),
+  });
   const weekOneMode = programmeScreen(screen) !== null;
   const current = screen === "college-management"
     ? ["CM", screen, role === "CENTRE_COMMAND" ? "Manage college" : "Manage players"]
@@ -573,6 +576,7 @@ export default function Arena({
           ref={playerNavigation}
           id="workspace-navigation"
           className={`sidebar ${mobile ? "open" : ""}`}
+          tabIndex={0}
           inert={playerMode && !mobile ? true : undefined}
           role={mobile ? "dialog" : undefined}
           aria-modal={mobile ? true : undefined}
@@ -616,7 +620,6 @@ export default function Arena({
                 : "EXPEDITION COUNCIL"}
           </span>
           <nav aria-label="Workspace">
-            {tenancy && role !== "GAMER" && (!Array.isArray(user.permissions) || user.permissions.includes("roster:write")) && <Link href={`/${prefix(role)}/college-management`} className={`nav-item ${screen === "college-management" ? "active" : ""}`} aria-current={screen === "college-management" ? "page" : undefined} onClick={() => setMobile(false)}><ShieldCheck size={18} /><span>{role === "CENTRE_COMMAND" ? "Manage college" : "Manage players"}</span><small>CM</small>{screen === "college-management" && <i />}</Link>}
             {nav.map(([code, path, label, icon]) => {
               const Icon = icons[icon];
               return (
@@ -624,6 +627,7 @@ export default function Arena({
                   onClick={() => setMobile(false)}
                   href={`/${prefix(role)}/${path}`}
                   className={`nav-item ${screen === path || (path === "week-one" && weekOneMode) ? "active" : ""}`}
+                  aria-current={screen === path || (path === "week-one" && weekOneMode) ? "page" : undefined}
                   title={label}
                   aria-label={playerMode ? label : undefined}
                   key={code}
@@ -644,12 +648,12 @@ export default function Arena({
                 setCharacterPicker(true);
               }}
             >
-              <AvatarPortrait avatar={characterFor(data.user)?.avatar}
+              {characterFor(data.user) && <AvatarPortrait avatar={characterFor(data.user).avatar}
                 alt=""
                 width={36}
                 height={36}
-              />
-              Customize avatar
+              />}
+              {data.user.avatar ? "Customize avatar" : "Create my avatar"}
             </button>
           )}
           <div className="sidebar-bottom">
@@ -671,7 +675,7 @@ export default function Arena({
                   <strong>{squad?.name || roleNames[role]}</strong>
                   <small>
                     {playerMode
-                      ? `${characterFor(data?.user || user)?.name || "Explorer"} · Full stack`
+                      ? flightMode ? "Roles begin in the jungle" : (data?.user || user).assignment || "Role assigned on jungle entry"
                       : user.assignment}
                   </small>
                 </span>

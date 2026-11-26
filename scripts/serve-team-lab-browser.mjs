@@ -116,6 +116,7 @@ const child = spawn(
       MONGODB_URI: process.env.MONGODB_URI,
       SESSION_SECRET: randomBytes(48).toString("hex"),
       TENANCY_ENABLED: "false",
+      ...(process.argv.includes("--verification-build") ? { CODEWILD_BUILD_CHECK: "1" } : {}),
       APP_ORIGIN: "http://127.0.0.1:3191",
       DEMO_MODE: "false",
       BLOB_READ_WRITE_TOKEN: "",

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import PaginatedList from "./PaginatedList";
 import { Panel, Form, Badge, Empty } from "./ui";
 import { umbrellas, interventions, transitions } from "@/lib/support-rules.js";
 import {
@@ -55,7 +56,7 @@ function Action({ title, children }) {
     </details>
   );
 }
-function Desk({ data, act, now }) {
+function Desk({ data, act, now, paginated = false }) {
   const [selected, setSelected] = useState("");
   const s = data.support,
     user = data.user,
@@ -95,9 +96,10 @@ function Desk({ data, act, now }) {
           assigning tickets.
         </p>
       )}
-      <div className="support-ticket-list">
+      <PaginatedList items={s.tickets} label="tickets" enabled={paginated} className="support-ticket-list">
+        {tickets => <>
         {!s.tickets.length && <Empty title="No tickets in your queue" />}
-        {s.tickets.map((t) => (
+        {tickets.map((t) => (
           <button
             key={t._id}
             className={`support-ticket ${selected === t._id ? "selected" : ""}`}
@@ -119,7 +121,8 @@ function Desk({ data, act, now }) {
             </small>
           </button>
         ))}
-      </div>
+        </>}
+      </PaginatedList>
       {ticket && (
         <Panel title="Ticket workspace" kicker={ticket._id}>
           <p className="support-copy">{ticket.description}</p>
@@ -471,7 +474,7 @@ function Discovery({ data, act }) {
     </>
   );
 }
-function Library({ data, act }) {
+function Library({ data, act, paginated = false }) {
   const [query, setQuery] = useState("");
   const s = data.support,
     cc = data.user.role === "CENTRE_COMMAND";
@@ -514,7 +517,7 @@ function Library({ data, act }) {
         </Action>
       )}
       {!entries.length && <Empty title="No reviewed cases match" />}
-      {entries.map((c) => (
+      <PaginatedList key={query} items={entries} label="cases" pageSize={4} enabled={paginated}>{rows => rows.map((c) => (
         <article className="support-record" key={c._id}>
           <h3>{c.content.title}</h3>
           <CaseComparison entry={c} data={data} act={act} />
@@ -600,7 +603,7 @@ function Library({ data, act }) {
             </>
           )}
         </article>
-      ))}
+      ))}</PaginatedList>
     </>
   );
 }
@@ -893,7 +896,7 @@ function Configuration({ data, act }) {
 }
 export { Desk as SupportDesk, Library as SupportLibrary };
 
-export default function SupportConsole({ screen, data, act, now }) {
+export default function SupportConsole({ screen, data, act, now, paginated = false }) {
   const [tab, setTab] = useState("");
   const gamer = data.user.role === "GAMER",
     cc = data.user.role === "CENTRE_COMMAND";
@@ -942,7 +945,7 @@ export default function SupportConsole({ screen, data, act, now }) {
             </button>
           ))}
         </div>
-        <Content key={active[0]} data={data} act={act} now={now} />
+        <Content key={active[0]} data={data} act={act} now={now} paginated={paginated} />
         {cc && ["dashboard", "reports"].includes(screen) && (
           <a className="btn" href="/api/support/export">
             Export private support evidence (JSON)

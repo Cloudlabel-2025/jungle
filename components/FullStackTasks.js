@@ -61,17 +61,14 @@ export default function FullStackTasks({
             className={`feature-assignment${own ? " is-own-feature" : ""}`}
           >
             <summary>
-              <img src={character?.image} alt="" width={48} height={48} />
+              {character && <img src={character.image} alt="" width={48} height={48} />}
               <span>
                 <strong>
                   {feature.name}
                   {own && <Badge>YOUR FEATURE</Badge>}
                 </strong>
                 <small>
-                  {member?.name || "Assigned when the team starts"} ·{" "}
-                  {character?.name ||
-                    characters.find((c) => c.key === feature.characterKey)
-                      ?.label}{" "}
+                  {member?.name || "Assigned when the team starts"}{" "}
                   · {complete}/5 approved
                 </small>
               </span>

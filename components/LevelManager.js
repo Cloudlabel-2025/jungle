@@ -463,7 +463,7 @@ export default function LevelManager({
                 <section className="feature-authoring">
                   <h3>Five features · 25 tasks</h3>
                   <p>
-                    One feature per character. Every feature includes frontend,
+                    One feature per player. Every feature includes frontend,
                     backend, database, testing and deployment.
                   </p>
                   {form.features.map((feature, index) => (

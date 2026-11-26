@@ -4,9 +4,11 @@ import mongoose from "mongoose";
 import { models, connect } from "../lib/db.js";
 import { teamAction, validateMembers } from "../lib/team-management.js";
 import { characters, characterFor } from "../lib/characters.js";
+import { assignmentSlotFor } from "../lib/team-slots.js";
 import { checkPassword } from "../lib/password.js";
 import { projectAction } from "../lib/projects.js";
 import { planRecipients } from "../lib/team-roles.js";
+import { publicPlayer } from "../lib/player-stage.js";
 
 const member = (i) => ({
   name: `New player ${i}`,
@@ -15,7 +17,14 @@ const member = (i) => ({
   characterKey: characters[i % 5].key,
   variant: i % 2 ? "female" : "male",
 });
-test("team member input limits, normalized unique usernames and distinct character slots are enforced", () => {
+test("new accounts normalize usernames and defer work roles until jungle entry", () => {
+  const personal = validateMembers([{ name: "Personal explorer", username: "personal_player", password: "QA-only-Password-42", teamRoleCode: "BACKEND" }])[0];
+  assert.equal(personal.teamRoleCode, undefined);
+  assert.equal(personal.characterKey, undefined);
+  assert.doesNotThrow(() => validateMembers([{ name: "No role yet", username: "no_role", password: "QA-only-Password-42" }]));
+  assert.doesNotThrow(() => validateMembers([member(0), { ...member(1), characterKey: "blaze" }]));
+  assert.equal(personal.variant, undefined);
+  assert.equal(personal.avatar, undefined);
   assert.equal(
     validateMembers([{ ...member(0), username: "Player.ONE" }])[0].username,
     "player.one",
@@ -24,20 +33,19 @@ test("team member input limits, normalized unique usernames and distinct charact
     [],
     Array.from({ length: 6 }, (_, i) => member(i)),
     [member(0), { ...member(1), username: member(0).username.toUpperCase() }],
-    [member(0), { ...member(1), characterKey: "blaze" }],
     [{ ...member(0), password: "short" }],
     [{ ...member(0), username: "bad user" }],
     [{ ...member(0), variant: "unknown" }],
   ])
     assert.throws(() => validateMembers(rows));
 });
-test("each character has a distinct fixed support ability, identical across versions", () => {
+test("workshop guidance belongs to work roles independently of avatar appearance", () => {
   assert.equal(new Set(characters.map((c) => c.ability.name)).size, 5);
   for (const character of characters) {
     assert.deepEqual(
-      characterFor({ characterKey: character.key, characterVariant: "male" })
+      assignmentSlotFor({ characterKey: character.key, characterVariant: "male" })
         .ability,
-      characterFor({ characterKey: character.key, characterVariant: "female" })
+      assignmentSlotFor({ characterKey: character.key, characterVariant: "female" })
         .ability,
     );
     assert.equal(character.ability.steps.length, 4);
@@ -110,6 +118,10 @@ test(
       assert.equal(user.role, "GAMER");
       assert.equal(user.xp, 0);
       assert.equal(user.trophies, 0);
+      assert.equal(user.teamRoleCode, undefined);
+      assert.equal(user.characterKey, undefined);
+      assert.equal(user.characterVariant, undefined);
+      assert.equal(user.avatar, undefined);
       const credential = await models.Credential.findById(user._id).lean();
       assert.notEqual(credential.passwordHash, member(0).password);
       assert.equal(
@@ -131,13 +143,6 @@ test(
         await models.Team.countDocuments(),
         1,
         "failed account creation must roll back the team",
-      );
-      await assert.rejects(
-        teamAction({ _id: "cc" }, "add-members", {
-          teamId: result.teamId,
-          members: [{ ...member(1), characterKey: "blaze" }],
-        }),
-        /already belongs/,
       );
       await teamAction({ _id: "cc" }, "add-members", {
         teamId: result.teamId,
@@ -173,10 +178,10 @@ test(
         }),
         /name already exists/,
       );
-      const ready = await models.User.findOne({
-        teamId: result.teamId,
-        characterKey: "blaze",
-      }).lean();
+      await models.Cohort.updateOne({ _id: "alpha" }, { $set: { currentWeek: 2 } });
+      const players = await models.User.find({ teamId: result.teamId }).lean();
+      for (const player of players) await publicPlayer(player);
+      const ready = await models.User.findOne({ teamId: result.teamId, teamRoleCode: "TEAM_LEAD" }).lean();
       await projectAction(ready, "start", { levelId: "project_1" });
       assert.equal(
         await models.Task.countDocuments({

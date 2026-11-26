@@ -64,7 +64,7 @@ export default function CrashArrival({ act }) {
               }
             }}
           >
-            {busy ? "Continuing…" : "Continue to character selection"}
+            {busy ? "Continuing…" : "Create my personal avatar"}
             <ArrowRight size={18} />
           </button>
         )}

@@ -422,6 +422,15 @@ button {
   display: flex;
   flex-direction: column;
   padding: 31px 16px 0;
+  max-height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #58734b #0b251c;
+}
+.sidebar > * {
+  flex-shrink: 0;
 }
 .brand {
   display: flex;

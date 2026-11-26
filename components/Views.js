@@ -30,6 +30,10 @@ import {
   Zap,
   Hexagon,
   CheckCircle2,
+  Settings2,
+  Columns3,
+  FileBarChart,
+  ArrowUpRight,
 } from "lucide-react";
 import { Panel, Badge, HP, Avatar, Modal, Empty, Form, Receipt, Busy } from "./ui";
 import { EncounterGrid } from "./Expedition";
@@ -48,6 +52,9 @@ import MapDesigner from "./MapDesigner";
 import TeamManager from "./TeamManager";
 import PilotBoardSlot from "./PilotBoardSlot";
 import ProgrammePanel from "./ProgrammePanel";
+import CommandMissionBoard from "./CommandMissionBoard";
+import PaginatedList from "./PaginatedList";
+import DashboardSectionNav from "./DashboardSectionNav";
 import { DiscoveryMission } from "./DayOneFeatures";
 import { teamRoles, playerRole } from "@/lib/team-roles.js";
 import {
@@ -1067,11 +1074,14 @@ function Telemetry({ data, now, act, executive = false }) {
   const attendance = data.attendance.filter((a) => a.day === ist(now).day);
   const blockers = data.messages.filter((m) => m.isBlocker && !m.resolvedAt);
   const done = data.tasks.filter((t) => t.status === "Done").length;
+  const slipping = data.tasks.filter(t => t.status !== "Done" &&
+    (new Date(t.dueAt) < now || ["At Risk", "Delayed"].includes(t.report)));
   return (
     <>
+      <section id={executive ? "cc-overview" : undefined} className={executive ? "cc-section cc-overview" : undefined}>
       <Heading
         code={executive ? "CC02" : "MC01"}
-        title={executive ? "Council overview" : "Guide’s lookout"}
+        title={executive ? "Dashboard" : "Guide’s lookout"}
         subtitle={
           executive
             ? "The whole arena. One clear view."
@@ -1138,9 +1148,11 @@ function Telemetry({ data, now, act, executive = false }) {
           },
         ]}
       />
+      </section>
+      <div id={executive ? "cc-squads" : undefined} className={executive ? "cc-section cc-squads" : undefined}>
       <Panel title="Squad radar" kicker="DELIVERY / ENERGY / COMMUNICATION">
-        <div className="squad-telemetry">
-          {data.teams.map((t) => {
+        <PaginatedList items={data.teams} label="squads" pageSize={6} enabled={executive} className="squad-telemetry">
+          {teams => teams.map((t) => {
             const users = data.roster.filter((u) => u.teamId === t._id),
               tasks = data.tasks.filter((q) => q.teamId === t._id),
               done = tasks.filter((q) => q.status === "Done").length;
@@ -1178,12 +1190,13 @@ function Telemetry({ data, now, act, executive = false }) {
               </div>
             );
           })}
-        </div>
+        </PaginatedList>
       </Panel>
-      <div className="two-columns lower-panels">
+      </div>
+      <div id={executive ? "cc-attention" : undefined} className={executive ? "two-columns cc-section cc-attention" : "two-columns lower-panels"}>
         <Panel title="Blocker frequency" kicker="INTERVENTIONS NEEDED">
           {blockers.length ? (
-            blockers.map((m) => (
+            <PaginatedList items={blockers} label="blockers" pageSize={4} enabled={executive}>{rows => rows.map((m) => (
               <div className="history-entry" key={m._id}>
                 <Badge tone="red">BLOCKER</Badge>
                 <h3>{m.senderName}</h3>
@@ -1202,7 +1215,7 @@ function Telemetry({ data, now, act, executive = false }) {
                   <Check size={14} />
                 </button>
               </div>
-            ))
+            ))}</PaginatedList>
           ) : (
             <Empty title="No active blockers">
               Squad blocker broadcasts appear here for rapid support.
@@ -1210,20 +1223,8 @@ function Telemetry({ data, now, act, executive = false }) {
           )}
         </Panel>
         <Panel title="Slippage watch" kicker="DEADLINES / EARLY WARNINGS">
-          {data.tasks.filter(
-            (t) =>
-              t.status !== "Done" &&
-              (new Date(t.dueAt) < now ||
-                ["At Risk", "Delayed"].includes(t.report)),
-          ).length ? (
-            data.tasks
-              .filter(
-                (t) =>
-                  t.status !== "Done" &&
-                  (new Date(t.dueAt) < now ||
-                    ["At Risk", "Delayed"].includes(t.report)),
-              )
-              .map((t) => (
+          {slipping.length ? (
+            <PaginatedList items={slipping} label="deadlines" pageSize={4} enabled={executive}>{rows => rows.map((t) => (
                 <div className="history-entry" key={t._id}>
                   <h3>{t.title}</h3>
                   <p>
@@ -1232,7 +1233,7 @@ function Telemetry({ data, now, act, executive = false }) {
                   </p>
                   <small className="danger-text">{fmt(t.dueAt)} IST</small>
                 </div>
-              ))
+              ))}</PaginatedList>
           ) : (
             <Empty title="No slippage signals">
               At-risk reports and overdue quests are monitored by the server.
@@ -1251,6 +1252,26 @@ export function StaffView(props) {
     validProgrammeScreen(props.data.user.role, props.screen)
   )
     return <WeekOneView {...props} screen={moduleScreen} />;
+  if (props.screen === "dashboard" && props.data.user.role === "CENTRE_COMMAND")
+    return <div className="cc-dashboard">
+      <DashboardSectionNav hasProgramme={Boolean(props.data.weekOneProgram)} hasSupport={Boolean(props.data.support)} />
+      <Telemetry {...props} executive />
+      {props.data.weekOneProgram && <section id="cc-actions" className="cc-section cc-actions" aria-label="Quick actions"><CommandMissionBoard data={props.data} /></section>}
+      <section id="cc-programme" className="cc-section cc-programme" aria-label="Programme operations">
+        <Panel title="Weekly programme operations" kicker="SPRINTS / ASSIGNMENTS / REVIEW">
+          <nav id="programme-board" className="cc-programme-links" aria-label="Programme tools">
+            {[
+              ["setup?programme=setup#programme-setup", "Set up a sprint", "Schedule, teams, owners and resources", Settings2],
+              ["client-control?programme=board#programme-board", "Open sprint board", "Tasks, reviews and acceptance", Columns3],
+              ["reports?programme=reports#programme-reports", "View reports", "Progress and programme records", FileBarChart],
+            ].map(([path, label, description, Icon]) => <Link key={path} href={`/centre-command/${path}`} className="cc-programme-link">
+              <Icon size={19} aria-hidden="true" /><span><strong>{label}</strong><small>{description}</small></span><ArrowUpRight size={16} aria-hidden="true" />
+            </Link>)}
+          </nav>
+        </Panel>
+      </section>
+      {props.data.support && <section id="cc-support" className="cc-section cc-support" aria-label="Campus support"><SupportConsole {...props} paginated /></section>}
+    </div>;
   return (
     <>
       <StaffCore {...props} />
@@ -1714,14 +1735,6 @@ function Setup({ data, act }) {
                   value: t._id,
                   label: t.name,
                 })),
-              },
-              {
-                name: "characterKey",
-                label: "Team role · swaps with its current holder",
-                options: [
-                  { value: "", label: "Keep current team role" },
-                  ...characters.map(c => ({value:c.key,label:c.label})),
-                ],
               },
             ]}
             submit="Update allocation"

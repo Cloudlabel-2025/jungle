@@ -1,4 +1,47 @@
 /* Scoped additions only; the expedition map and existing page styles are retained. */
+.programme-setup-form { display: grid; gap: 18px; padding: 20px; }
+.programme-setup-form h3, .programme-setup-form h4, .programme-setup-form h5 { margin: 0; color: #e0ead4; }
+.programme-setup-form h3 { font-size: 22px; }
+.programme-setup-form h4 { font-size: 20px; }
+.programme-setup-form h5 { font-size: 17px; }
+.programme-setup-intro p { margin: 8px 0 0; color: #aebfa3; line-height: 1.5; }
+.programme-setup-form fieldset { display: grid; gap: 18px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.programme-setup-form label { display: grid; gap: 7px; min-width: 0; font-size: 14px; color: #c5d2bb; }
+.programme-setup-form input:not([type="checkbox"]), .programme-setup-form select, .programme-setup-form textarea {
+  width: 100%; min-width: 0; min-height: 42px; padding: 10px 12px; border: 1px solid #4b6247;
+  border-radius: 5px; color: #e4ecd9; background: #0d2119; font: inherit; color-scheme: dark;
+}
+.programme-setup-form textarea { min-height: 80px; resize: vertical; }
+.programme-setup-form :focus-visible { outline: 2px solid #a9cc87; outline-offset: 3px; }
+.programme-setup-form h4:focus { outline: none; }
+.programme-setup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 14px; }
+.programme-setup-steps { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0 0 14px; border-bottom: 1px solid #3b5141; }
+.programme-setup-steps button { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; border-radius: 4px; color: #a3b598; }
+.programme-setup-steps [aria-current="step"] button { color: #e1ecd0; background: #29402b; }
+.programme-setup-steps button:disabled { opacity: .45; cursor: default; }
+.programme-working-days { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.programme-working-days label { display: flex; align-items: center; gap: 8px; min-height: 36px; }
+.programme-working-days input { width: 18px; height: 18px; accent-color: #a9cc87; }
+.programme-setup-team, .programme-setup-resource { display: grid; gap: 14px; padding: 16px; border: 1px solid #3b5141; border-radius: 6px; background: #12281d; }
+.programme-setup-team p { margin: 0; color: #aebfa3; }
+.programme-owner-list { display: grid; gap: 0; }
+.programme-role-rotation { list-style: none; margin: 12px 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 8px; }
+.programme-role-rotation li { display: grid; gap: 5px; padding: 12px; background: #10231b; border: 1px solid #3b5141; border-radius: 5px; }
+.programme-role-rotation strong { color: #dce7cd; font-size: 14px; }
+.programme-role-rotation span { color: #a9bf96; font-size: 13px; }
+.programme-owner-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(160px, 30%); align-items: center; gap: 14px; padding-block: 12px; border-bottom: 1px solid #314534; }
+.programme-owner-list > label { grid-template-columns: minmax(0, 1fr) minmax(180px, 35%); gap: 16px; align-items: center; padding-block: 12px; border-bottom: 1px solid #314534; }
+.programme-owner-list > label:last-child { border: 0; }
+.programme-owner-list strong { color: #a9cc87; }
+.programme-setup-notice { display: flex; align-items: center; gap: 8px; margin: 16px 20px; padding: 14px; border-left: 3px solid #a9cc87; background: #1b3224; color: #d2dfc4; }
+.programme-setup-form .programme-setup-notice { margin: 0; }
+.programme-setup-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 16px; border-top: 1px solid #3b5141; }
+.programme-setup-footer > span { margin-right: auto; color: #aebfa3; font-size: 13px; }
+@media (max-width: 700px) {
+  .programme-setup-form { padding: 14px; }
+  .programme-owner-list > label { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .programme-owner-row { grid-template-columns: minmax(0, 1fr); }
+}
 [aria-label="Programme Sprint Work"] {
   min-width: 0;
 }

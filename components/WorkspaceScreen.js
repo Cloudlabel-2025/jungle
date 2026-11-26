@@ -57,7 +57,7 @@ export default function WorkspaceScreen({ screen, objectives, objectiveLevel }) 
   const squad = data.teams.find((team) => team._id === user.teamId);
   return (
     <>
-      {role !== "GAMER" && screen === "dashboard" && data.weekOneProgram && <CommandMissionBoard data={data}/>}
+      {role === "MISSION_COMMANDER" && screen === "dashboard" && data.weekOneProgram && <CommandMissionBoard data={data}/>}
       {!data.story?.flight && ["dashboard", "setup", "week-one"].includes(screen) &&
         screen !== "dashboard" && (
           <WorkflowOverview data={data} now={clock} />

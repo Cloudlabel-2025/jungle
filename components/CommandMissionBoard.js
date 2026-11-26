@@ -48,6 +48,23 @@ export default function CommandMissionBoard({ data }) {
       Icon: cc ? Settings2 : ShieldCheck,
     },
   ];
+  if (cc) return (
+    <section className="cc-quick-actions" aria-label="Quick actions">
+      <h2>Quick actions</h2>
+      <nav className="cc-quick-links" aria-label="Command shortcuts">
+        {missions.map(({ page, count, Icon }) => (
+          <Link key={page} href={programmePath(role, page)} className="cc-quick-link">
+            <Icon size={20} aria-hidden="true" />
+            <span>
+              <strong>{{ results: "Review results", questions: "Open questions", setup: "Level setup" }[page]}</strong>
+              <small>{count}</small>
+            </span>
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
+        ))}
+      </nav>
+    </section>
+  );
   return (
     <section
       className="command-mission-board"

@@ -2,37 +2,29 @@
 import { useRef, useState } from "react";
 import { Plus, Users, UserPlus, Trash2, ShieldCheck } from "lucide-react";
 import { Panel, Badge, Avatar } from "./ui";
-import {
-  characters,
-  characterFor,
-  characterKey,
-  fullStackTeamReady,
-} from "@/lib/characters";
+import { fullStackTeamReady } from "@/lib/characters";
+
+import { assignmentSlotFor } from '@/lib/team-slots';
 
 export default function TeamManager({ data, act }) {
   const [editing, setEditing] = useState(false),
     [teamId, setTeamId] = useState(null),
     [name, setName] = useState("");
   const counter = useRef(0);
-  const blank = (key) => ({
+  const blank = () => ({
     id: ++counter.current,
     name: "",
     username: "",
     password: "",
-    characterKey: key,
   });
   const [members, setMembers] = useState([]),
     [busy, setBusy] = useState(false);
   const existing = data.roster.filter((p) => p.teamId === teamId);
   const maximum = teamId ? 5 - existing.length : 5;
   function open(team = null) {
-    const used = data.roster
-      .filter((p) => p.teamId === team?._id)
-      .map(characterKey);
-    const next = characters.find((c) => !used.includes(c.key));
     setTeamId(team?._id || null);
     setName(team?.name || "");
-    setMembers([blank(next?.key || "blaze")]);
+    setMembers([blank()]);
     setEditing(true);
   }
   function update(id, key, value) {
@@ -41,13 +33,8 @@ export default function TeamManager({ data, act }) {
     );
   }
   function add() {
-    const used = [
-      ...existing.map(characterKey),
-      ...members.map((m) => m.characterKey),
-    ];
-    const next = characters.find((c) => !used.includes(c.key));
-    if (members.length < maximum && next)
-      setMembers((rows) => [...rows, blank(next.key)]);
+    if (members.length < maximum)
+      setMembers((rows) => [...rows, blank()]);
   }
   async function save(event) {
     event.preventDefault();
@@ -86,7 +73,7 @@ export default function TeamManager({ data, act }) {
     >
       <p className="detail-copy">
         Create a party with up to five members. Each member gets a username,
-        password and a team role. Each player creates their own personal avatar.
+        password. Work roles begin in the jungle coding stage and rotate with each sprint. Each player creates their own personal avatar.
       </p>
       {editing && (
         <form
@@ -116,21 +103,11 @@ export default function TeamManager({ data, act }) {
             </label>
           )}
           <p className="support-copy">
-            Each team role occupies one slot. Players choose their own appearance. Teams with fewer than five members can sign in and
+            Roles are assigned automatically after flight clearance. Players choose their own appearance. Teams with fewer than five members can sign in and
             explore, and show as forming until ready for five-feature levels.
           </p>
           <div className="team-member-forms">
             {members.map((member, index) => {
-              const character = characterFor({
-                characterKey: member.characterKey,
-                characterVariant: member.variant,
-              });
-              const taken = [
-                ...existing.map(characterKey),
-                ...members
-                  .filter((m) => m.id !== member.id)
-                  .map((m) => m.characterKey),
-              ];
               return (
                 <fieldset key={member.id} disabled={busy}>
                   <legend>EXPLORER {String(index + 1).padStart(2, "0")}</legend>
@@ -138,16 +115,14 @@ export default function TeamManager({ data, act }) {
                     <Avatar
                       player={{
                         name: member.name,
-                        characterKey: member.characterKey,
-                        characterVariant: member.variant,
                       }}
                     />
                     <span>
                       <strong>
-                        {character.label}
+                        {member.name || `Player ${index + 1}`}
                       </strong>
                       <small>
-                        {character.ability.name} · static support ability
+                        Personal avatar created by the player
                       </small>
                     </span>
                     {members.length > 1 && (
@@ -212,19 +187,9 @@ export default function TeamManager({ data, act }) {
                         8–256 characters. Members sign in with their username.
                       </small>
                     </label>
-                    <label>
-                      Team role
-                      <select value={member.characterKey} onChange={(e) => update(member.id, "characterKey", e.target.value)}>
-                        {characters.map(c => <option key={c.key} value={c.key} disabled={taken.includes(c.key)}>{c.label}</option>)}
-                      </select>
-                    </label>
                   </div>
-                  <p className="team-ability-preview">
-                    <ShieldCheck size={14} />
-                    <span>
-                      <strong>{character.ability.name}</strong> ·{" "}
-                      {character.ability.summary}
-                    </span>
+                  <p className="team-ability-preview"><ShieldCheck size={14} />
+                    Your work role rotates each sprint. Your avatar stays yours.
                   </p>
                 </fieldset>
               );
@@ -288,9 +253,9 @@ export default function TeamManager({ data, act }) {
                         {player.username
                           ? `@${player.username}`
                           : "Existing account"}{" "}
-                        · {characterFor(player)?.label || "Explorer"}
+                        · {assignmentSlotFor(player)?.label || "Explorer"}
                       </small>
-                      <small>{characterFor(player)?.ability.name}</small>
+                      <small>{player.avatar ? "Personal avatar" : "Avatar not created yet"}</small>
                     </span>
                   </div>
                 ))}

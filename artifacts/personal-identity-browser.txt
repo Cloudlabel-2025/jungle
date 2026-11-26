@@ -1,0 +1,79 @@
+- main:
+  - region "Expedition game map":
+    - generic "Uncharted jungle. Use left and right arrow keys, drag, or scroll to explore the forest.":
+      - 'button "Level 1: Open the Gates, Waiting for Commander release"':
+        - generic: "01"
+        - generic: LEVEL 01
+        - generic: Open the Gates
+        - generic: Waiting for Commander release
+      - 'button "Level 2: Build the Registry, Earn Key 1 first"':
+        - generic: "02"
+        - generic: LEVEL 02
+        - generic: Build the Registry
+        - generic: Earn Key 1 first
+      - 'button "Level 3: Repair the Trail, Earn Key 1, Key 2 first"':
+        - generic: "03"
+        - generic: LEVEL 03
+        - generic: Repair the Trail
+        - generic: Earn Key 1, Key 2 first
+      - 'button "Level 4: Prove the Portal, Earn Key 1, Key 2, Key 3 first"':
+        - generic: "04"
+        - generic: LEVEL 04
+        - generic: Prove the Portal
+        - generic: Earn Key 1, Key 2, Key 3 first
+      - 'button "Level 5: Deliver Alumni Connect, Earn Key 1, Key 2, Key 3, Key 4 first"':
+        - generic: "05"
+        - generic: LEVEL 05
+        - generic: Deliver Alumni Connect
+        - generic: Earn Key 1, Key 2, Key 3, Key 4 first
+    - button "Scroll map left" [disabled]:
+    - button "Scroll map right":
+    - generic: ALUMNI CONNECT · 5 LEVELS
+    - heading "The Verdant Wilds" [level=1]
+    - button "Open Alumni Connect levels":
+      - generic: 0 / 5 KEYS
+    - generic "Expedition controls":
+      - button "Open daily check-in":
+        - generic: Check-in
+      - button "Open next steps":
+        - generic: Next steps
+      - button "Open my work":
+        - generic: My work
+      - button "Open team":
+        - generic: Team
+      - button "Open help":
+        - generic: Help
+    - button "Open team level 1"
+    - generic: Open the Gates
+    - dialog "Your expedition party":
+      - generic: EXPEDITION / FIELD EQUIPMENT
+      - heading "Your expedition party" [level=2]
+      - button "Close dialog" [active]:
+      - generic: FIVE EXPLORERS. ONE WAY HOME.
+      - heading "Your expedition party" [level=2]
+      - link "Comms":
+        - /url: /gamer/team-room
+      - img "QA Gamer 0's personal avatar"
+      - strong: QA Gamer 0YOU
+      - generic: QA Gamer 0 · Full-stack explorer · Full stack
+      - generic "Online"
+      - generic "5 of 5 HP"
+      - generic: QG
+      - strong: QA Gamer 1
+      - generic "Offline"
+      - generic "5 of 5 HP"
+      - generic: QG
+      - strong: QA Gamer 2
+      - generic "Offline"
+      - generic "5 of 5 HP"
+      - generic: QG
+      - strong: QA Gamer 3
+      - generic "Offline"
+      - generic "5 of 5 HP"
+      - generic: QG
+      - strong: QA Gamer 4
+      - generic "Offline"
+      - generic "5 of 5 HP"
+      - text: 5 operatives mission ready
+      - generic: 0 trophies
+- alert

@@ -63,10 +63,10 @@ test("ten full-stack projects assign five distinct end-to-end features and every
     /Define one/,
   );
   assert.equal(
-    characterFor({ ...players[0], characterVariant: "female" }).name,
+    characterFor({ ...players[0], avatar: defaultAvatar("female") }).name,
     "Player 0",
   );
-  assert.equal(characterFor({role:"GAMER",assignment:"Frontend Specialist"}).name,"Explorer");
+  assert.equal(characterFor({role:"GAMER",assignment:"Frontend Specialist"}),null);
 });
 test("legacy attempts resolve their original definition when the published curriculum changes", () => {
   const newer = fullStackLevel(projectLevels[0]);

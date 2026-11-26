@@ -1,5 +1,7 @@
 # Character cast and full-stack projects
 
+Archived art history. The five preset identities and their public assets were retired on November 26, 2026. Their generation scripts were removed. Active character appearance comes from each player's saved avatar. See [Personal player identity](personal-identity-retirement.md).
+
 The cast has five identities: Blaze (Zayn/Zara), Glitch (Jett/Juno), Shade (Nyx/Nia), Pulse (Kai/Kira), Rune (Riven/Rhea). Each has male and female portrait versions with identical gameplay. Portraits were generated and then revised using the built-in image_gen tool. Final optimized assets live in `public/images/characters/`; generation sources and individual appearance/outfit prompts are recorded in `character-image-sources.json`. Earlier sources remain in `character-image-sources-v1.json`.
 
 Final edit prompt template, with CHARACTER, VARIANT, APPEARANCE and OUTFIT substituted from the source manifest:

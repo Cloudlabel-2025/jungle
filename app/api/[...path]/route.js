@@ -1037,6 +1037,8 @@ async function handle(request, { params }) {
         await cohort.save({ session });
       } else if (route === "centre-command/roster") {
         assertRole(user, ["CENTRE_COMMAND"]);
+        if (body.teamRoleCode || body.characterKey)
+          fail("Player roles are assigned automatically at jungle entry and rotate with each released sprint.", 400);
         const operative = await gamer(body.userId, session);
         const nextTeamId = body.teamId || operative.teamId;
         if (!(await models.Team.exists({ _id: nextTeamId }).session(session)))
@@ -1087,42 +1089,6 @@ async function handle(request, { params }) {
           { $inc: { rosterVersion: 1 } },
           { session },
         );
-        if (body.teamRoleCode) {
-          const selected = teamRoles.find((r) => r.code === body.teamRoleCode);
-          if (!selected) fail("Unknown team role.");
-          operative.teamRoleCode = selected.code;
-          operative.assignment = selected.label;
-        }
-        if (body.characterKey) {
-          if (!characters.some((c) => c.key === body.characterKey))
-            fail("Unknown team role.");
-          const currentKey = characterKey(operative);
-          const peers = await models.User.find({
-            teamId: nextTeamId,
-            role: "GAMER",
-            active: { $ne: false },
-            _id: { $ne: operative._id },
-          }).session(session);
-          const holders = peers.filter(
-            (p) => characterKey(p) === body.characterKey,
-          );
-          if (holders.length > 1)
-            fail(
-              "Resolve duplicate team roles in this squad first.",
-              409,
-            );
-          if (holders.length && operative.teamId !== nextTeamId)
-            fail(
-              "Choose an unused team role when moving a player to another squad.",
-              409,
-            );
-          if (holders.length && body.characterKey !== currentKey) {
-            if (!currentKey) fail("Assign an unused character first.", 409);
-            holders[0].characterKey = currentKey;
-            await holders[0].save({ session });
-          }
-          operative.characterKey = body.characterKey;
-        }
         if (body.characterVariant) {
           if (!["male", "female"].includes(body.characterVariant))
             fail("Choose a valid legacy avatar style.");
