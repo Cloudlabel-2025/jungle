@@ -64,7 +64,7 @@
   background: #081c17;
   border: 1px solid #647052;
   border-radius: 4px;
-  color: #edf2d9;
+  color: var(--text-primary);
   padding: 8px;
 }
 .notification-help {
@@ -114,7 +114,7 @@
 .notification-content h2 {
   margin: 8px 0;
   font: 700 21px/1.3 var(--body);
-  color: #edf2d9;
+  color: var(--text-heading);
 }
 .notification-content p {
   margin: 0 0 16px;
@@ -134,7 +134,7 @@
   margin: auto;
 }
 .notification-empty h2 {
-  color: #edf2d9;
+  color: var(--text-heading);
   font-size: 23px;
 }
 .toast.warning {

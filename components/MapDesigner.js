@@ -4,7 +4,7 @@ import { Plus, Save, Pencil, MapPinned } from "lucide-react";
 import { Panel, Modal } from "./ui";
 import LevelEmblem from "./LevelEmblem";
 import LevelManager from "./LevelManager";
-import { alumniLevels } from "@/lib/alumni-map.js";
+import { playerMapLevels } from "@/lib/player-map-levels.js";
 import {
   defaultMapPoint,
   missionMapPoint,
@@ -17,26 +17,13 @@ export default function MapDesigner({ data, act }) {
   const [revision, setRevision] = useState(data.mapLayout?.revision || 0);
   const [dirty, setDirty] = useState(false),
     [busy, setBusy] = useState(false);
-  const [selected, setSelected] = useState(alumniLevels[0]._id);
+  const [selected, setSelected] = useState(null);
   const [workshop, setWorkshop] = useState(null);
   const [horizontalInput, setHorizontalInput] = useState(null);
   const canvas = useRef(null),
     dragging = useRef(null);
-  const missions = [
-    ...new Map(
-      [
-        ...data.projectLevels.filter((l) => l.mapMission),
-        ...(data.levelDrafts || [])
-          .filter((r) => r.draft?.mapMission || r.published?.mapMission)
-          .map((r) => ({
-            ...(r.published || r.draft),
-            _id: r._id,
-            privateDraft: !r.published,
-          })),
-      ].map((l) => [l._id, l]),
-    ).values(),
-  ].sort((a, b) => (a.number || 101) - (b.number || 101));
-  const levels = [...alumniLevels, ...missions];
+  const levels = playerMapLevels(data, { includeDrafts: true });
+  const missions = levels.filter(level => level.kind === "PROJECT");
   const active = levels.find((l) => l._id === selected) || levels[0];
   const index = levels.findIndex((l) => l._id === active._id);
   const point = positions[active._id] || defaultMapPoint(index);
@@ -90,9 +77,8 @@ export default function MapDesigner({ data, act }) {
       <div className="map-designer">
         <div className="map-designer-toolbar">
           <p>
-            Drag the emblems onto the jungle. Use arrow keys for precise
-            placement. Only the background image repeats; each mission appears
-            once.
+            These are the same five Alumni Connect levels shown in team progression,
+            followed by custom map missions. Drag a marker or use arrow keys to position it.
           </p>
           <div className="button-row">
             <button
@@ -231,7 +217,7 @@ export default function MapDesigner({ data, act }) {
             >
               {levels.map((l) => (
                 <option key={l._id} value={l._id}>
-                  {l.name}
+                  {l.kind === "SPRINT" ? `Level ${l.number}` : `Custom mission ${l.number}`} · {l.name}
                   {l.privateDraft ? " · Draft" : ""}
                 </option>
               ))}

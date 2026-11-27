@@ -6,7 +6,7 @@
   display: grid;
   grid-template-columns: minmax(240px, 0.8fr) minmax(360px, 1.2fr);
   gap: 18px;
-  color: #ede7d7;
+  color: var(--text-primary);
   text-transform: none;
   letter-spacing: normal;
 }
@@ -95,7 +95,7 @@
   font-size: 30px;
   margin: 0;
   font-weight: 600;
-  color: #fff0d4;
+  color: var(--text-heading);
 }
 .avatar-stage-bottom p {
   margin: 4px 0 10px;

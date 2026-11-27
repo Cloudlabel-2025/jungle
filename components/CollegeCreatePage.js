@@ -275,7 +275,7 @@ export default function CollegeCreatePage({
                   MapPin,
                 )}
                 <div className="pa-form-two">
-                  <Field label="College contact email">
+                  <Field label="College contact email" hint="Use an official email that is not assigned to another college.">
                     <input
                       name="contactEmail"
                       type="email"
@@ -286,7 +286,7 @@ export default function CollegeCreatePage({
                   </Field>
                   <Field
                     label="Contact phone (optional)"
-                    hint="Include the country code, for example +91."
+                    hint="Must be unique to this college. Include the country code, for example +91."
                   >
                     <input
                       name="phone"

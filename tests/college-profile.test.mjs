@@ -180,7 +180,7 @@ test(
         ...body,
         name: "Retry College",
         slug: "retry-college",
-        profile,
+        profile: { ...profile, contactEmail: "retry@college.edu", phone: "+91 87654 32109" },
         cohortName: "Retry intake",
       });
       assert.equal(retried.id, failureId);

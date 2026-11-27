@@ -1,4 +1,5 @@
 import { collegeRoute } from "@/lib/college-request.js";
+import { collegeContext, tenancyEnabled } from "@/lib/college-context.js";
 import { missionRecoverySnapshot, recoverMissionEnergy } from "@/lib/mission-energy.js";
 import { trophyConductSnapshot, trophyConductAction } from "@/lib/trophy-conduct.js";
 import { NextResponse } from "next/server";
@@ -13,6 +14,7 @@ import { workHistory,workFile } from "@/lib/work-history.js";
 import {
   guardTargets,
   cohortOf,
+  cohortFilter,
   permitted,
   demand,
 } from "@/lib/access-scope.js";
@@ -36,6 +38,7 @@ import { programAction, programSnapshot } from "@/lib/week-one-program.js";
 import { dayOneSnapshot, dayOneAction, dayOneSignIn } from "@/lib/day-one.js";
 import { weekOneSnapshot, weekOneAction } from "@/lib/week-one.js";
 import { supportAction, supportSnapshot } from "@/lib/support.js";
+import { supportReportPdf } from "@/lib/support-report-pdf.js";
 import { comparisonTotals } from "@/lib/effort-rules.js";
 import { checkPassword } from "@/lib/password.js";
 import { challengeAction, taskAudit } from "@/lib/challenges.js";
@@ -383,11 +386,15 @@ async function handle(request, { params }) {
     }
     if (route === "support/export" && request.method === "GET") {
       assertRole(user, ["CENTRE_COMMAND"]);
-      return NextResponse.json(await supportSnapshot(user), {
+      const support = await supportSnapshot(user);
+      const people = await models.User.find(cohortFilter(user)).select("_id name").lean();
+      const bytes = await supportReportPdf(support, { user, people, college: collegeContext()?.college.name });
+      return new Response(bytes, {
         headers: {
-          "Cache-Control": "no-store",
+          "Content-Type": "application/pdf",
+          "Cache-Control": "private, no-store",
           "Content-Disposition":
-            'attachment; filename="vow-support-evidence.json"',
+            'attachment; filename="vow-campus-support-report.pdf"',
         },
       });
     }
@@ -1173,7 +1180,9 @@ async function handle(request, { params }) {
       error.code === 11000
         ? "This event has already been recorded."
         : error.message;
-    console.error("[CODEWILD]", error.name, error.message);
+    console.error("[CODEWILD]", error.name, error.message, {
+      route: new URL(request.url).pathname, status, tenancy: tenancyEnabled(), college: collegeContext()?.college.slug || null,
+    });
     return NextResponse.json(
       { success: false, error: message },
       { status, headers: { "Cache-Control": "no-store" } },

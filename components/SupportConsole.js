@@ -1,7 +1,9 @@
 "use client";
-import { useState } from "react";
+import { Children, cloneElement, createContext, isValidElement, useContext, useId, useState } from "react";
+import { ArrowUpRight, BookOpen, ChevronRight, Download, Inbox, Search, UserRound } from "lucide-react";
 import PaginatedList from "./PaginatedList";
-import { Panel, Form, Badge, Empty } from "./ui";
+import { Panel, Form, Badge, Empty, Modal } from "./ui";
+import { filterSupportTickets, supportQueueCounts, supportTicketClosed, supportTicketOverdue } from "@/lib/support-queue.js";
 import { umbrellas, interventions, transitions } from "@/lib/support-rules.js";
 import {
   EffortWorkspace,
@@ -26,7 +28,7 @@ const stamp = (value) =>
   value
     ? new Date(value).toLocaleString(undefined, { timeZoneName: "short" })
     : "Not yet recorded";
-const label = (value) => value?.replaceAll("_", " ");
+const label = (value) => value?.replaceAll("_", " ").toLowerCase().replace(/^\w/, letter => letter.toUpperCase());
 const caseFields = [
   "title",
   "cause",
@@ -40,15 +42,29 @@ const caseFields = [
   field(
     k,
     {
+      title: "Case title",
+      cause: "Root cause",
       unsuccessful: "Unsuccessful approaches (redacted)",
       successful: "Successful recovery (redacted)",
+      applicability: "When to use this guidance",
+      prerequisites: "Prerequisites",
       anonymisation: "Redaction checklist and evidence (private)",
       validationEvidence: "Resolution validation evidence (private)",
     }[k] || k,
   ),
 );
 
+const SupportDialogContext = createContext(false);
 function Action({ title, children }) {
+  const dialog = useContext(SupportDialogContext);
+  const [open, setOpen] = useState(false);
+  if (dialog) return <>
+    <button type="button" className="support-command" onClick={() => setOpen(true)}><span>{title}</span><ChevronRight size={16} aria-hidden="true" /></button>
+    {open && <Modal title={title} close={() => setOpen(false)} portal wide>
+      <div className="support-action-dialog">{Children.map(children, child => isValidElement(child) && child.type === Form
+        ? cloneElement(child, { onSubmit: async values => { const result = await child.props.onSubmit(values); if (result !== false) setOpen(false); return result; } }) : child)}</div>
+    </Modal>}
+  </>;
   return (
     <details className="support-action">
       <summary>{title}</summary>
@@ -56,22 +72,37 @@ function Action({ title, children }) {
     </details>
   );
 }
-function Desk({ data, act, now, paginated = false }) {
+function RequestDetailSurface({ enhanced, ticket, close, children }) {
+  if (enhanced) return <Modal title="Request details" kicker={label(ticket.state)} close={close} portal wide>
+    <div className="support-ticket-detail support-request-dialog">{children}</div>
+  </Modal>;
+  return <Panel title="Ticket workspace" kicker={ticket._id}>{children}</Panel>;
+}
+function Desk({ data, act, now, paginated = false, enhanced = false, queueFilter = "open", setQueueFilter }) {
   const [selected, setSelected] = useState("");
+  const [query, setQuery] = useState("");
   const s = data.support,
     user = data.user,
     cc = user.role === "CENTRE_COMMAND",
     staff = user.role !== "GAMER";
   const ticket = s.tickets.find((t) => t._id === selected);
+  const names = Object.fromEntries([...(data.roster || []), ...(s.operators || [])].map(person => [person._id, person.name]));
+  const queue = enhanced ? filterSupportTickets(s.tickets, { query, filter: queueFilter, names }) : s.tickets;
   const send = (action, values) =>
     act(`support/${action}`, { ticketId: ticket?._id, ...values });
   return (
-    <>
-      <p className="muted">
+    <div className={enhanced ? "support-desk" : undefined}>
+      {!enhanced && <p className="muted">
         Private support for you and the responsible command team. Asking for
         help carries no score penalty. Receipts and acknowledgements do not
         satisfy the response SLA.
-      </p>
+      </p>}
+      {enhanced && <div className="support-queue-toolbar">
+        <label className="support-searchbox"><Search size={17} aria-hidden="true" /><input type="search" aria-label="Search support tickets" placeholder="Search requests, people or topics…" value={query} onChange={event => setQuery(event.target.value)} /></label>
+        <div className="support-queue-filters" role="group" aria-label="Filter ticket queue">
+          {[["open", "Open"], ...(cc ? [["unassigned", "Unassigned"]] : []), ["overdue", "Overdue"], ["closed", "Resolved"], ["all", "All"]].map(([id, title]) => <button type="button" key={id} aria-pressed={queueFilter === id} onClick={() => setQueueFilter(id)}>{title}</button>)}
+        </div>
+      </div>}
       {!staff && (
         <Action title="Raise a private ticket">
           <Form
@@ -91,48 +122,68 @@ function Desk({ data, act, now, paginated = false }) {
         </Action>
       )}
       {cc && !s.calendar && (
-        <p role="status">
+        <p role="status" className={enhanced ? "support-calendar-note" : undefined}>
           Configure the cohort working calendar in Expedition setup before
           assigning tickets.
         </p>
       )}
-      <PaginatedList items={s.tickets} label="tickets" enabled={paginated} className="support-ticket-list">
+      <div className={enhanced ? "support-desk-layout" : undefined}>
+      <div className={enhanced ? "support-queue" : undefined}>
+      {enhanced && <div className="support-queue-heading"><h3>Request queue</h3><span role="status" aria-live="polite">{queue.length} {queue.length === 1 ? "request" : "requests"}</span></div>}
+      <PaginatedList key={enhanced ? `${query}:${queueFilter}` : "tickets"} items={queue} label="tickets" pageSize={enhanced ? 3 : 5} enabled={paginated} className="support-ticket-list">
         {tickets => <>
-        {!s.tickets.length && <Empty title="No tickets in your queue" />}
+        {!queue.length && <Empty title={s.tickets.length ? "No matching requests" : "No support requests yet"}>
+          {enhanced && <><p>{s.tickets.length ? "Try another search or view all requests." : "Requests from your campus will appear here when someone needs help."}</p>{s.tickets.length > 0 && <button type="button" className="btn small" onClick={() => { setQuery(""); setQueueFilter("all"); }}>Clear filters</button>}</>}
+        </Empty>}
         {tickets.map((t) => (
           <button
             key={t._id}
             className={`support-ticket ${selected === t._id ? "selected" : ""}`}
+            type="button"
+            aria-pressed={selected === t._id}
+            aria-haspopup={enhanced ? "dialog" : undefined}
             onClick={() => setSelected(t._id)}
           >
             <span>
-              <Badge tone={t.breachedAt ? "red" : "lime"}>
+              <Badge tone={supportTicketOverdue(t) ? "red" : ""}>
                 {label(t.state)}
               </Badge>{" "}
+              {enhanced && supportTicketOverdue(t) && <Badge tone="red">Overdue</Badge>}
               {t.escalated && <Badge tone="red">Escalated</Badge>}
             </span>
+            {enhanced && <span className="support-ticket-person"><UserRound size={14} aria-hidden="true" />{names[t.createdBy] || "Campus request"}<ChevronRight size={16} aria-hidden="true" /></span>}
             <strong>{t.description.slice(0, 110)}</strong>
-            <small>
+            {!enhanced && <small>
               {t.category ? label(t.category) : "Awaiting CC triage"} ·{" "}
               {t.assignedAt
                 ? `Response due ${stamp(t.dueAt)}`
                 : `Unassigned: ${t.unassignedWaitMinutes} elapsed min`}{" "}
               {t.breachedAt ? " · SLA breached" : ""}
-            </small>
+            </small>}
+            {enhanced && <span className="support-ticket-owner">Owner: {names[t.assignedTo] || "Not assigned"}</span>}
           </button>
         ))}
         </>}
       </PaginatedList>
+      </div>
+      <div>
       {ticket && (
-        <Panel title="Ticket workspace" kicker={ticket._id}>
+        <RequestDetailSurface enhanced={enhanced} ticket={ticket} close={() => setSelected("")}>
           <p className="support-copy">{ticket.description}</p>
-          <EffortWorkspace
+          {enhanced ? <Action title="Investigation effort & comparisons"><EffortWorkspace key={ticket._id} ticket={ticket} data={data} act={act} /></Action> : <EffortWorkspace
             key={ticket._id}
             ticket={ticket}
             data={data}
             act={act}
-          />
-          <p className="muted">
+          />}
+          {enhanced ? <dl className="support-request-facts">
+            <div><dt>Requested by</dt><dd>{names[ticket.createdBy] || "Campus member"}</dd></div>
+            <div><dt>Assigned owner</dt><dd>{names[ticket.assignedTo] || "Unassigned"}</dd></div>
+            <div><dt>Created</dt><dd>{stamp(ticket.createdAt)}</dd></div>
+            <div><dt>Response due</dt><dd>{ticket.dueAt ? stamp(ticket.dueAt) : "Assign an owner first"}</dd></div>
+            <div><dt>First response</dt><dd>{ticket.firstResponseAt ? stamp(ticket.firstResponseAt) : "Awaiting response"}</dd></div>
+            <div><dt>Category</dt><dd>{ticket.category ? label(ticket.category) : "Needs classification"}</dd></div>
+          </dl> : <p className="muted">
             Created {stamp(ticket.createdAt)} · Owner{" "}
             {s.operators.find((o) => o._id === ticket.assignedTo)?.name ||
               ticket.assignedTo ||
@@ -144,19 +195,20 @@ function Desk({ data, act, now, paginated = false }) {
             Original assignment {stamp(ticket.assignedAt)} · First-response
             deadline {stamp(ticket.dueAt)} · Unassigned wait{" "}
             {ticket.unassignedWaitMinutes} min
-          </p>
+          </p>}
           {ticket.breachedAt && (
             <p className="danger-text">
               SLA breach recorded {stamp(ticket.breachedAt)}. The breach remains
               in the history.
             </p>
           )}
+          <div className={enhanced ? "support-request-actions" : undefined} role={enhanced ? "group" : undefined} aria-label={enhanced ? "Request actions" : undefined}>
           {cc && (
             <>
-              <Action title="Classify / correct support umbrella">
+              <Action title="Classify request">
                 <Form
                   fields={[
-                    choice("category", "Primary umbrella", umbrellas),
+                    choice("category", "Support category", umbrellas),
                     field("tags", "Secondary tags, comma separated", true),
                     field("reason", "Classification or correction reason"),
                   ]}
@@ -175,7 +227,7 @@ function Desk({ data, act, now, paginated = false }) {
                   }
                 />
               </Action>
-              <Action title="Assign / reassign owner">
+              <Action title="Assign an owner">
                 <Form
                   fields={[
                     choice(
@@ -204,7 +256,7 @@ function Desk({ data, act, now, paginated = false }) {
               >
                 Acknowledge receipt
               </button>
-              <Action title="Give a substantive response">
+              <Action title="Respond to request">
                 <Form
                   fields={[
                     field(
@@ -212,11 +264,11 @@ function Desk({ data, act, now, paginated = false }) {
                       "Meaningful guidance, resolution, or concrete next action",
                     ),
                   ]}
-                  submit="Record substantive response"
+                    submit="Save response"
                   onSubmit={(v) => send("ticket-response", v)}
                 />
               </Action>
-              <Action title="Record human intervention">
+              <Action title="Record a support session">
                 <Form
                   fields={[
                     choice(
@@ -280,7 +332,7 @@ function Desk({ data, act, now, paginated = false }) {
                   onSubmit={(v) => send("issue", v)}
                 />
               </Action>
-              <Action title="Escalate">
+              <Action title="Escalate request">
                 <Form
                   fields={[field("reason", "Escalation reason")]}
                   onSubmit={(v) => send("ticket-escalate", v)}
@@ -288,7 +340,7 @@ function Desk({ data, act, now, paginated = false }) {
               </Action>
             </>
           )}
-          <Action title="Record an attempt / recovery">
+          <Action title="Record a recovery attempt">
             <Form
               fields={[
                 field("approach", "What was attempted"),
@@ -346,7 +398,7 @@ function Desk({ data, act, now, paginated = false }) {
                 (staff || v === "IN_PROGRESS"),
             );
             return states.length ? (
-              <Action title="Update state / reopen">
+              <Action title="Update request status">
                 <Form
                   fields={[
                     choice("state", "Next state", states),
@@ -370,9 +422,12 @@ function Desk({ data, act, now, paginated = false }) {
                 ))}
             </ol>
           </Action>
-        </Panel>
+          </div>
+        </RequestDetailSurface>
       )}
-    </>
+      </div>
+      </div>
+    </div>
   );
 }
 function Discovery({ data, act }) {
@@ -474,36 +529,37 @@ function Discovery({ data, act }) {
     </>
   );
 }
-function Library({ data, act, paginated = false }) {
+function Library({ data, act, paginated = false, enhanced = false }) {
   const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("all");
+  const [selected, setSelected] = useState(null);
   const s = data.support,
     cc = data.user.role === "CENTRE_COMMAND";
   const entries = s.cases.filter((c) =>
-    JSON.stringify(c.content).toLowerCase().includes(query.toLowerCase()),
+    (status === "all" || (c.status || "PUBLISHED") === status) && JSON.stringify(c.content).toLowerCase().includes(query.trim().toLowerCase()),
   );
+  const selectedCase = s.cases.find(entry => entry._id === selected);
+  const resolvedTickets = s.tickets.filter(ticket => supportTicketClosed(ticket));
   return (
-    <>
-      <p>
-        Reviewed learning cases include both unsuccessful approaches and
-        successful recovery. Source tickets stay private.
-      </p>
-      <label className="support-search">
-        Search permitted cases
-        <input
+    <div className={enhanced ? "support-library" : undefined}>
+      <p className="support-library-intro">Find verified approaches from resolved requests. Drafts stay private until reviewed and published.</p>
+      <label className={enhanced ? "support-searchbox" : "support-search"}>
+        {enhanced ? <Search size={17} aria-hidden="true" /> : "Search permitted cases"}
+        <input type="search" aria-label="Search knowledge cases"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search symptoms, causes, and approaches"
         />
       </label>
-      {cc && (
+      {enhanced && <div className="support-library-tools">{cc ? <div className="support-queue-filters" role="group" aria-label="Filter knowledge cases">{[["all", "All cases"], ["PUBLISHED", "Published"], ["DRAFT", "Drafts"]].map(([id, title]) => <button type="button" key={id} aria-pressed={status === id} onClick={() => setStatus(id)}>{title}</button>)}</div> : <span>Published guidance</span>}<span role="status" aria-live="polite">{entries.length} {entries.length === 1 ? "case" : "cases"}</span></div>}
+      {cc && (resolvedTickets.length > 0 ? (
         <Action title="Draft a case from a resolved ticket">
           <Form
             fields={[
               choice(
                 "ticketId",
                 "Source ticket",
-                s.tickets
-                  .filter((t) => ["RESOLVED", "CLOSED"].includes(t.state))
+                resolvedTickets
                   .map((t) => ({
                     value: t._id,
                     label: t.description.slice(0, 80),
@@ -515,11 +571,23 @@ function Library({ data, act, paginated = false }) {
             onSubmit={(v) => act("support/case-draft", v)}
           />
         </Action>
-      )}
-      {!entries.length && <Empty title="No reviewed cases match" />}
-      <PaginatedList key={query} items={entries} label="cases" pageSize={4} enabled={paginated}>{rows => rows.map((c) => (
-        <article className="support-record" key={c._id}>
-          <h3>{c.content.title}</h3>
+      ) : <p className="support-library-hint">Resolve a support request to create a learning case from its evidence.</p>)}
+      {!entries.length && <Empty title={s.cases.length ? "No matching cases" : "Build your campus knowledge library"}><p>{s.cases.length ? "Try a different phrase or view all cases." : "Reviewed solutions will appear here as your team resolves requests."}</p>{s.cases.length > 0 && <button type="button" className="btn small" onClick={() => { setQuery(""); setStatus("all"); }}>Clear filters</button>}</Empty>}
+      <PaginatedList key={`${query}:${status}`} items={entries} label="cases" pageSize={enhanced ? 3 : 4} enabled={paginated} className={enhanced ? "support-case-grid" : undefined}>{rows => rows.map(c => enhanced ? (
+        <button type="button" className="support-case-preview" key={c._id} onClick={() => setSelected(c._id)}>
+          <span className="support-case-status"><BookOpen size={18} aria-hidden="true" /><Badge>{c.status || "PUBLISHED"}</Badge></span>
+          <strong>{c.content.title}</strong><span className="support-case-excerpt">{c.content.cause || c.content.applicability || "Open this case to review its approach and evidence."}</span>
+          <span className="support-case-open">Read case <ArrowUpRight size={16} aria-hidden="true" /></span>
+        </button>
+      ) : <KnowledgeCaseDetails key={c._id} entry={c} data={data} act={act} />)}</PaginatedList>
+      {enhanced && selectedCase && <Modal title={selectedCase.content.title} close={() => setSelected(null)} portal wide><div className="support-case-dialog"><KnowledgeCaseDetails entry={selectedCase} data={data} act={act} showTitle={false} /></div></Modal>}
+    </div>
+  );
+}
+function KnowledgeCaseDetails({ entry: c, data, act, showTitle = true }) {
+  const s = data.support, cc = data.user.role === "CENTRE_COMMAND";
+  return <article className="support-record">
+          {showTitle && <h3>{c.content.title}</h3>}
           <CaseComparison entry={c} data={data} act={act} />
           <Badge>
             {c.status || "PUBLISHED"} · v{c.version}
@@ -532,7 +600,7 @@ function Library({ data, act, paginated = false }) {
             "prerequisites",
           ].map((k) => (
             <p className="support-copy" key={k}>
-              <strong>{label(k)}: </strong>
+              <strong>{{ cause: "Root cause", unsuccessful: "What did not work", successful: "Verified solution", applicability: "When to use this", prerequisites: "Before you start" }[k]}: </strong>
               {c.content[k]}
             </p>
           ))}
@@ -602,10 +670,7 @@ function Library({ data, act, paginated = false }) {
               </Action>
             </>
           )}
-        </article>
-      ))}</PaginatedList>
-    </>
-  );
+        </article>;
 }
 function Growth({ data, act }) {
   const mc = data.user.role === "MISSION_COMMANDER",
@@ -898,6 +963,8 @@ export { Desk as SupportDesk, Library as SupportLibrary };
 
 export default function SupportConsole({ screen, data, act, now, paginated = false }) {
   const [tab, setTab] = useState("");
+  const [queueFilter, setQueueFilter] = useState("open");
+  const tabId = useId();
   const gamer = data.user.role === "GAMER",
     cc = data.user.role === "CENTRE_COMMAND";
   const tabs = [];
@@ -911,7 +978,7 @@ export default function SupportConsole({ screen, data, act, now, paginated = fal
   if (
     screen === "team-room" ||
     (!gamer && screen === "coaching") ||
-    (cc && screen === "dashboard")
+    (!gamer && screen === "dashboard")
   )
     tabs.push(["library", "Knowledge Library", Library]);
   if (
@@ -924,34 +991,56 @@ export default function SupportConsole({ screen, data, act, now, paginated = fal
   if (cc && screen === "reports")
     tabs.push(["operations", "Support operations", Operations]);
   if (!tabs.length || !data.support) return null;
+  const enhanced = !gamer && screen === "dashboard";
+  const counts = supportQueueCounts(data.support.tickets);
   const active = tabs.find((t) => t[0] === tab) || tabs[0],
     Content = active[2];
+  function tabKey(event) {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    const buttons = Array.from(event.currentTarget.querySelectorAll('[role="tab"]'));
+    const index = buttons.indexOf(document.activeElement);
+    const next = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + buttons.length) % buttons.length;
+    event.preventDefault(); buttons[next].click(); buttons[next].focus();
+  }
   return (
-    <div className="support-console">
+    <SupportDialogContext.Provider value={enhanced}>
+    <div className={`support-console ${enhanced ? "support-console-enhanced" : ""}`}>
       <Panel
         title="Campus support & discovery"
-        kicker="VOW / HUMAN-LED LEARNING"
+        kicker={enhanced ? "CAMPUS CARE / KNOWLEDGE" : "VOW / HUMAN-LED LEARNING"}
+        action={enhanced && cc ? <a href="/api/support/export" className="support-export"><Download size={16} aria-hidden="true" /><span>Download PDF</span></a> : undefined}
       >
-        <div className="tabs" role="tablist" aria-label="Support tools">
+        {enhanced && <>
+          <div className="support-summary">
+            {[["open", "Open requests", counts.open], ...(cc ? [["unassigned", "Need an owner", counts.unassigned]] : []), ["overdue", "Overdue response", counts.overdue], ["library", "Knowledge cases", data.support.cases.length]].map(([id, title, count]) => <button key={id} type="button" onClick={() => { setTab(id === "library" ? "library" : "desk"); if (id !== "library") setQueueFilter(id); }}><strong>{count}</strong><span>{title}</span></button>)}
+          </div>
+        </>}
+        <div className={`tabs ${enhanced ? "support-tabs" : ""}`} role="tablist" aria-label="Support tools" onKeyDown={tabKey}>
           {tabs.map(([id, title]) => (
             <button
               role="tab"
               aria-selected={active[0] === id}
+              id={`${tabId}-${id}`}
+              aria-controls={`${tabId}-content`}
+              tabIndex={active[0] === id ? 0 : -1}
               className={active[0] === id ? "active" : ""}
               key={id}
               onClick={() => setTab(id)}
             >
-              {title}
+              {enhanced && (id === "desk" ? <Inbox size={18} aria-hidden="true" /> : <BookOpen size={18} aria-hidden="true" />)}{title}
             </button>
           ))}
         </div>
-        <Content key={active[0]} data={data} act={act} now={now} paginated={paginated} />
-        {cc && ["dashboard", "reports"].includes(screen) && (
+        <div className={enhanced ? "support-tab-content" : undefined} role="tabpanel" id={`${tabId}-content`} aria-labelledby={`${tabId}-${active[0]}`} tabIndex={0}>
+          <Content key={active[0]} data={data} act={act} now={now} paginated={paginated || enhanced} enhanced={enhanced} queueFilter={queueFilter} setQueueFilter={setQueueFilter} />
+        </div>
+        {cc && !enhanced && ["dashboard", "reports"].includes(screen) && (
           <a className="btn" href="/api/support/export">
-            Export private support evidence (JSON)
+            Download support report (PDF)
           </a>
         )}
       </Panel>
     </div>
+    </SupportDialogContext.Provider>
   );
 }

@@ -1,0 +1,20 @@
+.pa-lifecycle { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding: 18px; margin: 18px 0 24px; border: 1px solid #635044; border-radius: 9px; background: #35271e38; }
+.pa-lifecycle h2 { margin: 0 0 6px; font-size: 20px; color: var(--text-heading); }
+.pa-lifecycle p { max-width: 75ch; margin: 5px 0 0; color: var(--text-secondary); font-size: 13px; line-height: 1.5; }
+.pa-lifecycle-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.pa-delete-button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 42px; padding: 10px 14px; border: 1px solid #be82765c; border-radius: 6px; color: #eca99b; background: #d886751c; font: 500 13px var(--font-ui); cursor: pointer; }
+.pa-delete-button:hover:not(:disabled) { background: #d8867533; border-color: #d99b8b; }
+.pa-delete-button:disabled { opacity: .5; cursor: not-allowed; }
+.pa-lifecycle-dialog { width: min(520px,calc(100vw - 32px)); max-height: calc(100dvh - 40px); overflow: auto; padding: 24px; margin: auto; border: 1px solid #6e6550; border-radius: 12px; background: #10261d; color: var(--text-primary); box-shadow: 0 24px 70px #0008; }
+.pa-lifecycle-dialog::backdrop { background: #03120dbb; backdrop-filter: blur(4px); }
+.pa-lifecycle-dialog header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pa-lifecycle-dialog h2 { margin: 0; font: 600 26px/1.15 var(--font-heading); color: var(--text-heading); }
+.pa-lifecycle-dialog p { margin: 16px 0; font: 14px/1.6 var(--font-ui); color: var(--text-secondary); }
+.pa-lifecycle-dialog label { display: grid; gap: 8px; font: 14px/1.5 var(--font-ui); }
+.pa-lifecycle-dialog label strong { color: var(--text-heading); }
+.pa-lifecycle-dialog input { min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #57704f; border-radius: 6px; background: #091c14; color: var(--text-primary); font: 14px var(--font-ui); }
+.pa-lifecycle-dialog footer { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+:is(.pa-lifecycle,.pa-lifecycle-dialog) :is(button,input):focus-visible { outline: 2px solid #b5dc8c; outline-offset: 3px; }
+.pa-status-inactive { color: #d5ba8d; background: #d5ba8d15; }
+.pa-status-deleting { color: #eca99b; background: #d886751c; }
+@media(max-width:600px) { .pa-lifecycle { padding: 14px; } .pa-lifecycle-actions { width: 100%; } .pa-lifecycle-actions button { flex: 1; } .pa-lifecycle-dialog { padding: 18px; } }

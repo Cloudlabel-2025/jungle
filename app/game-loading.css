@@ -8,7 +8,7 @@
   align-items: flex-end;
   padding: clamp(24px, 6vw, 88px);
   background: #102b20;
-  color: #f5edd6;
+  color: var(--text-primary);
   outline: 0;
   isolation: isolate;
 }
@@ -31,13 +31,13 @@
   font: 700 19px var(--body);
   letter-spacing: 4px;
   margin-bottom: clamp(36px, 9vh, 90px);
-  color: #ecf1db;
+  color: var(--text-primary);
 }
 .game-entry-brand > span {
   color: #b7db81;
 }
 .game-entry-kicker {
-  font: 10px var(--mono);
+  font: 10px var(--body);
   letter-spacing: 2px;
   color: #d1c291;
 }
@@ -101,7 +101,7 @@
   text-underline-offset: 5px;
 }
 .game-entry-cancel:hover {
-  color: #f0f5df;
+  color: var(--text-primary);
 }
 .game-entry-cancel:focus-visible {
   outline: 2px solid #f3dea5;

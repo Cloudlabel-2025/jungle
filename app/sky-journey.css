@@ -21,7 +21,7 @@
   padding: 4px 6px 20px;
 }
 .sky-eyebrow {
-  font: 10px var(--mono);
+  font: 10px var(--body);
   letter-spacing: 0.13em;
   color: #b5d1c5;
 }
@@ -41,7 +41,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #d3e4d5;
+  color: var(--text-primary);
   text-decoration: none;
   font-weight: 600;
   white-space: nowrap;
@@ -123,7 +123,7 @@
   z-index: 2;
 }
 .sky-compass span {
-  font: 9px var(--mono);
+  font: 9px var(--body);
   margin-top: 5px;
 }
 .sky-aircraft-position {
@@ -150,8 +150,8 @@
   padding: 5px 8px;
   border-radius: 3px;
   background: #18361d;
-  color: #f3edc9;
-  font: 8px var(--mono);
+  color: var(--text-primary);
+  font: 8px var(--body);
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
@@ -163,7 +163,7 @@
   gap: 12px;
   background: none;
   border: 0;
-  color: #f9f1cb;
+  color: var(--text-primary);
   cursor: pointer;
   padding: 6px 12px;
   width: 190px;
@@ -197,7 +197,7 @@
     box-shadow 0.2s;
 }
 .sky-station-ring b {
-  font: 600 28px var(--mono);
+  font: 600 28px var(--body);
 }
 .sky-station-label {
   display: grid;
@@ -210,7 +210,7 @@
   box-shadow: 0 5px 15px #102a1c26;
 }
 .sky-station-label small {
-  font: 8px var(--mono);
+  font: 8px var(--body);
   letter-spacing: 0.15em;
   color: #b7cbbd;
 }
@@ -300,7 +300,7 @@
   35%, 55% { opacity: 1; scale: 1; rotate: 35deg; }
 }
 .sky-station.is-locked {
-  color: #c7d8d0;
+  color: var(--text-primary);
 }
 .sky-station.is-locked .sky-station-ring {
   background: #293d26;
@@ -330,8 +330,8 @@
   border-radius: 30px;
 }
 .sky-map-controls span {
-  color: #d1e0d1;
-  font: 8px var(--mono);
+  color: var(--text-primary);
+  font: 8px var(--body);
   letter-spacing: 0.1em;
   white-space: nowrap;
 }
@@ -343,7 +343,7 @@
   height: 38px;
   display: grid;
   place-items: center;
-  color: #fff3cf;
+  color: var(--text-primary);
   cursor: pointer;
 }
 .sky-map-controls button:disabled {
@@ -419,7 +419,7 @@
 }
 .sky-flight-note a {
   margin-left: auto;
-  color: #d6dfc5;
+  color: var(--text-primary);
   white-space: nowrap;
   font-size: 13px;
 }
@@ -451,17 +451,17 @@
   height: 20px;
   display: grid;
   place-items: center;
-  font: 10px var(--mono);
+  font: 10px var(--body);
 }
 .sky-checkpoints strong {
-  color: #dbe8d8;
+  color: var(--text-primary);
   font-size: 15px;
   font-weight: 600;
 }
 .sky-checkpoints small {
   grid-column: 2;
   color: #99b1ab;
-  font: 9px var(--mono);
+  font: 9px var(--body);
 }
 .sky-checkpoints .is-complete {
   border-color: #b3c891;
@@ -530,7 +530,7 @@
   align-items: center;
   margin-top: 22px;
   background: transparent;
-  color: #e3e8ce;
+  color: var(--text-primary);
   border: 0;
   padding: 12px 0;
   cursor: pointer;
@@ -709,7 +709,7 @@
 /* Flight animations run automatically; travel itself is driven by the controller. */
 .sky-journey:not(.is-flying) .sky-helicopter-sprite { animation:sky-hover 5s ease-in-out infinite !important; }
 .sky-station:disabled { cursor:wait; }
-.sky-cancel-flight { background:transparent; border:1px solid #a3b77c; border-radius:4px; color:#e5edc7; padding:12px; cursor:pointer; white-space:nowrap; }
+.sky-cancel-flight { background:transparent; border:1px solid #a3b77c; border-radius:4px; color:var(--text-primary); padding:12px; cursor:pointer; white-space:nowrap; }
 
 /* Shared jungle-map equipment: side arrows and bottom action rail. */
 .sky-side-arrow.map-scroll-left { left:76px; }
@@ -721,9 +721,9 @@
 .sky-header-tools { display:flex; align-items:flex-start; gap:8px; pointer-events:auto; }
 .sky-header-tools { flex-shrink:0; }
 .sky-heading > div:first-child { min-width:0; }
-.sky-header-tools button { display:flex; align-items:center; justify-content:center; gap:8px; background:#0b241ae8; color:#e2e9ca; border:1px solid #82966a88; border-radius:5px; padding:10px 12px; min-height:44px; cursor:pointer; font-size:14px; }
-.sky-progress > span { display:grid; gap:3px; font:15px var(--mono); white-space:nowrap; }
-.sky-progress small { font:8px var(--mono); letter-spacing:.06em; }
+.sky-header-tools button { display:flex; align-items:center; justify-content:center; gap:8px; background:#0b241ae8; color:var(--text-primary); border:1px solid #82966a88; border-radius:5px; padding:10px 12px; min-height:44px; cursor:pointer; font-size:14px; }
+.sky-progress > span { display:grid; gap:3px; font:15px var(--body); white-space:nowrap; }
+.sky-progress small { font:8px var(--body); letter-spacing:.06em; }
 .sky-mission-dock { left:auto; right:24px; bottom:94px; max-width:430px; width:calc(100% - 116px); padding:12px 16px; gap:12px; }
 .sky-mission-dock .sky-dock-icon { display:none; }
 .sky-mission-dock > div:nth-child(2) { flex:1; min-width:0; }
@@ -732,8 +732,8 @@
 .sky-mission-dock .sky-enter { padding:12px 16px; gap:12px; font-size:15px; }
 .sky-mission-dock:has(.sky-cancel-flight) { flex-wrap:wrap; }
 .sky-mission-dock .sky-cancel-flight { margin-left:auto; }
-.sky-flight-note button { background:transparent; border:0; color:#d6dfc5; font-size:13px; padding:0; cursor:pointer; text-shadow:0 2px 5px #031808; }
-.sky-equipment-panel { display:grid; gap:18px; min-width:0; color:#d4dfc5; }
+.sky-flight-note button { background:transparent; border:0; color:var(--text-primary); font-size:13px; padding:0; cursor:pointer; text-shadow:0 2px 5px #031808; }
+.sky-equipment-panel { display:grid; gap:18px; min-width:0; color:var(--text-primary); }
 .sky-equipment-panel > p { margin:0; line-height:1.6; }
 .sky-level-list { display:grid; gap:10px; }
 .sky-level-row { display:flex; gap:12px; align-items:center; border:1px solid #647e4d80; background:#0d291b; border-radius:6px; padding:14px; }

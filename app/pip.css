@@ -29,8 +29,7 @@
   border-radius: 8px;
   background: #143823;
   font:
-    700 15px "Rajdhani",
-    sans-serif;
+    700 15px var(--font-ui);
 }
 .pip-click-pointer.points-up {
   flex-direction: column-reverse;
@@ -63,7 +62,7 @@
   gap: 10px;
   max-width: min(520px, 49vw);
   pointer-events: none;
-  color: #edf4d8;
+  color: var(--text-primary);
 }
 .pip-guide button,
 .pip-message {
@@ -89,7 +88,7 @@
   gap: 12px;
 }
 .pip-message header > span {
-  font: 9px var(--mono);
+  font: 9px var(--body);
   letter-spacing: 0.08em;
   color: #c9dfa5;
 }
@@ -106,13 +105,13 @@
   cursor: pointer;
 }
 .pip-message h3 {
-  font: 700 22px/1.1 var(--sans, "Rajdhani", sans-serif);
+  font: 700 22px/1.1 var(--font-ui);
   margin: 7px 0;
 }
 .pip-message p {
-  font: 500 15px/1.35 var(--sans, "Rajdhani", sans-serif);
+  font: 500 15px/1.35 var(--font-ui);
   margin: 0;
-  color: #e0eacb;
+  color: var(--text-primary);
 }
 .pip-message footer {
   display: flex;
@@ -137,12 +136,11 @@
   background: #d2e8a8;
   color: #153523;
   font:
-    700 15px "Rajdhani",
-    sans-serif;
+    700 15px var(--font-ui);
   cursor: pointer;
 }
 .pip-tip {
-  color: #e0eacb;
+  color: var(--text-primary);
   font-size: 13px;
   text-decoration: underline;
   border: 0;
@@ -223,7 +221,7 @@
   border: 1px solid #a8c17a;
   border-radius: 18px;
   background: #183d2cf5;
-  color: #edf4d8;
+  color: var(--text-primary);
   padding: 20px 24px;
   box-shadow: 0 12px 32px #02140b66;
 }
@@ -245,8 +243,7 @@
   align-items: baseline;
   gap: 12px;
   font:
-    700 24px "Rajdhani",
-    sans-serif;
+    700 24px var(--font-ui);
 }
 .pip-arrival strong span {
   font-size: 13px;
@@ -255,8 +252,7 @@
 .pip-arrival .pip-speech {
   margin: 8px 0 0;
   font:
-    500 19px/1.4 "Rajdhani",
-    sans-serif;
+    500 19px/1.4 var(--font-ui);
 }
 .pip-speech {
   position: relative;
@@ -498,4 +494,4 @@
     animation: none !important;
   }
 }
-.pip-save-status { position: fixed; right: 16px; bottom: 16px; z-index: 130; max-width: min(340px, 80vw); margin: 0; padding: 10px 14px; background: #10291f; border: 1px solid #b9ce8d; border-radius: 10px; color: #e5edcd; font-size: 14px; }
+.pip-save-status { position: fixed; right: 16px; bottom: 16px; z-index: 130; max-width: min(340px, 80vw); margin: 0; padding: 10px 14px; background: #10291f; border: 1px solid #b9ce8d; border-radius: 10px; color: var(--text-primary); font-size: 14px; }

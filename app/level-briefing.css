@@ -41,7 +41,7 @@
   font-size: 24px;
   line-height: 1.25;
   margin: 7px 0 0;
-  color: #e9e6c9;
+  color: var(--text-heading);
 }
 .level-drawer > .panel-heading .icon-btn {
   flex-shrink: 0;
@@ -92,7 +92,7 @@
   letter-spacing: 0.13em;
 }
 .level-objective p {
-  color: #e0e6ce;
+  color: var(--text-primary);
   font-size: 15px;
   line-height: 1.7;
   margin: 8px 0 15px;
@@ -416,7 +416,7 @@
 }
 .level-star-guide li strong {
   display: block;
-  color: #dce4c6;
+  color: var(--text-primary);
 }
 .level-star-tiers {
   margin: 0 16px;
@@ -626,7 +626,7 @@
 .completion-rewards article strong {
   display: block;
   font-size: 13px;
-  color: #e2e5cb;
+  color: var(--text-primary);
 }
 .completion-rewards article strong small {
   color: #d7c682;

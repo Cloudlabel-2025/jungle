@@ -21,7 +21,13 @@ test("CC dashboard comes first with and without college management access", () =
 });
 
 test("management navigation preserves Guide access and stays out of player navigation", () => {
-  assert.equal(workspaceNavigation("MISSION_COMMANDER", { includeManagement: true })[0][1], "college-management");
+  for (const includeManagement of [false, true]) {
+    const nav = workspaceNavigation("MISSION_COMMANDER", { includeManagement });
+    assert.equal(nav[0][1], "dashboard");
+    assert.equal(nav[0][2], "Dashboard");
+    assert.equal(nav.filter(entry => entry[1] === "dashboard").length, 1);
+    assert.equal(nav[1][1], includeManagement ? "college-management" : "sprints");
+  }
   assert.deepEqual(workspaceNavigation("GAMER", { includeManagement: true }), workspaceNavigation("GAMER"));
 });
 

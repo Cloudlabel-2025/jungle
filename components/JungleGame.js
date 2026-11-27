@@ -20,6 +20,7 @@ import { missionMapPoint, missionMapWidth } from "@/lib/mission-map.js";
 import LevelBriefing from "./LevelBriefing";
 import { projectState as missionState } from "./Projects";
 import { alumniLevels } from "@/lib/alumni-map.js";
+import { playerMapLevels } from "@/lib/player-map-levels.js";
 import WorkflowOverview from "./WorkflowOverview";
 import MissionAdventure from "./MissionAdventure";
 
@@ -138,8 +139,8 @@ export default function JungleGame({
       acceptance: [],
       acceptedTasks: 0,
     }));
-  const customMissions = (data.projectLevels || [])
-    .filter((level) => level.mapMission)
+  const customMissions = playerMapLevels(data, { teamId: data.user.teamId })
+    .filter((level) => level.kind === "PROJECT")
     .map((level) => {
       const { state } = missionState(data, level);
       return {

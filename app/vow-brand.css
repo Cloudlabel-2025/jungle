@@ -13,7 +13,7 @@
   gap: 11px;
   min-width: 0;
   letter-spacing: normal;
-  font-family: Rajdhani, sans-serif;
+  font-family: var(--font-ui);
 }
 .vow-brand-copy {
   display: flex;
@@ -24,15 +24,13 @@
 .vow-brand-copy strong {
   color: #eadca6;
   font:
-    700 27px/1 Rajdhani,
-    sans-serif;
+    700 27px/1 var(--font-ui);
   letter-spacing: 0.16em;
 }
 .vow-brand-copy > span {
   color: #c1cfac;
   font:
-    500 11px/1.2 Rajdhani,
-    sans-serif;
+    500 11px/1.2 var(--font-ui);
   letter-spacing: 0.025em;
 }
 .jungle-world .sidebar .brand .vow-brand-copy {
@@ -192,22 +190,20 @@
 }
 .game-entry-kicker {
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   color: #bfc78f;
   letter-spacing: 0.24em;
 }
 .vow-loading-copy h1 {
   margin: 0;
   color: #efe3b8;
-  font: 500 clamp(26px, 3.6vw, 44px)/1.08 var(--display, Georgia, serif);
+  font: 500 clamp(26px, 3.6vw, 44px)/1.08 var(--display);
   text-wrap: balance;
   text-shadow: 0 2px 24px #0009;
 }
 .vow-loading-initials {
   font:
-    10px "JetBrains Mono",
-    monospace;
+    10px var(--font-ui);
   color: #b9b582;
   letter-spacing: 0.5em;
 }
@@ -219,8 +215,7 @@
   margin: 3px 0 0;
   color: #bdcda9;
   font:
-    500 15px/1.3 Rajdhani,
-    sans-serif;
+    500 15px/1.3 var(--font-ui);
 }
 .game-entry-track {
   width: 240px;
@@ -237,8 +232,7 @@
 }
 .vow-loading-caption {
   font:
-    500 12px Rajdhani,
-    sans-serif;
+    500 12px var(--font-ui);
   color: #819b76;
   letter-spacing: 0.14em;
 }
@@ -253,8 +247,7 @@
   min-height: 32px;
   margin-top: 0;
   font:
-    500 13px Rajdhani,
-    sans-serif;
+    500 13px var(--font-ui);
   color: #96ad84;
   text-decoration-color: #708858;
 }

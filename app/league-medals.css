@@ -45,8 +45,7 @@
   border: 1px solid var(--metal-dark);
   border-radius: 2px;
   font:
-    700 calc(var(--emblem-size) * 0.12)/1.15 "Rajdhani",
-    sans-serif;
+    700 calc(var(--emblem-size) * 0.12)/1.15 var(--font-ui);
   box-shadow: 0 1px 2px #0008;
 }
 .league-unranked-mark {
@@ -334,22 +333,19 @@
 }
 .league-trail li > span:not(.league-emblem) {
   font:
-    600 14px "Rajdhani",
-    sans-serif;
+    600 14px var(--font-ui);
   color: #bdbb9f;
 }
 .league-trail li > small {
   font:
-    600 10px "Rajdhani",
-    sans-serif;
+    600 10px var(--font-ui);
   letter-spacing: 1px;
   color: #c6ca9b;
 }
 .league-hall-label {
   display: block;
   font:
-    600 13px "Rajdhani",
-    sans-serif;
+    600 13px var(--font-ui);
   color: #d9cda4;
   letter-spacing: 1px;
 }
@@ -366,7 +362,7 @@
 }
 .league-total small,
 .league-progress-copy > span {
-  font-family: "Rajdhani", sans-serif;
+  font-family: var(--font-ui);
 }
 .league-progress {
   height: 13px;

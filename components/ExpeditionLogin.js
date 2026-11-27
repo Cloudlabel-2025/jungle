@@ -108,7 +108,7 @@ export default function ExpeditionLogin({
           {tenancy && (
             <>
               {" "}
-              <a href="/recover">Forgot password?</a>
+              <a href={college?.slug ? `/c/${college.slug}/recover` : "/recover"}>Forgot password?</a>
             </>
           )}
         </p>

@@ -5,7 +5,7 @@
   border: 1px solid #b5cd7e88;
   border-radius: 14px;
   background: #173b29;
-  color: #edf4d8;
+  color: var(--text-primary);
 }
 .level-one-result > .mission-stars-result {
   position: relative;
@@ -114,7 +114,7 @@
   border-radius: 20px;
   background: #263e22;
   color: #ffe5a0;
-  font: 600 13px/1.2 "Rajdhani", sans-serif;
+  font: 600 13px/1.2 var(--font-ui);
   letter-spacing: normal;
   white-space: nowrap;
   cursor: pointer;
@@ -151,24 +151,24 @@
 .level-one-result.is-compact { background: transparent; border: 0; padding: 16px 0 0; gap: 12px; }
 .is-mission-tab .mission-briefing-scene .level-one-result.is-compact h4 { margin: 0; font-size: 25px; }
 .level-one-result.is-compact .button-row { display: flex; flex-wrap: wrap; gap: 14px; }
-.mission-review-trigger { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px; border: 1px solid #b8ce8177; border-radius: 10px; background: linear-gradient(110deg, #3a542b88, #173a2b); color: #edf1cd; text-align: left; cursor: pointer; transition: border-color .2s, background .2s; }
+.mission-review-trigger { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px; border: 1px solid #b8ce8177; border-radius: 10px; background: linear-gradient(110deg, #3a542b88, #173a2b); color: var(--text-primary); text-align: left; cursor: pointer; transition: border-color .2s, background .2s; }
 .mission-review-trigger:hover { border-color: #ead48c; background: #38532e; }
 .mission-review-trigger:focus-visible { outline: 2px solid #ead48c; outline-offset: 3px; }
 .mission-review-trigger-icon { display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: 9px; background: #c6d38a22; color: #e9db98; }
 .mission-review-trigger > span:nth-child(2) { display: grid; gap: 2px; flex: 1; }
-.mission-review-trigger strong { font: 700 15px/1.2 "Rajdhani", sans-serif; }
-.level-one-result .mission-review-trigger small { display: block; font: 12px/1.2 "Rajdhani", sans-serif; color: #bfd0ab; }
+.mission-review-trigger strong { font: 700 15px/1.2 var(--font-ui); }
+.level-one-result .mission-review-trigger small { display: block; font: 12px/1.2 var(--font-ui); color: #bfd0ab; }
 .mission-review-trigger > svg { flex-shrink: 0; color: #dacb8a; }
-.mission-review-report { display: grid; gap: 20px; color: #e5edd5; }
+.mission-review-report { display: grid; gap: 20px; color: var(--text-primary); }
 .mission-review-summary { display: flex; align-items: center; gap: 22px; padding: 20px; border: 1px solid #b1c77a55; border-radius: 18px; background: radial-gradient(ellipse at left, #b4993c22, transparent 65%), #153425; }
 .mission-review-award { display: grid; justify-items: center; gap: 10px; min-width: 130px; color: #f0d58a; }
 .mission-review-award .sky-station-stars { margin: 0; }
-.mission-review-eyebrow { color: #c6d38a; font: 9px "JetBrains Mono", monospace; letter-spacing: .13em; }
-.mission-review-summary h3 { margin: 6px 0; font: 700 28px/1.1 "Rajdhani", sans-serif; color: #f0e4b1; }
+.mission-review-eyebrow { color: #c6d38a; font: 9px var(--font-ui); letter-spacing: .13em; }
+.mission-review-summary h3 { margin: 6px 0; font: 700 28px/1.1 var(--font-ui); color: #f0e4b1; }
 .mission-review-summary p { margin: 6px 0 12px; color: #bdd0b4; }
 .mission-review-rewards { display: flex; flex-wrap: wrap; gap: 16px; color: #efdda0; }
 .mission-review-rewards > span { display: inline-flex; align-items: center; gap: 5px; }
-.mission-review-section-title { margin: 0 0 10px; color: #dde9c5; font: 700 20px "Rajdhani", sans-serif; }
+.mission-review-section-title { margin: 0 0 10px; color: var(--text-heading); font: 700 20px var(--font-ui); }
 .mission-review-checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .mission-review-check { display: flex; gap: 10px; padding: 13px; border-radius: 12px; border: 1px solid #718e5b55; background: #173826; }
 .mission-review-check > div { flex: 1; min-width: 0; }
@@ -178,7 +178,7 @@
 .mission-review-check.not-assessed { opacity: .75; }
 .mission-review-check-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 5px 10px; }
 .mission-review-check-heading strong { font-size: 16px; }
-.mission-review-check-heading > span { font: 600 11px "Rajdhani", sans-serif; color: #caddb2; }
+.mission-review-check-heading > span { font: 600 11px var(--font-ui); color: #caddb2; }
 .needs-work .mission-review-check-heading > span { color: #f0d58a; }
 .mission-review-check p { margin: 5px 0 0; color: #becfb4; font-size: 14px; line-height: 1.4; }
 .mission-review-check small { display: block; margin-top: 6px; color: #e4d79e; font-size: 12px; }

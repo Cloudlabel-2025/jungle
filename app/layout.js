@@ -1,6 +1,5 @@
 import "./globals.css";
-import "@fontsource/rajdhani/400.css";
-import "@fontsource/rajdhani/500.css";
+import "@fontsource-variable/geist";
 import "@fontsource/rajdhani/600.css";
 import "@fontsource/rajdhani/700.css";
 import "@fontsource/jetbrains-mono/400.css";
@@ -60,6 +59,14 @@ import "./game-stations.css";
 import "./league-medals.css";
 import "./team-lab.css";
 import "./cc-dashboard.css";
+import "./support-console.css";
+import "./typography.css";
+import "./navigation-account.css";
+import "./cohort-management.css";
+import "./trail-objectives.css";
+import "./player-level-progression.css";
+import "./expedition-setup.css";
+import "./college-lifecycle.css";
 import { brand } from "@/lib/brand.js";
 export const metadata = {
   title: brand.title,

@@ -21,7 +21,7 @@
   font-size: 17px;
   font-family: var(--display);
   line-height: 1.2;
-  color: #ecedce !important;
+  color: var(--text-primary) !important;
   white-space: normal !important;
 }
 .player-name-line > span {
@@ -40,7 +40,7 @@
   white-space: nowrap;
 }
 .player-experience small {
-  font: 9px var(--mono);
+  font: 9px var(--body);
   color: #b5c4a2;
   white-space: nowrap;
 }
@@ -75,7 +75,7 @@
 .player-vitals small {
   margin-left: 3px;
   color: #a4b99d;
-  font: 9px var(--mono);
+  font: 9px var(--body);
 }
 .life-counter {
   color: #ff8298;
@@ -146,7 +146,7 @@
 }
 .player-honours small {
   grid-column: 1 / -1;
-  font: 8px var(--mono);
+  font: 8px var(--body);
   color: #a8b798;
   text-align: right;
 }
@@ -347,7 +347,7 @@
 .emblem-picker h4 {
   margin: 18px 0 12px;
   color: #afc199;
-  font: 10px var(--mono);
+  font: 10px var(--body);
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }

@@ -1,0 +1,30 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { build } from "esbuild";
+import { createRequire } from "node:module";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { supportConsoleFixture } from "./support-console-fixture.mjs";
+
+test("CC support dashboard renders a paginated active queue and clear empty state; other roles keep their support tools", async () => {
+  const output = await build({ entryPoints: ["components/SupportConsole.js"], bundle: true, write: false, platform: "node", format: "cjs", packages: "external", jsx: "automatic", loader: { ".js": "jsx" }, alias: { "@": process.cwd() } });
+  const compiled = { exports: {} };
+  new Function("require", "module", "exports", output.outputFiles[0].text)(createRequire(import.meta.url), compiled, compiled.exports);
+  const SupportConsole = compiled.exports.default;
+  const props = { data: supportConsoleFixture(), screen: "dashboard", act: async () => ({ success: true }), now: new Date("2026-11-26T10:00:00Z") };
+  const html = renderToStaticMarkup(createElement(SupportConsole, props));
+  assert.match(html, /Search support tickets/);
+  assert.match(html, /Request queue/);
+  assert.match(html, /Download PDF/);
+  assert.doesNotMatch(html, /evidence \(JSON\)/);
+  assert.doesNotMatch(html, /support-detail-placeholder/);
+  assert.match(html, /1–3 of 6 tickets/);
+  assert.match(html, /aria-label="Filter ticket queue"/);
+  assert.doesNotMatch(html, /Resolved authentication issue/);
+  const empty = supportConsoleFixture(); empty.support.tickets = [];
+  assert.match(renderToStaticMarkup(createElement(SupportConsole, { ...props, data: empty })), /No support requests yet/);
+  const gamer = supportConsoleFixture(); gamer.user.role = "GAMER";
+  const gamerHtml = renderToStaticMarkup(createElement(SupportConsole, { ...props, data: gamer, screen: "team-room" }));
+  assert.match(gamerHtml, /Raise a private ticket/);
+  assert.doesNotMatch(gamerHtml, /support-console-enhanced/);
+});

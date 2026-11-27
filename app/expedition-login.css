@@ -14,7 +14,7 @@
   padding: 24px 34px 26px;
   border: 1px solid #96b57570;
   border-radius: 24px;
-  color: #f0f4e6;
+  color: var(--text-primary);
   background: #0c271df5;
   box-shadow:
     0 22px 70px #061b1670,
@@ -59,7 +59,7 @@
 .vow-login-field label {
   font-size: 16px;
   font-weight: 600;
-  color: #e2ebd5;
+  color: var(--text-primary);
 }
 .jungle-world .vow-login-field input {
   display: block;
@@ -68,7 +68,7 @@
   margin: 0;
   padding: 11px 14px;
   background: #071c14;
-  color: #f0f4e6;
+  color: var(--text-primary);
   border: 1px solid #6d8866;
   border-radius: 10px;
   font-size: 16px;
@@ -139,7 +139,7 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  color: #ffd0c6;
+  color: var(--text-primary);
   font-size: 15px;
   line-height: 1.3;
 }

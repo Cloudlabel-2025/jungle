@@ -79,7 +79,7 @@
 }
 .project-level-card {
   text-align: left;
-  color: #e8f4ed;
+  color: var(--text-primary);
   background: #102b28;
   border: 1px solid #3c6860;
   border-radius: 12px;

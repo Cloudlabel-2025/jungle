@@ -8,7 +8,7 @@ The main address opens the **`/platform` super admin dashboard**. College lifecy
 
 | Variable | Meaning |
 | --- | --- |
-| TENANCY_ENABLED | Set to true only after registering the existing database |
+| TENANCY_ENABLED | Set to true after registering the existing database. Vercel defaults to true when omitted; explicitly set false only for a legacy single-database deployment. |
 | MONGODB_URI | Existing database connection, retained for College for test |
 | MASTER_MONGODB_URI | Optional registry cluster connection; falls back to MONGODB_URI |
 | MASTER_DB_NAME | Registry database, default jungle_platform |
@@ -55,6 +55,8 @@ To create a college, run `scripts/colleges.mjs create` with a JSON object on sec
 
 Open the URL shown in the college overview using **Open college** or **Copy URL**. College for test uses `http://college-for-test.localhost:3000/` locally. Users enter their username/email and password; the college name is fixed by the address. Login rotates the session and reloads the workspace, disposing of in-memory work queues. Accounts with identical usernames/emails in different colleges remain independent.
 
+Local entry and recovery rewrites use Next's internal loopback origin, while the original Host and trusted college header select the tenant. This avoids Node trying to resolve `college-for-test.localhost` through Windows DNS during `/c/<slug>` re-entry (including logout). Keep `skipProxyUrlNormalize` enabled so loopback addresses are not normalized into a different rewrite origin. If the browser itself cannot open a `.localhost` address, use `http://127.0.0.1:3000/c/college-for-test` instead. After updating proxy or Next configuration, restart `npm run dev`.
+
 The session carries the immutable college ID and registry access revision. Browser API calls include the college bound to the rendered page. A session belonging to another college receives a conflict. The server derives the college from a registered URL and removes incoming selection headers. Subdomain sessions use host-only cookies, supporting independent college tabs. The `/c/<slug>` fallback uses a host-wide selection cookie; save work and sign out before switching fallback colleges in the same browser.
 
 On Vercel without wildcard domain configuration, the college URL is `https://<deployment-host>/c/college-for-test`. To use `https://<college-slug>.<your-domain>/`, configure the root and wildcard domain in your hosting provider, its required DNS records and TLS, then set `COLLEGE_ROOT_DOMAIN=<your-domain>` and redeploy. Keep `CMS_PUBLIC_ORIGIN` set to the public CMS origin for recovery mail. Individual college subdomains are not automatically provisioned at your DNS provider by the application.
@@ -74,6 +76,23 @@ Attendance and pilot processing enumerate ACTIVE colleges, take separate distrib
 Notification contact configuration is now nested by immutable college ID and cohort ID: `{"<college-id>":{"alpha":[{"name":"Approved contact","email":"approved@example.org","approval":"Institution-approved reference"}]}}`. Legacy cohort-only contact lists are not reused in tenant mode. College ID also prefixes external delivery idempotency keys and new private Blob object paths. Existing object paths are preserved and still require college-local evidence authorization.
 
 ## Verification and rollout
+
+CMS college overview offers **Deactivate college**, **Restore access** and **Delete permanently**. Deactivation changes the registry status to `INACTIVE` and advances the access revision; all college roles, direct entry links, account recovery and existing sessions are blocked while tenant data is retained. The super admin can see the inactive college's registry entry and restore it, but its tenant records are not opened until restoration. Restoring also advances the revision, so users must sign in again.
+
+Permanent deletion requires the current record versions and typing the exact college code. It first marks the college `DELETING`, blocks tenant access and claims a cleanup lease. It erases private Blob evidence and the college's Blob prefix, drops the explicitly mapped tenant database, and removes the registry profile, college recovery records, job leases and college-specific audit data. Only a minimal platform operation receipt without the college profile or tenant content remains. System/registry database mappings and foreign file prefixes are rejected. The operation never deletes another college's storage or exported copies/backups outside application storage.
+
+If recent private upload tokens or a running background job could still write data, deletion remains pending and CMS displays when to retry. Storage errors also retain the blocked `DELETING` entry so cleanup can be retried; the UI does not report success before cleanup finishes. Contact emails, phone identities and college codes are released only when the registry entry is permanently removed. Incomplete provisioning must finish before deletion; failed provisioning can be permanently removed through its college overview.
+
+College contact emails and phone numbers are unique across the CMS registry, including archived and failed colleges. Email comparison ignores case and surrounding whitespace. Phone comparison ignores punctuation and spaces and treats `00` as an international prefix. For India (the CMS default, including older profiles without a country), a ten-digit national number and its `+91` or domestic `0` forms share one identity. Other countries should use the full international country code. Display formatting is preserved. Empty optional contacts do not reserve an identity. These rules do not change college account login emails.
+
+New and updated records receive database uniqueness keys. After deploying the new contact checks, audit and backfill older records using the environment for that registry:
+
+```powershell
+npm run colleges:contacts
+npm run colleges:contacts -- --apply
+```
+
+The audit reports college IDs and conflicting fields without printing contact values. If it reports duplicates, correct those contacts in CMS and repeat the audit; the tool never deletes or merges college contacts. Apply checks that each profile still matches its audited value and writes only the identity keys in a transaction, so a concurrent profile edit aborts the backfill. Creation and editing also compare older profiles before accepting contacts, even before backfill.
 
 ```powershell
 node scripts/check-day-one.mjs --all --test-file=college-tenancy.test.mjs

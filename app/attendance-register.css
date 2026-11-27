@@ -43,7 +43,7 @@
 }
 .attendance-counts strong {
   font-size: 29px;
-  color: #e0ecc5;
+  color: var(--text-primary);
 }
 .attendance-day-toolbar,
 .attendance-day-toolbar > div {
@@ -68,7 +68,7 @@
   border: 1px solid #65835b;
   border-radius: 8px;
   padding: 9px;
-  color: #e4edcf;
+  color: var(--text-primary);
 }
 .attendance-table {
   border: 1px solid #4b6544;
@@ -86,7 +86,7 @@
   padding: 15px 18px;
   border-bottom: 1px solid #36513b;
   font-size: 14px;
-  color: #e2ebd5;
+  color: var(--text-primary);
 }
 .attendance-table-row:last-child {
   border-bottom: 0;
@@ -115,7 +115,7 @@
   padding: 4px 9px;
   border-radius: 20px;
   background: #294737;
-  color: #d1e3c7;
+  color: var(--text-primary);
 }
 .attendance-badge.status-present,
 .attendance-badge.status-full_day {
@@ -135,7 +135,7 @@
 .attendance-badge.status-excused,
 .attendance-badge.status-day_off {
   background: #2f444b;
-  color: #c6dfe4;
+  color: var(--text-primary);
 }
 .attendance-empty {
   padding: 24px;
@@ -149,7 +149,7 @@
 .calendar-editor select {
   color-scheme: dark;
   background: #163c2b;
-  color: #e4edcf;
+  color: var(--text-primary);
   border: 1px solid #65835b;
   border-radius: 8px;
   padding: 12px;

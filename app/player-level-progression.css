@@ -1,0 +1,16 @@
+.player-level-progression { min-width: 0; }
+.player-level-catalogue { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,170px),1fr)); gap: 10px; margin-top: 16px; }
+.player-level-catalogue > button { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; padding: 14px; text-align: left; border: 1px solid #415b43; border-radius: 8px; background: #10251c; color: var(--text-primary); }
+.player-level-catalogue > button:hover, .player-level-catalogue > button[aria-pressed="true"] { background: #223b29; border-color: #9dbd7c; }
+.player-level-catalogue small { color: var(--text-secondary); font-size: 10px; letter-spacing: .7px; }
+.player-level-catalogue strong { font: 600 20px/1.2 var(--font-heading); color: var(--text-heading); overflow-wrap: anywhere; }
+.player-level-catalogue span { font-size: 12px; line-height: 1.45; color: var(--text-secondary); }
+.player-level-detail { padding: 16px; margin-top: 14px; border-left: 2px solid #9dbd7c; background: #182e21; }
+.player-level-detail h3 { margin: 0 0 8px; font-size: 22px; }
+.player-level-detail p { max-width: 85ch; margin: 8px 0; font-size: 14px; line-height: 1.6; }
+.player-level-detail .btn { margin-top: 8px; }
+.practice-projects { margin-top: 14px; border: 1px solid #38503d; border-radius: 8px; }
+.practice-projects > summary { padding: 14px 16px; cursor: pointer; font-size: 14px; color: var(--text-secondary); }
+.practice-projects > summary span { margin-left: 10px; font-size: 12px; }
+.player-level-progression :is(button,summary,a):focus-visible { outline: 2px solid #b5dc8c; outline-offset: 3px; }
+@media(max-width:600px) { .player-level-catalogue { grid-template-columns: repeat(auto-fit,minmax(min(100%,140px),1fr)); } }

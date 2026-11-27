@@ -23,7 +23,6 @@ import {
   Activity,
   Menu,
   Command,
-  LogOut,
   Check,
   AlertTriangle,
   X,
@@ -48,6 +47,7 @@ import { roleNames } from "@/lib/expedition";
 import { league } from "@/lib/rules.js";
 import { Avatar, Modal, HP, Badge } from "./ui";
 import PlayerHeader from "./PlayerHeader";
+import NavLogoutButton from "./NavLogoutButton";
 import TrophyLeague, { TrophyLeagueChange } from "./TrophyLeague";
 import PlayerProfile from "./PlayerProfile";
 import AttendancePrompt from "./AttendancePrompt";
@@ -430,8 +430,11 @@ export default function Arena({
         headers: { "Content-Type": "application/json" },
         body: "{}",
       });
-      if (!response.ok) throw new Error("Sign-out failed. Please try again.");
-      if (tenancy) { window.location.assign("/gamer/dashboard"); return; }
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result.error || "Sign-out failed. Please try again.");
+      }
+      if (tenancy) { window.location.assign(college?.slug ? `/c/${college.slug}` : "/gamer/dashboard"); return; }
       setUser(null);
       setData(null);
       setError("");
@@ -599,6 +602,7 @@ export default function Arena({
               <X size={20} />
             </button>
           )}
+          <div className="sidebar-scroll-area">
           <div className="sidebar-season">
             {college && <span className="eyebrow">{college.name}</span>}
             <span className="eyebrow">
@@ -688,6 +692,10 @@ export default function Arena({
               </span>
               <span>v1.0</span>
             </div>
+          </div>
+          </div>
+          <div className="sidebar-account">
+            <NavLogoutButton onClick={logout} busy={switching} />
           </div>
         </aside>
         <div className="workspace">
@@ -799,15 +807,6 @@ export default function Arena({
                   </span>
                 </button>
               )}
-              <button
-                className="icon-btn logout"
-                title="Sign out"
-                aria-label="Sign out"
-                disabled={switching}
-                onClick={logout}
-              >
-                <LogOut size={16} />
-              </button>
             </div>
           </header>
           {error && (

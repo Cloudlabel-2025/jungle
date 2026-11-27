@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { tenancyEnabled } from "./lib/tenancy-mode.js";
 import {
   collegeEntryCookie,
   collegeEntryHeader,
@@ -13,7 +14,7 @@ export function proxy(request) {
   headers.delete(collegeEntryHeader);
   const rootDomain =
     process.env.COLLEGE_ROOT_DOMAIN || process.env.ROOT_DOMAIN || "";
-  if (process.env.TENANCY_ENABLED !== "true")
+  if (!tenancyEnabled())
     return NextResponse.next({ request: { headers } });
   const hostSlug = collegeSlugFromHost(
     request.headers.get("host") || request.nextUrl.host,
@@ -54,15 +55,19 @@ export function proxy(request) {
         { error: "College URL not found." },
         { status: 404 },
       );
-    // NextURL normalizes 127.0.0.1 to localhost. Keep the actual Host so this
-    // stays an internal rewrite and retains the trusted college header.
-    rewrite = new URL(request.nextUrl.pathname + request.nextUrl.search, requestOrigin(request.headers, request.url));
+    // Rewrite against Next's internal request origin, not the browser's Host.
+    // A tenant .localhost Host can differ from the loopback origin and would
+    // turn this into an external proxy request requiring OS DNS resolution.
+    // Plain URL also avoids NextURL normalizing 127.0.0.1 into localhost.
+    rewrite = new URL(request.url);
     rewrite.pathname = target === "recover" ? "/recover" : "/gamer/dashboard";
   }
   if (slug) headers.set(collegeEntryHeader, slug);
   const response = rewrite
     ? NextResponse.rewrite(rewrite, { request: { headers } })
     : NextResponse.next({ request: { headers } });
+  if (rewrite)
+    response.headers.set("Cache-Control", "private, no-store");
   if (rewrite)
     response.cookies.set(collegeEntryCookie, slug, {
       httpOnly: true,

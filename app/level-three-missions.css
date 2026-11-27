@@ -56,10 +56,9 @@
   border: 1px solid #c4ce8a99;
   border-radius: 10px;
   background: linear-gradient(120deg, #365638, #1a392c);
-  color: #f2edc4;
+  color: var(--text-primary);
   font:
-    600 15px/1.2 Rajdhani,
-    sans-serif;
+    600 15px/1.2 var(--font-ui);
   cursor: pointer;
 }
 .l3-component-bank button:hover:not(:disabled) {
@@ -94,21 +93,19 @@
   border-style: solid;
   border-color: #c4ce8a99;
   background: #284831;
-  color: #f4edc9;
+  color: var(--text-primary);
   animation: l3-connect 0.2s ease-out;
 }
 .l3-slot-number {
   color: #d7cb86;
   font:
-    10px "JetBrains Mono",
-    monospace;
+    10px var(--font-ui);
 }
 .l3-signal-path strong {
   flex: 1;
   min-width: 0;
   font:
-    600 14px/1.15 Rajdhani,
-    sans-serif;
+    600 14px/1.15 var(--font-ui);
 }
 .l3-slot-tools {
   display: flex;
@@ -258,15 +255,13 @@
 }
 .l3-evidence-board header small {
   font:
-    9px "JetBrains Mono",
-    monospace;
+    9px var(--font-ui);
   letter-spacing: 0.12em;
 }
 .l3-evidence-board header h3 {
   margin: 4px 0 0;
   font:
-    700 25px/1.1 Rajdhani,
-    sans-serif;
+    700 25px/1.1 var(--font-ui);
 }
 .l3-clue-cards {
   display: grid;
@@ -301,14 +296,12 @@
 }
 .l3-clue-cards small {
   font:
-    9px "JetBrains Mono",
-    monospace;
+    9px var(--font-ui);
   color: #bdce98;
 }
 .l3-clue-cards strong {
   font:
-    700 21px/1.1 Rajdhani,
-    sans-serif;
+    700 21px/1.1 var(--font-ui);
 }
 .l3-clue-cards button > span:last-child {
   display: flex;
@@ -327,8 +320,7 @@
   background: #081f17aa;
   border-radius: 0 10px 10px 0;
   font:
-    500 20px/1.4 Rajdhani,
-    sans-serif;
+    500 20px/1.4 var(--font-ui);
   animation: l3-connect 0.2s ease-out;
 }
 .l3-clue-reveal svg {
@@ -380,8 +372,7 @@
   margin: 30px 0;
   color: #e1d587;
   font:
-    700 18px Rajdhani,
-    sans-serif;
+    700 18px var(--font-ui);
 }
 .l3-story-trail {
   display: flex;
@@ -408,13 +399,11 @@
   place-items: center;
   height: 25px;
   font:
-    700 20px Rajdhani,
-    sans-serif;
+    700 20px var(--font-ui);
 }
 .l3-story-trail span {
   font:
-    600 12px Rajdhani,
-    sans-serif;
+    600 12px var(--font-ui);
   text-transform: capitalize;
 }
 .l3-story-trail [aria-current="step"] {
@@ -467,8 +456,7 @@
 .l3-run-control small {
   color: #c1cfaa;
   font:
-    13px/1.35 Rajdhani,
-    sans-serif;
+    13px/1.35 var(--font-ui);
 }
 .l3-signal-path li.is-signal-here {
   border-color: #ffe49a;
@@ -743,21 +731,18 @@
   display: grid;
   gap: 3px;
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   letter-spacing: 0.1em;
 }
 .l3-hunt-location strong {
   font:
-    700 18px Rajdhani,
-    sans-serif;
+    700 18px var(--font-ui);
   letter-spacing: 0;
 }
 .l3-hunt-counter {
   right: 14px;
   font:
-    600 13px Rajdhani,
-    sans-serif;
+    600 13px var(--font-ui);
 }
 .l3-hunt-hotspots {
   display: flex;
@@ -777,7 +762,7 @@
   border: 1px solid #c2bc7577;
   border-radius: 12px;
   background: #163e2d;
-  color: #ebedc6;
+  color: var(--text-primary);
   cursor: pointer;
   text-align: left;
   transition:
@@ -813,14 +798,12 @@
 }
 .l3-hunt-hotspots small {
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   color: #d5d89b;
 }
 .l3-hunt-hotspots strong {
   font:
-    700 17px/1.1 Rajdhani,
-    sans-serif;
+    700 17px/1.1 var(--font-ui);
 }
 .l3-hunt-discovery {
   min-height: 0;
@@ -836,23 +819,20 @@
 }
 .l3-hunt-kicker {
   font:
-    9px "JetBrains Mono",
-    monospace;
+    9px var(--font-ui);
   letter-spacing: 0.12em;
   color: #dccd84;
 }
 .l3-hunt-discovery h3 {
   font:
-    700 clamp(22px, 2.3vw, 36px)/1.1 Rajdhani,
-    sans-serif;
+    700 clamp(22px, 2.3vw, 36px)/1.1 var(--font-ui);
   color: #f6e6b2;
   margin: 18px 0;
 }
 .l3-hunt-dialogue {
   font:
-    500 clamp(17px, 1.5vw, 24px)/1.4 Rajdhani,
-    sans-serif;
-  color: #edf0d2;
+    500 clamp(17px, 1.5vw, 24px)/1.4 var(--font-ui);
+  color: var(--text-primary);
   margin: 0;
   padding: 16px 0;
   border-top: 1px solid #c4c78055;
@@ -872,8 +852,7 @@
 .l3-hunt-goal p {
   margin: 0;
   font:
-    15px/1.35 Rajdhani,
-    sans-serif;
+    15px/1.35 var(--font-ui);
 }
 .l3-hunt-goal strong {
   display: block;
@@ -889,13 +868,11 @@
   cursor: pointer;
   margin-top: 18px;
   font:
-    13px Rajdhani,
-    sans-serif;
+    13px var(--font-ui);
 }
 .l3-hunt-full-brief {
   font:
-    14px/1.35 Rajdhani,
-    sans-serif;
+    14px/1.35 var(--font-ui);
   color: #c0d0ae;
   flex-shrink: 0;
 }
@@ -929,29 +906,25 @@
 }
 .l3-hunt-pip > strong {
   font:
-    700 14px Rajdhani,
-    sans-serif;
+    700 14px var(--font-ui);
   color: #e9d996;
 }
 .l3-hunt-pip > strong span {
   margin-left: 8px;
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   color: #aebe96;
 }
 .l3-hunt-pip p {
   margin: 4px 0;
   font:
-    500 18px/1.2 Rajdhani,
-    sans-serif;
-  color: #e4ebcb;
+    500 18px/1.2 var(--font-ui);
+  color: var(--text-primary);
 }
 .l3-hunt-pip small {
   color: #a8be92;
   font:
-    12px Rajdhani,
-    sans-serif;
+    12px var(--font-ui);
 }
 .l3-hunt-footer > button {
   flex-shrink: 0;

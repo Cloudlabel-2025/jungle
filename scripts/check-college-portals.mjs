@@ -16,7 +16,8 @@ import { requestAccountRecovery, deliverRecoveryMail } from "../lib/password-rec
 
 const replica = await MongoMemoryReplSet.create({ binary: { version: "7.0.24" }, replSet: { count: 1 } });
 const base = "http://127.0.0.1:3195", password = "Portal-password-123";
-const [playwrightRoot, chromePath] = process.argv.slice(2);
+const devMode = process.argv.includes("--dev");
+const [playwrightRoot, chromePath] = process.argv.slice(2).filter(arg => arg !== "--dev");
 let server, browser, output = "", checks = 0;
 try {
   for (const key of Object.keys(process.env)) if (key.startsWith("SMTP_")) delete process.env[key];
@@ -40,12 +41,13 @@ try {
   }
   const digest = async context => createHash("sha256").update(mongoose.mongo.BSON.serialize(await context.connection.db.collection("portal_history").findOne())).digest("hex");
   const historyBefore = await Promise.all(contexts.map(digest));
-  server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "--hostname", "127.0.0.1", "-p", "3195"], {
-    env: { ...process.env, APP_ORIGIN: base, DEMO_MODE: "false", BLOB_READ_WRITE_TOKEN: "", SMTP_HOST: "", SMTP_PORT: "", SMTP_USER: "", SMTP_TENANT_ID: "", SMTP_CLIENT_ID: "", SMTP_CLIENT_SECRET: "" }, windowsHide: true });
+  server = spawn(process.execPath, ["node_modules/next/dist/bin/next", devMode ? "dev" : "start", ...(devMode ? ["--webpack"] : []), "--hostname", "127.0.0.1", "-p", "3195"], {
+    env: { ...process.env, VERCEL: "1", TENANCY_ENABLED: "", APP_ORIGIN: base, DEMO_MODE: "false", BLOB_READ_WRITE_TOKEN: "", SMTP_HOST: "", SMTP_PORT: "", SMTP_USER: "", SMTP_TENANT_ID: "", SMTP_CLIENT_ID: "", SMTP_CLIENT_SECRET: "" }, windowsHide: true });
   server.stdout.on("data", bytes => output += bytes); server.stderr.on("data", bytes => output += bytes);
   let ready = false;
   for (let n = 0; n < 100; n++) { try { if ((await fetch(base + "/api/health")).ok) { ready = true; break; } } catch {} await new Promise(resolve => setTimeout(resolve, 200)); }
   assert.ok(ready, output);
+  assert.equal((await (await fetch(base + "/api/health")).json()).tenancy, true, "Vercel must use tenant mode without an explicit flag");
   const hostFor = index => `${colleges[index].slug}.localhost:3195`;
   async function request(path, { host, cookie, body, status = 200, origin, extra = {} } = {}) {
     // Native HTTP preserves Host; fetch can normalize it to the connection URL.
@@ -66,6 +68,13 @@ try {
     const loginPage = await request("/gamer/dashboard", { host: hostFor(i) });
     assert.ok(loginPage.text.includes(colleges[i].name), `Login page must display ${colleges[i].name} on ${hostFor(i)}`);
     assert.ok(!loginPage.text.includes('role="combobox"'));
+    // Logging out on a college host re-enters through /c/<slug>. This must
+    // render internally rather than proxying to an OS-unresolvable .localhost.
+    const reentry = await request(`/c/${colleges[i].slug}`, { host: hostFor(i) });
+    assert.ok(reentry.text.includes(colleges[i].name));
+    assert.equal(reentry.response.headers.get("cache-control"), devMode ? "no-store" : "private, no-store");
+    const recovery = await request(`/c/${colleges[i].slug}/recover`, { host: hostFor(i) });
+    assert.ok(recovery.text.includes(colleges[i].name));
   }
   const root = await request("/api/platform/auth/login", { body: { email: "owner@portals.example", password } });
   const rootCookie = root.response.headers.get("set-cookie").split(";")[0];
@@ -90,7 +99,25 @@ try {
   const fallback = await request(`/c/${colleges[0].slug}`);
   assert.ok(fallback.response.headers.get("set-cookie").includes("HttpOnly"));
   const fallbackCookie = fallback.response.headers.get("set-cookie").split(";")[0];
-  await request("/api/auth/login", { cookie: fallbackCookie, body: { identifier: "staff", password, collegeId: colleges[1].id }, status: 403 });
+  const switched = await request("/api/auth/login", { cookie: fallbackCookie, body: { identifier: "staff", password, collegeId: colleges[1].id } });
+  assert.equal(switched.json().user.collegeId, colleges[1].id, "An old shared cookie must not override the selected login form");
+  const switchedCookies = switched.response.headers.getSetCookie().map(value => value.split(";")[0]);
+  const switchedSession = switchedCookies.find(value => value.startsWith("codewild_session="));
+  assert.ok(switchedSession, "Tenant switch must establish its signed session");
+  assert.ok(switchedCookies.includes(`vow_college_entry=${colleges[1].slug}`), "Successful login must update the remembered college");
+  // Reopening a different portal changes only its entry cookie. A request from
+  // the signed-in college still selects its own database using the page ID.
+  const mismatchedEntry = `${switchedSession}; ${fallbackCookie}`;
+  const selected = await request("/api/auth/me", { cookie: mismatchedEntry, extra: { "x-codewild-college": colleges[1].id } });
+  assert.equal(selected.json().user.collegeId, colleges[1].id);
+  assert.equal((await request("/api/auth/me", { cookie: mismatchedEntry })).json().user.collegeId, colleges[1].id, "The signed session must outrank a stale remembered entry");
+  const signedPage = await request("/centre-command/dashboard", { cookie: mismatchedEntry });
+  assert.ok(signedPage.text.includes(colleges[1].name), "Page navigation must retain the authenticated college");
+  await request("/api/state", { cookie: mismatchedEntry, extra: { "x-codewild-college": colleges[0].id }, status: 409 });
+  await request("/api/auth/logout", { cookie: mismatchedEntry, body: {}, extra: { "x-codewild-college": colleges[0].id }, status: 409 });
+  assert.equal((await request("/api/auth/me", { cookie: mismatchedEntry, extra: { "x-codewild-college": colleges[1].id } })).json().authenticated, true);
+  const switchBack = await request("/api/auth/login", { cookie: switchedCookies.join("; "), body: { identifier: "staff", password, collegeId: colleges[0].id } });
+  assert.equal(switchBack.json().user.collegeId, colleges[0].id);
   if (playwrightRoot) {
     const { chromium } = createRequire(resolve(playwrightRoot,"package.json"))("playwright");
     browser = await chromium.launch({ headless: true, ...(chromePath ? { executablePath: chromePath } : {}) });

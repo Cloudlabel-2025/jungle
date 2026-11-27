@@ -9,8 +9,8 @@
   min-height: 0;
   padding: 112px 34px 22px 92px;
   overflow: hidden;
-  color: #ecf0d5;
-  font-family: "Rajdhani", sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-ui);
   background:
     linear-gradient(180deg, #08251c70, #0c291e99 45%, #071f17ed),
     url("/images/flight-mission-ground-v2.png") center/cover;
@@ -37,8 +37,7 @@
 .l2-eyebrow {
   color: #bdd18c;
   font:
-    8px/1.4 "JetBrains Mono",
-    monospace;
+    8px/1.4 var(--font-ui);
   letter-spacing: 0.14em;
 }
 .l2-topline > div > strong {
@@ -55,10 +54,9 @@
   border-radius: 9px;
   background: #143b2be6;
   padding: 10px 14px;
-  color: #e8efcf;
+  color: var(--text-primary);
   font:
-    600 15px/1.2 "Rajdhani",
-    sans-serif;
+    600 15px/1.2 var(--font-ui);
   cursor: pointer;
 }
 .l2-mission-counter {
@@ -67,8 +65,7 @@
   gap: 8px;
   color: #dddfa2;
   font:
-    700 17px "Rajdhani",
-    sans-serif;
+    700 17px var(--font-ui);
 }
 .l2-mission-counter > span {
   font-size: 8px;
@@ -87,16 +84,14 @@
 }
 .l2-scene-title > span {
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   letter-spacing: 0.2em;
   color: #c3d298;
 }
 .l2-scene-title h2 {
   margin: 5px 0;
   font:
-    700 clamp(26px, 2.6vw, 40px)/1.05 "Rajdhani",
-    sans-serif;
+    700 clamp(26px, 2.6vw, 40px)/1.05 var(--font-ui);
   color: #f1e8ba;
   text-shadow: 0 3px 18px #04170e;
 }
@@ -122,7 +117,7 @@
   min-width: 0;
   min-height: 0;
   text-align: left;
-  color: #eaf1d4;
+  color: var(--text-primary);
   background:
     radial-gradient(ellipse at 50% 25%, #91a75c22, transparent 70%),
     linear-gradient(160deg, #234b35f5, #092b21f5);
@@ -158,8 +153,7 @@
   gap: 8px;
   width: 100%;
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   color: #c1d18e;
   letter-spacing: 0.1em;
 }
@@ -186,21 +180,18 @@
 .l2-card-copy > small {
   color: #becd8e;
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   letter-spacing: 0.09em;
 }
 .l2-card-copy > strong {
   color: #f3e6b9;
   font:
-    700 clamp(22px, 2.1vw, 30px)/1.05 "Rajdhani",
-    sans-serif;
+    700 clamp(22px, 2.1vw, 30px)/1.05 var(--font-ui);
 }
 .l2-card-copy > span {
   color: #c0d0b2;
   font:
-    15px/1.35 "Rajdhani",
-    sans-serif;
+    15px/1.35 var(--font-ui);
 }
 .l2-card-action {
   display: flex;
@@ -212,8 +203,7 @@
   border-top: 1px solid #acbd7233;
   color: #e3dfa4;
   font:
-    700 16px "Rajdhani",
-    sans-serif;
+    700 16px var(--font-ui);
 }
 .l2-card-progress {
   height: 3px;
@@ -289,15 +279,13 @@
 .l2-briefing-heading h2 {
   margin: 4px 0 0;
   font:
-    700 28px/1.1 "Rajdhani",
-    sans-serif;
+    700 28px/1.1 var(--font-ui);
   color: #f2e6bb;
 }
 .l2-briefing-heading > div > span {
   color: #b6cc8c;
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   letter-spacing: 0.1em;
 }
 .l2-back {
@@ -310,8 +298,7 @@
   background: transparent;
   color: #cbdab4;
   font:
-    600 14px/1.2 "Rajdhani",
-    sans-serif;
+    600 14px/1.2 var(--font-ui);
   cursor: pointer;
 }
 .l2-scenario-layout {
@@ -332,8 +319,7 @@
 .l2-scenario-picker h3 {
   margin: 0 0 16px;
   font:
-    700 24px "Rajdhani",
-    sans-serif;
+    700 24px var(--font-ui);
   color: #e8e7bc;
 }
 .l2-scenario-buttons {
@@ -371,8 +357,7 @@
 }
 .l2-scenario-buttons button > strong {
   font:
-    700 19px/1.1 "Rajdhani",
-    sans-serif;
+    700 19px/1.1 var(--font-ui);
 }
 .l2-scenario-buttons button > span {
   position: absolute;
@@ -405,8 +390,7 @@
   margin: 14px 0;
   color: #f3e6b5;
   font:
-    700 29px/1.1 "Rajdhani",
-    sans-serif;
+    700 29px/1.1 var(--font-ui);
 }
 .l2-scenario-story {
   flex: 1;
@@ -448,8 +432,7 @@
   min-height: 42px;
   padding: 10px 16px;
   font:
-    700 16px/1.2 "Rajdhani",
-    sans-serif;
+    700 16px/1.2 var(--font-ui);
   cursor: pointer;
   box-shadow: 0 3px 0 #76935b;
 }
@@ -491,8 +474,7 @@
   margin: 9px 0 16px;
   color: #e6dfaa;
   font:
-    700 25px/1.1 "Rajdhani",
-    sans-serif;
+    700 25px/1.1 var(--font-ui);
 }
 .l2-case-story {
   flex: 1;
@@ -524,14 +506,12 @@
 }
 .l2-timer strong {
   font:
-    24px/1.1 "JetBrains Mono",
-    monospace;
+    24px/1.1 var(--font-ui);
 }
 .l2-timer > span {
   color: #a8bc91;
   font:
-    7px "JetBrains Mono",
-    monospace;
+    7px var(--font-ui);
   letter-spacing: 0.1em;
 }
 .l2-field-console {
@@ -572,8 +552,7 @@
   background: #143826;
   color: #aec291;
   font:
-    600 12px "JetBrains Mono",
-    monospace;
+    600 12px var(--font-ui);
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -591,8 +570,7 @@
 .l2-field-console h2 {
   margin: 8px 0 12px;
   font:
-    700 29px/1.1 "Rajdhani",
-    sans-serif;
+    700 29px/1.1 var(--font-ui);
   color: #f2e7bb;
 }
 .l2-answer-label {
@@ -614,10 +592,9 @@
   border: 1px solid #9dbb7755;
   border-radius: 12px;
   box-shadow: inset 0 2px 14px #0003;
-  color: #ecf2d8;
+  color: var(--text-primary);
   font:
-    500 18px/1.5 "Rajdhani",
-    sans-serif;
+    500 18px/1.5 var(--font-ui);
 }
 .jungle-world textarea.l2-evidence-input:focus {
   outline: none;
@@ -683,8 +660,7 @@
 }
 .l2-debrief h2 {
   font:
-    700 34px/1.1 "Rajdhani",
-    sans-serif;
+    700 34px/1.1 var(--font-ui);
   margin: 0;
   color: #f0e4b6;
 }
@@ -717,8 +693,7 @@
   padding: 3px;
   color: #bfd0a9;
   font:
-    12px "Rajdhani",
-    sans-serif;
+    12px var(--font-ui);
   cursor: pointer;
 }
 .l2-log {

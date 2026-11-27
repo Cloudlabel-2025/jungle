@@ -4,10 +4,10 @@
 .rank-halo { position: absolute; z-index: -1; width: 340px; height: 340px; top: 50%; left: 50%; transform: translate(-50%, -55%); border-radius: 50%; background: radial-gradient(circle, #ffe79760, #e5c25618 45%, transparent 70%); animation: rank-halo 1s ease-out both; }
 .rank-medallion { position: relative; width: 166px; height: 180px; display: grid; justify-items: center; align-content: center; color: #193422; background: linear-gradient(135deg, #fffbd7, #f5d56c 30%, #c79627 65%, #ffed9c); clip-path: polygon(50% 0,95% 23%,95% 74%,50% 100%,5% 74%,5% 23%); animation: rank-medal .65s cubic-bezier(.18,.85,.22,1.35) both; }
 .rank-medallion::after { content: ""; position: absolute; inset: -50%; background: linear-gradient(110deg, transparent 40%, #fffbe9c0 50%, transparent 60%); animation: rank-shine 1s .55s both; }
-.rank-medallion span { font: 700 72px/.95 Rajdhani, sans-serif; }
-.rank-medallion small { font: 700 11px "JetBrains Mono", monospace; letter-spacing: .17em; margin: 6px 0; }
+.rank-medallion span { font: 700 72px/.95 var(--font-ui); }
+.rank-medallion small { font: 700 11px var(--font-ui); letter-spacing: .17em; margin: 6px 0; }
 .rank-medallion svg { width: 23px; height: 23px; }
-.rank-up-title { color: #ffeda9; font: 700 40px/1 Rajdhani, sans-serif; letter-spacing: .12em; text-shadow: 0 3px 0 #31452a, 0 0 20px #f5d56c70; animation: rank-word .4s .2s both; }
+.rank-up-title { color: #ffeda9; font: 700 40px/1 var(--font-ui); letter-spacing: .12em; text-shadow: 0 3px 0 #31452a, 0 0 20px #f5d56c70; animation: rank-word .4s .2s both; }
 .rank-burst { position: absolute; inset: 0; z-index: -1; }
 .rank-burst i { position: absolute; top: 40%; left: 50%; height: 5px; width: 5px; background: #fff0ae; border-radius: 50%; animation: rank-spark 1.3s calc(.2s + var(--ray) * 20ms) both; }
 @keyframes rank-pop { 0% { opacity: 0; transform: scale(.35); } 12% { opacity: 1; transform: scale(1.12); } 20%, 74% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: translateY(-24px) scale(1.08); } }

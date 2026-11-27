@@ -35,6 +35,7 @@ export default function LevelManager({
   data,
   act,
   mapMode = false,
+  practiceOnly = false,
   autoCreate = false,
   initialLevel = null,
   onPublished,
@@ -58,7 +59,7 @@ export default function LevelManager({
         ...drafts.map((r) => ({ _id: r._id, ...(r.published || r.draft) })),
       ].map((l) => [l._id, l]),
     ).values(),
-  ].filter((level) => !mapMode || level.mapMission);
+  ].filter((level) => (!mapMode || level.mapMission) && (!practiceOnly || !level.mapMission));
   useEffect(() => {
     if (autoCreate || initialLevel) open(initialLevel);
   }, [autoCreate, initialLevel?._id]);

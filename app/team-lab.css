@@ -73,7 +73,7 @@ body:has(.lab-expanded) {
   border: 1px solid #425638;
   border-radius: 9px;
   background: #1b2c20;
-  color: #dce5cc;
+  color: var(--text-primary);
   font-size: 13px;
 }
 .team-local-sync {
@@ -190,7 +190,7 @@ body:has(.team-studio-page) > .landscape-app-content {
 .team-review-form select,
 .team-lab-toolbar select {
   background: #122018;
-  color: #e2e9ce;
+  color: var(--text-primary);
   border: 1px solid #526342;
   border-radius: 5px;
   padding: 10px;
@@ -229,7 +229,7 @@ body:has(.team-studio-page) > .landscape-app-content {
   font-size: clamp(26px, 3vw, 43px);
   line-height: 1.1;
   margin: 9px 0;
-  color: #f1e7c9;
+  color: var(--text-heading);
   letter-spacing: -1px;
 }
 .team-lab-heading p {

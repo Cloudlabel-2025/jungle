@@ -1,0 +1,52 @@
+/* Shared interface typography across CMS, college portals and learning screens.
+   Geist is self-hosted; native fallbacks cover scripts outside its character set. */
+body {
+  font-kerning: normal;
+}
+
+body.jungle-world :is(h1, h2, h3),
+body.jungle-world :is(.panel-heading, .page-heading, .vow-login-heading, .platform-admin) :is(h1, h2, h3) {
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+
+body.jungle-world :is(.eyebrow, .nav-label, .stat-label, .pa-kicker, .form-field-mark) {
+  color: var(--text-secondary);
+}
+
+body.jungle-world :is(.vow-login-brand, .support-summary strong, .stat-value, .pa-detail-summary strong) {
+  color: var(--text-accent);
+}
+
+body :is(button, input, textarea, select) {
+  font-family: var(--body);
+}
+
+body :is(code, pre, kbd, samp),
+body .terminal-command input {
+  font-family: var(--font-code);
+}
+
+body :is(.eyebrow, .nav-label, .stat-label, .pa-kicker, .form-field-mark) {
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: .06em;
+}
+
+body :is(.badge, .pa-status, .form-field-caption small) {
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: .01em;
+}
+
+body :is(.nav-item, .pa-sidebar nav a, .pa-sidebar nav button) {
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+body :is(time, .stat-value, .pa-stat strong, .attendance-countdown, [role="timer"]) {
+  font-variant-numeric: tabular-nums;
+}

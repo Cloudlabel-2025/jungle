@@ -2,11 +2,12 @@ const config = {
   // Isolated verification builds leave the running development app untouched.
   ...(process.env.CODEWILD_BUILD_CHECK === "1" ? { distDir: ".next/level-one-check" } : {}),
   experimental: { cpus: 1, agentUpgrade: "security" },
-  // Preserve the college/CMS host when redirecting between localhost subdomains.
+  // Preserve the internal origin for rewrites; redirects explicitly use Host.
   skipProxyUrlNormalize: true,
   serverExternalPackages: ["mongoose"],
   outputFileTracingIncludes: {
     "/api/pilot": ["./node_modules/@fontsource/rajdhani/files/*-400-normal.woff"],
+    "/api/\\[...path\\]": ["./node_modules/@fontsource/rajdhani/files/*-400-normal.woff"],
   },
   poweredByHeader: false,
   async headers() {

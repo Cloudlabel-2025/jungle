@@ -9,8 +9,8 @@
   gap: 12px;
   overflow: hidden;
   padding: 112px 30px 20px 90px;
-  color: #e7edce;
-  font-family: Rajdhani, sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-ui);
   background:
     radial-gradient(ellipse at 48% 60%, #284c3766, transparent 65%),
     linear-gradient(90deg, #a7bb7011 1px, transparent 1px),
@@ -43,8 +43,7 @@
   color: #c7c78b;
   letter-spacing: 0.16em;
   font:
-    8px/1.3 "JetBrains Mono",
-    monospace;
+    8px/1.3 var(--font-ui);
 }
 .signal-lab-header h2 {
   margin: 4px 0 0;
@@ -53,8 +52,7 @@
   gap: 9px;
   color: #f0e6ac;
   font:
-    700 28px/1 Rajdhani,
-    sans-serif;
+    700 28px/1 var(--font-ui);
 }
 .signal-lab-header h2 svg {
   width: 25px;
@@ -66,11 +64,10 @@
   align-items: center;
   color: #adbf8c;
   font:
-    9px "JetBrains Mono",
-    monospace;
+    9px var(--font-ui);
 }
 .pip-signal-lab button {
-  font-family: Rajdhani, sans-serif;
+  font-family: var(--font-ui);
   cursor: pointer;
 }
 .pip-signal-lab button:disabled {
@@ -94,8 +91,7 @@
   color: #e1e7c0;
   background: #163a2b;
   font:
-    700 15px/1.1 Rajdhani,
-    sans-serif;
+    700 15px/1.1 var(--font-ui);
 }
 .lab-primary {
   background: linear-gradient(#e5dfa0, #b8c97c);
@@ -139,14 +135,12 @@
 }
 .signal-lab-bays small {
   font:
-    7px "JetBrains Mono",
-    monospace;
+    7px var(--font-ui);
   letter-spacing: 0.1em;
 }
 .signal-lab-bays strong {
   font:
-    700 18px/1 Rajdhani,
-    sans-serif;
+    700 18px/1 var(--font-ui);
 }
 .signal-lab-bay-count {
   margin-left: auto;
@@ -155,13 +149,11 @@
   gap: 8px;
   color: #dece8e;
   font:
-    700 20px Rajdhani,
-    sans-serif;
+    700 20px var(--font-ui);
 }
 .signal-lab-bay-count span {
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
 }
 .signal-lab-dock {
   flex: 1;
@@ -186,8 +178,7 @@
 .signal-lab-dock-board h3 {
   color: #f1e2ae;
   font:
-    700 clamp(23px, 2.7vw, 38px)/1.05 Rajdhani,
-    sans-serif;
+    700 clamp(23px, 2.7vw, 38px)/1.05 var(--font-ui);
   margin: 0;
 }
 .signal-lab-dock-board > p {
@@ -233,8 +224,7 @@
 }
 .signal-lab-dock-circuit span {
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
 }
 .signal-lab-cases {
   display: flex;
@@ -249,8 +239,7 @@
   border-radius: 20px;
   background: #102b22;
   font:
-    600 15px Rajdhani,
-    sans-serif;
+    600 15px var(--font-ui);
 }
 .signal-lab-cases [aria-pressed="true"] {
   background: #d1d696;
@@ -317,8 +306,7 @@
   align-items: center;
   gap: 5px;
   font:
-    12px "JetBrains Mono",
-    monospace;
+    12px var(--font-ui);
   color: #d5cc8a;
 }
 .signal-lab-save {
@@ -386,8 +374,7 @@
   gap: 7px;
   color: #bbc88c;
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   letter-spacing: 0.1em;
 }
 .signal-lab-board-title button {
@@ -411,8 +398,7 @@
   border-radius: 10px;
   color: #e1dfb6;
   font:
-    16px/1.4 Rajdhani,
-    sans-serif;
+    16px/1.4 var(--font-ui);
   box-shadow: 0 15px 25px #0008;
 }
 .signal-lab-custom {
@@ -464,8 +450,7 @@
 .signal-lab-sockets > li > small {
   color: #8ea87b;
   font:
-    7px "JetBrains Mono",
-    monospace;
+    7px var(--font-ui);
   letter-spacing: 0.08em;
 }
 .signal-lab-sockets .is-connected {
@@ -487,8 +472,7 @@
 }
 .signal-lab-node strong {
   font:
-    700 clamp(13px, 1.3vw, 20px)/1.1 Rajdhani,
-    sans-serif;
+    700 clamp(13px, 1.3vw, 20px)/1.1 var(--font-ui);
   text-align: center;
 }
 .signal-lab-node:disabled {
@@ -536,8 +520,7 @@
 .signal-lab-tray > small {
   writing-mode: vertical-rl;
   font:
-    6px "JetBrains Mono",
-    monospace;
+    6px var(--font-ui);
   color: #9eb681;
   letter-spacing: 0.1em;
 }
@@ -554,8 +537,7 @@
   color: #e3e7be;
   min-height: 40px;
   font:
-    600 13px/1.1 Rajdhani,
-    sans-serif;
+    600 13px/1.1 var(--font-ui);
 }
 .signal-lab-tray > span {
   color: #b9cb9b;
@@ -587,16 +569,14 @@
 }
 .signal-lab-speech small {
   font:
-    7px "JetBrains Mono",
-    monospace;
+    7px var(--font-ui);
   color: #d9ca82;
   letter-spacing: 0.1em;
 }
 .signal-lab-speech p {
   margin: 7px 0 0;
   font:
-    16px/1.3 Rajdhani,
-    sans-serif;
+    16px/1.3 var(--font-ui);
   color: #e0e6bf;
 }
 .signal-lab-predictions,
@@ -610,8 +590,7 @@
 }
 .signal-lab-pip legend {
   font:
-    700 14px Rajdhani,
-    sans-serif;
+    700 14px var(--font-ui);
   color: #d6cf91;
   margin-bottom: 5px;
 }
@@ -624,8 +603,7 @@
   background: #102e23;
   color: #bed0a0;
   font:
-    600 14px Rajdhani,
-    sans-serif;
+    600 14px var(--font-ui);
 }
 .signal-lab-predictions button[aria-pressed="true"],
 .signal-lab-faults button[aria-pressed="true"] {
@@ -714,14 +692,12 @@
 .signal-lab-transmitter h3 {
   margin: 0;
   font:
-    700 27px/1.05 Rajdhani,
-    sans-serif;
+    700 27px/1.05 var(--font-ui);
   color: #f0dda4;
 }
 .signal-lab-transmitter label {
   font:
-    16px/1.3 Rajdhani,
-    sans-serif;
+    16px/1.3 var(--font-ui);
   color: #becfa7;
 }
 .jungle-world .signal-lab-transmitter textarea {
@@ -732,11 +708,10 @@
   padding: 15px;
   border: 1px solid #9bb87866;
   border-radius: 9px;
-  color: #e7ebcb;
+  color: var(--text-primary);
   background: #061e17;
   font:
-    17px/1.4 Rajdhani,
-    sans-serif;
+    17px/1.4 var(--font-ui);
   margin: 0;
 }
 .signal-lab-transmitter footer {
@@ -766,8 +741,7 @@
 }
 .signal-lab-teach-pip h3 {
   font:
-    700 23px/1.1 Rajdhani,
-    sans-serif;
+    700 23px/1.1 var(--font-ui);
   color: #dfd195;
   margin: 0;
 }
@@ -812,8 +786,7 @@
   margin: 0;
   color: #f1e0a4;
   font:
-    700 32px Rajdhani,
-    sans-serif;
+    700 32px var(--font-ui);
 }
 .signal-lab-result p {
   margin: 0;
@@ -1450,7 +1423,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  color: #dfe8c5;
+  color: var(--text-primary);
 }
 .lab-objective-intro {
   flex-shrink: 0;
@@ -1464,16 +1437,14 @@
   align-items: center;
   gap: 9px;
   font:
-    700 clamp(22px, 2.4vw, 34px)/1.1 Rajdhani,
-    sans-serif;
+    700 clamp(22px, 2.4vw, 34px)/1.1 var(--font-ui);
   color: #f1e0a9;
   margin: 6px 0;
 }
 .lab-objective-intro p {
   color: #bed0a6;
   font:
-    16px/1.3 Rajdhani,
-    sans-serif;
+    16px/1.3 var(--font-ui);
   margin: 0;
 }
 .lab-objective-intro > img {
@@ -1508,22 +1479,19 @@
 }
 .lab-objective-bay header small {
   font:
-    7px "JetBrains Mono",
-    monospace;
+    7px var(--font-ui);
   letter-spacing: 0.12em;
 }
 .lab-objective-bay h4 {
   font:
-    700 25px/1 Rajdhani,
-    sans-serif;
+    700 25px/1 var(--font-ui);
   margin: 4px 0 0;
   color: #efdfa8;
 }
 .lab-objective-learn {
   margin: 10px 0;
   font:
-    14px/1.3 Rajdhani,
-    sans-serif;
+    14px/1.3 var(--font-ui);
   color: #b7cda0;
 }
 .lab-objective-flow {
@@ -1542,8 +1510,7 @@
   align-items: center;
   color: #d6ddaa;
   font:
-    600 12px Rajdhani,
-    sans-serif;
+    600 12px var(--font-ui);
 }
 .lab-objective-flow svg {
   color: #bdc382;
@@ -1572,19 +1539,16 @@
   color: #e4dba2;
   background: #375132;
   font:
-    700 13px Rajdhani,
-    sans-serif;
+    700 13px var(--font-ui);
 }
 .lab-objective-bay li strong {
   font:
-    700 17px/1.1 Rajdhani,
-    sans-serif;
+    700 17px/1.1 var(--font-ui);
   color: #e9e2b3;
 }
 .lab-objective-bay li p {
   font:
-    14px/1.3 Rajdhani,
-    sans-serif;
+    14px/1.3 var(--font-ui);
   color: #b9cda6;
   margin: 4px 0 0;
 }
@@ -1605,15 +1569,13 @@
   gap: 7px;
   color: #e5d79a;
   font:
-    700 16px/1.15 Rajdhani,
-    sans-serif;
+    700 16px/1.15 var(--font-ui);
 }
 .lab-objective-footer p {
   margin: 6px 0;
   color: #b8c9a2;
   font:
-    13px/1.2 Rajdhani,
-    sans-serif;
+    13px/1.2 var(--font-ui);
 }
 .lab-objective-footer small {
   display: flex;
@@ -1621,8 +1583,7 @@
   align-items: center;
   color: #a4bc94;
   font:
-    11px/1.2 Rajdhani,
-    sans-serif;
+    11px/1.2 var(--font-ui);
 }
 .lab-objective-footer > button {
   flex-shrink: 0;
@@ -1726,14 +1687,12 @@
   margin-top: 6px;
   color: #d6cc96;
   font:
-    13px/1.2 Rajdhani,
-    sans-serif;
+    13px/1.2 var(--font-ui);
 }
 .lab-objective-bay li > p {
   margin: 0;
   font:
-    15px/1.4 Rajdhani,
-    sans-serif;
+    15px/1.4 var(--font-ui);
   color: #bed0a9;
 }
 .lab-objective-bay li > p > strong {
@@ -1818,8 +1777,7 @@
     background: #143226;
     color: #bace9f;
     font:
-      600 11px/1.1 Rajdhani,
-      sans-serif;
+      600 11px/1.1 var(--font-ui);
   }
   .lab-objective-switch button[aria-pressed="true"] {
     color: #f1dfa0;

@@ -9,7 +9,6 @@ import WorkflowOverview from "./WorkflowOverview";
 import PlayerObjectives from "./PlayerObjectives";
 import { flightScreens } from "@/lib/flight-rules.js";
 import FlightLockedPage from "./FlightLockedPage";
-import CommandMissionBoard from "./CommandMissionBoard";
 
 const GamerView = dynamic(() => import("./Views").then((m) => m.GamerView), {
   loading: () => <Busy label="Opening this page…" />,
@@ -57,7 +56,6 @@ export default function WorkspaceScreen({ screen, objectives, objectiveLevel }) 
   const squad = data.teams.find((team) => team._id === user.teamId);
   return (
     <>
-      {role === "MISSION_COMMANDER" && screen === "dashboard" && data.weekOneProgram && <CommandMissionBoard data={data}/>}
       {!data.story?.flight && ["dashboard", "setup", "week-one"].includes(screen) &&
         screen !== "dashboard" && (
           <WorkflowOverview data={data} now={clock} />

@@ -17,7 +17,7 @@
 }
 .work-history-controls input {
   background: #102b1e;
-  color: #e1ebcf;
+  color: var(--text-primary);
   border: 1px solid #829b68;
   border-radius: 5px;
   padding: 10px 12px;
@@ -94,7 +94,7 @@
   margin: 4px 0 0;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  color: #d2dfc5;
+  color: var(--text-primary);
 }
 .work-history-timeline .text-link {
   display: block;

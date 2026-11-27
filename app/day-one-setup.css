@@ -20,7 +20,7 @@
 .day-one-setup label {
   display: grid;
   gap: 9px;
-  color: #e1e9cf;
+  color: var(--text-primary);
   font-size: 15px;
 }
 .day-one-setup input:not([type="checkbox"]),
@@ -34,7 +34,7 @@
   background: #0a2118;
   border: 1px solid #6c865b;
   border-radius: 6px;
-  color: #e6edda;
+  color: var(--text-primary);
   font: inherit;
   color-scheme: dark;
 }
@@ -86,7 +86,7 @@
 }
 .day-setup-groups h4 span {
   color: #b8d98d;
-  font: 13px var(--mono);
+  font: 13px var(--body);
 }
 .day-setup-groups p {
   margin: 0;
@@ -141,7 +141,7 @@
   border: 1px solid #a3bd70;
   border-radius: 6px;
   background: #23422c;
-  color: #e3edcb;
+  color: var(--text-primary);
   line-height: 1.5;
 }
 .day-setup-launch {

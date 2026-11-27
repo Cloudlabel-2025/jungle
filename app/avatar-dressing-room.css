@@ -20,7 +20,7 @@
   .modal.modal-dialog:has(.avatar-studio-deluxe)
   > .panel-heading
   h2 {
-  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 25px;
   letter-spacing: -1px;
   line-height: 1.15;
@@ -54,7 +54,7 @@
 .avatar-studio-deluxe {
   grid-template-columns: minmax(270px, 0.88fr) minmax(360px, 1.12fr);
   gap: 25px;
-  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-family: var(--font-ui);
   color: #30382e;
 }
 .avatar-studio-deluxe .avatar-stage {
@@ -161,7 +161,7 @@
 }
 .avatar-preview-tools button[aria-pressed="true"] {
   background: #314b38;
-  color: #f6f5e9;
+  color: var(--text-primary);
 }
 .avatar-studio-deluxe .avatar-stage-bottom {
   position: absolute;
@@ -177,7 +177,7 @@
   font-weight: 700;
 }
 .avatar-studio-deluxe .avatar-stage-bottom h3 {
-  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 24px;
   font-weight: 700;
   color: #2f4534;
@@ -417,7 +417,7 @@
 .avatar-studio-deluxe .avatar-workbench footer .primary {
   background: #3e593f;
   border-color: #3e593f;
-  color: #fff9e9;
+  color: var(--text-primary);
   min-width: 158px;
   justify-content: center;
 }

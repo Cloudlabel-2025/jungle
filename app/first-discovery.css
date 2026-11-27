@@ -4,7 +4,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  color: #edf1d8;
+  color: var(--text-primary);
 }
 .first-discovery-journey button:focus-visible,
 .first-discovery-journey input:focus-visible,
@@ -25,8 +25,7 @@
   padding: 8px 12px;
   margin: 4px 20px;
   font:
-    600 14px Rajdhani,
-    sans-serif;
+    600 14px var(--font-ui);
   cursor: pointer;
 }
 .discovery-mission-hub {
@@ -44,8 +43,7 @@
 .claim-evidence-pair section > span,
 .claim-judgement > span {
   font:
-    9px "JetBrains Mono",
-    monospace;
+    9px var(--font-ui);
   letter-spacing: 1.8px;
   color: #cbdfa1;
 }
@@ -71,7 +69,7 @@
   border: 1px solid #b1c38188;
   border-radius: 24px;
   background: linear-gradient(145deg, #264a33ee, #102e23f5);
-  color: #edf3d6;
+  color: var(--text-primary);
   text-align: left;
   cursor: pointer;
   box-shadow: 0 12px 30px #00140e55;
@@ -187,10 +185,9 @@
   border: 1px solid #93ae6e77;
   border-radius: 10px;
   background: #0a291e;
-  color: #f0f1d8;
+  color: var(--text-primary);
   font:
-    17px/1.4 Rajdhani,
-    sans-serif;
+    17px/1.4 var(--font-ui);
   resize: vertical;
 }
 .claim-check-board input::placeholder,
@@ -229,7 +226,7 @@
   padding: 14px;
   border: 1px solid #819c65;
   border-radius: 12px;
-  color: #dfe9c4;
+  color: var(--text-primary);
   background: #193b2a;
   text-align: left;
   cursor: pointer;
@@ -275,8 +272,7 @@
   background: #cfe2a2;
   color: #203b28;
   font:
-    700 17px Rajdhani,
-    sans-serif;
+    700 17px var(--font-ui);
   box-shadow: 0 3px 0 #809959;
   cursor: pointer;
 }

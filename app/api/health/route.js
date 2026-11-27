@@ -8,7 +8,7 @@ export async function GET() {
     if (tenancyEnabled()) await (await registryModels()).connection.db.command({ ping: 1 });
     else await connect();
     return Response.json(
-      { status: "ok" },
+      { status: "ok", tenancy: tenancyEnabled() },
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch {

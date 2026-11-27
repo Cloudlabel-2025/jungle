@@ -1,0 +1,52 @@
+/* Guide objectives share the dashboard's compact, muted jungle palette. */
+.trail-objectives { max-width: 1440px; margin-inline: auto; min-width: 0; color: var(--text-primary); }
+.trail-page-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 22px; }
+.trail-page-heading h1 { margin: 6px 0; font-size: clamp(28px, 3vw, 36px); color: var(--text-heading); }
+.trail-page-heading p, .trail-objectives .board-selector > p { margin: 0; max-width: 72ch; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+.trail-objectives .board-selector { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #38503d; }
+.trail-objectives .board-switcher { display: flex; flex-wrap: wrap; gap: 4px; width: fit-content; margin: 0 0 10px; padding: 4px; background: #0c2119; border: 1px solid #38503d; border-radius: 8px; }
+.trail-objectives .board-switcher .btn { border: 0; box-shadow: none; background: transparent; color: var(--text-secondary); font: 500 14px var(--font-ui); padding: 10px 16px; min-height: 42px; }
+.trail-objectives .board-switcher [aria-current="page"] { background: #2b4330; color: #d4e6ba; }
+.trail-project-board { display: grid; gap: 18px; min-width: 0; }
+.trail-board-toolbar, .trail-task-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+.trail-objectives label:has(>select) { display: grid; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+.trail-objectives select { min-height: 42px; max-width: 100%; padding: 8px 34px 8px 12px; border: 1px solid #496047; border-radius: 6px; background: #10271d; color: var(--text-primary); font: 14px var(--font-ui); color-scheme: dark; }
+.trail-board-toolbar > p { margin: 0; font-size: 13px; color: var(--text-secondary); }
+.trail-board-toolbar > p strong { color: var(--text-heading); }
+.trail-board-toolbar > p span { margin-inline: 8px; }
+.trail-objectives .panel { margin: 0; padding: 18px; border: 1px solid #38503d; border-radius: 10px; background: #10291f; box-shadow: none; }
+.trail-objectives .panel-heading { min-height: 0; padding: 0 0 12px; margin-bottom: 12px; background: none; }
+.trail-objectives .panel-heading h2, .trail-task-heading h2 { margin: 0; font-size: 22px; color: var(--text-heading); }
+.trail-objectives .project-level-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 10px; margin-top: 14px; }
+.trail-objectives .project-level-card { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; min-height: 0; padding: 14px; text-align: left; border: 1px solid #496047; border-radius: 7px; background: #102219; box-shadow: none; }
+.trail-objectives .project-level-card.locked { opacity: 1; background: #102219; border-color: #314436; }
+.trail-objectives .project-level-card.cleared { border-color: #829968; background: #203626; }
+.trail-objectives .project-level-card:hover { border-color: #a9c18b; }
+.trail-objectives .project-level-card h3 { margin: 8px 0; font-size: 18px; line-height: 1.25; overflow-wrap: anywhere; color: var(--text-heading); }
+.trail-objectives .project-level-card > small { font-size: 11px; color: var(--text-secondary); }
+.trail-objectives .project-card-hazard { display: none; }
+.trail-objectives .project-level-card > p { margin: auto 0 0; padding-top: 10px; font-size: 12px; line-height: 1.4; color: var(--text-secondary); }
+.trail-objectives .project-level-card .level-star-award { margin-bottom: 6px; }
+.trail-challenges { border: 1px solid #38503d; border-radius: 8px; background: #10251c; }
+.trail-challenges > summary { cursor: pointer; padding: 14px 16px; color: var(--text-heading); font-size: 15px; }
+.trail-challenges > summary span { margin-left: 12px; font-size: 12px; color: var(--text-secondary); }
+.trail-objectives .trail-challenges > .panel { border: 0; border-top: 1px solid #38503d; border-radius: 0 0 8px 8px; }
+.trail-task-heading p { margin: 5px 0 0; font-size: 13px; line-height: 1.5; color: var(--text-secondary); }
+.trail-objectives .board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; min-width: 0; margin: 0; }
+.trail-objectives .board.trail-board-filtered { grid-template-columns: minmax(0, 1fr); }
+.trail-objectives .board-column { min-height: 120px; min-width: 0; padding: 12px; border: 1px solid #38503d; border-radius: 8px; background: #10251c; }
+.trail-objectives .column-heading { font-size: 13px; gap: 8px; margin-bottom: 12px; }
+.trail-objectives .quest-card { padding: 12px; background: #172e21; border: 1px solid #496047; box-shadow: none; }
+.trail-objectives .quest-card h3 { font-size: 16px; }
+.trail-objectives .quest-card > p { font-size: 13px; }
+.trail-objectives .column-empty { font-size: 13px; margin: 12px 0; }
+.trail-objectives :is(button,a,select,summary):focus-visible { outline: 2px solid #b5dc8c; outline-offset: 3px; }
+@media(max-width: 1100px) { .trail-objectives .board { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media(max-width: 600px) {
+  .trail-objectives .board { grid-template-columns: minmax(0, 1fr); }
+  .trail-objectives .panel { padding: 14px; }
+  .trail-objectives .board-switcher { width: 100%; }
+  .trail-objectives .board-switcher .btn { flex: 1; padding-inline: 10px; text-align: center; }
+  .trail-board-toolbar > label { width: 100%; }
+  .trail-objectives .project-level-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); }
+}

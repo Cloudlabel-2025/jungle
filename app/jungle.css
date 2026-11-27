@@ -4,28 +4,28 @@ body.jungle-world {
   --surface: #102b22;
   --surface-2: #193c2e;
   --line: #315244;
-  --text: #eef4e8;
-  --muted: #b2c6b5;
+  --text: var(--text-primary);
+  --muted: var(--text-secondary);
   --lime: #a9dc8a;
   --cyan: #8fd5bf;
   --amber: #e5bc78;
   --red: #f6a396;
-  --display: Georgia, "Times New Roman", serif;
-  --body: "Segoe UI", sans-serif;
+  --display: var(--font-heading);
+  --body: var(--font-ui);
   margin: 0;
   background: var(--bg);
   color: var(--text);
   font-family: var(--body);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.5;
 }
 .jungle-world h1 {
   font-size: clamp(27px, 2.5vw, 37px);
-  font-weight: 400;
-  letter-spacing: -0.7px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
 .jungle-world h2 {
-  font-weight: 500;
+  font-weight: 600;
 }
 .jungle-world h1,
 .jungle-world h2,
@@ -33,7 +33,7 @@ body.jungle-world {
   text-wrap: balance;
 }
 .jungle-world .brand {
-  font-family: Georgia, serif;
+  font-family: var(--font-ui);
   letter-spacing: 0.8px;
   font-size: 21px;
 }
@@ -66,12 +66,12 @@ body.jungle-world {
 }
 .jungle-world .nav-item.active {
   background: #315737;
-  color: #dcf2c6;
+  color: var(--text-primary);
   border-color: #729360;
 }
 .jungle-world .nav-item:hover {
   background: #244a32;
-  color: #f4f8ec;
+  color: var(--text-primary);
 }
 .jungle-world .field-note {
   background: #173d2a;
@@ -350,7 +350,7 @@ body.jungle-world {
   font-weight: 600;
   min-height: 40px;
   background: #244932;
-  color: #e9f3de;
+  color: var(--text-primary);
   border-color: #587b4d;
 }
 .jungle-world .btn.primary {
@@ -369,7 +369,7 @@ body.jungle-world {
   color: #c4dac0;
   background: #294b33;
   border-color: #56774b;
-  font-size: 9px;
+  font-size: 12px;
 }
 .jungle-world .badge.lime {
   color: #d3edb8;
@@ -404,18 +404,18 @@ body.jungle-world {
 .jungle-world .panel-heading h2 {
   font-family: var(--display);
   font-size: 23px;
-  color: #edf2df;
+  color: var(--text-heading);
 }
 .jungle-world .panel-heading .eyebrow {
   color: #a2bca3;
-  font-size: 8px;
+  font-size: 11px;
 }
 .jungle-world .stat-label {
   color: #bed0b7;
-  font-size: 10px;
+  font-size: 11px;
 }
 .jungle-world .stat-value {
-  color: #daf0c4;
+  color: var(--text-heading);
   font-family: var(--display);
 }
 .jungle-world .stat-note {
@@ -518,7 +518,7 @@ body.jungle-world {
 .jungle-world .receipt {
   background: #1e422d;
   border-color: #62814a;
-  color: #d4e6c6;
+  color: var(--text-primary);
 }
 .jungle-world input:not(.code-input),
 .jungle-world select,
@@ -534,7 +534,7 @@ body.jungle-world {
 .jungle-world .toast {
   background: #244b31;
   border-color: #83a965;
-  color: #eef6e3;
+  color: var(--text-primary);
 }
 .jungle-world .broadcast-banner {
   background: #394a26;
@@ -615,7 +615,7 @@ body.jungle-world {
 }
 .jungle-world .entry-brand > p {
   max-width: 390px;
-  color: #e5ecdd;
+  color: var(--text-primary);
   font-size: 16px;
   text-shadow: 0 2px 10px #000;
 }
@@ -678,7 +678,7 @@ body.jungle-world {
 }
 .expedition-intro h2 {
   font-family: var(--display);
-  color: #f0f4df;
+  color: var(--text-heading);
   font-size: clamp(28px, 2.6vw, 39px);
   font-weight: 400;
   line-height: 1.12;
@@ -710,7 +710,7 @@ body.jungle-world {
   letter-spacing: 1.5px;
 }
 .terrain-toolbar h3 {
-  color: #edf3de;
+  color: var(--text-heading);
   font-family: var(--display);
   font-size: 25px;
   font-weight: 400;
@@ -735,7 +735,7 @@ body.jungle-world {
 }
 .map-view-controls button[aria-pressed="true"] {
   background: #476c3b;
-  color: #f2f7df;
+  color: var(--text-primary);
 }
 .trail-map {
   position: relative;
@@ -758,7 +758,7 @@ body.jungle-world {
   padding: 12px 15px;
   font-size: 8px;
   letter-spacing: 1px;
-  color: #f1edca;
+  color: var(--text-primary);
   background: linear-gradient(#112b20e8, #112b2000);
 }
 .map-caption > span {
@@ -795,7 +795,7 @@ body.jungle-world {
   border: 2px solid #d2dbac;
   border-radius: 50%;
   background: #143a28f5;
-  color: #edf4c9;
+  color: var(--text-primary);
   box-shadow: 0 3px 10px #071a10c4;
   transition: transform 0.18s;
 }
@@ -813,10 +813,10 @@ body.jungle-world {
 .trail-node.cleared .node-marker {
   background: #6f9c4c;
   border-color: #d2eca5;
-  color: #f8ffe5;
+  color: var(--text-primary);
 }
 .node-label {
-  color: #fbf9db;
+  color: var(--text-primary);
   background: #102e20f2;
   padding: 4px 7px;
   border: 1px solid #a1b07970;
@@ -835,14 +835,14 @@ body.jungle-world {
   top: 39px;
   display: grid;
   justify-items: center;
-  color: #f2edc4;
+  color: var(--text-primary);
   text-shadow: 0 1px 4px #000;
   font-family: var(--display);
   font-size: 12px;
   pointer-events: none;
 }
 .map-compass small {
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 6px;
 }
 .map-legend {
@@ -993,7 +993,7 @@ body.jungle-world {
 }
 .encounters-banner h2 {
   font-family: var(--display);
-  color: #e9f3d9;
+  color: var(--text-heading);
   font-size: 34px;
   font-weight: 400;
   margin: 8px 0;
@@ -1093,7 +1093,7 @@ body.jungle-world {
   bottom: 13px;
   left: 18px;
   z-index: 1;
-  color: #f4f4d9;
+  color: var(--text-primary);
   font-family: var(--display);
   font-size: 31px;
   text-shadow: 0 1px 8px #0008;
@@ -1109,7 +1109,7 @@ body.jungle-world {
   display: grid;
   place-items: center;
   background: #112c21dc;
-  color: #def2c4;
+  color: var(--text-primary);
   border: 1px solid #bbcea078;
 }
 .jungle-world .module-card > .encounter-card-copy {
@@ -1124,7 +1124,7 @@ body.jungle-world {
 .jungle-world .encounter-card-copy h2 {
   font-family: var(--display);
   font-size: 24px;
-  color: #eaf2d8;
+  color: var(--text-heading);
   margin: 11px 0 7px;
 }
 .encounter-card-copy > strong {

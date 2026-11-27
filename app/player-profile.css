@@ -1,14 +1,14 @@
 .profile-stat-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:22px 0; }
 .profile-stat-grid > div { background:#112d1e; border:1px solid #8fa56b66; border-radius:6px; padding:16px; }
 .profile-stat-grid dt { color:#b8c9a5; font-size:13px; }
-.profile-stat-grid dd { margin:6px 0 0; font:600 29px var(--body); color:#e6efc3; }
+.profile-stat-grid dd { margin:6px 0 0; font:600 29px var(--body); color:var(--text-primary); }
 .player-profile-card .player-identity { width:100%; }
 .profile-character-state { border-left:3px solid #a6bd73; padding:12px 16px; background:#132f21; color:#d3dfbc; line-height:1.6; }
 .crash-arrival { position:relative; isolation:isolate; overflow:hidden; min-height:calc(100dvh - 130px); display:flex; align-items:flex-end; padding:clamp(24px,6vw,80px); border-radius:8px; background:linear-gradient(#0a1e1580,#0a1e15dd),url('/images/flight-aerial-clouds.png') center/cover; }
 .crash-arrival.has-landed { background:linear-gradient(#0a1e1566,#0a1e15ee),url('/images/verdant-wilds.webp') center/cover; }
 .crash-story-copy { position:relative; z-index:2; max-width:650px; }
 .crash-story-copy h1 { font-size:clamp(38px,6vw,70px); margin:20px 0; }
-.crash-story-copy > p:not(.eyebrow) { font-size:19px; line-height:1.6; color:#d3dfc4; }
+.crash-story-copy > p:not(.eyebrow) { font-size:19px; line-height:1.6; color:var(--text-primary); }
 .crash-aircraft { position:absolute; top:10%; left:35%; width:min(430px,55vw); animation:crash-descent 4s ease-in forwards; }
 .has-landed .crash-aircraft { animation:none; top:26%; left:50%; transform:rotate(14deg); opacity:.6; }
 @keyframes crash-descent { from{transform:translate(0,-30px) rotate(0);} to{transform:translate(15vw,25vh) rotate(18deg) scale(.75);opacity:.25;} }

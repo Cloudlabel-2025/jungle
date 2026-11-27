@@ -10,6 +10,7 @@ import { seed } from "../lib/seed.js";
 import { runWithCollege } from "../lib/college-context.js";
 import { hashPassword } from "../lib/password.js";
 import { signToken } from "../lib/session-token.js";
+import { platformModels } from "../lib/platform-auth.js";
 const replica = await MongoMemoryReplSet.create({ binary: { version: "7.0.24" }, replSet: { count: 1 } });
 let server, output = "", checks = 0;
 const connections = [], suffix = randomUUID().replaceAll("-", "");
@@ -61,7 +62,9 @@ try {
       ...(body ? { "Content-Type": "application/json", Origin: base } : {}),
     }, ...(body ? { body: JSON.stringify(body) } : {}) });
     const text = await response.text();
-    assert.equal(response.status, status, `${method} ${path}: ${text.slice(0, 250)}`); checks++;
+    if(Array.isArray(status)) assert.ok(status.includes(response.status),`${method} ${path}: ${response.status}`);
+    else assert.equal(response.status, status, `${method} ${path}: ${text.slice(0, 250)}`);
+    checks++;
     return { response, text, json: () => JSON.parse(text) };
   };
   assert.equal((await request("/api/auth/me")).json().authenticated, false);
@@ -102,6 +105,42 @@ try {
   await request("/api/auth/login", { body: { collegeSlug: colleges[1].slug, identifier: "usr_g01", password }, status: 403 });
   await request("/api/auth/logout", { cookie: suspendedCookie, body: {} });
   await request("/api/state", { cookie, college });
+  const {PlatformAdmin}=await platformModels();
+  await PlatformAdmin.create({_id:"http-owner",name:"Synthetic owner",email:"owner@http.invalid",passwordHash:await hashPassword(password),mustChangePassword:false});
+  const cmsLogin=await request("/api/platform/auth/login",{body:{email:"owner@http.invalid",password}});
+  const cmsCookie=cmsLogin.response.headers.get("set-cookie").split(";")[0];
+  const collegePath=`/api/platform/colleges/${college._id}`;
+  const lifecycle=async(action)=>{
+    const detail=(await request(collegePath,{cookie:cmsCookie})).json().college;
+    return request(`${collegePath}/access`,{cookie:cmsCookie,body:{action,version:detail.version,accessRevision:detail.accessRevision}});
+  };
+  await request(collegePath,{method:"DELETE",body:{confirmationSlug:college.slug,version:1,accessRevision:1},status:401});
+  await lifecycle("deactivate");
+  const inactiveEntry=await request(`/c/${college.slug}`,{status:[200,404]});
+  assert.ok(inactiveEntry.text.includes("Signal lost."),"streamed Next not-found UI blocks inactive entry");
+  assert.ok(!inactiveEntry.text.includes('name="identifier"'),"inactive entry never renders a college sign-in form");
+  for(const session of sessions.filter(row=>row.college._id===college._id)) {
+    await request("/api/state",{...session,status:403});
+    await request("/api/pilot/files/same-file",{...session,status:403});
+  }
+  await request("/api/auth/login",{body:{collegeId:college._id,identifier:"usr_g01",password},status:403});
+  const blocked=(await request(collegePath,{cookie:cmsCookie})).json();assert.equal(blocked.accessBlocked,true);assert.equal(blocked.people.length,0);
+  assert.ok(await connections[0].db.collection("users").countDocuments()>0);
+  await lifecycle("restore");
+  for(const session of sessions.filter(row=>row.college._id===college._id)) await request("/api/state",{...session,status:401});
+  const restoredLogin=await request("/api/auth/login",{body:{collegeId:college._id,identifier:"usr_g01",password}});
+  const restoredCookie=restoredLogin.response.headers.get("set-cookie").split(";")[0];
+  await request("/api/state",{cookie:restoredCookie,college});
+  const latest=(await request(collegePath,{cookie:cmsCookie})).json().college;
+  await request(collegePath,{method:"DELETE",cookie:cmsCookie,body:{confirmationSlug:"wrong",version:latest.version,accessRevision:latest.accessRevision},status:400});
+  await request(collegePath,{method:"DELETE",cookie:cmsCookie,body:{confirmationSlug:college.slug,version:latest.version,accessRevision:latest.accessRevision}});
+  await request(collegePath,{cookie:cmsCookie,status:404});
+  const removedEntry=await request(`/c/${college.slug}`,{status:[200,404]});
+  assert.ok(removedEntry.text.includes("Signal lost."));
+  assert.ok(!removedEntry.text.includes('name="identifier"'));
+  await request("/api/state",{cookie:restoredCookie,college,status:404});
+  assert.ok(!(await connections[1].db.admin().listDatabases()).databases.some(db=>db.name===college.dbName));
+  assert.ok(await connections[1].db.collection("users").countDocuments()>0,"other college data survives deletion");
   console.log(JSON.stringify({ checks, passed: true, colleges: 2, rolesPerCollege: 3, syntheticOnly: true }));
 } finally {
   if (server && server.exitCode === null) { server.kill(); await new Promise(resolve => server.once("exit", resolve)); }

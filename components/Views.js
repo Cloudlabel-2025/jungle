@@ -358,29 +358,31 @@ function QuestDetail({ task, data, close, act, staff = false }) {
     </Modal>
   );
 }
-function Board({ data, now, act, staff = false }) {
+function Board({ data, now, act, staff = false, trail = false }) {
   const [selected, setSelected] = useState(null),
-    [team, setTeam] = useState("all"),
-    [challenge, setChallenge] = useState("all");
+    [team, setTeam] = useState(trail ? data.teams[0]?._id || "all" : "all"),
+    [challenge, setChallenge] = useState("all"),
+    [statusFilter, setStatusFilter] = useState("all");
   const tasks = data.tasks.filter(
     (t) =>
       (team === "all" || t.teamId === team) &&
       (challenge === "all" || t.challengeId === challenge),
   );
   return (
-    <>
-      <ProjectBoard data={data} act={act} />
-      <ChallengeProgress
+    <div className={trail ? "trail-project-board" : undefined}>
+      {trail && <div className="trail-board-toolbar"><label>Team<select value={team} onChange={e => { setTeam(e.target.value); setChallenge("all"); setSelected(null); }}>{data.teams.map(t => <option key={t._id} value={t._id}>{t.name}</option>)}{!data.teams.length && <option value="all">No assigned teams</option>}</select></label><p aria-live="polite"><strong>{tasks.filter(t => t.status === "Review").length}</strong> awaiting review <span>·</span> {tasks.filter(t => t.status === "Done").length}/{tasks.length} tasks approved</p></div>}
+      <ProjectBoard data={data} act={act} compact={trail} selectedTeam={trail ? team : undefined} />
+      {trail ? <details className="trail-challenges"><summary>Challenge assignments <span>{(data.challenges || []).filter(c => c.status === "PUBLISHED").length} published</span></summary><ChallengeProgress data={{...data, tasks: data.tasks.filter(t => team === "all" || t.teamId === team)}} selected={challenge} onSelect={setChallenge} /></details> : <ChallengeProgress
         data={data}
         selected={challenge}
         onSelect={setChallenge}
-      />
-      {staff && (
+      />}
+      {staff && !trail && (
         <div className="filter-row">
           <label>
             Squad filter{" "}
             <select value={team} onChange={(e) => setTeam(e.target.value)}>
-              <option value="all">All five squads</option>
+              <option value="all">All squads</option>
               {data.teams.map((t) => (
                 <option key={t._id} value={t._id}>
                   {t.name}
@@ -394,8 +396,9 @@ function Board({ data, now, act, staff = false }) {
           </span>
         </div>
       )}
-      <div className="board">
-        {["Backlog", "In Progress", "Review", "Done"].map((status, i) => (
+      {trail && <div className="trail-task-heading"><div><h2>Team tasks</h2><p>Open a task to review evidence, give feedback or approve work.</p></div><label>Show status<select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}><option value="all">All statuses</option>{["Backlog", "In Progress", "Review", "Done"].map(status => <option key={status}>{status}</option>)}</select></label></div>}
+      <div className={`board ${trail && statusFilter !== "all" ? "trail-board-filtered" : ""}`}>
+        {["Backlog", "In Progress", "Review", "Done"].map((status, i) => (!trail || statusFilter === "all" || statusFilter === status) && (
           <section className="board-column" key={status}>
             <div className="column-heading">
               <span>
@@ -437,7 +440,7 @@ function Board({ data, now, act, staff = false }) {
           staff={staff}
         />
       )}
-    </>
+    </div>
   );
 }
 function SquadRoster({ data }) {
@@ -1070,7 +1073,7 @@ function AwardIcon({ i }) {
     </span>
   );
 }
-function Telemetry({ data, now, act, executive = false }) {
+function Telemetry({ data, now, act, executive = false, compact = executive, sectionPrefix = "cc" }) {
   const attendance = data.attendance.filter((a) => a.day === ist(now).day);
   const blockers = data.messages.filter((m) => m.isBlocker && !m.resolvedAt);
   const done = data.tasks.filter((t) => t.status === "Done").length;
@@ -1078,7 +1081,7 @@ function Telemetry({ data, now, act, executive = false }) {
     (new Date(t.dueAt) < now || ["At Risk", "Delayed"].includes(t.report)));
   return (
     <>
-      <section id={executive ? "cc-overview" : undefined} className={executive ? "cc-section cc-overview" : undefined}>
+      <section id={compact ? `${sectionPrefix}-overview` : undefined} className={compact ? "cc-section cc-overview" : undefined}>
       <Heading
         code={executive ? "CC02" : "MC01"}
         title={executive ? "Dashboard" : "Guide’s lookout"}
@@ -1149,9 +1152,9 @@ function Telemetry({ data, now, act, executive = false }) {
         ]}
       />
       </section>
-      <div id={executive ? "cc-squads" : undefined} className={executive ? "cc-section cc-squads" : undefined}>
+      <div id={compact ? `${sectionPrefix}-squads` : undefined} className={compact ? "cc-section cc-squads" : undefined}>
       <Panel title="Squad radar" kicker="DELIVERY / ENERGY / COMMUNICATION">
-        <PaginatedList items={data.teams} label="squads" pageSize={6} enabled={executive} className="squad-telemetry">
+        <PaginatedList items={data.teams} label="squads" pageSize={6} enabled={compact} className="squad-telemetry">
           {teams => teams.map((t) => {
             const users = data.roster.filter((u) => u.teamId === t._id),
               tasks = data.tasks.filter((q) => q.teamId === t._id),
@@ -1193,10 +1196,10 @@ function Telemetry({ data, now, act, executive = false }) {
         </PaginatedList>
       </Panel>
       </div>
-      <div id={executive ? "cc-attention" : undefined} className={executive ? "two-columns cc-section cc-attention" : "two-columns lower-panels"}>
+      <div id={compact ? `${sectionPrefix}-attention` : undefined} className={compact ? "two-columns cc-section cc-attention" : "two-columns lower-panels"}>
         <Panel title="Blocker frequency" kicker="INTERVENTIONS NEEDED">
           {blockers.length ? (
-            <PaginatedList items={blockers} label="blockers" pageSize={4} enabled={executive}>{rows => rows.map((m) => (
+            <PaginatedList items={blockers} label="blockers" pageSize={4} enabled={compact}>{rows => rows.map((m) => (
               <div className="history-entry" key={m._id}>
                 <Badge tone="red">BLOCKER</Badge>
                 <h3>{m.senderName}</h3>
@@ -1224,7 +1227,7 @@ function Telemetry({ data, now, act, executive = false }) {
         </Panel>
         <Panel title="Slippage watch" kicker="DEADLINES / EARLY WARNINGS">
           {slipping.length ? (
-            <PaginatedList items={slipping} label="deadlines" pageSize={4} enabled={executive}>{rows => rows.map((t) => (
+            <PaginatedList items={slipping} label="deadlines" pageSize={4} enabled={compact}>{rows => rows.map((t) => (
                 <div className="history-entry" key={t._id}>
                   <h3>{t.title}</h3>
                   <p>
@@ -1245,6 +1248,8 @@ function Telemetry({ data, now, act, executive = false }) {
   );
 }
 export function StaffView(props) {
+  const isCentre = props.data.user.role === "CENTRE_COMMAND";
+  const sectionPrefix = isCentre ? "cc" : "mc";
   const moduleScreen = programmeScreen(props.screen);
   if (
     props.data.weekOneProgram &&
@@ -1252,25 +1257,29 @@ export function StaffView(props) {
     validProgrammeScreen(props.data.user.role, props.screen)
   )
     return <WeekOneView {...props} screen={moduleScreen} />;
-  if (props.screen === "dashboard" && props.data.user.role === "CENTRE_COMMAND")
-    return <div className="cc-dashboard">
-      <DashboardSectionNav hasProgramme={Boolean(props.data.weekOneProgram)} hasSupport={Boolean(props.data.support)} />
-      <Telemetry {...props} executive />
-      {props.data.weekOneProgram && <section id="cc-actions" className="cc-section cc-actions" aria-label="Quick actions"><CommandMissionBoard data={props.data} /></section>}
-      <section id="cc-programme" className="cc-section cc-programme" aria-label="Programme operations">
-        <Panel title="Weekly programme operations" kicker="SPRINTS / ASSIGNMENTS / REVIEW">
+  if (props.screen === "dashboard" && ["CENTRE_COMMAND", "MISSION_COMMANDER"].includes(props.data.user.role))
+    return <div className={`cc-dashboard ${isCentre ? "" : "mc-dashboard"}`}>
+      <DashboardSectionNav hasProgramme={Boolean(props.data.weekOneProgram)} hasSupport={Boolean(props.data.support)} sectionPrefix={sectionPrefix} />
+      <Telemetry {...props} executive={isCentre} compact sectionPrefix={sectionPrefix} />
+      {props.data.weekOneProgram && <section id={`${sectionPrefix}-actions`} className="cc-section cc-actions" aria-label="Quick actions"><CommandMissionBoard data={props.data} /></section>}
+      <section id={`${sectionPrefix}-programme`} className="cc-section cc-programme" aria-label={isCentre ? "Programme operations" : "Guide operations"}>
+        <Panel title={isCentre ? "Weekly programme operations" : "Guide operations"} kicker={isCentre ? "SPRINTS / ASSIGNMENTS / REVIEW" : "SPRINTS / SUPPORT / FOLLOW-UP"}>
           <nav id="programme-board" className="cc-programme-links" aria-label="Programme tools">
-            {[
+            {(isCentre ? [
               ["setup?programme=setup#programme-setup", "Set up a sprint", "Schedule, teams, owners and resources", Settings2],
               ["client-control?programme=board#programme-board", "Open sprint board", "Tasks, reviews and acceptance", Columns3],
               ["reports?programme=reports#programme-reports", "View reports", "Progress and programme records", FileBarChart],
-            ].map(([path, label, description, Icon]) => <Link key={path} href={`/centre-command/${path}`} className="cc-programme-link">
+            ] : [
+              ["sprints?board=programme", "Open sprint board", "Assigned work, evidence and independent reviews", Columns3],
+              ["coaching", "Support your crew", "Coaching, interventions and recovery follow-up", Heart],
+              ["attendance", "Review attendance", "Check-ins and attendance records for your crew", Clock3],
+            ]).map(([path, label, description, Icon]) => <Link key={path} href={`/${isCentre ? "centre-command" : "commander"}/${path}`} className="cc-programme-link">
               <Icon size={19} aria-hidden="true" /><span><strong>{label}</strong><small>{description}</small></span><ArrowUpRight size={16} aria-hidden="true" />
             </Link>)}
           </nav>
         </Panel>
       </section>
-      {props.data.support && <section id="cc-support" className="cc-section cc-support" aria-label="Campus support"><SupportConsole {...props} paginated /></section>}
+      {props.data.support && <section id={`${sectionPrefix}-support`} className="cc-section cc-support" aria-label="Campus support"><SupportConsole {...props} paginated /></section>}
     </div>;
   return (
     <>
@@ -1295,27 +1304,24 @@ function StaffCore({ screen, data, act, now }) {
     );
   if (screen === "sprints")
     return (
-      <>
-        <Heading
-          code="MC02"
-          title="Trail objectives"
-          subtitle="Remove friction. Review the work. Make the next move clear."
-        />
-        <PilotBoardSlot data={data}><Board data={data} now={now} act={act} staff /></PilotBoardSlot>
-      </>
+      <section className="trail-objectives" aria-label="Trail objectives">
+        <header className="trail-page-heading"><div><span className="eyebrow">JUNGLE CODING / GUIDE WORKSPACE</span><h1>Trail objectives</h1><p>Follow each team’s level progression, review evidence and guide the next step.</p></div><Link className="btn" href="/commander/dashboard">Dashboard <ArrowUpRight size={16}/></Link></header>
+        <PilotBoardSlot data={data}><Board data={data} now={now} act={act} staff trail /></PilotBoardSlot>
+      </section>
     );
   if (screen === "coaching") return <Coaching data={data} act={act} />;
   if (screen === "awards") return <Proposals data={data} act={act} />;
   if (screen === "setup")
     return (
-      <>
+      <section className="expedition-setup" aria-label="Expedition setup">
         <Setup data={data} act={act} />
+        <section id="setup-levels" className="setup-section" aria-label="Player level progression"><ProjectBoard data={data} act={act} compact /></section>
+        <section id="setup-map" className="setup-section" aria-label="Player map layout"><MapDesigner data={data} act={act} /></section>
         <ProgrammePanel user={data.user} mode="setup" title="Weekly sprint setup and permissions"
           description="Approved packages, owners, calendars, resources and kickoff" />
-        <MapDesigner data={data} act={act} />
-        <details><summary>Other project definitions</summary><LevelManager data={data} act={act} /></details>
-        <ChallengeManager data={data} act={act} />
-      </>
+        <details className="setup-disclosure"><summary>Practice project workshop</summary><p className="muted">Additional projects have separate tasks and completion records. Use Player map designer to create a mission on the main map.</p><LevelManager data={data} act={act} practiceOnly /></details>
+        <details id="setup-challenges" className="setup-disclosure"><summary>Challenge assignments</summary><ChallengeManager data={data} act={act} /></details>
+      </section>
     );
   if (screen === "rules-approvals") return <Approvals data={data} act={act} />;
   if (screen === "client-control") return <Chaos data={data} act={act} />;
@@ -1648,34 +1654,22 @@ function Proposals({ data, act }) {
 function Setup({ data, act }) {
   return (
     <>
-      <ProjectBoard data={data} act={act} />
-      <Heading
-        code="CC01"
-        title="Expedition setup"
-        subtitle="Set the conditions for meaningful work."
-        action={
-          <div className="button-row">
-            <a className="btn primary" href="#role-challenges">
-              Manage challenges
-            </a>
-            <Badge>CONFIG REV {data.cohort.version}</Badge>
-          </div>
-        }
-      />
-      <TeamManager data={data} act={act} />
-      <div className="two-columns">
+      <header className="setup-page-heading"><div><span className="eyebrow">CENTRE COMMAND / JUNGLE CODING</span><h1>Expedition setup</h1><p>Configure your cohort, prepare teams and shape the same level journey players see.</p></div><Badge>Revision {data.cohort.version}</Badge></header>
+      <nav className="setup-navigation" aria-label="Setup sections">{[["setup-cohort","Cohort settings"],["setup-teams","Teams"],["setup-levels","Player levels"],["setup-map","Map designer"],["programme-setup","Weekly sprints"],["setup-challenges","Challenges"]].map(([id,label]) => <a key={id} href={`#${id}`}>{label}</a>)}</nav>
+      <div id="setup-cohort" className="two-columns setup-section">
         <Panel
-          title="Simulation topology"
-          kicker="TITAN / ALPHA / ASIA-KOLKATA"
+          title="Cohort settings"
+          kicker="INSTITUTE / SCHEDULE / SCENARIO"
         >
           <Form
             key={data.cohort.version}
+            guided={false}
             fields={[
               { name: "college", label: "Institute" },
               { name: "name", label: "Cohort name" },
               {
                 name: "currentWeek",
-                label: "Current simulation week",
+                label: "Current programme week",
                 type: "number",
                 min: 1,
                 max: 52,
@@ -1688,12 +1682,12 @@ function Setup({ data, act }) {
               },
             ]}
             initial={data.cohort}
-            submit="Save arena configuration"
+            submit="Save cohort settings"
             onSubmit={(v) =>
               act(
                 "centre-command/setup",
                 { ...v, version: data.cohort.version },
-                "Arena configuration updated.",
+                "Cohort settings updated.",
               )
             }
           />
@@ -1708,9 +1702,6 @@ function Setup({ data, act }) {
             </span>
             <span>
               START DATE<strong>{data.cohort.startDate}</strong>
-            </span>
-            <span>
-              DATABASE<strong>MongoDB / replica set</strong>
             </span>
             <span>
               TIME AUTHORITY<strong>Server · Asia/Kolkata</strong>
@@ -1767,6 +1758,7 @@ function Setup({ data, act }) {
           ))}
         </Panel>
       </div>
+      <details id="setup-teams" className="setup-disclosure"><summary>Teams &amp; player accounts <span>{data.teams.length} teams</span></summary><TeamManager data={data} act={act} /></details>
     </>
   );
 }

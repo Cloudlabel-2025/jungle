@@ -96,8 +96,7 @@
   color: #263b27;
   box-shadow: 0 3px 12px #05190c77;
   font:
-    800 9px "Rajdhani",
-    sans-serif;
+    800 9px var(--font-ui);
   letter-spacing: 0;
 }
 .l2-story-pages-badge {
@@ -110,15 +109,13 @@
   border-radius: 5px;
   color: #e4dfac;
   font:
-    7px/1 "JetBrains Mono",
-    monospace;
+    7px/1 var(--font-ui);
   letter-spacing: 0.05em;
 }
 .is-game-library .l2-story-cover > strong {
   padding: 0 16px 12px;
   font:
-    700 clamp(20px, 2.05vw, 30px)/1.05 "Rajdhani",
-    sans-serif;
+    700 clamp(20px, 2.05vw, 30px)/1.05 var(--font-ui);
   color: #f6e5b1;
   text-shadow: 0 2px 8px #031b11;
 }
@@ -263,8 +260,7 @@
   border-radius: 3px;
   padding: 2px 4px;
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
 }
 .l2-comic-scene-cards > button > strong {
   position: absolute;
@@ -273,8 +269,7 @@
   right: 5px;
   color: #e5e7bd;
   font:
-    600 10px/1.05 "Rajdhani",
-    sans-serif;
+    600 10px/1.05 var(--font-ui);
   text-align: left;
 }
 .l2-comic-scene-cards > button.is-current {
@@ -586,7 +581,7 @@
   border: 2px solid #102a1f;
   box-shadow: 3px 3px 0 #081e16;
   transform: rotate(-3deg);
-  font: 800 20px/1.1 "Rajdhani", sans-serif;
+  font: 800 20px/1.1 var(--font-ui);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -595,7 +590,7 @@
   grid-column: 2;
   grid-row: 1;
   color: #f7e0a1;
-  font: 800 23px/1.05 "Rajdhani", sans-serif;
+  font: 800 23px/1.05 var(--font-ui);
   text-transform: uppercase;
   letter-spacing: .025em;
 }
@@ -608,7 +603,7 @@
   background: #f1daa2;
   box-shadow: 3px 3px 0 #071e16;
   color: #173b29;
-  font: 650 clamp(18px, 1.45vw, 25px)/1.2 "Rajdhani", sans-serif;
+  font: 650 clamp(18px, 1.45vw, 25px)/1.2 var(--font-ui);
 }
 .is-game-story .l2-comic-speech::before {
   content: ""; position: absolute; top: -9px; left: 18px;

@@ -18,14 +18,14 @@ export default function PilotBoardSlot({ data, children }) {
   };
   return (
     <>
-      <div className="button-row board-switcher" aria-label="Objective boards">
+      <div className="board-selector"><nav className="button-row board-switcher" aria-label="Objective boards">
         <Link
           className={`btn ${!show ? "primary" : ""}`}
           href={boardLink(false)}
           scroll={false}
           aria-current={!show ? "page" : undefined}
         >
-          Existing Objectives
+          Project objectives
         </Link>
         <Link
           className={`btn ${show ? "primary" : ""}`}
@@ -33,12 +33,12 @@ export default function PilotBoardSlot({ data, children }) {
           scroll={false}
           aria-current={show ? "page" : undefined}
         >
-          Programme Sprint Work
+          Weekly sprint work
         </Link>
-        <p>
+      </nav><p>
           {show
             ? "Approved programme sprints: assigned work, evidence and independent reviews."
-            : "Expedition quests and project levels. Programme sprints have their own board and records."}
+            : "Follow the five Alumni Connect levels and published map missions. Weekly sprint work contains sprint tasks, reviews and acceptance."}
         </p>
       </div>
       {show ? (

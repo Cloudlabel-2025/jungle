@@ -1,0 +1,38 @@
+.expedition-setup { display: grid; gap: 20px; min-width: 0; max-width: 1440px; margin-inline: auto; }
+.setup-page-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.setup-page-heading h1 { margin: 6px 0; color: var(--text-heading); font-size: clamp(28px,3vw,36px); }
+.setup-page-heading p { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+.setup-navigation { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 18px; border-bottom: 1px solid #38503d; }
+.setup-navigation a { padding: 9px 12px; border: 1px solid #38503d; border-radius: 6px; font-size: 13px; color: var(--text-secondary); background: #10251c; }
+.setup-navigation a:hover { background: #223b29; color: var(--text-heading); }
+.expedition-setup :is(.setup-section,.setup-disclosure,.programme-panel) { scroll-margin-top: 24px; min-width: 0; }
+.expedition-setup .two-columns { gap: 18px; margin: 0; align-items: start; }
+.expedition-setup .panel { min-width: 0; margin: 0; padding: 18px; border: 1px solid #38503d; border-radius: 10px; background: #10291f; box-shadow: none; }
+.expedition-setup .panel-heading { min-height: 0; padding: 0 0 12px; margin-bottom: 14px; background: none; }
+.expedition-setup .panel-heading h2 { font-size: 22px; color: var(--text-heading); }
+.expedition-setup .field-form { margin: 0; padding: 0; }
+.jungle-world .expedition-setup .field-form { gap: 14px; border: 0; border-radius: 0; background: none; box-shadow: none; }
+.jungle-world .expedition-setup .field-form::before,
+.jungle-world .expedition-setup .field-form::after,
+.jungle-world .expedition-setup .field-form .form-field-mark,
+.jungle-world .expedition-setup .field-form .form-field-number,
+.jungle-world .expedition-setup .field-form .form-action-icon { display: none; }
+.jungle-world .expedition-setup .field-form .form-field-caption { display: flex; min-height: 0; margin-bottom: 6px; }
+.jungle-world .expedition-setup .field-form :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) { min-height: 42px; padding: 9px 12px; border: 1px solid #496047; border-radius: 6px; background: #0e241a; box-shadow: none; font-size: 14px; }
+.jungle-world .expedition-setup .field-form .btn.primary { min-height: 42px; padding: 10px 16px; border: 1px solid #728b5e; border-radius: 6px; background: #304d32; box-shadow: none; color: #d3e7bc; text-shadow: none; font-size: 14px; }
+.jungle-world .expedition-setup .field-form .btn.primary:hover:not(:disabled) { background: #3b5a39; transform: none; box-shadow: none; }
+.expedition-setup .detail-grid { margin: 16px 0 0; grid-template-columns: repeat(auto-fit,minmax(min(100%,170px),1fr)); }
+.setup-disclosure { border: 1px solid #38503d; border-radius: 8px; background: #10251c; }
+.setup-disclosure > summary { padding: 16px; cursor: pointer; color: var(--text-heading); font-size: 16px; }
+.setup-disclosure > summary span { margin-left: 10px; font-size: 12px; color: var(--text-secondary); }
+.setup-disclosure > .panel { border: 0; border-top: 1px solid #38503d; border-radius: 0 0 8px 8px; }
+.setup-disclosure > p { margin-inline: 16px; }
+.expedition-setup .map-designer { padding: 0; }
+.expedition-setup .map-designer-toolbar { flex-wrap: wrap; }
+.expedition-setup .map-designer-toolbar p { max-width: 75ch; font-size: 14px; line-height: 1.5; }
+.expedition-setup .map-designer-scroll { max-width: 100%; border-radius: 8px; }
+.expedition-setup .map-designer-properties { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,190px),1fr)); }
+.expedition-setup .managed-team-list { grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr)); }
+.expedition-setup :is(a,button,summary,input,select,textarea):focus-visible { outline: 2px solid #b5dc8c; outline-offset: 3px; }
+@media(max-width:900px) { .expedition-setup .two-columns { grid-template-columns: minmax(0,1fr); } }
+@media(max-width:600px) { .expedition-setup .panel { padding: 14px; } .expedition-setup .map-designer-toolbar .button-row { width: 100%; flex-wrap: wrap; } }

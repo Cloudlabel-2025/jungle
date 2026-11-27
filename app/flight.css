@@ -75,8 +75,7 @@
 }
 .flight-eyebrow {
   font:
-    11px "JetBrains Mono",
-    monospace;
+    11px var(--font-ui);
   letter-spacing: 0.17em;
 }
 .flight-story-copy h1 {
@@ -102,7 +101,7 @@
   gap: 20px;
   border: 1px solid #203b2d;
   background: #193f31;
-  color: #f1f4dd;
+  color: var(--text-primary);
   padding: 16px 22px;
   margin-top: 20px;
   font-size: 17px;
@@ -251,10 +250,9 @@
   gap: 12px;
   align-items: center;
   font:
-    10px "JetBrains Mono",
-    monospace;
+    10px var(--font-ui);
   letter-spacing: 0.13em;
-  color: #e4ecd6;
+  color: var(--text-primary);
 }
 .flight-caption span {
   margin-left: auto;
@@ -264,7 +262,7 @@
   align-items: center;
   gap: 20px;
   padding: 26px 10px;
-  color: #d6dfc6;
+  color: var(--text-primary);
 }
 .flight-briefing h2 {
   font-size: 22px;

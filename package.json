@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "engines": {
-    "node": "22.x"
-  },
   "scripts": {
     "dev": "node --use-system-ca scripts/dev.mjs",
     "dev:next": "next dev --webpack --hostname 127.0.0.1",
@@ -24,6 +21,7 @@
     "test:portals": "node scripts/check-day-one.mjs --all --test-file=college-routing.test.mjs",
     "test:portals:http": "node scripts/check-college-portals.mjs",
     "colleges": "node --use-system-ca --env-file-if-exists=.env.local scripts/colleges.mjs",
+    "colleges:contacts": "node --use-system-ca --env-file-if-exists=.env.local scripts/college-contacts.mjs",
     "platform:bootstrap": "node --use-system-ca --env-file-if-exists=.env.local scripts/platform-admin.mjs",
     "test:platform": "node scripts/check-day-one.mjs --all --test-file=platform-dashboard.test.mjs",
     "test:platform:http": "node scripts/check-platform-http.mjs",
@@ -43,6 +41,7 @@
     "@codemirror/language": "^6.13.1",
     "@codemirror/state": "^6.7.6",
     "@codemirror/view": "^6.43.15",
+    "@fontsource-variable/geist": "^5.3.0",
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@fontsource/orbitron": "^5.3.0",
     "@fontsource/rajdhani": "^5.3.0",

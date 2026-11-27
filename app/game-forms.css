@@ -83,7 +83,7 @@
   gap: 13px;
 }
 .jungle-world .field-form label {
-  color: #f5efda;
+  color: var(--text-primary);
   font-size: 15px;
   font-weight: 600;
   gap: 12px;
@@ -124,7 +124,7 @@
   border: 2px solid #688263;
   border-radius: 14px;
   background-color: #0d271f;
-  color: #faf4e0;
+  color: var(--text-primary);
   min-height: 50px;
   font-size: 16px;
   font-weight: 400;
@@ -250,7 +250,7 @@
 .jungle-world .field-form .workflow-form-feedback.is-error {
   border-color: #c88c70;
   background: #382d22;
-  color: #ffe0cf;
+  color: var(--text-primary);
 }
 .jungle-world .field-form .challenge-definition {
   border-radius: 16px;

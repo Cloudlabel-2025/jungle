@@ -61,7 +61,7 @@
   accent-color: var(--character-color);
 }
 .character-pair strong {
-  color: #e2e5cb;
+  color: var(--text-primary);
   font-size: 14px;
 }
 .character-pair small {
@@ -402,7 +402,7 @@
   align-items: center;
 }
 .managed-team-members strong {
-  color: #dbe1c5;
+  color: var(--text-primary);
   font-size: 13px;
 }
 .managed-team-members small {

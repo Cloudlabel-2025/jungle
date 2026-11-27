@@ -76,7 +76,7 @@
 .workflow-heading h2 {
   font: 700 23px var(--body);
   margin: 7px 0;
-  color: #edf2d9;
+  color: var(--text-heading);
 }
 .workflow-heading p {
   margin: 0;
@@ -104,7 +104,7 @@
   border-color: #d6b575;
 }
 .workflow-action-number {
-  font: 11px var(--mono);
+  font: 11px var(--body);
   color: #d6b575;
   padding-top: 3px;
 }
@@ -115,7 +115,7 @@
 .workflow-action strong {
   display: block;
   font-size: 15px;
-  color: #edf2d9;
+  color: var(--text-primary);
   line-height: 1.3;
 }
 .workflow-action strong small {
@@ -158,7 +158,7 @@
 .programme-panel-toggle strong {
   display: block;
   font-size: 18px;
-  color: #edf2d9;
+  color: var(--text-primary);
 }
 .programme-panel-toggle span span {
   display: block;
@@ -194,12 +194,12 @@
   margin: 0;
   padding: 10px 12px;
   border-left: 3px solid #d6b575;
-  color: #edf2d9;
+  color: var(--text-primary);
   background: #081c17;
 }
 .workflow-form-feedback.is-error {
   border-color: #ee8b83;
-  color: #ffd7d2;
+  color: var(--text-primary);
 }
 .board-switcher {
   padding-bottom: 12px;

@@ -25,8 +25,7 @@
   margin: 3px 0 0;
   color: #e8e6bb;
   font:
-    700 23px/1.1 "Rajdhani",
-    sans-serif;
+    700 23px/1.1 var(--font-ui);
 }
 .jungle-world .star-guide-window > .panel-heading .eyebrow {
   font-size: 8px;
@@ -47,8 +46,8 @@
   min-height: 0;
   flex: 1;
   overflow: auto;
-  color: #e6edd0;
-  font-family: "Rajdhani", sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-ui);
   background:
     radial-gradient(ellipse at 80% 0, #9fbd5b16, transparent 70%), #102a20;
 }
@@ -101,15 +100,14 @@
 .star-hunt-speech > span {
   color: #e2d497;
   font:
-    7px/1.6 "JetBrains Mono",
-    monospace;
+    7px/1.6 var(--font-ui);
   letter-spacing: 0.08em;
 }
 .star-hunt-speech p {
   margin: 9px 0 14px;
   font-size: 16px;
   line-height: 1.4;
-  color: #e1e8cb;
+  color: var(--text-primary);
 }
 .star-hunt-speech button {
   display: flex;
@@ -123,8 +121,7 @@
   color: #ded18d;
   text-align: left;
   font:
-    600 13px "Rajdhani",
-    sans-serif;
+    600 13px var(--font-ui);
   cursor: pointer;
 }
 .star-hunt-speech button:focus-visible,
@@ -150,15 +147,13 @@
 }
 .star-hunt-goal > div > span {
   font:
-    8px "JetBrains Mono",
-    monospace;
+    8px var(--font-ui);
   letter-spacing: 0.14em;
   color: #bacb8a;
 }
 .star-hunt-goal h3 {
   font:
-    700 35px/1.05 "Rajdhani",
-    sans-serif;
+    700 35px/1.05 var(--font-ui);
   color: #f3e6b6;
   margin: 5px 0;
 }
@@ -191,8 +186,7 @@
 .star-hunt-number {
   color: #aabd7c;
   font:
-    11px/22px "JetBrains Mono",
-    monospace;
+    11px/22px var(--font-ui);
 }
 .star-hunt-objectives > li > svg {
   color: #d3df9f;
@@ -202,7 +196,7 @@
   display: block;
   font-size: 17px;
   line-height: 1.2;
-  color: #e8edd2;
+  color: var(--text-primary);
 }
 .star-hunt-objectives p {
   margin: 3px 0 0;
@@ -245,8 +239,7 @@
 }
 .star-hunt-rewards strong {
   font:
-    700 10px "JetBrains Mono",
-    monospace;
+    700 10px var(--font-ui);
   letter-spacing: 0.07em;
 }
 .star-hunt-rewards button > span {

@@ -37,7 +37,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: #f2ebcb;
+  color: var(--text-primary);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -80,7 +80,7 @@
   padding: 2px 7px;
   border-radius: 4px;
   background: #102519c9;
-  color: #e9e6c8;
+  color: var(--text-primary);
   border: 1px solid #a3b18166;
   font-size: clamp(9px, 0.9vw, 12px);
   line-height: 1.2;
@@ -97,7 +97,7 @@
   border-radius: 10px;
   background: #0e251bee;
   box-shadow: 0 12px 35px #0008;
-  color: #efedd5;
+  color: var(--text-primary);
 }
 .camp-resident-info > button {
   position: absolute;
@@ -122,7 +122,7 @@
   min-width: 0;
 }
 .camp-resident-info-heading span {
-  font: 8px var(--mono);
+  font: 8px var(--body);
   color: #bcc79c;
 }
 .camp-resident-info-heading h2 {

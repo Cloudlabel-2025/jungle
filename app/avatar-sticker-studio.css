@@ -8,7 +8,7 @@
   border-radius: 22px;
   background: #102a20;
   box-shadow: 0 25px 100px #020d0bce;
-  color: #eee4c7;
+  color: var(--text-primary);
 }
 .jungle-world .modal.modal-dialog:has(.avatar-studio-deluxe) > .panel-heading {
   background: linear-gradient(115deg, #294c34, #17392b);
@@ -43,7 +43,7 @@
 .avatar-studio-deluxe {
   grid-template-columns: minmax(260px, 0.86fr) minmax(360px, 1.14fr);
   gap: 22px;
-  color: #e5dfc7;
+  color: var(--text-primary);
 }
 .avatar-studio-deluxe .avatar-stage {
   border: 1px solid #a2b36b55;

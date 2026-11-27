@@ -5,6 +5,7 @@ import { listAdministrators, manageAdministrator } from "@/lib/platform-administ
 import { recoveryOverview, requestAccountRecovery, deliverRecoveryMail } from "@/lib/password-recovery.js";
 import { allowedWriteOrigin } from "@/lib/request-origin.js";
 import { collegeError } from "@/lib/college-registry.js";
+import { platformCollegeAccess, platformDeleteCollege } from "@/lib/college-lifecycle.js";
 import { authenticatePlatform, publicAdmin, requirePlatformAdmin, changePlatformPassword } from "@/lib/platform-auth.js";
 import { currentPlatformAdmin, setPlatformSession, clearPlatformSession } from "@/lib/platform-session.js";
 import { platformColleges, platformCollegeDetail, platformCreateCollege, platformUpdateCollege,
@@ -59,7 +60,10 @@ async function handle(request, { params }) {
     } else if (path[0] === "colleges" && path.length === 2) {
       if (method === "GET") result = await platformCollegeDetail(current._id, path[1]);
       else if (method === "PATCH") result = await platformUpdateCollege(current._id, path[1], body);
+      else if (method === "DELETE") result = await platformDeleteCollege(current._id,path[1],body);
       else throw collegeError("Method not allowed.", 405);
+    } else if (path[0] === "colleges" && path.length === 3 && path[2] === "access" && method === "POST") {
+      result = await platformCollegeAccess(current._id,path[1],body);
     } else if (path[0] === "colleges" && path.length === 3 && path[2] === "cc" && method === "POST") {
       result = await platformCreateCC(current._id, path[1], body);
     } else if (path[0] === "colleges" && path[2] === "cohorts") {
@@ -84,3 +88,4 @@ async function handle(request, { params }) {
 export const GET = handle;
 export const POST = handle;
 export const PATCH = handle;
+export const DELETE = handle;

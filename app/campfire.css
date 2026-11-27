@@ -38,7 +38,7 @@
   min-height: calc(100dvh - var(--camp-header-height));
   overflow: hidden;
   background: #142117;
-  color: #fff2d1;
+  color: var(--text-primary);
 }
 .camp-scene-window {
   position: absolute;
@@ -82,7 +82,7 @@
   align-items: center;
   gap: 8px;
   color: #e9bc75;
-  font: 10px var(--mono);
+  font: 10px var(--body);
   letter-spacing: 2px;
 }
 .camp-territory-heading h1 {
@@ -93,7 +93,7 @@
 }
 .camp-territory-heading p {
   font-size: 15px;
-  color: #dfdfc6;
+  color: var(--text-heading);
   margin: 0;
 }
 .camp-occupancy {
@@ -140,7 +140,7 @@
 .camp-tool-dock button:hover {
   transform: translateY(-4px);
   background: #51432b;
-  color: #fff2c4;
+  color: var(--text-primary);
 }
 .camp-tool-dock button span {
   font-size: 11px;

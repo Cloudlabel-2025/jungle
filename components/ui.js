@@ -201,6 +201,7 @@ export function Form({
   children,
   onDraftChange,
   quest = false,
+  guided: guidedOverride,
 }) {
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
@@ -208,7 +209,7 @@ export function Form({
   const formRef = useRef(null);
   const formId = useId();
   const [step, setStep] = useState(0);
-  const guided = fields.length >= (quest ? 2 : 4);
+  const guided = guidedOverride ?? fields.length >= (quest ? 2 : 4);
   const currentStep = Math.min(step, Math.max(0, fields.length - 1));
   const next = () => {
     const active = formRef.current?.querySelector(

@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
+import { playerMapLevels } from "@/lib/player-map-levels.js";
 import { Modal, Form, Badge, Panel, Receipt } from "./ui";
 import { teamRoles } from "@/lib/team-roles.js";
 import LevelEmblem from "./LevelEmblem";
@@ -685,10 +687,37 @@ export function ProjectDialog({
   );
 }
 
-export default function ProjectBoard({ data, act }) {
-  const [team, setTeam] = useState(data.user.teamId || data.teams[0]?._id);
+export default function ProjectBoard({ data, act, compact = false, selectedTeam }) {
+  const [localTeam, setTeam] = useState(data.user.teamId || data.teams[0]?._id);
   const [selected, setSelected] = useState(null);
-  const attempts = data.projectAttempts.filter((a) => a.teamId === team);
+  const team = selectedTeam ?? localTeam;
+  const levels = playerMapLevels(data, { teamId: team });
+  const active = levels.find(level => level._id === selected);
+  const staff = data.user.role !== "GAMER";
+  const sprintHref = data.user.role === "CENTRE_COMMAND" ? "/centre-command/setup?programme=setup#programme-setup"
+    : data.user.role === "MISSION_COMMANDER" ? "/commander/sprints?board=programme" : "/gamer/sprint-board?board=programme";
+  const practice = levelsForTeam((data.projectLevels || []).filter(level => !level.mapMission), team);
+  return <div className="player-level-progression"><Panel title="Team project progression" kicker="ALUMNI CONNECT / PLAYER MAP LEVELS">
+    {staff && selectedTeam === undefined && <label className="challenge-filter">Team<select value={team || ""} onChange={event => {setTeam(event.target.value);setSelected(null);}}>{data.teams.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}{!data.teams.length && <option value="">No teams yet</option>}</select></label>}
+    <p className="muted">The player map follows these five weekly sprints. Each team earns the previous sprint’s key before continuing. Published custom missions follow below.</p>
+    <div className="player-level-catalogue">{levels.map(level => {
+      const project = level.kind === "PROJECT";
+      const state = project ? projectState(data, level, team).state : null;
+      return <button key={`${team}:${level._id}`} type="button" aria-pressed={active?._id === level._id} onClick={() => setSelected(active?._id === level._id ? null : level._id)}>
+        <small>{project ? "CUSTOM MISSION" : `LEVEL ${level.number} / SPRINT ${level.number}`}</small><strong>{level.name}</strong>
+        <span>{project ? ({AVAILABLE:"Ready to start",LOCKED:"Complete the previous custom mission",ACTIVE:"In progress",REVIEW:"Awaiting review",CLEARED:"Mission cleared"}[state] || state) : level.statusLabel || level.subtitle}</span>
+      </button>;
+    })}</div>
+    {active?.kind === "SPRINT" && <section className="player-level-detail" aria-label={`Level ${active.number} details`}><h3>Level {active.number} · {active.name}</h3><p>{active.goal}</p><p className="muted">{active.number === 1 ? "Starts after flight clearance and team approval." : `Requires Key ${active.number - 1} from the previous sprint.`} {active.statusLabel || "Release, task reviews and client acceptance are managed in weekly sprint work."}</p><Link className="btn" href={sprintHref}>{data.user.role === "CENTRE_COMMAND" ? "Open weekly sprint setup" : "Open weekly sprint work"}</Link></section>}
+    {active?.kind === "PROJECT" && <ProjectDialog key={`${team}:${active._id}`} level={active} data={data} act={act} teamId={team} close={() => setSelected(null)}/>}
+  </Panel>{practice.length > 0 && <details className="practice-projects"><summary>Additional practice projects <span>{practice.length} definitions</span></summary><PracticeProjectBoard key={team} data={{...data,projectLevels:practice}} act={act} compact={compact} selectedTeam={team}/></details>}</div>;
+}
+
+function PracticeProjectBoard({ data, act, compact = false, selectedTeam }) {
+  const [localTeam, setTeam] = useState(data.user.teamId || data.teams[0]?._id);
+  const team = selectedTeam ?? localTeam;
+  const [selected, setSelected] = useState(null);
+  const attempts = data.projectAttempts.filter((a) => a.teamId === team && data.projectLevels.some(level => level._id === a.levelId));
   const levels = levelsForTeam(data.projectLevels, team).map(
     (level) =>
       attempts.find((a) => a.levelId === level._id)?.definitionSnapshot ||
@@ -696,10 +725,10 @@ export default function ProjectBoard({ data, act }) {
   );
   return (
     <Panel
-      title="Team project progression"
-      kicker="BEGINNER CHAPTER · BUILD TOGETHER"
+      title="Practice project progression"
+      kicker="ADDITIONAL PROJECTS / SEPARATE COMPLETION RECORDS"
     >
-      {data.user.role !== "GAMER" && (
+      {data.user.role !== "GAMER" && selectedTeam === undefined && (
         <label className="challenge-filter">
           Team
           <select
@@ -719,12 +748,13 @@ export default function ProjectBoard({ data, act }) {
       )}
       <p className="muted">
         {attempts.filter((a) => a.status === "CLEARED").length}/{levels.length}{" "}
-        projects cleared · {attempts.reduce((n, a) => n + a.stars, 0)}/
+        projects cleared · {attempts.reduce((n, a) => n + (a.stars || 0), 0)}/
         {levels.length * 3} stars
       </p>
       <div className="project-level-grid">
         {levels.map((level) => {
           const { attempt, state } = projectState(data, level, team);
+          const previous = previousLevel(levels, level._id);
           return (
             <button
               className={`project-level-card ${state.toLowerCase()}`}
@@ -734,16 +764,17 @@ export default function ProjectBoard({ data, act }) {
               <small>
                 LEVEL {String(level.number).padStart(2, "0")} · {level.hours}H
               </small>
-              <div className="project-card-hazard">
+              <div className="project-card-hazard" aria-hidden={compact || undefined}>
                 <LevelEmblem level={level} />
               </div>
               <h3>{level.name}</h3>
               <LevelStars attempt={attempt} level={level} compact />
-              <p>{state === "REVIEW" ? "Awaiting integrated review" : state}</p>
+              <p>{compact ? ({REVIEW:"Awaiting integrated review",AVAILABLE:"Ready to start",LOCKED:previous ? `Clear Level ${previous.number} to unlock` : "Locked",CLEARED:"Level cleared",ACTIVE:"In progress",REWORK:"Changes requested"}[state] || state.replaceAll("_", " ").toLowerCase()) : state === "REVIEW" ? "Awaiting integrated review" : state}</p>
             </button>
           );
         })}
       </div>
+      {compact && !levels.length && <p className="muted">No project levels assigned to this team yet.</p>}
       {selected && (
         <ProjectDialog
           key={`${team}:${selected._id}`}
