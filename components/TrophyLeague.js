@@ -231,7 +231,7 @@ export default function TrophyLeague({ trophies = 0, compact = false }) {
               league and division follow your current total trophy balance
               immediately. If a result is corrected or a reward is revoked, a
               lower balance can move you down. Trophies are not spent on
-              starting missions; energy pays that cost. There is no seasonal
+              starting missions, and normal gameplay does not spend energy. There is no seasonal
               reset or daily decay. XP levels and staff-published assessment
               marks remain separate.
             </p>

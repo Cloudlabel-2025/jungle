@@ -9,7 +9,7 @@ const drill = [
     "Your energy is empty. What can you do now?",
     [
       "Reset your progress",
-      "Continue saved work and recover energy",
+      "Keep playing and ask for an energy review",
       "Keep clicking Start",
     ],
   ],
@@ -93,12 +93,12 @@ export default function MissionRecovery({ data, act }) {
           player={data.user}
           mood="sad"
           caption="Rest, recover, return."
-          detail="Your progress is safe. Follow the recovery steps below."
+          detail="Your progress is safe. Flight missions remain available while you review recovery."
         />
       )}
       <p>
         Recovery restores 1 life if needed and 3 energy. Your missions, rewards
-        and conduct history stay saved.
+        and conduct history stay saved. Flight missions are free even with an empty balance.
       </p>
       {error && (
         <p role="alert">
@@ -145,8 +145,7 @@ export default function MissionRecovery({ data, act }) {
           {gamer && row.selfService ? (
             <>
               <p>
-                Complete these three choices to return to the trail. There is no
-                energy cost.
+                Complete these three choices to restore a historical mission balance. You can keep playing flight missions during recovery.
               </p>
               {drill.map(([question, options], i) => (
                 <fieldset key={question}>
@@ -180,8 +179,8 @@ export default function MissionRecovery({ data, act }) {
           ) : gamer ? (
             <p>
               Your case needs staff review. Send an essential-support question
-              below and ask Centre Command to approve energy recovery. Saved
-              missions remain available.
+              below and ask Centre Command to approve energy recovery. Flight
+              missions remain available, including new starts.
             </p>
           ) : (
             <>

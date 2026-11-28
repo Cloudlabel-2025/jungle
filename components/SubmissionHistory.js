@@ -22,17 +22,16 @@ export function SubmissionHistoryList({history}){
       {attempt.missions.map(mission=><section key={mission.id}>
         <h5>{mission.title}</h5>{mission.brief&&<p>{mission.brief}</p>}
         {!mission.submissions.length&&<p>No submitted revisions saved for this mission.</p>}
-        {mission.submissions.map((submission,i)=><details key={submission.id || i}>
-          <summary>Revision {i+1} · {historyTime(submission.at)}{submission.late?" · Late":""}{submission.expired?" · Timer expired":""}</summary>
-          {submission.id&&<small>Submission ID: {submission.id}</small>}
+        {mission.submissions.map((submission,i)=><section className="submission-revision" key={submission.id || i}>
+          <h5>Revision {i+1} · {historyTime(submission.at)}{submission.late?" · Late":""}{submission.expired?" · Timer expired":""}</h5>
           {submission.reason&&<p>{submission.reason}</p>}
           {submission.deadline&&<p>Saved deadline: {historyTime(submission.deadline)}</p>}
-          {submission.researchRevisionId&&<p>Linked research submission: {submission.researchRevisionId}</p>}
+          {submission.researchRevisionId&&<p className="muted">Linked to a saved research submission.</p>}
           {submission.url&&<p><Answer value={submission.url}/></p>}
           {submission.answers&&<dl>{Object.entries(submission.answers).map(([key,value])=>{const question=mission.questions?.find(question=>question.id===key);const option=question && Number.isInteger(value)?question.options?.[value]:undefined;return <div key={key}><dt>{question?.prompt || label(key)}</dt><dd><Answer value={option ?? value}/></dd></div>;})}</dl>}
-          {submission.transcript&&<details><summary>Saved conversation transcript</summary><pre style={{whiteSpace:"pre-wrap",overflowWrap:"anywhere",maxHeight:320,overflow:"auto"}}>{submission.transcript}</pre></details>}
+          {submission.transcript&&<section className="review-conversation"><h5>Saved conversation transcript</h5><pre style={{whiteSpace:"pre-wrap",overflowWrap:"anywhere",maxHeight:320,overflow:"auto"}}>{submission.transcript}</pre></section>}
           {!submission.transcript&&submission.url&&<p>No conversation transcript was saved for this revision. Open its submitted link to inspect it.</p>}
-        </details>)}
+        </section>)}
       </section>)}
     </section>)}
   </div>;
@@ -50,7 +49,7 @@ export default function SubmissionHistory({userId,day,revision}){
     }catch(failure){if(!controller.signal.aborted)setError(failure.message);}})();
     return ()=>controller.abort();
   },[open,userId,day,revision,reload]);
-  return <details className="submission-history" onToggle={event=>setOpen(event.currentTarget.open)}><summary>Full submission history · Level {day}</summary>
+  return <section className="submission-history"><button type="button" className="btn" aria-expanded={open} onClick={()=>setOpen(value=>!value)}>{open?"Hide":"View"} full submission history · Level {day}</button>
     {open&&(error?<p role="alert">{error} <button type="button" className="btn" onClick={()=>setReload(value=>value+1)}>Try again</button></p>:history?<SubmissionHistoryList history={history}/>:<p role="status">Loading all saved revisions…</p>)}
-  </details>;
+  </section>;
 }

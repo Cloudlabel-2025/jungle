@@ -1,6 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import ViewObjectivesLink from "./ViewObjectivesLink";
+import FlightLevelRetry from "./FlightLevelRetry";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -334,9 +335,9 @@ export default function SkyFlightMap({ data, act, now = new Date() }) {
           <div>
             <span className="sky-eyebrow">CHAPTER 01 / THE FLIGHT</span>
             <h1>Your flight</h1>
-            <p>Choose a checkpoint. New missions cost 1 energy.</p>
+            <p>Choose a checkpoint. First attempts are free; retrying a level costs 1 energy.</p>
             {(data.user.hp === 0 || data.user.energy === 0) && (
-              <p role="status">Continue saved work or <Link href="/gamer/week-one-ask-mc">ask Help Desk for energy recovery</Link>.</p>
+              <p role="status">You can keep playing. <Link href="/gamer/week-one-ask-mc">Ask Help Desk</Link> to review your energy balance.</p>
             )}
           </div>
           <div className="sky-header-tools">
@@ -604,6 +605,7 @@ export default function SkyFlightMap({ data, act, now = new Date() }) {
           close={closeMission}
         >
           <div className="sky-mission">
+            <FlightLevelRetry data={data} act={act} day={displayedMission} now={now}/>
             {displayedMission === 1 && (
               <ol className="sky-checkpoints" aria-label="Level 1 checkpoints">
                 {discovery.steps.map((step, i) => (

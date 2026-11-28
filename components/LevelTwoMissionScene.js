@@ -1,5 +1,6 @@
 "use client";
 import ViewObjectivesLink from "./ViewObjectivesLink";
+import FlightLevelRetry from "./FlightLevelRetry";
 import { companionText } from "@/lib/companion-name.js";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -126,7 +127,7 @@ export default function LevelTwoMissionScene({
           activityId: selected,
           variantId: selectedScenario.id,
         },
-        "Mission started. 1 energy spent; your timer and notes are saved.",
+        "Mission started. Your energy is unchanged; your timer and notes are saved.",
       );
       if (!result)
         throw Error(
@@ -161,6 +162,7 @@ export default function LevelTwoMissionScene({
           <Compass size={16} /> Sky map <ArrowRight size={16} />
         </button>
       </header>
+      <FlightLevelRetry data={data} act={act} day={dayNumber} now={now}/>
       <FlightLevelRewards data={data} day={dayNumber} compact />
       {error && (
         <p className="l2-error" role="alert">
@@ -267,7 +269,7 @@ export default function LevelTwoMissionScene({
             <p>
               {complete === 2
                 ? "Both discoveries secured. Your next flight mission is unlocked."
-                : "Kiko: Pick either mission. Launching costs 1 energy and starts your timer. Continuing saved work is free."}
+                : "Kiko: Pick either mission. Starting and continuing are free. A fresh level retry costs 1 energy. Your timer starts when you launch."}
             </p>
             {complete === 2 && nextLevel?.available && (
               <button type="button" onClick={onNext}>

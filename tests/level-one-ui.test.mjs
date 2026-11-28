@@ -47,6 +47,32 @@ test("full history renders every chat link, transcript and answer revision, and 
   for(const text of ["https://example.org/old","https://example.org/revised","Earlier saved transcript","Revised answer","Current answer","Revision 2","Archived attempt","Current attempt","Choose the correct source","B source","Timer expired"])assert.ok(html.includes(text),text);
   assert.ok(!html.includes('href="javascript:'));
 });
+
+test("expired levels expose an understandable paid retry and zero-energy recovery path",async()=>{
+  const Retry=await component("components/FlightLevelRetry.js");
+  const now=new Date("2026-11-28T10:00:00Z"),old="2026-11-28T09:00:00Z";
+  const data={user:{_id:"p",role:"GAMER",energy:2},dayOne:{records:[{userId:"p",startedAt:old,deadline:old,levelOne:{attempt:1}}]},weekOneProgram:{levelResults:[],attempts:[2,3,4,5].map(day=>({userId:"p",day,data:{startedAt:old,deadline:old}}))}};
+  for(const day of [1,2,3,4,5]){
+    const html=renderToStaticMarkup(React.createElement(Retry,{data,day,now,act:async()=>true}));
+    assert.ok(html.includes("Time’s up. Try this level again."));
+    assert.ok(html.includes("Retry Level "+day+" · 1 energy"));
+    assert.ok(html.includes("previous submissions and rewards stay saved"));
+  }
+  const empty=renderToStaticMarkup(React.createElement(Retry,{data:{...data,user:{...data.user,energy:0}},day:1,now,act:async()=>true}));
+  assert.ok(empty.includes("Open energy recovery"));
+  assert.ok(!empty.includes('class="btn primary"'));
+});
+
+test("review evidence shows question text, readable options and labelled checks without raw data disclosures",async()=>{
+  const Answers=await component("components/ResultReviewEvidence.js","ReviewAnswers");
+  const Checks=await component("components/ResultReviewEvidence.js","ScoringChecks");
+  const html=renderToStaticMarkup(React.createElement(Answers,{questions:[{id:"q1",prompt:"Which source supports the claim?",options:["An anonymous comment","The original research paper"]}],answers:{q1:1,notes:{finding:"Compared the original source",confirmed:true},url:"javascript:alert(1)"}}));
+  for(const text of ["Which source supports the claim?","The original research paper","Player’s finding","Compared the original source","Confirmed","Yes"])assert.ok(html.includes(text),text);
+  assert.ok(!html.includes("[object Object]") && !html.includes('&quot;finding&quot;') && !html.includes('href="javascript:'));
+  const checks=renderToStaticMarkup(React.createElement(Checks,{automatic:{reason:"Evidence reviewed",checks:{detailedNotes:true,freshChat:false}}}));
+  for(const text of ["Notes include enough detail","A new AI conversation was submitted","Met","Not met"])assert.ok(checks.includes(text));
+  assert.ok(!checks.includes("<details"),"scoring checks must be readable without opening another dropdown");
+});
 test("player result reveals stars, exact rewards, replay history and release gating", async () => {
   const Result = await component("components/LevelOneResult.js");
   const level = {

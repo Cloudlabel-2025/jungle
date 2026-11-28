@@ -169,7 +169,7 @@ export function ClaimCheck({ record, act, now, open, onContinue, nextLevel }) {
       record.claimCheck.researchRevisionId === current?.id,
     ),
     expired = new Date(now) > new Date(record.deadline),
-    needsStart = record.missionEnergy?.policy === "mission-start-v1" && !record.missionEnergy.claim,
+    needsStart = ["mission-start-v1", "free-missions-v2"].includes(record.missionEnergy?.policy) && !record.missionEnergy.claim,
     readOnly = needsStart || !open || (done && !revising);
   const work = useSavedWork({
     value: answers,
@@ -232,16 +232,16 @@ export function ClaimCheck({ record, act, now, open, onContinue, nextLevel }) {
     <div className="claim-check-board">
       <ShieldCheck size={45} />
       <h3>Check before you trust.</h3>
-      <p>Starting Mission 2 costs 1 energy. Returning to this mission and saving your work are free.</p>
+      <p>Starting, continuing and saving this mission are free. Energy is only deducted for confirmed rule breaches.</p>
       {error && <p role="alert">{error}</p>}
       <button className="discovery-submit" disabled={busy || !open} onClick={async () => {
         setBusy(true);
         setError("");
         try {
-          if (!await act("day1/claim-check-start", { ownerId: record.userId, researchRevisionId: current?.id }, "Mission 2 started. 1 energy spent."))
+          if (!await act("day1/claim-check-start", { ownerId: record.userId, researchRevisionId: current?.id }, "Mission 2 started. Your energy is unchanged."))
             setError("Mission start was not confirmed. Try again or ask Help Desk for recovery.");
         } finally { setBusy(false); }
-      }}>{busy ? "Starting…" : "Start Mission 2 · 1 energy"}</button>
+      }}>{busy ? "Starting…" : "Start Mission 2"}</button>
     </div>
   );
   return (

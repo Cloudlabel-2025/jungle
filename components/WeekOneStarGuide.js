@@ -162,7 +162,7 @@ export function FlightLevelRewards({ data, day, compact = false }) {
             <XpIcon size={17} />
             <strong>{row.creditedXp} XP</strong>
           </>
-        ) : (
+        ) : row?.playerRetry ? <span>Retry: beat your best stars for +3 trophies · 25% XP on completion</span> : (
           <span>
             Earn 15–30 trophies · {levelReward(1, day).xp}–
             {levelReward(3, day).xp} XP · {day}× flight XP
@@ -181,7 +181,7 @@ export function FlightLevelRewards({ data, day, compact = false }) {
       {!compact && result && (
         <p>
           {result.reason}
-          {row.practice && " Replay keeps your best completion and rewards."}
+          {row.playerRetry ? " Retry keeps earlier rewards. Improved best stars add 3 trophies; completed retries earn 25% XP." : row.practice && " Replay keeps your best completion and rewards."}
         </p>
       )}
     </section>

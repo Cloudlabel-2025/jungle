@@ -355,7 +355,7 @@ export function DiscoveryMission({
               className="btn primary"
               onClick={() => send(act, "start", r)}
             >
-              Begin 90-minute research · 1 energy
+              Begin 90-minute research
             </button>
           </>
         )}

@@ -179,7 +179,7 @@ export default function SkyMapPanels({
             )}
             {panel === "rules" && (
               <>
-                <p>Each new mission costs 1 energy. Opening pages, saving and continuing an existing mission are free. Spending your third energy removes one life and refills energy to 3. At zero lives, finish saved work and ask Help Desk for recovery before starting another mission. Mission costs do not count as conduct penalties.</p>
+                <p>First attempts, saving and submitting are free. After a timer ends or a level is completed, retry the whole level for 1 energy and fresh mission timers. Retry charges do not remove lives or count as conduct penalties. Improve your best stars for 3 extra trophies; equal or lower stars earn no extra trophies. Completed retries earn 25% XP. Your first earned stars on a level still receive normal trophies. Wrong answers and asking for help are free. Confirmed rule breaches retain their recorded penalties. Help Desk offers energy recovery when your retry balance is empty.</p>
                 {!boarded && (
                   <p>
                     You can read the rules now. Board Level 1 before

@@ -1,22 +1,14 @@
 "use client";
 import { useState } from "react";
 import { levelReward } from "@/lib/week-one-level-rules.js";
-import { WeekPanel, Evidence, weekTime } from "./WeekOneShared";
+import { WeekPanel, weekTime } from "./WeekOneShared";
+import { ReviewAnswers, ScoringChecks } from "./ResultReviewEvidence";
 import DayOneReviewEvidence from "./DayOneReviewEvidence";
 import SubmissionHistory from "./SubmissionHistory";
 import GameChoices from "./GameChoices";
 import WorkspaceSelect from "./WorkspaceSelect";
 import MissionStars from "./MissionStars";
 import { trophyLeague } from "@/lib/trophy-leagues.js";
-const readable = (value) =>
-  Object.fromEntries(
-    Object.entries(value || {}).map(([key, answer]) => [
-      key,
-      answer && typeof answer === "object"
-        ? JSON.stringify(answer, null, 2)
-        : answer,
-    ]),
-  );
 
 export default function PlayerResultReview({ data, act }) {
   const [userId, setUserId] = useState(()=>data.weekOneProgram?.levelTargets?.members?.[0]?._id || "");
@@ -130,7 +122,7 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
         <MissionStars stars={actualStars} size="result"/>
         <strong>Actual result: {row?.result?.completed?`${actualStars}/3 stars`:"Incomplete"}</strong><small>{row?.result?.source && row.result.source!=="SYSTEM" ? "Staff correction" : currentValidation?"Validated result":"Awaiting staff validation"}</small></div>
       </section>
-      <details className="result-review-disclosure"><summary>Scoring explanation and checks</summary><p>{automatic?.reason || "An automatic result appears after the player submits mission evidence."}</p>{automatic?.verificationScope&&<p>{automatic.verificationScope}</p>}{automatic?.checks&&<ul>{Object.entries(automatic.checks).map(([name,value])=><li key={name}>{name.replace(/([A-Z])/g," $1").replace(/^./,letter=>letter.toUpperCase())}: {typeof value==="boolean"?value?"Met":"Not met":String(value)}</li>)}</ul>}</details>
+      <ScoringChecks automatic={automatic}/>
       {validation && (
         <p className="result-review-validation">
           {currentValidation
@@ -141,7 +133,7 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
           {validation.reason}
         </p>
       )}
-      <details className="result-review-disclosure" open><summary>Submitted evidence · current attempt</summary><div className="result-review-evidence-content">
+      <section className="result-review-submissions" aria-label="Submitted evidence"><h4>Submitted evidence · current attempt</h4><div className="result-review-evidence-content">
       {day === 1 ? (
         first ? (
           <>
@@ -152,7 +144,7 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
               formatDate={weekTime}
             />
             <h4>Independent claim check</h4>
-            {first.claimCheck || first.claimCheckDraft?<><p>{first.claimCheck?"Submitted claim check":"Draft only — not yet submitted"}</p><Evidence value={readable(first.claimCheck || first.claimCheckDraft)}/></>:<p>No claim check has been submitted yet.</p>}
+            {first.claimCheck || first.claimCheckDraft?<><p>{first.claimCheck?"Submitted claim check":"Draft only — not yet submitted"}</p><ReviewAnswers answers={Object.fromEntries(Object.entries(first.claimCheck || first.claimCheckDraft).filter(([key])=>["claim","source","verdict","finding"].includes(key)))}/></>:<p>No claim check has been submitted yet.</p>}
           </>
         ) : (
           <p>This player has not started Level 1.</p>
@@ -168,29 +160,19 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
               · Revision {a.version}
             </p>
             <p>{a.data.variant?.brief || a.data.activity.brief}</p>
-            <Evidence
-              value={readable(
+            <ReviewAnswers
+              questions={a.data.activity.questions || []}
+              answers={
                 a.data.submissions?.at(-1)?.answers ||
-                  a.data.draft || { status: "No answers saved" },
-              )}
+                  a.data.draft || { status: "No answers saved" }
+              }
             />
-            <details>
-              <summary>Scoring checks and saved experiment</summary>
-              <Evidence
-                value={readable({
-                  automatic: row?.automatic,
-                  assessment: a.data.result,
-                  experiment: a.data.gameState || a.data.labState,
-                  reference: a.data.variant?.reference,
-                })}
-              />
-            </details>
           </section>
         ))
       ) : (
         <p>No mission evidence has been saved for this level.</p>
       )}
-      </div></details>
+      </div></section>
       {day!==1&&<SubmissionHistory userId={userId} day={day} revision={`${row?.version}:${attempts.map(attempt=>`${attempt._id}:${attempt.version}`).join("|")}`}/>}
       </div><aside className="result-review-sidebar">
       <form
@@ -342,10 +324,10 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
         {message && <p role="status">{message}</p>}
       </form>
       {row?.overrideHistory?.length > 0 && (
-        <details>
-          <summary>Previous result decisions</summary>
+        <section className="review-decision-history">
+          <h4>Previous result decisions</h4>
           <ol>{row.overrideHistory.map((entry,index)=>{const previous=entry.result || entry;return <li key={index}><strong>Previous result: {previous.completed?`${previous.stars}/3 stars`:"Incomplete"}</strong><p>{entry.reason}</p><small>{entry.actorId} · {weekTime(entry.at)}</small></li>;})}</ol>
-        </details>
+        </section>
       )}
       </aside>
     </div>

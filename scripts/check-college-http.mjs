@@ -117,6 +117,16 @@ try {
   const readState=(await request("/api/state",launchSessions["launch-player"])).json();
   assert.equal(readState.notifications.items.find(notice=>notice.id===notified[0].id).read,true);
   assert.equal(readState.notifications.items.filter(notice=>notice.id.startsWith("level-review:")).length,1,"a stale retry cannot create a second notice");
+  const retryBody={day:1,attempt:readState.dayOne.records[0].levelOne.attempt,userId:"someone-else"};
+  await request("/api/week1/program/level-retry",{...launchSessions["launch-cc"],body:retryBody,status:403});
+  await request("/api/week1/program/level-retry",{...launchSessions["launch-player"],body:retryBody});
+  assert.equal((await request("/api/week1/program/level-retry",{...launchSessions["launch-player"],body:retryBody})).json().alreadyRetried,true);
+  const retriedState=(await request("/api/state",launchSessions["launch-player"])).json();
+  assert.equal(retriedState.user.energy,readState.user.energy-1,"duplicate retry requests charge exactly once");
+  assert.equal(retriedState.user.hp,readState.user.hp,"retrying never removes a life");
+  assert.equal(retriedState.dayOne.records[0].levelOne.attempt,retryBody.attempt+1);
+  const retryHistory=(await request("/api/week1/submission-history?userId=launch-player&day=1",launchSessions["launch-cc"])).json();
+  assert.equal(retryHistory.attempts[0].missions[0].submissions.length,2,"retry archives every submitted chat");
   for (const college of colleges) for (const id of ["usr_g01", "usr_mc01", "usr_cc01"]) {
     const login = await request("/api/auth/login", { body: { collegeId: college._id, identifier: id, password } });
     const cookie = login.response.headers.get("set-cookie").split(";")[0];

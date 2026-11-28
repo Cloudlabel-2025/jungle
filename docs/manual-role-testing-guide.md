@@ -71,7 +71,7 @@ The CMS sidebar sections are views within `/platform`; they are not separate `/p
 | Profile icon | Open profile, work-by-date history, XP and trophies. Check full-face framing at desktop/mobile sizes. |
 | **Create my avatar** / **Customize avatar** | Open the personal avatar studio. Test camera scan, permissions-denied feedback, manual adjustments, hairstyles, clothing, accessories, poses, backgrounds and save/reload. No Blaze/Pulse/etc. choices or fallback stock faces should appear. |
 | Trophy badge | Open leagues/divisions and current progress. Below 300 trophies is unranked. Ordinary failures, asking for help and recovery should not deduct trophies. |
-| Mission launch/result windows | Check brief, start, save, submit, replay, stars and personal-character reactions. Starting each of the first five missions costs one energy; simply opening pages or saving should not charge energy. |
+| Mission launch/result windows | Check brief, start, save, submit, retry, stars and personal-character reactions. First starts and saved work are free. After expiry or completion, confirm a whole-level retry for exactly one energy; it must preserve evidence and lives. Verify fresh timers, 25% completion XP, +3 trophies only for a new best star rating, and recovery at zero energy. |
 | Help / recovery panels | Check that a player can explain a blocker and recover instead of being stranded at zero energy. |
 
 Flight levels are mission states within the game, not five independent page URLs: Level 1 discovery/onboarding; Level 2 **Explore**; Level 3 **Tell your STORY**; Level 4 **Light the FIRE**; Level 5 **Prove your skills**. After flight completion, verify the arrival scene, avatar creation and programme-readiness handoff.

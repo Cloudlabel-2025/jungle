@@ -1221,14 +1221,17 @@ function RecognitionProposal({ data, act }) {
   );
 }
 export function StaffResults({ data, act }) {
+  const [section, setSection] = useState("review");
   const p = data.weekOneProgram,
     cc = data.user.role === "CENTRE_COMMAND";
+  const sections = [["review", "Level reviews"], ["readiness", "Readiness & allocation"], ["teams", "Team results & replay"], ["conduct", "Trophy adjustments"], ["capabilities", "Capabilities"], ["awards", "Awards"], ...(cc ? [["champion", "Day 1 champion"]] : [])];
   return (
     <>
-      <PlayerResultReview data={data} act={act} />
-      <details className="result-secondary-controls"><summary>Conduct and trophy adjustments</summary><TrophyConduct data={data} act={act}/></details>
-      <details className="result-secondary-controls"><summary>Team result controls and replay</summary><WeekOneLevelControls data={data} act={act} /></details>
-      <details className="result-secondary-controls"><summary>Week 1 readiness and publication</summary>
+      <nav className="result-section-nav" aria-label="Results and allocation sections">{sections.map(([id, label]) => <button key={id} type="button" aria-current={section === id ? "page" : undefined} onClick={() => setSection(id)}>{label}</button>)}</nav>
+      {section === "review" && <PlayerResultReview data={data} act={act} />}
+      {section === "conduct" && <TrophyConduct data={data} act={act}/>}
+      {section === "teams" && <WeekOneLevelControls data={data} act={act} />}
+      {section === "readiness" &&
       <WeekPanel
         title="Week 1 readiness and publication"
         action={
@@ -1307,11 +1310,8 @@ export function StaffResults({ data, act }) {
           </>
         )}
       </WeekPanel>
-      </details>
-      <details>
-        <summary>
-          Review component evidence and capability recommendations
-        </summary>
+      }
+      {section === "capabilities" && <WeekPanel title="Evidence and capability recommendations">
         {p.results.map((r) => (
           <div key={r.userId}>
             <ResultCard row={r} weights={p.settings.weights} />
@@ -1345,20 +1345,16 @@ export function StaffResults({ data, act }) {
               ))}
           </div>
         ))}
-      </details>
-      <details>
-        <summary>
-          Nominate 13 distinct award recipients and three examples
-        </summary>
+      </WeekPanel>}
+      {section === "awards" && <WeekPanel title="Award nominations" >
         <RecognitionProposal data={data} act={act} />
-      </details>
-      {cc && (
-        <details>
-          <summary>Private Day 1 Champion decision</summary>
+      </WeekPanel>}
+      {cc && section === "champion" && (
+        <section aria-label="Private Day 1 Champion decision">
           <DayOneCohort data={data} act={act} now={new Date()} />
-        </details>
+        </section>
       )}
-      {p.publication && (
+      {section === "readiness" && p.publication && (
         <WeekPanel
           title={
             p.recovery?.policy

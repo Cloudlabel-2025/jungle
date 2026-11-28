@@ -121,7 +121,7 @@ export function EvidenceHunt({ source, variant, onBegin, busy, disabled }) {
           disabled={busy || disabled}
           onClick={onBegin}
         >
-          {busy ? "Launching…" : "Launch challenge · 1 energy"}
+          {busy ? "Launching…" : "Launch challenge"}
           <ArrowRight size={18} />
         </button>
       </footer>
@@ -241,7 +241,7 @@ export function LevelThreeLaunch({
           disabled={busy || disabled}
           onClick={onBegin}
         >
-          {busy ? "Launching…" : "Launch challenge · 1 energy"}
+          {busy ? "Launching…" : "Launch challenge"}
           <ArrowRight size={18} />
         </button>
       </div>

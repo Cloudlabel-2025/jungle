@@ -198,6 +198,37 @@
 .result-review-toolbar .game-choice strong { font-size:14px; white-space:nowrap; }
 .jungle-world .result-review-toolbar label.game-choice { padding:9px; min-height:44px; gap:6px; }
 .result-review-workspace { display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,360px); align-items:start; gap:24px; }
+.flight-retry { display:flex; flex-wrap:wrap; flex-shrink:0; align-items:center; justify-content:space-between; gap:14px; margin:14px 0; padding:16px; border:1px solid #a7c77b77; border-radius:10px; background:#153829; color:var(--text-heading); }
+.flight-retry > div { flex:1 1 280px; min-width:0; }
+.flight-retry h3 { margin:0 0 8px; font-size:18px; }
+.flight-retry p { margin:6px 0; font-size:13px; line-height:1.6; }
+.flight-retry a { color:var(--text-heading); text-decoration:underline; }
+.flight-retry-actions .btn { margin:6px 8px 0 0; white-space:normal; }
+.result-section-nav { display:flex; flex-wrap:wrap; gap:6px; padding:6px; margin-bottom:18px; border:1px solid var(--border, #6c865b66); border-radius:10px; background:#102d22; }
+.result-section-nav button { border:1px solid transparent; background:transparent; color:var(--text-secondary); padding:10px 14px; border-radius:6px; font:inherit; font-size:14px; cursor:pointer; }
+.result-section-nav button:hover { background:#a7c77b12; color:var(--text-heading); }
+.result-section-nav button[aria-current] { color:var(--text-heading); background:#a7c77b22; border-color:#a7c77b66; }
+.result-section-nav button:focus-visible { outline:2px solid var(--accent, #a7c77b); outline-offset:2px; }
+.review-scoring-summary, .review-decision-history { padding:14px; border:1px solid #6c865b44; border-radius:8px; min-width:0; }
+.review-scoring-summary h4, .result-review-submissions > h4, .review-decision-history h4, .review-conversation h4 { margin:0 0 10px; color:var(--text-heading); font-size:16px; }
+.review-scoring-summary p { font-size:13px; line-height:1.6; margin:8px 0; color:var(--text-secondary); }
+.review-check-list { display:grid; gap:0; list-style:none; padding:0; margin:12px 0 0; }
+.review-check-list li { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:7px 0; font-size:13px; color:var(--text-secondary); }
+.review-check-list strong { flex-shrink:0; color:var(--text-heading); font-size:12px; }
+.review-check-list strong[data-met="true"] { color:#b8db8b; }
+.review-check-list strong[data-met="false"] { color:#e7ba8a; }
+.review-answer-list { margin:0; }
+.review-answer-list > div { padding:9px 0; }
+.review-answer-list dt { color:var(--text-secondary); font-size:12px; font-weight:600; }
+.review-answer-list dd { margin:5px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; color:var(--text-heading); font-size:14px; line-height:1.65; }
+.review-answer-list a { color:#c0db99; text-decoration:underline; text-underline-offset:3px; }
+.review-answer-list dl { padding-left:12px; border-left:2px solid #6c865b44; }
+.review-conversation pre { font:inherit; font-size:13px; line-height:1.65; color:var(--text-secondary); background:#0a231b; padding:12px; border-radius:6px; }
+.review-decision-history ol { margin:0; padding-left:18px; font-size:13px; line-height:1.6; }
+.review-decision-history p { margin:5px 0; overflow-wrap:anywhere; }
+.submission-revision { padding:14px 0; border-top:1px solid #6c865b44; }
+.submission-revision > h5 { color:var(--text-heading); font-size:14px; }
+@media(max-width:600px) { .result-section-nav { gap:4px; } .result-section-nav button { padding:9px 10px; font-size:13px; } .review-check-list li { gap:10px; } }
 .result-review-evidence { min-width:0; display:grid; gap:14px; }
 .result-review-heading h3 { margin:6px 0 0; }
 .result-score-comparison { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border:1px solid #6c865b66; border-radius:10px; overflow:hidden; }

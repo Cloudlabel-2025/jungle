@@ -1,4 +1,5 @@
 "use client";
+import FlightLevelRetry from "./FlightLevelRetry";
 import { companionText } from "@/lib/companion-name.js";
 import PlayerVitals from "./PlayerVitals";
 import MissionRecovery from "./MissionRecovery";
@@ -651,6 +652,7 @@ export function Games({ data, act, now }) {
       {[...p.days].reverse().map((day) =>
         day.day === 1 ? (
           <div key={1}>
+            <FlightLevelRetry data={data} act={act} day={1} now={now}/>
             <DiscoveryMission data={data} act={act} now={now} />
             <WeekForm
               action="share-consent"
@@ -662,6 +664,7 @@ export function Games({ data, act, now }) {
           </div>
         ) : (
           <div key={day.day}>
+            <FlightLevelRetry data={data} act={act} day={day.day} now={now}/>
             <FlightLevelRewards data={data} day={day.day} />
             {day.activities.map((activity) => {
               const record = p.attempts.find(
@@ -684,7 +687,7 @@ export function Games({ data, act, now }) {
                 >
                   <p>
                     Your timer begins when you start. This is one persistent
-                    attempt. Starting costs 1 energy; continuing saved work is free.
+                    attempt. Starting and continuing are free; retrying a level costs 1 energy.
                   </p>
                   <WeekForm
                     action="attempt-start"

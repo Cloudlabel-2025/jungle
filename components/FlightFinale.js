@@ -1,4 +1,5 @@
 "use client";
+import FlightLevelRetry from "./FlightLevelRetry";
 import { useState } from "react";
 import {
   Compass,
@@ -79,7 +80,7 @@ export default function FlightFinale({
             activityId: activity.id,
             ...(variantId ? { variantId } : {}),
           },
-          "Mission started. 1 energy spent; your timer and progress are saved.",
+          "Mission started. Your energy is unchanged; your timer and progress are saved.",
         ))
       )
         throw Error("Mission start was not confirmed. Try again.");
@@ -136,6 +137,7 @@ export default function FlightFinale({
           <Compass size={16} /> Sky map
         </button>
       </header>
+      <FlightLevelRetry data={data} act={act} day={dayNumber} now={now}/>
       {error && (
         <p role="alert" className="finale-error">
           {error}
@@ -202,8 +204,7 @@ export function FinaleAttempt({ record, ownerId, now, open, act, children }) {
       </div>
       {game.expired && !game.complete && (
         <p className="finale-warning">
-          Time has ended. Only your last saved work can be submitted. Ask MC for
-          an extension if needed.
+          Time has ended. Submit your last saved work, or use Retry Level above for a fresh attempt costing 1 energy.
         </p>
       )}
       {!game.canWrite && (

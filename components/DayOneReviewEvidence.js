@@ -52,8 +52,8 @@ export default function DayOneReviewEvidence({
             </a>
           )}
           {submission.transcript && (
-            <details>
-              <summary>Submitted conversation evidence</summary>
+            <section className="review-conversation">
+              <h4>Submitted conversation evidence</h4>
               <pre
                 style={{
                   whiteSpace: "pre-wrap",
@@ -63,9 +63,9 @@ export default function DayOneReviewEvidence({
               >
                 {submission.transcript}
               </pre>
-            </details>
+            </section>
           )}
-          {r.levelOne?.automatic && (
+          {r.levelOne?.automatic && !compact && (
             <details>
               <summary>Automatic scoring checks</summary>
               {Object.entries(r.levelOne.automatic.checks).map(

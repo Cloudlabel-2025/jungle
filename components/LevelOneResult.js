@@ -32,7 +32,7 @@ export default function LevelOneResult({ level, compact = false }) {
       </h4>
       {!compact && (
         <p>
-          {result?.reason ||
+          {level.playerRetry ? "Your earlier rewards are saved. Beat your best stars for +3 trophies; completed retries earn 25% XP." : result?.reason ||
             (level.practice
               ? "Your previous rewards are safe. An improved result awards only the difference."
               : `Complete your research mission to earn up to 3 stars, ${levelOneReward(3).trophies} trophies and ${levelOneReward(3).xp} XP.`)}

@@ -261,7 +261,7 @@ export default function FlightMissionBriefing({
             disabled={busy}
             onClick={() => onAction("start")}
           >
-            <span>{busy ? "Launching…" : "Begin research · 1 energy"}</span>
+            <span>{busy ? "Launching…" : "Begin research"}</span>
             <ArrowRight size={18} />
           </button>
         )}

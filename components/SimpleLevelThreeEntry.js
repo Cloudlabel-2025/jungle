@@ -1,4 +1,5 @@
 "use client";
+import FlightLevelRetry from "./FlightLevelRetry";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
@@ -97,7 +98,7 @@ export default function SimpleLevelThreeEntry({
         !(await act(
           "week1/program/attempt-start",
           { day: 3, activityId: selected, variantId: variant.id },
-          "Mission started. 1 energy spent; your progress saves automatically.",
+          "Mission started. Your energy is unchanged; your progress saves automatically.",
         ))
       )
         throw Error("Starting was not confirmed. Try again.");
@@ -141,6 +142,7 @@ export default function SimpleLevelThreeEntry({
           <Compass size={15} /> Sky map
         </button>
       </header>
+      <FlightLevelRetry data={data} act={act} day={3} now={now}/>
       {error && (
         <p className="signal-lab-error" role="alert">
           {error}
@@ -274,7 +276,7 @@ export default function SimpleLevelThreeEntry({
                         onClick={start}
                       >
                         <Play size={17} />
-                        {busy ? "Starting…" : "Play this case · 1 energy"}
+                        {busy ? "Starting…" : "Play this case"}
                       </button>
                       <small>
                         {activity?.durationMinutes} minutes · your saved timer

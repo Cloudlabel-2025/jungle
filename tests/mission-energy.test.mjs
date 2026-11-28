@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import mongoose from "mongoose";
 import { connect, models, transaction } from "../lib/db.js";
 import {
-  spendMissionEnergy,
+  missionStartBalance,
   recoverMissionEnergy,
   missionRecoverySnapshot,
 } from "../lib/mission-energy.js";
@@ -20,7 +20,7 @@ import { conversation } from "./level-one-rules.test.mjs";
 import { check } from "./first-discovery-check.test.mjs";
 
 test(
-  "mission starts charge once, roll back, preserve conduct and allow saved work at zero",
+  "normal mission starts and retries are free at every balance; legacy recovery stays scoped and idempotent",
   { skip: !process.env.TEST_MONGODB_URI },
   async () => {
     process.env.MONGODB_URI = new URL(
@@ -100,10 +100,11 @@ test(
         true,
         "older curriculum packs still get both missions",
       );
-      assert.equal((await read()).energy, 2);
+      assert.equal((await read()).energy, 3);
+      assert.equal((await models.DayOneRecord.findById(`alpha:${player._id}`).lean()).data.missionEnergy.research.cost,0);
       assert.equal(
         await models.Energy.countDocuments({ userId: player._id }),
-        1,
+        0,
       );
       const reader = async (url) => ({
         ok: true,
@@ -132,6 +133,8 @@ test(
         draftVersion: 0,
         answers: check,
       };
+      // An in-progress attempt created before deployment follows the free policy too.
+      await models.DayOneRecord.updateOne({_id:`alpha:${player._id}`},{$set:{"data.missionEnergy.policy":"mission-start-v1"}});
       await assert.rejects(
         dayOneAction(player, "claim-check-submit", body, now),
         /Start Mission 2/,
@@ -140,7 +143,7 @@ test(
         dayOneAction(player, "claim-check-start", body, now),
         dayOneAction(player, "claim-check-start", body, now),
       ]);
-      assert.equal((await read()).energy, 1);
+      assert.equal((await read()).energy, 3);
       await dayOneAction(player, "claim-check-submit", body, now);
       const activity = second.activities[0];
       const launch = {
@@ -156,7 +159,7 @@ test(
           now,
         ),
       );
-      assert.equal((await read()).energy, 1, "invalid launch is free");
+      assert.equal((await read()).energy, 3, "invalid launch is free");
       await Promise.all([
         programAction(player, "attempt-start", launch, now),
         programAction(player, "attempt-start", launch, now),
@@ -164,8 +167,8 @@ test(
       assert.equal((await read()).energy, 3);
       assert.equal(
         (await read()).hp,
-        4,
-        "third energy spends a life and refills",
+        5,
+        "starting three missions never costs a life",
       );
       assert.equal((await read()).drops, 2);
       assert.equal(
@@ -175,16 +178,11 @@ test(
       );
       assert.equal(
         await models.Energy.countDocuments({ userId: player._id }),
-        3,
+        0,
       );
       await assert.rejects(
         transaction(async (session) => {
-          await spendMissionEnergy(
-            player._id,
-            "mission:rollback",
-            session,
-            now,
-          );
+          await missionStartBalance(player._id, session);
           throw Error("deliberate rollback");
         }),
         /deliberate rollback/,
@@ -199,25 +197,26 @@ test(
         { $set: { hp: 1, energy: 1 } },
       );
       await transaction((session) =>
-        spendMissionEnergy(player._id, "mission:last", session, now),
+        missionStartBalance(player._id, session),
       );
-      assert.equal((await read()).hp, 0);
-      assert.equal((await read()).energy, 0);
+      assert.equal((await read()).hp, 1);
+      assert.equal((await read()).energy, 1);
       assert.equal(
         await models.Rescue.countDocuments({
           userId: player._id,
           status: "OPEN",
         }),
-        1,
+        0,
       );
+      // A balance exhausted under the previous policy must not block free play.
+      await models.User.updateOne({_id:player._id},{$set:{hp:0,energy:0}});
       await programAction(player, "attempt-start", launch, now);
       assert.equal(
         await models.Energy.countDocuments({ userId: player._id }),
-        4,
+        0,
         "resuming a saved attempt at zero costs nothing",
       );
-      await assert.rejects(
-        programAction(
+      await programAction(
           player,
           "attempt-start",
           {
@@ -226,13 +225,16 @@ test(
             variantId: second.activities[1].variants[0].id,
           },
           now,
-        ),
-        /need energy/,
       );
       assert.equal(
         await models.WeekOneAttempt.countDocuments({ userId: player._id }),
-        1,
+        2,
       );
+      assert.equal((await read()).hp,0);
+      assert.equal((await read()).energy,0);
+      // Retained historical charges still support their existing recovery drill.
+      await models.Energy.create({_id:"old-mission-charge",userId:player._id,eventKey:"mission:legacy-last",resource:"ENERGY",change:-1,result:0,energyResult:0,day:config.day,reason:"Historical mission charge"});
+      await models.Rescue.create({_id:"legacy-mission-case",userId:player._id,missionEventKey:"mission:legacy-last"});
       const recovery = (await missionRecoverySnapshot(player)).cases[0];
       assert.equal(recovery.selfService, true);
       await assert.rejects(
@@ -271,13 +273,13 @@ test(
       );
       assert.equal(
         (await read()).energy,
-        2,
+        3,
         "a recovered player can start the next real mission",
       );
       await recoverMissionEnergy(player, request, now);
       assert.equal(
         (await read()).energy,
-        2,
+        3,
         "repeating a finished drill cannot refill energy",
       );
       await models.User.updateOne(
