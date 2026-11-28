@@ -5,7 +5,7 @@ import {createRequire} from "node:module";
 import {resolve} from "node:path";
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
-import {flightGameState,attemptComplete,experimentFeedback,firstUnanswered} from "../lib/final-flight-games.js";
+import {flightGameState,attemptComplete,experimentFeedback,firstUnanswered,fireJourney} from "../lib/final-flight-games.js";
 import {pack,start,later} from "./week-one-levels.test.mjs";
 const noAction=()=>assert.fail("Rendering must not mutate progress");
 async function load(file,name="default") {
@@ -79,10 +79,31 @@ test("Level 4 exposes both mission states and a complete report can be transmitt
   for(const a of pack(4).activities)assert.ok(html.includes(a.name));
   assert.match(html,/Short MC update/);
   assert.match(html,/9\/9 checkpoints filled · 9\/9 saved/);
-  assert.match(html,/All checkpoints filled/);
   assert.match(html,/<button class="finale-button"><svg[^]*?Transmit discovery<\/button>/);
   assert.match(html,/evidence-submit-status/);
-  assert.match(html,/9\. Short MC update, filled/);
+  assert.match(html,/aria-label="FIRE investigation journey"/);
+  assert.match(html,/Brief the crew/);
+});
+
+test("the FIRE journey groups every required answer once and preserves both investigation contracts",()=>{
+  for(const activity of pack(4).activities){
+    const stages=fireJourney(activity.fields),keys=stages.flatMap(stage=>stage.fields);
+    assert.deepEqual([...keys].sort(),[...activity.fields].sort());
+    assert.equal(new Set(keys).size,activity.fields.length);
+    assert.deepEqual(stages.slice(0,4).map(stage=>stage.mark),["F","I","R","E"]);
+    assert.equal(stages[1].title,"Integrate");
+  }
+});
+
+test("FIRE navigation follows the stage order while retaining saved answer field indices",async()=>{
+  const Console=await load("components/FlightEvidenceConsole.js"),r=fixture(4,1);let moved;
+  const game={answers:{},cursor:2,count:0,total:r.data.activity.fields.length,canWrite:true,move:index=>{moved=index;}};
+  function buttons(element,result=[]){if(!element||typeof element!=="object")return result;if(element.type==="button")result.push(element);React.Children.forEach(element.props?.children,child=>buttons(child,result));return result;}
+  const text=element=>typeof element==="string"?element:Array.isArray(element)?element.map(text).join(""):element?.props?text(element.props.children):"";
+  const next=buttons(Console({game,record:r})).find(button=>text(button).includes("Continue investigation"));
+  next.props.onClick();assert.equal(r.data.activity.fields[moved],"layer","reasoning continues to the affected layer before experiments");
+  const back=buttons(Console({game:{...game,cursor:moved},record:r})).find(button=>text(button).includes("Back"));
+  back.props.onClick();assert.equal(moved,2);
 });
 
 test("a failed report submission displays its exact error next to the transmit action",async()=>{

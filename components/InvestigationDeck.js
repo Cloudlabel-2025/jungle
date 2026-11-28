@@ -26,6 +26,7 @@ import {
   attemptComplete,
 } from "@/lib/final-flight-games.js";
 import { companionText } from "@/lib/companion-name.js";
+import { pipImage } from "@/lib/pip-expressions.js";
 
 export default function InvestigationDeck({
   activities,
@@ -238,12 +239,12 @@ function DeckBoard({ record, technical, game }) {
             Read every clue. The strongest claim may still have missing
             evidence.
           </p>
-          <div className="deck-scratch-line" aria-hidden="true" />
+          <div className="deck-kiko-coach"><img src={pipImage("guiding")} alt="Kiko guides your investigation" width={96} height={72}/><div><strong>Kiko’s field tip</strong><p>{technical ? "Check both doors: your own record and another crew member’s. Explain what the server should allow." : "A confident claim still needs a fair test. Keep the clues that could prove it wrong."}</p></div></div>
         </section>
         {report ? (
           <aside className="deck-field-notebook">
             <span className="finale-eyebrow">
-              YOUR FIELD NOTEBOOK / KEEP THE CLUES IN SIGHT
+              Follow the FIRE trail. Build your verdict.
             </span>
             <FlightEvidenceConsole game={game} record={record} />
           </aside>
