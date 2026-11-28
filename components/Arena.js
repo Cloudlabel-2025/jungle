@@ -62,6 +62,7 @@ import { monitoringRequired, claimSignInNotice } from "@/lib/notifications.js";
 import GameLoadingScreen, { useGameEntryLoading } from "./GameLoadingScreen";
 import ExpeditionLogin from "./ExpeditionLogin";
 import InitialPasswordChange from "./InitialPasswordChange";
+import DraftConflictDialog from "./DraftConflictDialog";
 import VowBrand, { VowEmblem } from "./VowBrand";
 const icons = {
   CalendarDays,
@@ -108,6 +109,7 @@ export default function Arena({
   const [characterPicker, setCharacterPicker] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [leagueOpen,setLeagueOpen] = useState(false);
+  const [rankCelebrating,setRankCelebrating] = useState(false);
   useEffect(()=>setLeagueOpen(false),[user?._id]);
   const [attendanceOpen,setAttendanceOpen]=useState(false);
   useEffect(()=>{setProfileOpen(false);setAttendanceOpen(false);},[user?._id]);
@@ -418,7 +420,7 @@ export default function Arena({
       setSwitching(false);
     }
   }
-  async function act(route, body, message = "Action recorded by the server.") {
+  async function act(route, body, message = "Action recorded by the server.", { throwOnError = false } = {}) {
     try {
       const r = await fetch(`/api/${route}`, {
         method: "POST",
@@ -437,6 +439,7 @@ export default function Arena({
       return result;
     } catch (e) {
       notify(e.message, "error");
+      if (throwOnError) throw e;
       return false;
     }
   }
@@ -911,7 +914,8 @@ export default function Arena({
         )}
       </div>
       {showEntryLoading && <GameLoadingScreen onCancel={logout} flight={flightMode} />}
-      {playerMode && data?.user?._id === user?._id && <><TrophyLeagueChange key={`league:${data.user._id}`} player={data.user} ready={!showEntryLoading && !launcher && !characterPicker && !profileOpen && !attendanceOpen && !leagueOpen} open={()=>setLeagueOpen(true)}/><ExperienceCelebration key={data.user._id} player={data.user} ready={!showEntryLoading && !launcher && !characterPicker && !profileOpen && !attendanceOpen && !leagueOpen} /></>}
+      {playerMode && <DraftConflictDialog ownerId={user._id} screen={screen}/>}
+      {playerMode && user?._id && <><TrophyLeagueChange key={`league:${user._id}`} player={data?.user?._id === user._id ? data.user : user} ready={Boolean(data) && !rankCelebrating && !showEntryLoading && !launcher && !characterPicker && !profileOpen && !attendanceOpen && !leagueOpen} open={()=>setLeagueOpen(true)}/><ExperienceCelebration key={user._id} player={data?.user?._id === user._id ? data.user : user} ready={Boolean(data) && !showEntryLoading && !launcher && !characterPicker && !profileOpen && !attendanceOpen && !leagueOpen} onActiveChange={setRankCelebrating} /></>}
       {leagueOpen && data && <Modal title="Trophy leagues" kicker="THE TROPHY HALL" close={()=>setLeagueOpen(false)} wide><TrophyLeague trophies={data.user.trophies}/></Modal>}
     </WorkspaceContext.Provider>
   );

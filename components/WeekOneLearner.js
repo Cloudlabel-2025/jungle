@@ -412,6 +412,9 @@ export function AttemptForm({ record, act, now, open, ownerId }) {
     ownerId,
     enabled: canWrite && !expired && !busy && !(quiz && d.submittedAt),
     endpoint: "/api/week1/program/attempt-save",
+    onReconciled: value => setAnswers(value.answers),
+    attemptStartedAt:d.startedAt,
+    submittedAt:d.submittedAt,
     buildBody: (value, version) => ({
       attemptId: record._id,
       attemptVersion: version,
@@ -458,13 +461,14 @@ export function AttemptForm({ record, act, now, open, ownerId }) {
           event.preventDefault();
           if (busy) return;
           try {
-            const pending = work.flush();
+            const pending = work.flush(undefined,{force:true});
             setBusy(true);
             await pending;
             await runProgram(act, "attempt-submit", {
               attemptId: record._id,
               attemptVersion: work.getVersion(),
               answers,
+              useSavedDraft: true,
             });
           } catch (error) {
             setStatus(error.message);

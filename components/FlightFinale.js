@@ -137,6 +137,9 @@ export default function FlightFinale({
           <Compass size={16} /> Sky map
         </button>
       </header>
+      {dayNumber === 4 && <nav className="finale-mission-progress" aria-label="Level 4 missions">
+        {activities.map((item,index) => { const done=attemptComplete(p.attempts.find(row=>row.activityId===item.id)); return <button type="button" key={item.id} aria-current={selected===item.id ? "step" : undefined} onClick={()=>leave(()=>setSelected(item.id))} disabled={busy}><span>{done ? <Check size={15}/> : index+1}</span><strong>{item.name}</strong><small>{done ? "Submitted" : "Not yet submitted"}</small></button>; })}
+      </nav>}
       <FlightLevelRetry data={data} act={act} day={dayNumber} now={now}/>
       {error && (
         <p role="alert" className="finale-error">
@@ -218,6 +221,7 @@ export function FinaleAttempt({ record, ownerId, now, open, act, children }) {
         </p>
       )}
       {children(game)}
+      {game.complete && !game.revising && <p className="finale-mission-saved" role="status"><Check size={16}/> Mission submitted. {record.day===4 ? "Return to Case files to complete the other investigation." : "Your saved evidence is ready to review."}</p>}
     </div>
   );
 }

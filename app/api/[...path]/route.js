@@ -86,14 +86,15 @@ async function handle(request, { params }) {
   try {
     const { path } = await params;
     const route = path.join("/");
+    const bodyLimit = route === "week1/program/attempt-save" ? 200000 : 100000;
     if (request.method === "POST") {
       if (!allowedWriteOrigin(request))
         fail("Cross-origin writes are not allowed.", 403);
-      if (Number(request.headers.get("content-length") || 0) > 100000)
+      if (Number(request.headers.get("content-length") || 0) > bodyLimit)
         fail("Request is too large.", 413);
     }
-    const body = request.method === "POST" ? await boundedJson(request) : {};
-    if (JSON.stringify(body).length > 100000)
+    const body = request.method === "POST" ? await boundedJson(request,bodyLimit) : {};
+    if (JSON.stringify(body).length > bodyLimit)
       fail("Request is too large.", 413);
     await connect();
     if (route === "auth/personas" && request.method === "GET")
@@ -1189,7 +1190,7 @@ async function handle(request, { params }) {
       route: new URL(request.url).pathname, status, tenancy: tenancyEnabled(), college: collegeContext()?.college.slug || null,
     });
     return NextResponse.json(
-      { success: false, error: message },
+      { success: false, error: message, ...(error.code === "ATTEMPT_DRAFT_CONFLICT" ? { code:error.code,draftConflict:error.draftConflict } : {}) },
       { status, headers: { "Cache-Control": "no-store" } },
     );
   }

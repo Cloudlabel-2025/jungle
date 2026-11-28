@@ -2,6 +2,7 @@
 import fetch from "@/lib/college-fetch.js";
 
 import { useEffect, useRef, useState } from "react";
+import { mergeDraft } from "@/lib/draft-merge.js";
 
 const pendingWork = new Map();
 
@@ -31,6 +32,9 @@ export default function useSavedWork({
   payload = {},
   buildBody,
   onSaved,
+  onReconciled,
+  attemptStartedAt,
+  submittedAt,
 }) {
   const [status, setStatus] = useState("");
   const saved = useRef(JSON.stringify(initialValue)),
@@ -40,6 +44,7 @@ export default function useSavedWork({
     latest = useRef(null),
     flushRef = useRef(null);
   const boundOwner = useRef(ownerId);
+  const conflict = useRef(null);
   latest.current = {
     value,
     enabled: enabled && ownerId === boundOwner.current,
@@ -48,8 +53,30 @@ export default function useSavedWork({
     payload,
     buildBody,
     onSaved,
+    onReconciled,
+    attemptStartedAt,
+    submittedAt,
   };
-  const flush = (override) => {
+  const fromServer = (template, draft) => ({ ...template, answers:draft.answers, ...("board" in template ? {board:draft.gameState||{}} : {}), ...("labState" in template ? {labState:draft.labState||{}} : {}) });
+  const showConflict = () => {
+    if(!mounted.current || !conflict.current)return;
+    const item=latest.current, savedConflict=conflict.current;
+    const server=fromServer(item.value,savedConflict.result.draft);
+    const comparison=mergeDraft(savedConflict.base,item.value,server);
+    comparison.conflicts=comparison.conflicts.filter(entry=>entry.field!=="board"&&!entry.field.startsWith("board."));
+    window.dispatchEvent(new CustomEvent("codewild:draft-conflict",{detail:{ownerId:item.ownerId,conflicts:comparison.conflicts,resolve:async choice=>{
+      if(!mounted.current)throw Error("Return to this mission before resolving its saved answers.");
+      const current=latest.current;
+      const merged=mergeDraft(savedConflict.base,current.value,server,choice).value;
+      if("board" in current.value)merged.board=current.value.board;
+      revision.current=savedConflict.result.version;
+      saved.current=JSON.stringify(server);
+      conflict.current=null;
+      current.onReconciled?.(merged);
+      return flush(merged);
+    }}}));
+  };
+  const flush = (override, { silentConflict = false, force = false } = {}) => {
     const item = latest.current;
     if (!item.enabled) return queue.current.catch(() => {});
     const snapshot = structuredClone(override ?? item.value),
@@ -57,7 +84,8 @@ export default function useSavedWork({
     const pending = queue.current
       .catch(() => {})
       .then(async () => {
-        if (key === saved.current) return;
+        if(conflict.current){if(!silentConflict)showConflict();throw Error("Review the conflicting saved answers. Your current entries are kept here.");}
+        if (key === saved.current && !force) return;
         if (mounted.current) setStatus("Saving draft…");
         const body = item.buildBody
           ? item.buildBody(snapshot, revision.current)
@@ -67,12 +95,22 @@ export default function useSavedWork({
               ownerId: item.ownerId,
               draftVersion: revision.current,
             };
+        const base=JSON.parse(saved.current);
+        if(item.endpoint === "/api/week1/program/attempt-save" && base.answers && item.attemptStartedAt){
+          body.draftBase={answers:base.answers,...("board" in base ? {gameState:base.board} : {}),...("labState" in base ? {labState:base.labState} : {})};
+          body.attemptStartedAt=item.attemptStartedAt;
+          body.baseSubmittedAt=item.submittedAt||null;
+        }
         const response = await fetch(item.endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         });
         const result = await response.json();
+        if(result.code === "ATTEMPT_DRAFT_CONFLICT" && result.draftConflict){
+          conflict.current={base,result:result.draftConflict};
+          showConflict();
+        }
         if (!response.ok)
           throw new Error(result.error || "Draft could not be saved.");
         if (result.expired)
@@ -84,10 +122,15 @@ export default function useSavedWork({
           result.attemptVersion ??
           result.version ??
           revision.current;
-        saved.current = key;
+        let acknowledged=snapshot;
+        if(result.mergedDraft && JSON.stringify(latest.current.value)===key){
+          acknowledged=fromServer(snapshot,result.mergedDraft);
+          if(mounted.current)item.onReconciled?.(acknowledged);
+        }
+        saved.current = JSON.stringify(acknowledged);
         if (mounted.current) {
           setStatus("Draft saved to your account");
-          item.onSaved?.(snapshot);
+          item.onSaved?.(acknowledged);
         }
       })
       .catch((error) => {
@@ -106,7 +149,7 @@ export default function useSavedWork({
   const changed = JSON.stringify(value);
   useEffect(() => {
     if (!enabled || changed === saved.current) return;
-    const timer = setTimeout(() => flushRef.current().catch(() => {}), 800);
+    const timer = setTimeout(() => flushRef.current(undefined,{silentConflict:true}).catch(() => {}), 800);
     return () => clearTimeout(timer);
   }, [changed, enabled]);
   useEffect(() => {
@@ -142,8 +185,14 @@ export default function useSavedWork({
     },
     getVersion: () => revision.current,
     syncVersion: (version) => {
-      if (JSON.stringify(latest.current.value) === saved.current)
-        revision.current = version;
+      // Attempt versions also cover changes from another editor. Only an
+      // acknowledged save can advance this editor's baseline; otherwise the
+      // next write must reconcile the remote answers rather than overwrite.
+      if(latest.current.endpoint === "/api/week1/program/attempt-save" && latest.current.attemptStartedAt)return;
+      if (Number.isSafeInteger(version) && JSON.stringify(latest.current.value) === saved.current)
+        // A poll may have started before our latest successful save. Never
+        // rewind its version or every following save will conflict forever.
+        revision.current = Math.max(revision.current, version);
     },
   };
 }

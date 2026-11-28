@@ -204,6 +204,17 @@
 .flight-retry p { margin:6px 0; font-size:13px; line-height:1.6; }
 .flight-retry a { color:var(--text-heading); text-decoration:underline; }
 .flight-retry-actions .btn { margin:6px 8px 0 0; white-space:normal; }
+.retry-kiko { display:flex; align-items:center; gap:10px; max-width:560px; animation:kiko-retry-arrive .35s ease-out both; }
+.retry-kiko img { flex:none; width:100px; height:76px; object-fit:contain; }
+.retry-kiko strong { color:var(--text-heading); font-size:15px; }
+.retry-kiko strong span { display:block; color:var(--text-muted); font:400 11px var(--font-ui); }
+.retry-kiko p { color:var(--text-primary); margin:5px 0; font-size:13px; line-height:1.5; }
+.retry-reward-summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:8px 0; padding:14px 0; border-block:1px solid #a7c77b33; }
+.retry-reward-summary dt { font-size:12px; color:var(--text-muted); }
+.retry-reward-summary dd { margin:6px 0 0; font-weight:700; color:var(--text-heading); }
+@keyframes kiko-retry-arrive { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+@media(max-width:480px) { .retry-kiko img { width:72px; height:64px; } .retry-reward-summary { gap:8px; font-size:13px; } }
+@media(prefers-reduced-motion:reduce) { .retry-kiko { animation:none; } }
 .result-section-nav { display:flex; flex-wrap:wrap; gap:6px; padding:6px; margin-bottom:18px; border:1px solid var(--border, #6c865b66); border-radius:10px; background:#102d22; }
 .result-section-nav button { border:1px solid transparent; background:transparent; color:var(--text-secondary); padding:10px 14px; border-radius:6px; font:inherit; font-size:14px; cursor:pointer; }
 .result-section-nav button:hover { background:#a7c77b12; color:var(--text-heading); }

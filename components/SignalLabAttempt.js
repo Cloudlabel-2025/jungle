@@ -93,6 +93,9 @@ export function LabAttempt({
     enabled: !readOnly && !busy,
     endpoint: "/api/week1/program/attempt-save",
     onSaved: setLastSaved,
+    onReconciled: value => { setAnswers(value.answers); setLabState(value.labState); },
+    attemptStartedAt:d.startedAt,
+    submittedAt:d.submittedAt,
     buildBody: (value, version) => ({
       attemptId: record._id,
       attemptVersion: version,
@@ -130,7 +133,7 @@ export function LabAttempt({
     if (busy || paused) return;
     setError("");
     try {
-      const pending = work.flush();
+      const pending = work.flush(undefined,{force:true});
       setBusy(true);
       await pending;
       const result = await act(
@@ -139,6 +142,7 @@ export function LabAttempt({
           attemptId: record._id,
           attemptVersion: work.getVersion(),
           answers: visible,
+          useSavedDraft: true,
         },
         "Your lab discovery is saved.",
       );

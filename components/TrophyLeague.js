@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import RewardOverlay from "./RewardOverlay";
 import {
   Trophy,
   Compass,
@@ -11,14 +12,14 @@ import {
   ChevronDown,
   Check,
   LockKeyhole,
-  X,
   Star,
   Wheat,
 } from "lucide-react";
 import {
   TROPHY_LEAGUES,
   trophyLeague,
-  advanceTrophyLeague,
+  trackTrophyLeague,
+  LEAGUE_CELEBRATION_MS,
 } from "@/lib/trophy-leagues.js";
 import { collegeStorageKey } from "@/lib/college-fetch.js";
 import Link from "next/link";
@@ -245,7 +246,7 @@ export default function TrophyLeague({ trophies = 0, compact = false }) {
     </section>
   );
 }
-export function TrophyLeagueChange({ player, ready = true, open }) {
+export function TrophyLeagueChange({ player, ready = true }) {
   const previous = useRef(undefined),
     [change, setChange] = useState(null);
   useEffect(() => {
@@ -257,69 +258,58 @@ export function TrophyLeagueChange({ player, ready = true, open }) {
         previous.current = null;
       }
     }
-    const result = advanceTrophyLeague(previous.current, player.trophies);
-    previous.current = result.state;
+    const state = trackTrophyLeague(previous.current, player.trophies);
+    previous.current = state;
     try {
-      localStorage.setItem(key, JSON.stringify(result.state));
+      localStorage.setItem(key, JSON.stringify(state));
     } catch {
       /* Balance-derived rank still works without storage. */
     }
-    if (result.transition) setChange(result.transition);
-    else
-      setChange((old) =>
-        old && old.to === trophyLeague(player.trophies).displayName
-          ? old
-          : null,
-      );
+    setChange(state.pending);
   }, [player._id, player.trophies]);
+  const close = () => {
+    previous.current = { ...previous.current, pending: null };
+    try { localStorage.setItem(collegeStorageKey(`vow:trophy-league:v1:${player._id}`), JSON.stringify(previous.current)); } catch {}
+    setChange(null);
+  };
+  const closeRef = useRef(close);
+  closeRef.current = close;
   useEffect(() => {
     if (!ready || !change) return;
-    const timer = setTimeout(() => setChange(null), 10000);
+    const timer = setTimeout(() => closeRef.current(), LEAGUE_CELEBRATION_MS);
     return () => clearTimeout(timer);
   }, [change, ready]);
   if (!change || !ready) return null;
+  return <LeagueTransition key={`${change.direction}:${change.to}`} change={change} />;
+}
+export function LeagueTransition({ change }) {
   const Icon = change.direction === "promotion" ? ChevronUp : ChevronDown;
   return (
-    <aside
-      className={`league-change is-${change.direction}`}
-      role="status"
-      aria-live="polite"
+    <RewardOverlay title={change.direction === "promotion" ? `Promoted to ${change.to}` : `League demotion: ${change.to}`} duration={LEAGUE_CELEBRATION_MS}>
+    <section
+      className={`league-celebration is-${change.direction}`}
     >
-      <LeagueEmblem league={change.league} small />
-      <div>
-        <span className="game-kicker">
-          <Icon size={13} />
+      <div className="league-celebration-art" aria-hidden="true"><span className="league-celebration-orbit" />
+        <LeagueEmblem league={change.league} />
+        <span className="league-celebration-direction"><Icon size={28}/></span>
+      </div>
+      <div className="league-celebration-copy">
+        <span className="league-celebration-label">
           {change.direction === "promotion"
             ? "LEAGUE PROMOTION"
             : "LEAGUE DEMOTION"}
         </span>
-        <strong>
+        <h2>
           {change.direction === "promotion"
             ? `Promoted to ${change.to}`
             : change.league.ranked
               ? `Now in ${change.to} league`
               : "Returned to unranked"}
-        </strong>
-        <span>
-          {change.total} trophies · {change.from} → {change.to}
-        </span>
-        <button
-          className="league-change-link"
-          onClick={() => {
-            setChange(null);
-            open();
-          }}
-        >
-          View league trail
-        </button>
+        </h2>
+        <p className="league-celebration-path">{change.from} <span aria-hidden="true">→</span> {change.to}</p>
+        <p className="league-celebration-total"><Trophy size={17} aria-hidden="true"/> {change.total} trophies</p>
       </div>
-      <button
-        className="icon-btn"
-        aria-label="Dismiss league update"
-        onClick={() => setChange(null)}
-      >
-        <X size={16} />
-      </button>
-    </aside>
+    </section>
+    </RewardOverlay>
   );
 }

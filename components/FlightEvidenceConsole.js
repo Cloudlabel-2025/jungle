@@ -104,6 +104,7 @@ export default function FlightEvidenceConsole({
     key = fields[index],
     value = game.answers[key] || "";
   const present = (k) => Boolean(String(game.answers[k] || "").trim());
+  const missing = fields.filter(k => !present(k));
   return (
     <section
       className={`flight-evidence-console ${passport ? "research-passport" : "fire-report"}`}
@@ -113,6 +114,9 @@ export default function FlightEvidenceConsole({
         {fields.map((k, i) => (
           <button
             key={k}
+            type="button"
+            aria-label={`${i + 1}. ${fieldLabels[k] || k}${present(k) ? ", filled" : ", answer needed"}`}
+            title={fieldLabels[k] || k}
             aria-pressed={i === index}
             className={present(k) ? "is-filled" : ""}
             disabled={game.busy}
@@ -161,7 +165,7 @@ export default function FlightEvidenceConsole({
         )}
         <div className="evidence-writing-meta">
           <small>
-            {game.count}/{game.total} checkpoints recorded
+            {game.count}/{game.total} checkpoints filled{game.savedCount != null ? ` · ${game.savedCount}/${game.total} saved` : ""}
           </small>
           <small>
             {key === "url"
@@ -169,7 +173,7 @@ export default function FlightEvidenceConsole({
               : `${value.trim().split(/\s+/).filter(Boolean).length} words · clear, distinct explanations earn stronger results`}
           </small>
         </div>
-        <div className="finale-actions">
+        <div className="evidence-submit-controls"><div className="finale-actions">
           <button
             className="finale-button secondary"
             disabled={index === 0 || game.busy}
@@ -196,9 +200,15 @@ export default function FlightEvidenceConsole({
               onClick={game.submit}
             >
               <Send size={16} />
-              {game.expired ? "Transmit saved evidence" : "Transmit discovery"}
+              {game.busy ? "Saving your report…" : game.expired ? "Transmit saved evidence" : "Transmit discovery"}
             </button>
           )}
+        </div>
+        <div className="evidence-submit-status" aria-live="polite">
+          {game.error ? <p role="alert" className="evidence-submit-error">{game.error}</p> : <p>{game.busy ? "Saving your answers and confirming your submission. Keep this page open." : game.status || "Your draft saves automatically."}</p>}
+          {!game.canWrite && <p className="evidence-submit-error">This mission is read-only. Ask MC or CC to reopen it.</p>}
+          {!game.expired && missing.length > 0 && <p>Still needed: {missing.map(k => fieldLabels[k] || k).join(", ")}.</p>}
+          {missing.length === 0 && !game.busy && !game.error && game.canWrite && <p>All checkpoints filled. Transmit discovery to finish this mission.</p>}
         </div>
         {(game.expired || game.count === game.total) &&
           index < fields.length - 1 && (
@@ -213,6 +223,7 @@ export default function FlightEvidenceConsole({
                 : "Transmit all recorded evidence"}
             </button>
           )}
+        </div>
       </div>
     </section>
   );

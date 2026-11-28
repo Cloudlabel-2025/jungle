@@ -1,0 +1,37 @@
+/* Level 4: readable paper, named checkpoints and explicit mission progress. */
+.finale-mission-progress { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; flex-shrink:0; }
+.finale-mission-progress button { display:flex; align-items:center; gap:9px; min-width:0; padding:9px 12px; border:1px solid #8da57166; border-radius:8px; background:#102a20; color:#c5d5b5; text-align:left; }
+.finale-mission-progress button[aria-current="step"] { background:#28452e; border-color:#c0d594; }
+.finale-mission-progress button > span { display:grid; place-items:center; flex:none; width:25px; height:25px; border:1px solid #9aac7c; border-radius:50%; }
+.finale-mission-progress strong { font-size:13px; }
+.finale-mission-progress small { margin-left:auto; font-size:11px; color:#b8c9a6; white-space:nowrap; }
+.verdict-deck .deck-evidence-room.has-field-notebook { grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr); align-items:start; gap:18px; }
+.verdict-deck .deck-clue-reader { min-height:0; padding:22px; }
+.verdict-deck .deck-clue-reader blockquote { font-size:22px; margin:16px 0 22px; }
+.verdict-deck .deck-field-notebook { min-width:0; padding:14px; border-radius:10px; }
+.verdict-deck .deck-field-notebook .fire-report > nav { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+.verdict-deck .deck-field-notebook .fire-report > nav button { display:flex; gap:6px; width:100%; min-height:34px; height:auto; padding:6px 8px; border-radius:6px; justify-content:flex-start; text-align:left; }
+.verdict-deck .deck-field-notebook .fire-report > nav button > small { position:static; width:auto; height:auto; clip-path:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:11px; }
+.verdict-deck .deck-field-notebook .fire-report > nav button svg { flex:none; }
+body.jungle-world .verdict-deck .evidence-writing h3 { color:#203b29; font-size:26px; margin:10px 0; line-height:1.2; }
+.verdict-deck .deck-field-notebook .evidence-writing { padding:20px; border-radius:6px; }
+.verdict-deck .deck-field-notebook .evidence-writing textarea { min-height:160px; max-height:300px; line-height:1.6; font-size:16px; background:#f0e5c022; }
+.verdict-deck .evidence-writing .finale-actions { gap:12px; justify-content:space-between; flex-wrap:wrap; }
+.verdict-deck .evidence-submit-controls { position:sticky; bottom:0; z-index:2; margin-top:12px; padding:12px 0 4px; border-top:1px solid #65704d55; background:#e0d3a4; box-shadow:0 -8px 12px #e0d3a4; }
+.verdict-deck .evidence-writing .finale-button { background:#274630; color:#f1edcb; border-color:#274630; box-shadow:0 2px 0 #132d1d; }
+.verdict-deck .evidence-writing .finale-button.secondary { background:transparent; color:#274630; border-color:#5f704c; box-shadow:none; }
+.evidence-submit-status { margin-top:12px; font-size:12px; line-height:1.5; }
+.evidence-submit-status p { margin:5px 0; }
+.deck-field-notebook .evidence-submit-status { color:#3b5035; }
+.deck-field-notebook .evidence-submit-status .evidence-submit-error { color:#7c291f; font-weight:600; }
+.finale-mission-saved { display:flex; align-items:center; justify-content:center; gap:8px; margin:12px 0; color:#d5e8af; font-size:13px; }
+.draft-conflict-review { display:grid; gap:18px; }
+.draft-conflict-review h3 { margin:0 0 10px; font-size:18px; }
+.draft-conflict-versions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.draft-conflict-versions > div { padding:12px; border:1px solid #80956855; border-radius:8px; background:#10291f; min-width:0; }
+.draft-conflict-versions strong { font-size:12px; color:#d4dfae; }
+.draft-conflict-versions p { white-space:pre-wrap; overflow-wrap:anywhere; max-height:180px; overflow:auto; font-size:13px; line-height:1.5; }
+.draft-conflict-actions { display:flex; flex-wrap:wrap; gap:10px; }
+@media(max-width:600px) { .draft-conflict-versions { grid-template-columns:1fr; } }
+@media(max-width:1000px) { .verdict-deck .deck-evidence-room.has-field-notebook { grid-template-columns:1fr; } .verdict-deck .deck-clue-reader blockquote { font-size:19px; } .verdict-deck .deck-clue-reader { padding:16px; } .finale-mission-progress small { display:none; } }
+@media(orientation:landscape) and (max-height:560px) { .finale-mission-progress button { padding:5px 8px; } .finale-mission-progress strong { font-size:12px; } .verdict-deck .deck-field-notebook .evidence-writing textarea { min-height:120px; } }

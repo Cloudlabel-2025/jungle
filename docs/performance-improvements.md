@@ -16,6 +16,6 @@ Cold tenant connections now compile database models on first use instead of eage
 
 Unchanged background responses synchronise the clock without replacing workspace state. The comparison includes real progress, account changes and online-presence expiry. Changed background responses and the one-second clock update use React transitions so typing and clicks take priority; initial loading and refreshes after saving still apply immediately.
 
-Public production probes returned warm responses in roughly 350–520 ms, with the Vercel function identifier showing the iad1 region. These unauthenticated probes do not measure signed-in workspace latency. Function placement should be considered alongside the actual MongoDB region before changing deployment regions.
+Public production probes returned warm responses in roughly 350–520 ms, with the Vercel function identifier showing the iad1 region. A subsequent read-only Atlas check confirmed the database is in Mumbai (AP_SOUTH_1), so `vercel.json` now selects bom1 for new deployments. See [the production audit](production-speed-audit.md) for measurements, remaining opportunities and verification limits.
 
 Deploy the updated code to apply these changes in production. No data migration or database permission change is required.

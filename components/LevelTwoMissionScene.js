@@ -460,6 +460,9 @@ export function LevelTwoInvestigation({
     ownerId,
     enabled: canWrite && !saved.expired && !busy,
     endpoint: "/api/week1/program/attempt-save",
+    onReconciled: value => setAnswers(value.answers),
+    attemptStartedAt:d.startedAt,
+    submittedAt:d.submittedAt,
     buildBody: (value, version) => ({
       attemptId: record._id,
       attemptVersion: version,
@@ -481,7 +484,7 @@ export function LevelTwoInvestigation({
     if (busy || paused) return;
     setError("");
     try {
-      const pending = work.flush();
+      const pending = work.flush(undefined,{force:true});
       setBusy(true);
       await pending;
       const result = await act(
@@ -490,6 +493,7 @@ export function LevelTwoInvestigation({
           attemptId: record._id,
           attemptVersion: work.getVersion(),
           answers: saved.expired ? d.draft || {} : answers,
+          useSavedDraft: true,
         },
         "Your discovery has been saved.",
       );

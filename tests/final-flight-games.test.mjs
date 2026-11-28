@@ -69,3 +69,27 @@ test("Level 5 restores the saved quiz answer and current checkpoint without expo
   assert.match(html,/25:00/);
   assert.equal(r.data.deadline,later(30).toISOString());
 });
+
+test("Level 4 exposes both mission states and a complete report can be transmitted with local save feedback",async()=>{
+  const C=await load("components/FlightFinale.js"),activity=pack(4).activities[1];
+  const answers=Object.fromEntries(activity.fields.map(key=>[key,`Saved ${key} evidence and a distinct verification explanation.`]));
+  const r=fixture(4,1,answers,{mode:"report",cursor:8});
+  const html=render(C,{data:player(4,[r]),dayNumber:4,act:noAction,now:later(5)});
+  assert.match(html,/aria-label="Level 4 missions"/);
+  for(const a of pack(4).activities)assert.ok(html.includes(a.name));
+  assert.match(html,/Short MC update/);
+  assert.match(html,/9\/9 checkpoints filled · 9\/9 saved/);
+  assert.match(html,/All checkpoints filled/);
+  assert.match(html,/<button class="finale-button"><svg[^]*?Transmit discovery<\/button>/);
+  assert.match(html,/evidence-submit-status/);
+  assert.match(html,/9\. Short MC update, filled/);
+});
+
+test("a failed report submission displays its exact error next to the transmit action",async()=>{
+  const Console=await load("components/FlightEvidenceConsole.js"),r=fixture(4,1);
+  const game={answers:{},cursor:8,count:0,total:9,canWrite:true,expired:false,error:"Attempt changed in another session. Refresh before saving.",status:"Not saved",busy:false};
+  const html=render(Console,{game,record:r});
+  assert.match(html,/evidence-submit-error[^]*?Attempt changed in another session/);
+  assert.match(html,/Still needed:/);
+  assert.match(html,/Diagnostic check 2/);
+});

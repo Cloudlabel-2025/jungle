@@ -29,6 +29,9 @@ export default function useFlightAttempt({ record, ownerId, now, open, act }) {
     enabled: !readOnly && !busy,
     endpoint: "/api/week1/program/attempt-save",
     onSaved: setSaved,
+    onReconciled: value => { setAnswers(value.answers); setBoard(value.board); },
+    attemptStartedAt:d.startedAt,
+    submittedAt:d.submittedAt,
     buildBody: (value, version) => ({
       attemptId: record._id,
       attemptVersion: version,
@@ -68,7 +71,7 @@ export default function useFlightAttempt({ record, ownerId, now, open, act }) {
     if (busy || !canWrite || sealed) return;
     setError("");
     try {
-      const pending = work.flush();
+      const pending = work.flush(undefined,{force:true});
       setBusy(true);
       await pending;
       const ok = await act(
@@ -77,8 +80,10 @@ export default function useFlightAttempt({ record, ownerId, now, open, act }) {
           attemptId: record._id,
           attemptVersion: work.getVersion(),
           answers: expired ? saved.answers : answers,
+          useSavedDraft: true,
         },
         "Your mission result is saved.",
+        { throwOnError: true },
       );
       if (!ok)
         throw Error(
@@ -115,6 +120,7 @@ export default function useFlightAttempt({ record, ownerId, now, open, act }) {
     complete,
     sealed,
     count,
+    savedCount: quiz ? undefined : d.activity.fields.filter(k => String(saved.answers[k] || "").trim()).length,
     total,
     canWrite,
     revising,
