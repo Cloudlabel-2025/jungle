@@ -209,10 +209,12 @@ test(
         ...fixtureConfig(),
         day: "2026-11-16",
         officialStart: at("2026-11-16").toISOString(),
+        availableAt: at("2026-11-16").toISOString(),
+        clockCutoff: at("2026-11-16", "09:15").toISOString(),
         closingCutoff: at("2026-11-16", "17:00").toISOString(),
       };
       const program = blankProgram();
-      program.progressionMode = "COMPLETION";
+      program.progressionMode = "SCHEDULED";
       await models.WeekOneProgram.create({
         _id: "alpha",
         version: 0,
@@ -227,6 +229,7 @@ test(
             state: "OPEN",
             content: config,
             officialStart: config.officialStart,
+            openedAt: config.officialStart,
             scheduledEnd: config.closingCutoff,
           },
         ],
@@ -274,6 +277,12 @@ test(
         calendarAction(cc, change(0, "WORKING")),
         (e) => e.status === 409,
       );
+      // Free first-part play ignores attendance dates; scheduled programmes do not.
+      await models.WeekOneProgram.updateOne({_id:"alpha"},{$set:{"data.progressionMode":"COMPLETION"}});
+      const freePlay=await attendanceSnapshot(player,at("2026-11-16"));
+      assert.equal(freePlay.available,true);
+      assert.equal(freePlay.attendanceRequired,false);
+      await models.WeekOneProgram.updateOne({_id:"alpha"},{$set:{"data.progressionMode":"SCHEDULED"}});
       assert.equal(
         (await attendanceSnapshot(player, at("2026-11-16"))).available,
         false,
@@ -320,7 +329,7 @@ test(
             days: {
               day: 2,
               title: "Explore",
-              state: "PREPARED",
+              state: "OPEN",
               content: starterFlightContent(2, config),
               officialStart: config.officialStart,
             },

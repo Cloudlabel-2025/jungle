@@ -64,6 +64,9 @@ test("all five levels retry expired work transactionally, preserve evidence and 
         assert.equal(fresh.version,4,"a new attempt cannot reuse stale autosave versions");
         assert.equal(fresh.data.startedAt,now.toISOString());
         assert.ok(Date.parse(fresh.data.deadline)>+now,"a timed-out level gets a real fresh timer");
+        assert.equal((await getLevel(2)).data.replayPending,false,"starting the new mission consumes the pending retry");
+        await models.WeekOneLevel.updateOne({_id:flightLevelId("alpha","p",2)},{$set:{"data.replayPending":true}});
+        await assert.rejects(programAction(player,"level-retry",{day:2,attempt:2},now),/wait until/);
       }
       await transaction(async session=>{
         const saved=day===1?await models.DayOneRecord.findById("alpha:p").session(session):await models.WeekOneLevel.findById(flightLevelId("alpha","p",day)).session(session);

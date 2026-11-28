@@ -51,7 +51,7 @@ test("full history renders every chat link, transcript and answer revision, and 
 test("expired levels expose an understandable paid retry and zero-energy recovery path",async()=>{
   const Retry=await component("components/FlightLevelRetry.js");
   const now=new Date("2026-11-28T10:00:00Z"),old="2026-11-28T09:00:00Z";
-  const data={user:{_id:"p",role:"GAMER",energy:2},dayOne:{records:[{userId:"p",startedAt:old,deadline:old,levelOne:{attempt:1}}]},weekOneProgram:{levelResults:[],attempts:[2,3,4,5].map(day=>({userId:"p",day,data:{startedAt:old,deadline:old}}))}};
+  const data={user:{_id:"p",role:"GAMER",energy:2},dayOne:{records:[{userId:"p",startedAt:old,deadline:old,levelOne:{attempt:1}}]},weekOneProgram:{levelResults:[],attempts:[2,3,4,5].map(day=>({day,data:{startedAt:old,deadline:old}}))}};
   for(const day of [1,2,3,4,5]){
     const html=renderToStaticMarkup(React.createElement(Retry,{data,day,now,act:async()=>true}));
     assert.ok(html.includes("Time’s up. Try this level again."));
@@ -61,6 +61,8 @@ test("expired levels expose an understandable paid retry and zero-energy recover
   const empty=renderToStaticMarkup(React.createElement(Retry,{data:{...data,user:{...data.user,energy:0}},day:1,now,act:async()=>true}));
   assert.ok(empty.includes("Open energy recovery"));
   assert.ok(!empty.includes('class="btn primary"'));
+  const olderRetry={...data,weekOneProgram:{...data.weekOneProgram,levelResults:[{userId:"p",day:3,attempt:2,replayPending:true}]}};
+  assert.ok(renderToStaticMarkup(React.createElement(Retry,{data:olderRetry,day:3,now,act:async()=>true})).includes("Retry Level 3 · 1 energy"),"a stale pending flag cannot hide an expired started attempt");
 });
 
 test("review evidence shows question text, readable options and labelled checks without raw data disclosures",async()=>{

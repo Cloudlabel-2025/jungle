@@ -7,9 +7,11 @@ export default function FlightLevelRetry({ data, act, day, now }) {
   const [confirm, setConfirm] = useState(false), [busy, setBusy] = useState(false), [error, setError] = useState("");
   const first = data.dayOne?.records?.find(row => row.userId === data.user._id);
   const level = day === 1 ? first?.levelOne : data.weekOneProgram?.levelResults?.find(row => row.userId === data.user._id && row.day === day);
-  const attempts = data.weekOneProgram?.attempts?.filter(row => row.userId === data.user._id && row.day === day) || [];
+  // Gamer snapshots are already private and older responses omit userId.
+  const attempts = data.weekOneProgram?.attempts?.filter(row => (!row.userId || row.userId === data.user._id) && row.day === day) || [];
   const expired = day === 1 ? first?.startedAt && Date.parse(first.deadline) <= +new Date(now) : attempts.some(row => row.data.startedAt && Date.parse(row.data.deadline) <= +new Date(now));
-  if (data.weekOneProgram?.locked || level?.replayPending || (!expired && !level?.result?.completed)) return null;
+  const started = day === 1 ? Boolean(first?.startedAt) : attempts.some(row => row.data.startedAt);
+  if (data.weekOneProgram?.locked || (level?.replayPending && !started) || (!expired && !level?.result?.completed)) return null;
   return <section className="flight-retry" aria-label={`Retry Level ${day}`}>
     <div><h3>{expired && !level?.result?.completed ? "Time’s up. Try this level again." : "Try for a better result"}</h3>
       <p>A fresh attempt costs 1 energy. Your previous submissions and rewards stay saved.</p>

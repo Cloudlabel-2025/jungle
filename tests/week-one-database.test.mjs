@@ -186,7 +186,7 @@ test(
         ),
       );
       await reconcile([gamer._id]);
-      assert.equal(await models.Energy.countDocuments({ eventKey: /^mission:/ }), 1);
+      assert.equal(await models.Energy.countDocuments({ eventKey: /^mission:/ }), 0, "first attempts never charge energy");
       assert.equal(await models.Energy.countDocuments({ eventKey: { $not: /^mission:/ } }), 1);
       assert.equal(await weekOneProtected(gamer), true);
       await models.Cohort.updateOne(
