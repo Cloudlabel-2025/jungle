@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { RotateCcw } from "lucide-react";
 import { Modal } from "./ui";
 
 export default function FlightLevelRetry({ data, act, day, now }) {
@@ -16,7 +17,7 @@ export default function FlightLevelRetry({ data, act, day, now }) {
     <div><h3>{expired && !level?.result?.completed ? "Time’s up. Try this level again." : "Try for a better result"}</h3>
       <p>A fresh attempt costs 1 energy. Your previous submissions and rewards stay saved.</p>
       </div>
-    {data.user.energy < 1 ? <p>Retry needs 1 energy. <Link href="/gamer/week-one-ask-mc">Open energy recovery</Link></p> : <button type="button" className="btn primary" onClick={()=>setConfirm(true)}>Retry Level {day} · 1 energy</button>}
+    {data.user.energy < 1 ? <p>Retry needs 1 energy. <Link href="/gamer/week-one-ask-mc">Open energy recovery</Link></p> : <button type="button" className="btn primary" onClick={()=>setConfirm(true)}><RotateCcw size={17} aria-hidden="true"/> Retry Level {day} · 1 energy</button>}
     {confirm && <Modal title={`Retry Level ${day}`} close={()=>{if(!busy)setConfirm(false);}} portal>
       <div className="field-form flight-retry-actions"><p>Restart both missions in Level {day}? This costs 1 energy. The timer starts when you launch a mission.</p><p>Your previous submissions and rewards stay saved.</p>
       <p>Beat your best stars for +3 trophies. Equal or lower stars: no extra trophies. Completed retries earn 25% XP. Your first star award on this level earns normal trophies.</p>
@@ -27,7 +28,7 @@ export default function FlightLevelRetry({ data, act, day, now }) {
         if (!saved) throw Error("Retry was not started. Refresh and try again.");
         setConfirm(false);
       } catch (failure) { setError(failure.message); } finally { setBusy(false); }
-    }}>{busy ? "Preparing retry…" : "Confirm retry · 1 energy"}</button><button type="button" className="btn" disabled={busy} onClick={()=>setConfirm(false)}>Keep current attempt</button>
+    }}><RotateCcw size={17} aria-hidden="true"/>{busy ? "Preparing retry…" : "Confirm retry · 1 energy"}</button><button type="button" className="btn" disabled={busy} onClick={()=>setConfirm(false)}>Keep current attempt</button>
     {error && <p role="alert">{error}</p>}</div></Modal>}
   </section>;
 }

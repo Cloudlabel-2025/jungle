@@ -2,7 +2,8 @@
 import { setActiveCollege, collegeStorageKey } from "@/lib/college-fetch.js";
 import fetch from "@/lib/college-fetch.js";
 
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, startTransition } from "react";
+import { workspaceStateSignature } from "@/lib/workspace-state-signature.js";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -115,6 +116,7 @@ export default function Arena({
     sessionGeneration = useRef(0),
     activeSession = useRef(!!initialUser),
     stateRequest = useRef(null);
+  const stateSignature = useRef(null);
   const lastBroadcast = useRef(null),
     broadcastInitialized = useRef(false),
     audio = useRef(null);
@@ -292,6 +294,7 @@ export default function Arena({
           if (response.status === 401) {
             activeSession.current = false;
             setUser(null);
+            stateSignature.current = null;
             setData(null);
             setError("");
             setLauncher(false);
@@ -301,12 +304,16 @@ export default function Arena({
             );
             return;
           }
-          if (result.code === "PASSWORD_CHANGE_REQUIRED") { setUser(previous => ({ ...previous, mustChangePassword: true })); setData(null); setError(""); return; }
+          if (result.code === "PASSWORD_CHANGE_REQUIRED") { setUser(previous => ({ ...previous, mustChangePassword: true })); stateSignature.current = null; setData(null); setError(""); return; }
           if (!response.ok) throw new Error(result.error);
           offset.current = new Date(result.serverTime).getTime() - Date.now();
-          setData(result);
-          setUser(result.user);
-          setError("");
+          const signature = workspaceStateSignature(result);
+          if (!force && stateSignature.current === signature) { setError(""); return; }
+          const firstLoad = stateSignature.current === null;
+          stateSignature.current = signature;
+          const applyState = () => { setData(result); setUser(result.user); setError(""); };
+          if (!force && !firstLoad) startTransition(applyState);
+          else applyState();
         } catch (e) {
           if (
             (timedOut || e.name !== "AbortError") &&
@@ -358,7 +365,7 @@ export default function Arena({
   }, [user?._id, user?.mustChangePassword, refresh]);
   useEffect(() => {
     const t = setInterval(
-      () => setClock(new Date(Date.now() + offset.current)),
+      () => startTransition(() => setClock(new Date(Date.now() + offset.current))),
       1000,
     );
     return () => clearInterval(t);
@@ -385,6 +392,7 @@ export default function Arena({
     if (!user && workspace === prefix(nextUser.role)) {
       activeSession.current = true;
       setError("");
+      stateSignature.current = null;
       setData(null);
       setUser(nextUser);
       setLauncher(false);
@@ -450,6 +458,7 @@ export default function Arena({
       }
       if (tenancy) { window.location.assign(college?.slug ? `/c/${college.slug}` : "/gamer/dashboard"); return; }
       setUser(null);
+      stateSignature.current = null;
       setData(null);
       setError("");
       setLauncher(false);
