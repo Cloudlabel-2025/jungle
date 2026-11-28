@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useId, useState } from "react";
-import { Check, ChevronDown, ChevronRight, GraduationCap, Pencil, Plus, RefreshCw, Users, X } from "lucide-react";
+import { Check, ChevronDown, ChevronRight, GraduationCap, KeyRound, Pencil, Plus, RefreshCw, Users, X } from "lucide-react";
+import PlayerPasswordResetDialog from "./PlayerPasswordResetDialog";
 import { ManagementDialog } from "./PlatformDashboard";
 import { prefix } from "@/lib/catalog.js";
 import { teamRoles } from "@/lib/team-roles.js";
@@ -11,6 +12,7 @@ export default function CollegeManagement({ college, actor }) {
   const [dialog, setDialog] = useState(null), [revision, setRevision] = useState(0);
   const [expandedTeam, setExpandedTeam] = useState("");
   const [teamsExpanded, setTeamsExpanded] = useState(true);
+  const [resetPlayer,setResetPlayer]=useState(null);
   const panelId = useId();
   const [error, setError] = useState(""), [notice, setNotice] = useState(""), [loading, setLoading] = useState(true);
   const cohort = detail?.cohorts.find(c => c.id === cohortId) || detail?.cohorts[0];
@@ -62,12 +64,13 @@ export default function CollegeManagement({ college, actor }) {
           <div className="pa-section-heading cm-team-heading"><h3 id={`${panelId}-teams-title`}><button type="button" className="cm-section-toggle" aria-expanded={teamsExpanded} aria-controls={`${panelId}-teams`} onClick={() => setTeamsExpanded(value => !value)}><Users size={19} /><span>Teams</span><span className="cm-count">{teams.length}</span><ChevronDown size={18} className={teamsExpanded ? "is-open" : ""} /></button></h3>{cc && <button className="pa-secondary" onClick={() => setDialog({ type: "team" })}><Plus size={16} />Add team</button>}</div>
           <div id={`${panelId}-teams`} hidden={!teamsExpanded} className="pa-teams">{teams.map(t => { const players = detail.people.filter(p => p.role === "GAMER" && p.teamId === t.id), guide = detail.people.find(p => p.id === t.commanderId), expanded = expandedTeam === t.id, membersId = `${panelId}-members-${t.id}`; return <article className="pa-team cm-team" key={t.id}>
             <header className="pa-team-header"><button type="button" className="pa-team-toggle" aria-label={`${expanded ? "Hide" : "Show"} members of ${t.name}`} aria-expanded={expanded} aria-controls={membersId} onClick={() => setExpandedTeam(expanded ? "" : t.id)}><ChevronDown size={18} className={expanded ? "is-open" : ""} /><span><strong>{t.name}</strong><small>{t.code}</small></span></button><span className="pa-guide-name">{guide?.name || "Guide unassigned"}</span><span className="pa-team-count">{players.length}/5 players</span>{cc && <button className="pa-icon" aria-label={`Edit ${t.name}`} onClick={() => setDialog({ type: "edit-team", initial: t })}><Pencil size={16} /></button>}</header>
-            <div id={membersId} hidden={!expanded} className="pa-team-members"><h4 className="cm-members-title">Team members <span>{players.length}</span></h4>{players.map(p => <div className="pa-member" key={p.id}><span className="pa-avatar">{p.name[0]}</span><div><strong>{p.name}{!p.active && " · Inactive"}</strong><small>{p.username || p.email} · {teamRoles.find(r => r.code === p.teamRoleCode)?.label || "Full-stack explorer"}</small></div>{cc && <button className="pa-icon" aria-label={`Edit account for ${p.name}`} onClick={() => setDialog({ type: "person", initial: p })}><Pencil size={16} /></button>}</div>)}
+            <div id={membersId} hidden={!expanded} className="pa-team-members"><h4 className="cm-members-title">Team members <span>{players.length}</span></h4>{players.map(p => <div className="pa-member" key={p.id}><span className="pa-avatar">{p.name[0]}</span><div><strong>{p.name}{!p.active && " · Inactive"}</strong><small>{p.username || p.email} · {teamRoles.find(r => r.code === p.teamRoleCode)?.label || "Full-stack explorer"}</small></div><div className="pa-account-actions">{cc && <button className="pa-icon" aria-label={`Edit account for ${p.name}`} onClick={() => setDialog({ type: "person", initial: p })}><Pencil size={16} /></button>}<button className="pa-icon" disabled={!p.active} aria-label={`Password reset for ${p.name}`} onClick={()=>setResetPlayer(p)}><KeyRound size={16}/></button></div></div>)}
               {!players.length && <p className="pa-note">No players yet.</p>}<button className="pa-text-link" disabled={players.length >= 5} onClick={() => setDialog({ type: "member", initial: t })}><Plus size={16} />{players.length >= 5 ? "Team is full" : "Create player"}</button></div>
           </article>; })}{!teams.length && <div className="pa-empty pa-empty-small">{cc ? "Add a team to this cohort, then create its player accounts." : "No teams assigned in this cohort."}</div>}</div>
           </section>
         </>}</section></div>
       </>}
       {dialog && <ManagementDialog dialog={dialog} detail={detail} cohort={cohort} onClose={() => setDialog(null)} onSave={save} staffRoles={["MISSION_COMMANDER"]} allowRoleChange={false} />}
+      {resetPlayer && <PlayerPasswordResetDialog player={resetPlayer} onClose={()=>setResetPlayer(null)} onComplete={()=>setRevision(n=>n+1)} onReset={values=>api(`cohorts/${encodeURIComponent(resetPlayer.cohortId)}/people/${encodeURIComponent(resetPlayer.id)}/password-reset`,{body:values})}/>}
     </section>;
 }

@@ -15,6 +15,7 @@ import { platformApi } from "@/lib/platform-client.js";
 import { brand } from "@/lib/brand.js";
 import { collegeTypes } from "@/lib/college-options.js";
 import { buildCollegeUrl, validCollegeAddress } from "@/lib/college-routing.js";
+import { usernamePattern } from "@/lib/account-username.js";
 
 const profileKeys = [
   "institutionType",
@@ -428,7 +429,7 @@ export default function CollegeCreatePage({
                         <input
                           name="username"
                           maxLength={32}
-                          pattern="[a-zA-Z0-9][a-zA-Z0-9._-]{2,31}"
+                          pattern={usernamePattern}
                           autoComplete="off"
                         />
                       </Field>

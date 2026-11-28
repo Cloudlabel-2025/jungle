@@ -199,9 +199,12 @@ test(
       await assert.rejects(override(mc,[players[0]],"validate",3), /Review the saved evidence/);
       const beforeValidation = await balance(players[0]);
       await override(mc,[players[0]],"validate",3,{reviewedEvidence:true});
+      const firstNotice=await models.PlayerResultNotice.findOne({userId:players[0]._id,day:1}).lean();
+      assert.equal(firstNotice.actorId,mc._id);assert.equal(firstNotice.actorRole,"MISSION_COMMANDER");assert.equal(firstNotice.operation,"validate");assert.equal(firstNotice.after.stars,3);
       assert.deepEqual(await balance(players[0]),beforeValidation,"human validation does not mint rewards");
       assert.equal((await read(players[0])).data.levelOne.validation.actorId, mc._id);
       await override(cc,[players[0]],"validate",3,{reviewedEvidence:true});
+      assert.equal(await models.PlayerResultNotice.countDocuments({userId:players[0]._id,day:1,operation:"revalidate"}),1);
       assert.equal((await dayOneSnapshot(cc,at(46))).records.find((r) => r.userId === players[0]._id).levelOne.validation.actorId,cc._id);
       assert.equal(await models.DayOneEvent.countDocuments({kind:"LEVEL_ONE_VALIDATED"}),2);
       assert.equal(
@@ -248,6 +251,9 @@ test(
         (e) => e.status === 409,
       );
       await override(mc, [players[0]], "result", 1);
+      const reviewedView=(await dayOneSnapshot(mc,at(46))).records.find(record=>record.userId===players[0]._id).levelOne;
+      assert.equal(reviewedView.automatic.stars,3);assert.equal(reviewedView.result.stars,1);
+      assert.equal(reviewedView.overrideHistory.at(-1).result.stars,3,"staff can inspect the previous automatic result alongside its correction");
       assert.equal((await balance(players[0])).xp, 75);
       assert.equal((await balance(players[0])).trophies, 15);
       assert.equal(
@@ -344,6 +350,7 @@ test(
         "improved replay awards only the extra 25 XP",
       );
       const ledgerCount = await models.LevelOneReward.countDocuments();
+      const reviewNoticeCount=await models.PlayerResultNotice.countDocuments();
       await models.User.updateOne({ _id: players[1]._id }, { $set: { xp: 0 } });
       await assert.rejects(
         override(mc, players.slice(0, 2), "reopen"),
@@ -355,6 +362,7 @@ test(
         "a later member failure rolls back earlier team adjustments",
       );
       assert.equal(await models.LevelOneReward.countDocuments(), ledgerCount);
+      assert.equal(await models.PlayerResultNotice.countDocuments(),reviewNoticeCount,"a rolled-back team decision cannot notify any player");
       await models.User.updateOne(
         { _id: players[1]._id },
         { $set: { xp: 125 } },

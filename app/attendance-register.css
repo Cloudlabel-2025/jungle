@@ -140,9 +140,13 @@
 .attendance-empty {
   padding: 24px;
 }
+.calendar-editor > .attendance-time-toggle { display:flex; align-items:center; gap:10px; }
+.calendar-editor .attendance-time-toggle input[type="checkbox"] { width:18px; height:18px; padding:0; accent-color:var(--text-heading); }
 .attendance-register .calendar-history {
   margin-top: 18px;
 }
+.attendance-register .calendar-history li { grid-template-columns: minmax(0,1fr); gap: 6px; }
+.attendance-register .calendar-history li p { grid-column: 1; }
 .attendance-register .calendar-history small {
   color: #b1c1a6;
 }

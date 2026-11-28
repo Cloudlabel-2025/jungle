@@ -5,6 +5,7 @@ import { Panel, Badge, Avatar } from "./ui";
 import { fullStackTeamReady } from "@/lib/characters";
 
 import { assignmentSlotFor } from '@/lib/team-slots';
+import { usernamePattern, usernameHint } from "@/lib/account-username.js";
 
 export default function TeamManager({ data, act }) {
   const [editing, setEditing] = useState(false),
@@ -160,7 +161,7 @@ export default function TeamManager({ data, act }) {
                         required
                         minLength={3}
                         maxLength={32}
-                        pattern="[A-Za-z0-9][A-Za-z0-9_.-]{2,31}"
+                        pattern={usernamePattern}
                         autoCapitalize="none"
                         spellCheck={false}
                         autoComplete="off"
@@ -169,6 +170,7 @@ export default function TeamManager({ data, act }) {
                           update(member.id, "username", e.target.value)
                         }
                       />
+                      <small>{usernameHint}</small>
                     </label>
                     <label>
                       Initial password

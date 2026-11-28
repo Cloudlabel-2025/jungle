@@ -4,6 +4,7 @@ import { Plus, Save, Pencil, MapPinned } from "lucide-react";
 import { Panel, Modal } from "./ui";
 import LevelEmblem from "./LevelEmblem";
 import LevelManager from "./LevelManager";
+import WorkspaceSelect from "./WorkspaceSelect";
 import { playerMapLevels } from "@/lib/player-map-levels.js";
 import {
   defaultMapPoint,
@@ -197,7 +198,7 @@ export default function MapDesigner({ data, act }) {
                 >
                   <LevelEmblem level={l} />
                   <strong>
-                    {l.number ? `${l.number}. ` : ""}
+                    {l.kind === "SPRINT" ? `Level ${l.number} · ` : "Custom mission · "}
                     {l.name}
                   </strong>
                   {l.privateDraft && <small>Private draft</small>}
@@ -208,21 +209,7 @@ export default function MapDesigner({ data, act }) {
           </div>
         </div>
         <div className="map-designer-properties">
-          <label>
-            Selected level
-            <select
-              disabled={busy}
-              value={active._id}
-              onChange={(e) => setSelected(e.target.value)}
-            >
-              {levels.map((l) => (
-                <option key={l._id} value={l._id}>
-                  {l.kind === "SPRINT" ? `Level ${l.number}` : `Custom mission ${l.number}`} · {l.name}
-                  {l.privateDraft ? " · Draft" : ""}
-                </option>
-              ))}
-            </select>
-          </label>
+          <WorkspaceSelect label="Selected level" disabled={busy} value={active._id} onChange={setSelected} options={levels.map(level=>({value:level._id,label:`${level.kind==="SPRINT"?`Level ${level.number}`:"Custom mission"} · ${level.name}${level.privateDraft?" · Draft":""}`}))}/>
           <label>
             Horizontal position
             <input

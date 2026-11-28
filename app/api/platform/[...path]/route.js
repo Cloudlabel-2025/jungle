@@ -6,6 +6,7 @@ import { recoveryOverview, requestAccountRecovery, deliverRecoveryMail } from "@
 import { allowedWriteOrigin } from "@/lib/request-origin.js";
 import { collegeError } from "@/lib/college-registry.js";
 import { platformCollegeAccess, platformDeleteCollege } from "@/lib/college-lifecycle.js";
+import { resetPlayerPassword } from "@/lib/player-password-reset.js";
 import { authenticatePlatform, publicAdmin, requirePlatformAdmin, changePlatformPassword } from "@/lib/platform-auth.js";
 import { currentPlatformAdmin, setPlatformSession, clearPlatformSession } from "@/lib/platform-session.js";
 import { platformColleges, platformCollegeDetail, platformCreateCollege, platformUpdateCollege,
@@ -75,6 +76,7 @@ async function handle(request, { params }) {
       else if (path.length === 6 && path[4] === "teams" && method === "PATCH") result = await platformTeamCommand(current._id, path[1], "update", fixed);
       else if (path.length === 7 && path[4] === "teams" && path[6] === "members" && method === "POST") result = await platformTeamCommand(current._id, path[1], "add-member", fixed);
       else if (path.length === 6 && path[4] === "people" && method === "PATCH") result = await platformPersonUpdate(current._id, path[1], { ...body, cohortId: path[3], userId: path[5] });
+      else if (path.length === 7 && path[4] === "people" && path[6] === "password-reset" && method === "POST") result = await resetPlayerPassword(current._id,path[1],{...body,cohortId:path[3],userId:path[5]});
       else throw collegeError("Management endpoint not found.", 404);
     } else throw collegeError("Management endpoint not found.", 404);
     return Response.json(withCollegeLoginUrls(result, request), { headers });

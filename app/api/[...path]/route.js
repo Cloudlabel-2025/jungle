@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 import { boundedJson } from "@/lib/request-body.js";
 import { guardFlightApi, completeFlightIntro, completeCrashArrival, publicPlayer } from "@/lib/player-stage.js";
 import { attendanceAction } from "@/lib/attendance.js";
+import { submissionHistory } from "@/lib/submission-history.js";
 import { pipProgressSnapshot, savePipProgress } from "@/lib/pip-progress.js";
 import { attendanceRegister, correctAttendance } from "@/lib/attendance-register.js";
 import { calendarAction, calendarSnapshot, requireWorkingDay } from "@/lib/cohort-calendar.js";
@@ -247,6 +248,10 @@ async function handle(request, { params }) {
     }
     if (route === "map/layout" && request.method === "POST")
       return NextResponse.json(await saveMapLayout(user, body));
+    if (route === "week1/submission-history" && request.method === "GET") {
+      const params=new URL(request.url).searchParams;
+      return NextResponse.json(await submissionHistory(user,params.get("userId"),Number(params.get("day"))),{headers:{"Cache-Control":"private, no-store"}});
+    }
     if (route === "week1/audit" && request.method === "GET") {
       const search = new URL(request.url).searchParams;
       return NextResponse.json(

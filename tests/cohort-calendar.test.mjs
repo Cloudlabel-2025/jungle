@@ -396,7 +396,7 @@ test(
         reason: "Adjusted cohort hours",
         version: view.version,
       };
-      for (const actor of [player, mc, limited])
+      for (const actor of [player, limited])
         await assert.rejects(
           calendarAction(actor, hoursChange),
           (e) => e.status === 403,

@@ -917,6 +917,7 @@ function Configuration({ data, act }) {
         assignment. Existing ticket deadlines preserve their assigned calendar.
       </p>
       <Form
+        guided={false}
         fields={[
           { name: "timeZone", label: "IANA timezone (e.g. Asia/Kolkata)" },
           { name: "start", label: "Working day start", type: "time" },

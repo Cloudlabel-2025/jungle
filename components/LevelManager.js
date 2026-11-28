@@ -15,6 +15,8 @@ import {
 import { teamRoles } from "@/lib/team-roles";
 import { characters, projectTaskLabel } from "@/lib/characters";
 import { fullStackLevel, tasksForFeatures } from "@/lib/full-stack-levels";
+import { missionStarter, missionStarters } from "@/lib/mission-starters.js";
+import MissionBriefForm from "./MissionBriefForm";
 
 const blank = (teams) => ({
   ...fullStackLevel({
@@ -43,6 +45,7 @@ export default function LevelManager({
   const [editing, setEditing] = useState(false),
     [levelId, setLevelId] = useState(null),
     [version, setVersion] = useState(null);
+  const [simple,setSimple]=useState(mapMode&&!initialLevel),[starter,setStarter]=useState(missionStarters[0].value);
   const [form, setForm] = useState(() => ({
       ...blank(data.teams),
       ...(mapMode ? { mapMission: true } : {}),
@@ -78,8 +81,10 @@ export default function LevelManager({
             tasks: source.tasks.map((t) => ({ ...t })),
             criteria: [...source.criteria],
           }
-        : { ...blank(data.teams), ...(mapMode ? { mapMission: true } : {}) },
+        : mapMode ? missionStarter(data.teams) : blank(data.teams),
     );
+    setSimple(mapMode&&!level);
+    setStarter(missionStarters[0].value);
     setLevelId(level?._id || null);
     setVersion(record?.version || null);
     setEditing(true);
@@ -117,6 +122,13 @@ export default function LevelManager({
     });
     setDirty(true);
     setPreview(null);
+  }
+  function updateStarterFeature(index,key,value) {
+    setForm(previous=>{
+      const features=previous.features.map((feature,i)=>i===index?{...feature,[key]:value}:feature);
+      return {...previous,features,tasks:tasksForFeatures(features),criteria:features.map(feature=>`${feature.name}: ${feature.objective}`)};
+    });
+    setDirty(true);setPreview(null);setError("");
   }
   async function save(e) {
     e.preventDefault();
@@ -190,6 +202,7 @@ export default function LevelManager({
     <Panel
       title={mapMode ? "Map mission workshop" : "Level workshop"}
       kicker="CENTRE COMMAND · BUILD THE EXPEDITION"
+      className={simple&&editing?"mission-quick-workshop":""}
     >
       <div className="level-workshop-intro">
         <p>
@@ -281,7 +294,10 @@ export default function LevelManager({
             map designer. Teams already working on a level keep their original
             instructions, deadline, emblem, and rewards.
           </p>
-          <form
+          {simple ? <MissionBriefForm form={form} teams={data.teams} starter={starter} busy={busy} dirty={dirty} levelId={levelId} update={update} onFeature={updateStarterFeature} save={save} inspect={inspect} onDetailed={()=>setSimple(false)} onStarter={id=>{
+            const previousStarter=missionStarter(data.teams,starter),next=missionStarter(data.teams,id);
+            setStarter(id);setForm(previous=>({...previous,...next,name:previous.name===previousStarter.name?next.name:previous.name,description:previous.description===previousStarter.description?next.description:previous.description,hours:previous.hours===previousStarter.hours?next.hours:previous.hours,teamIds:previous.teamIds}));setDirty(true);setPreview(null);setError("");
+          }}/> : <form
             className="field-form level-author-form"
             onSubmit={save}
             aria-busy={busy}
@@ -616,7 +632,7 @@ export default function LevelManager({
             {dirty && (
               <small>Save your changes before previewing or publishing.</small>
             )}
-          </form>
+          </form>}
           {error && (
             <p role="alert" className="callout danger-text">
               {error}

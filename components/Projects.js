@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { playerMapLevels } from "@/lib/player-map-levels.js";
+import WorkspaceSelect from "./WorkspaceSelect";
 import { Modal, Form, Badge, Panel, Receipt } from "./ui";
 import { teamRoles } from "@/lib/team-roles.js";
 import LevelEmblem from "./LevelEmblem";
@@ -687,7 +688,7 @@ export function ProjectDialog({
   );
 }
 
-export default function ProjectBoard({ data, act, compact = false, selectedTeam }) {
+export default function ProjectBoard({ data, act, compact = false, selectedTeam, showPractice = true }) {
   const [localTeam, setTeam] = useState(data.user.teamId || data.teams[0]?._id);
   const [selected, setSelected] = useState(null);
   const team = selectedTeam ?? localTeam;
@@ -698,7 +699,7 @@ export default function ProjectBoard({ data, act, compact = false, selectedTeam 
     : data.user.role === "MISSION_COMMANDER" ? "/commander/sprints?board=programme" : "/gamer/sprint-board?board=programme";
   const practice = levelsForTeam((data.projectLevels || []).filter(level => !level.mapMission), team);
   return <div className="player-level-progression"><Panel title="Team project progression" kicker="ALUMNI CONNECT / PLAYER MAP LEVELS">
-    {staff && selectedTeam === undefined && <label className="challenge-filter">Team<select value={team || ""} onChange={event => {setTeam(event.target.value);setSelected(null);}}>{data.teams.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}{!data.teams.length && <option value="">No teams yet</option>}</select></label>}
+    {staff && selectedTeam === undefined && <WorkspaceSelect label="Team" value={team||""} options={data.teams.map(item=>({value:item._id,label:item.name}))} onChange={value=>{setTeam(value);setSelected(null);}}/>}
     <p className="muted">The player map follows these five weekly sprints. Each team earns the previous sprint’s key before continuing. Published custom missions follow below.</p>
     <div className="player-level-catalogue">{levels.map(level => {
       const project = level.kind === "PROJECT";
@@ -710,7 +711,7 @@ export default function ProjectBoard({ data, act, compact = false, selectedTeam 
     })}</div>
     {active?.kind === "SPRINT" && <section className="player-level-detail" aria-label={`Level ${active.number} details`}><h3>Level {active.number} · {active.name}</h3><p>{active.goal}</p><p className="muted">{active.number === 1 ? "Starts after flight clearance and team approval." : `Requires Key ${active.number - 1} from the previous sprint.`} {active.statusLabel || "Release, task reviews and client acceptance are managed in weekly sprint work."}</p><Link className="btn" href={sprintHref}>{data.user.role === "CENTRE_COMMAND" ? "Open weekly sprint setup" : "Open weekly sprint work"}</Link></section>}
     {active?.kind === "PROJECT" && <ProjectDialog key={`${team}:${active._id}`} level={active} data={data} act={act} teamId={team} close={() => setSelected(null)}/>}
-  </Panel>{practice.length > 0 && <details className="practice-projects"><summary>Additional practice projects <span>{practice.length} definitions</span></summary><PracticeProjectBoard key={team} data={{...data,projectLevels:practice}} act={act} compact={compact} selectedTeam={team}/></details>}</div>;
+  </Panel>{showPractice && practice.length > 0 && <details className="practice-projects"><summary>Additional practice projects <span>{practice.length} definitions</span></summary><PracticeProjectBoard key={team} data={{...data,projectLevels:practice}} act={act} compact={compact} selectedTeam={team}/></details>}</div>;
 }
 
 function PracticeProjectBoard({ data, act, compact = false, selectedTeam }) {

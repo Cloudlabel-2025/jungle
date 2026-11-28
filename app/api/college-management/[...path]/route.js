@@ -6,6 +6,7 @@ import { collegeManagementActor, authorizeManagement } from "@/lib/management-ac
 import { platformCollegeDetail, platformCohortCommand, platformTeamCommand, platformPersonUpdate } from "@/lib/platform-management.js";
 import { boundedJson } from "@/lib/request-body.js";
 import { allowedWriteOrigin } from "@/lib/request-origin.js";
+import { resetPlayerPassword } from "@/lib/player-password-reset.js";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -35,6 +36,7 @@ async function handle(request, { params }) {
       else if (path.length === 4 && path[2] === "teams" && method === "PATCH") result = await platformTeamCommand(actor, collegeId, "update", fixed);
       else if (path.length === 5 && path[2] === "teams" && path[4] === "players" && method === "POST") result = await platformTeamCommand(actor, collegeId, "add-member", fixed);
       else if (path.length === 4 && path[2] === "people" && method === "PATCH") result = await platformPersonUpdate(actor, collegeId, { ...body, cohortId: path[1], userId: path[3] });
+      else if (path.length === 5 && path[2] === "people" && path[4] === "password-reset" && method === "POST") result = await resetPlayerPassword(actor,collegeId,{...body,cohortId:path[1],userId:path[3]});
       else throw collegeError("Management endpoint not found.", 404);
     } else throw collegeError("Management endpoint not found.", 404);
     return Response.json(result, { headers });

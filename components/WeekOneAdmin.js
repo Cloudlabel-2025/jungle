@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Badge, Form, Receipt } from "./ui";
 import { DayOneGameSetup, DayOneCohort } from "./DayOneFeatures";
 import WeekOneRelease from "./WeekOneRelease";
+import FirstPartLaunch from "./FirstPartLaunch";
 import WeekOneLevelControls from "./WeekOneLevelControls";
 import PlayerResultReview from "./PlayerResultReview";
 import TrophyConduct from "./TrophyConduct";
@@ -541,6 +542,7 @@ export function Configuration({ data, act }) {
   const p = data.weekOneProgram;
   return (
     <>
+      <FirstPartLaunch data={data} act={act}/>
       <details>
         <summary>Provision 25 Gamers and a Mission Commander</summary>
         <ProvisionAccounts act={act} />
@@ -549,7 +551,7 @@ export function Configuration({ data, act }) {
         <summary>Organisation settings and operational content</summary>
         <Settings data={data} act={act} />
       </details>
-      <DayOneGameSetup data={data} act={act} />
+      <details><summary>Advanced Day 1 schedule and research setup</summary><DayOneGameSetup data={data} act={act} /></details>
       {[2, 3, 4, 5].map((number) => {
         const day = p.days.find((d) => d.day === number) || {
           day: number,
@@ -969,10 +971,10 @@ export function StaffRules({ data, act }) {
       <WeekPanel title="Game Rules and shared FAQ">
         {!p.rules.length && (
           <p role="status">
-            No Game Rules have been published.{" "}
+            No custom Game Rules have been published.{" "}
             {cc
-              ? "Publish the approved rules below before opening a day."
-              : "Ask Centre Command to publish the approved rules before opening a day."}
+              ? "Open first-part game starts play without manual rules. Rules are required only for the advanced scheduled day releases."
+              : "Centre Command can open the first-part game without manual rules. Advanced scheduled day releases still require published rules."}
           </p>
         )}
         {p.rules.map((r) => (
@@ -1224,8 +1226,9 @@ export function StaffResults({ data, act }) {
   return (
     <>
       <PlayerResultReview data={data} act={act} />
-      <TrophyConduct data={data} act={act}/>
-      <details><summary>Team result controls and replay</summary><WeekOneLevelControls data={data} act={act} /></details>
+      <details className="result-secondary-controls"><summary>Conduct and trophy adjustments</summary><TrophyConduct data={data} act={act}/></details>
+      <details className="result-secondary-controls"><summary>Team result controls and replay</summary><WeekOneLevelControls data={data} act={act} /></details>
+      <details className="result-secondary-controls"><summary>Week 1 readiness and publication</summary>
       <WeekPanel
         title="Week 1 readiness and publication"
         action={
@@ -1304,6 +1307,7 @@ export function StaffResults({ data, act }) {
           </>
         )}
       </WeekPanel>
+      </details>
       <details>
         <summary>
           Review component evidence and capability recommendations

@@ -2,11 +2,17 @@
 
 import { Panel, Badge, Form } from "./ui";
 import Link from "next/link";
+import FirstPartLaunch from "./FirstPartLaunch";
 import { programmePath } from "@/lib/workspace-navigation.js";
 
 export default function WeekOneRelease({ data, act, now }) {
   const release = data.weekOne;
   if (!release || data.user.role === "GAMER") return null;
+  if(data.user.role==="CENTRE_COMMAND")return <><FirstPartLaunch data={data} act={act}/><details className="game-rule-disclosure"><summary>Advanced scheduled day releases</summary><ScheduledRelease data={data} act={act} now={now}/></details></>;
+  return <ScheduledRelease data={data} act={act} now={now}/>;
+}
+function ScheduledRelease({data,act,now}) {
+  const release=data.weekOne;
   if (release.progressionMode === "COMPLETION")
     return (
       <Panel title="Automatic level progression" kicker="PLAYER PROGRESS">

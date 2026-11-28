@@ -26,6 +26,27 @@ async function component(path, name = "default") {
   );
   return module.exports[name];
 }
+
+test("MC and CC see the automatic result beside the corrected result and previous decision",async()=>{
+  const Review=await component("components/PlayerResultReview.js");
+  const automatic={source:"SYSTEM",completed:true,stars:3,checks:{onTime:true},reason:"Automatic evidence checks met"};
+  const levelOne={automatic,result:{source:"MISSION_COMMANDER",completed:true,stars:1},history:[],creditedTrophies:15,creditedXp:75,overrideHistory:[{result:automatic,actorId:"reviewer",at:"2026-11-27T10:00:00Z",reason:"Reviewed mission evidence"}]};
+  for(const role of ["MISSION_COMMANDER","CENTRE_COMMAND"]){
+    const data={user:{_id:"reviewer",role},dayOne:{records:[{userId:"p",version:1,config:{genres:[]},submissions:[],levelOne}]},weekOneProgram:{levelTargets:{members:[{_id:"p",name:"Player",trophies:15}]},attempts:[],levelResults:[]}};
+    const html=renderToStaticMarkup(React.createElement(Review,{data,act:async()=>true}));
+    for(const text of ["EARNED STARS","ACTUAL RESULT","3/3 stars","Actual result: 1/3 stars","Staff correction","Previous result decisions","Reviewed mission evidence","Validate result","Correct result","Validation notes"])assert.ok(html.includes(text),`${role}: ${text}`);
+    assert.ok(html.includes('aria-label="3 of 3 stars earned"'),"earned stars are shown visually and labelled for assistive technology");
+    assert.ok(html.includes('aria-label="1 of 3 stars earned"'),"the corrected result shows its actual stars");
+  }
+});
+
+test("full history renders every chat link, transcript and answer revision, and keeps unsafe links as text",async()=>{
+  const List=await component("components/SubmissionHistory.js","SubmissionHistoryList");
+  const history={attempts:[{attempt:1,archived:true,archivedAt:"2026-11-27T10:00:00Z",reason:"Approved replay",missions:[{id:"research",title:"Research",submissions:[{id:"s1",at:"2026-11-26T10:00:00Z",url:"https://example.org/old",transcript:"Earlier saved transcript"},{id:"s2",at:"2026-11-26T11:00:00Z",url:"https://example.org/revised",answers:{notes:"Revised answer",source:"https://example.org/source"},late:true}]}]},{attempt:2,archived:false,missions:[{id:"quiz",title:"Quiz",questions:[{id:"q1",prompt:"Choose the correct source",options:["A source","B source"]}],submissions:[{id:"s3",at:"2026-11-27T10:00:00Z",answers:{q1:1,notes:"Current answer",url:"javascript:alert(1)"},expired:true}]}]}]};
+  const html=renderToStaticMarkup(React.createElement(List,{history}));
+  for(const text of ["https://example.org/old","https://example.org/revised","Earlier saved transcript","Revised answer","Current answer","Revision 2","Archived attempt","Current attempt","Choose the correct source","B source","Timer expired"])assert.ok(html.includes(text),text);
+  assert.ok(!html.includes('href="javascript:'));
+});
 test("player result reveals stars, exact rewards, replay history and release gating", async () => {
   const Result = await component("components/LevelOneResult.js");
   const level = {

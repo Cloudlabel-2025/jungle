@@ -4,6 +4,8 @@ import { ArrowLeft, ArrowRight, Building2, ChevronDown, ChevronRight, CircleHelp
   Pencil, Plus, Search, ShieldCheck, Users, X, RefreshCw, Activity, KeyRound, Check, Mail } from "lucide-react";
 import NavLogoutButton from "./NavLogoutButton";
 import CollegeLifecycleActions from "./CollegeLifecycleActions";
+import PlayerPasswordResetDialog from "./PlayerPasswordResetDialog";
+import { usernamePattern, usernameHint } from "@/lib/account-username.js";
 
 import { platformApi as api } from "@/lib/platform-client.js";
 import { Field, PasswordInput } from "./PlatformFields";
@@ -88,12 +90,12 @@ export function ManagementDialog({ dialog, detail, cohort, onClose, onSave, staf
       {(type === "staff" || type === "member") && <><Field label="Full name"><input name="name" required maxLength={type === "member" ? 80 : 120} autoFocus /></Field>
         {type === "staff" ? <><Field label="Email address"><input name="email" type="email" required maxLength={120} autoComplete="off" /></Field>
           <Field label="Role"><select name="role">{staffRoles.map(role => <option key={role} value={role}>{role === "MISSION_COMMANDER" ? "Guide (Mission Commander)" : "Centre Command"}</option>)}</select></Field></> : <>
-          <Field label="Recovery email (optional)" hint="A real address enables automatic password recovery."><input name="email" type="email" maxLength={120} /></Field><Field label="Username"><input name="username" required minLength={3} maxLength={32} pattern="[a-zA-Z0-9][a-zA-Z0-9_.-]{2,31}" autoComplete="off" /></Field>
+          <Field label="Recovery email (optional)" hint="Players without email can ask their MC or CC for an assisted password reset."><input name="email" type="email" maxLength={120} /></Field><Field label="Username" hint={usernameHint}><input name="username" required minLength={3} maxLength={32} pattern={usernamePattern} autoCapitalize="none" spellCheck={false} autoComplete="off" /></Field>
           <p className="pa-hint">Work roles are assigned automatically in the jungle coding stage and rotate each week. Players create their own avatars.</p></>}
         <Field label="Initial password" hint="Share credentials privately with the account owner."><input name="password" type="password" required minLength={8} maxLength={256} autoComplete="new-password" /></Field></>}
       {type === "person" && <><Field label="Full name"><input name="name" required maxLength={120} defaultValue={initial.name} /></Field>
-        <Field label="Email address" hint="Password recovery is sent to this registered address."><input name="email" type="email" required maxLength={120} defaultValue={initial.email} /></Field>
-        <Field label="Username (optional)"><input name="username" maxLength={32} pattern="[a-zA-Z0-9][a-zA-Z0-9_.-]{2,31}" defaultValue={initial.username || ""} /></Field>
+        <Field label={initial.role==="GAMER"?"Recovery email (optional)":"Email address"} hint={initial.role==="GAMER"?"No email is needed for an assisted reset by your MC or CC.":"Password recovery is sent to this registered address."}><input name="email" type="email" required={initial.role!=="GAMER"} maxLength={120} defaultValue={initial.role==="GAMER" && initial.email?.endsWith(".invalid")?"":initial.email} /></Field>
+        <Field label={initial.role==="GAMER"?"Username":"Username (optional)"} hint={usernameHint}><input name="username" required={initial.role==="GAMER"} minLength={3} maxLength={32} pattern={usernamePattern} autoCapitalize="none" spellCheck={false} defaultValue={initial.username || ""} /></Field>
         {initial.role !== "GAMER" && allowRoleChange && <Field label="Role"><select name="role" defaultValue={initial.role}><option value="MISSION_COMMANDER">Guide</option><option value="CENTRE_COMMAND">Centre Command</option></select></Field>}
         <Field label="Account access" hint="Deactivation signs this person out and retains their work and assessment history."><select name="active" defaultValue={String(initial.active)}><option value="true">Active</option><option value="false">Inactive</option></select></Field>
         {initial.role === "MISSION_COMMANDER" && <Field label="Replacement Guide" hint="Required when disabling an assigned Guide or changing their role."><select name="replacementGuideId"><option value="">No replacement</option>{guides.filter(p => p.id !== initial.id).map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select></Field>}
@@ -108,6 +110,7 @@ export default function PlatformDashboard({ initialAdmin, initialCollegeId = "" 
   const [directory, setDirectory] = useState(null), [detail, setDetail] = useState(null), [activity, setActivity] = useState(null);
   const [cohortId, setCohortId] = useState(""), [teamId, setTeamId] = useState(""), [dialog, setDialog] = useState(null);
   const [teamsExpanded, setTeamsExpanded] = useState(true);
+  const [resetPlayer,setResetPlayer]=useState(null);
   const panelId = useId();
   const [query, setQuery] = useState({ search: "", status: "", page: 1 }), [revision, setRevision] = useState(0);
   const [loading, setLoading] = useState(false), [error, setError] = useState(""), [notice, setNotice] = useState(""), [signingOut, setSigningOut] = useState(false);
@@ -148,6 +151,7 @@ export default function PlatformDashboard({ initialAdmin, initialCollegeId = "" 
   }
   async function savePassword(values) { const result = await api("auth/password", { body: values }); setAdmin(result.admin); setView("colleges"); setNotice("Password updated."); }
   async function recoverPerson(person) {
+    if(person.role==="GAMER"){setResetPlayer(person);return;}
     setError("");
     try { await api("recovery", { body: { realm: "college", collegeId, userId: person.id, replace: true } }); setNotice("Password reset requested. View Recovery for delivery status."); }
     catch (e) { failure(e); }
@@ -192,5 +196,5 @@ export default function PlatformDashboard({ initialAdmin, initialCollegeId = "" 
             <div className="pa-section-heading"><h3>Staff <span>{people.filter(p => p.role !== "GAMER").length}</span></h3><button className="pa-secondary" disabled={!editable} onClick={() => setDialog({ type: "staff" })}><Plus size={16} />Add staff</button></div><section className="pa-staff">{people.filter(p => p.role !== "GAMER").map(p => <div className="pa-staff-row" key={p.id}><span className="pa-avatar">{p.name[0]}</span><div><strong>{p.name}</strong><small>{p.email}</small></div><span className="pa-person-meta">{roleName(p.role)}{!p.active && " · Inactive"}</span><div className="pa-account-actions"><button className="pa-icon" aria-label={`Edit account for ${p.name}`} disabled={!editable} onClick={() => setDialog({ type: "person", initial: p })}><Pencil size={15} /></button><button className="pa-icon" aria-label={`Password reset for ${p.name}`} disabled={!editable || !p.active} onClick={() => recoverPerson(p)}><KeyRound size={15} /></button></div></div>)}{!people.some(p => p.role !== "GAMER") && <p className="pa-note">Add Centre Command or a Guide to give this cohort its staff accounts.</p>}</section>
           </>}</div></div></div></>}
       </>}
-    </div></section>{dialog && <ManagementDialog dialog={dialog} detail={detail} cohort={cohort} onClose={() => setDialog(null)} onSave={save} />}</main>;
+    </div></section>{dialog && <ManagementDialog dialog={dialog} detail={detail} cohort={cohort} onClose={() => setDialog(null)} onSave={save} />}{resetPlayer && <PlayerPasswordResetDialog player={resetPlayer} onClose={()=>setResetPlayer(null)} onComplete={()=>setRevision(n=>n+1)} onReset={values=>api(`colleges/${enc(collegeId)}/cohorts/${enc(resetPlayer.cohortId)}/people/${enc(resetPlayer.id)}/password-reset`,{body:values})}/>}</main>;
 }

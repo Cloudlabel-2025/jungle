@@ -205,3 +205,10 @@
     flex: 1;
   }
 }
+.first-part-launch-content { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 24px; }
+.first-part-launch-content > div { max-width: 70ch; }
+.first-part-launch-content h3 { margin: 0 0 8px; font: 600 23px/1.2 var(--font-heading); color: var(--text-heading); }
+.first-part-launch-content p { margin: 0 0 10px; font-size: 14px; line-height: 1.6; color: var(--text-primary); }
+.first-part-launch-content small { color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
+.first-part-launch-content > button { flex-shrink: 0; }
+@media(max-width:800px) { .first-part-launch-content { align-items: stretch; flex-direction: column; gap: 16px; } }

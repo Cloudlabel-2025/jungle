@@ -1,5 +1,6 @@
 "use client";
 import AvatarPortrait from "./AvatarPortrait";
+import WorkspaceSelect from "./WorkspaceSelect";
 import {
   X,
   Check,
@@ -350,7 +351,7 @@ export function Form({
               guided && index !== currentStep ? { display: "none" } : undefined
             }
           >
-            {f.options && f.options.length <= 6 ? (
+            {f.options && f.menu ? <WorkspaceSelect id={`${formId}-${f.name}`} label={f.label} name={f.name} options={f.options} defaultValue={initial[f.name]} required={!f.optional} disabled={submitting}/> : f.options && f.options.length <= 6 ? (
               <GameChoices
                 label={f.label}
                 name={f.name}

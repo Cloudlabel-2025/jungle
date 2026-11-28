@@ -90,6 +90,7 @@ export default function CohortCalendar() {
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("17:00");
   const [hoursReason, setHoursReason] = useState("");
+  const [hoursEffectiveDay,setHoursEffectiveDay]=useState("");
   const [fullHours, setFullHours] = useState("6"),
     [halfHours, setHalfHours] = useState("4"),
     [minimumReason, setMinimumReason] = useState("");
@@ -98,6 +99,7 @@ export default function CohortCalendar() {
     setStartTime(data.attendanceHours.startTime);
     setEndTime(data.attendanceHours.endTime);
     setHoursReason("");
+    setHoursEffectiveDay(data.today);
     setFullHours(String((data.attendanceMinimums?.fullDayMinutes ?? 360) / 60));
     setHalfHours(String((data.attendanceMinimums?.halfDayMinutes ?? 240) / 60));
     setMinimumReason("");
@@ -147,6 +149,7 @@ export default function CohortCalendar() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "HOURS",
+          effectiveDay: hoursEffectiveDay || data.today,
           hours: { startTime, endTime },
           reason: hoursReason,
           version: data.version,
@@ -155,7 +158,7 @@ export default function CohortCalendar() {
       const result = await response.json();
       if (!response.ok)
         throw Error(result.error || "Could not save attendance hours.");
-      setMessage("Attendance hours updated for your cohort.");
+      setMessage(`Attendance hours updated from ${result.effectiveDay}. Previous shifts remain in history.`);
       setReload((n) => n + 1);
     } catch (e) {
       setError(e.message);
@@ -292,7 +295,7 @@ export default function CohortCalendar() {
           <strong>
             {data.attendanceHours.startTime} – {data.attendanceHours.endTime}
           </strong>
-          <span>{data.canEdit ? "Edit hours" : data.timeZone}</span>
+          <span>{data.canEditHours ? "Edit hours" : data.timeZone}</span>
         </summary>
         <p>
           Clock in during these hours on working days. Official attendance
@@ -300,7 +303,7 @@ export default function CohortCalendar() {
           session, without repeated prompts. Extra play ends at the next daily
           start.
         </p>
-        {data.canEdit && (
+        {data.canEditHours && (
           <form
             className="calendar-editor calendar-hours-form"
             onSubmit={saveHours}
@@ -337,13 +340,14 @@ export default function CohortCalendar() {
                 disabled={saving || loading}
               />
             </label>
+            <label>Effective from<input type="date" required min={data.today} value={hoursEffectiveDay} disabled={saving || loading} onChange={e=>setHoursEffectiveDay(e.target.value)}/></label>
             <button className="calendar-save" disabled={saving || loading}>
               {saving ? "Saving…" : "Save attendance hours"}
               <Check size={17} />
             </button>
             <small>
               {data.timeZone} · Applies to Week 1 and expedition attendance.
-              Today's open attendance follows new hours. Closed attendance and
+              Open attendance follows new hours from the effective date. Closed attendance and
               past records stay saved; extra play remains separate.
             </small>
           </form>

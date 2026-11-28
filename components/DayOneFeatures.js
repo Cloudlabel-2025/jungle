@@ -82,6 +82,7 @@ export function DayOneCheckIn({ data, act, now }) {
   const r = own(data),
     c = r?.config || data.dayOne?.config;
   if (!c) return null;
+  if(data.playSession?.attendanceRequired===false || data.weekOne?.progressionMode==="COMPLETION" || data.weekOneProgram?.flightLaunch?.openedAt)return <Panel title="Begin your flight" kicker="LEVEL 1 / DISCOVERY MISSION"><p className="muted">Play whenever you are ready. Attendance shifts do not interrupt the first part; the research timer starts when you begin the research mission.</p>{r?.clockAt?<Receipt>You have entered the flight.</Receipt>:<button className="btn primary full" data-pip-target="day-check-in" disabled={data.dayOne?.state!=="OPEN"} onClick={()=>send(act,"clock",r)}>Enter Level 1</button>}</Panel>;
   return (
     <Panel
       title="Daily camp check-in"
@@ -1027,6 +1028,50 @@ function DayOneReview({ person, record: r, data, act }) {
     </Panel>
   );
 }
+function DayOneDecisionAudit({ d }) {
+  const [open, setOpen] = useState(false);
+  const [events, setEvents] = useState(null);
+  const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
+  useEffect(() => {
+    if (!open) return;
+    const controller = new AbortController();
+    let disposed = false;
+    setEvents(null);
+    setError("");
+    const deadline = setTimeout(() => controller.abort(), 20000);
+    (async () => {
+      try {
+        const response = await fetch("/api/day1/state", { cache: "no-store", signal: controller.signal });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Unable to load the decision audit.");
+        if (!controller.signal.aborted) setEvents(result.events || []);
+      } catch (error) {
+        if (disposed) return;
+        if (!controller.signal.aborted) setError(error.message);
+        else setError("Loading took too long. Please try again.");
+      } finally {
+        clearTimeout(deadline);
+      }
+    })();
+    return () => { disposed = true; clearTimeout(deadline); controller.abort(); };
+  }, [open, retry, d.cohortId]);
+  return <Panel title="Day 1 decision audit" kicker="ORIGINAL EVENTS / OLD & NEW VALUES / ACTOR & REASON">
+    <details onToggle={event => setOpen(event.currentTarget.open)}>
+      <summary>View full decision audit</summary>
+      {open && <>
+        {error ? <p role="alert">{error} <button onClick={() => setRetry(value => value + 1)}>Retry</button></p> : events === null ? <p role="status">Loading decision audit…</p> : <>
+          {!events.length && <p className="muted">No decisions recorded yet.</p>}
+          {events.slice(0, 40).map(e => <details key={e._id}>
+            <summary>{e.kind} · {d.roster.find(p => p._id === e.userId)?.name || "Cohort"} · {fmt(e.createdAt, d.config.timeZone)}</summary>
+            <p className="muted">Actor {e.actorId} · Event {e._id}</p>
+            <pre style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere", maxHeight: 280, overflow: "auto" }}>{JSON.stringify(e.details, null, 2)}</pre>
+          </details>)}
+        </>}
+      </>}
+    </details>
+  </Panel>;
+}
 export function DayOneCohort({ data, act, now }) {
   const d = data.dayOne,
     [selected, setSelected] = useState(""),
@@ -1252,33 +1297,7 @@ export function DayOneCohort({ data, act, now }) {
             </Panel>
           </>
         )}
-        <Panel
-          title="Day 1 decision audit"
-          kicker="ORIGINAL EVENTS / OLD & NEW VALUES / ACTOR & REASON"
-        >
-          {d.events.slice(0, 40).map((e) => (
-            <details key={e._id}>
-              <summary>
-                {e.kind} ·{" "}
-                {d.roster.find((p) => p._id === e.userId)?.name || "Cohort"} ·{" "}
-                {fmt(e.createdAt, d.config.timeZone)}
-              </summary>
-              <p className="muted">
-                Actor {e.actorId} · Event {e._id}
-              </p>
-              <pre
-                style={{
-                  whiteSpace: "pre-wrap",
-                  overflowWrap: "anywhere",
-                  maxHeight: 280,
-                  overflow: "auto",
-                }}
-              >
-                {JSON.stringify(e.details, null, 2)}
-              </pre>
-            </details>
-          ))}
-        </Panel>
+        <DayOneDecisionAudit d={d} />
       </details>
     </Panel>
   );

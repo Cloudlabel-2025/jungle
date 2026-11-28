@@ -262,6 +262,7 @@ export default function Arena({
     async (force = false) => {
       if (!activeSession.current) return;
       if (busy.current) {
+        if(force)stateRequest.current?.abort();
         await busy.current;
         if (
           !activeSession.current ||
@@ -271,6 +272,8 @@ export default function Arena({
       }
       const generation = sessionGeneration.current;
       const controller = new AbortController();
+      let timedOut=false;
+      const deadline=setTimeout(()=>{timedOut=true;controller.abort();},20000);
       stateRequest.current = controller;
       const pending = (async () => {
         try {
@@ -280,6 +283,8 @@ export default function Arena({
           });
           const result = await response.json();
           if (
+            controller.signal.aborted ||
+            stateRequest.current !== controller ||
             generation !== sessionGeneration.current ||
             !activeSession.current
           )
@@ -304,10 +309,13 @@ export default function Arena({
           setError("");
         } catch (e) {
           if (
-            e.name !== "AbortError" &&
+            (timedOut || e.name !== "AbortError") &&
+            stateRequest.current === controller &&
             generation === sessionGeneration.current
           )
-            setError(e.message);
+            setError(timedOut?"Loading took too long. Please try again.":e.message);
+        } finally {
+          clearTimeout(deadline);
         }
       })();
       busy.current = pending;
@@ -334,12 +342,18 @@ export default function Arena({
       if (event.detail?.source !== "workspace") refresh(true);
     };
     window.addEventListener("codewild:balance-changed", balanceChanged);
+    // Mutations refresh immediately. Spread background reads across clients so
+    // a class signing in together does not repeatedly hit the database in a burst.
+    const interval = 10000 + Math.floor(Math.random() * 2000);
+    const resume = () => { if(document.visibilityState === "visible") refresh(); };
+    document.addEventListener("visibilitychange",resume);
     const timer = setInterval(() => {
       if (document.visibilityState === "visible") refresh();
-    }, 6000);
+    }, interval);
     return () => {
       clearInterval(timer);
       window.removeEventListener("codewild:balance-changed", balanceChanged);
+      document.removeEventListener("visibilitychange",resume);
     };
   }, [user?._id, user?.mustChangePassword, refresh]);
   useEffect(() => {
@@ -733,7 +747,7 @@ export default function Arena({
                 />
               )}
               {playerMode && <button className="icon-btn profile-trigger" aria-label="Open my profile" title="My profile" onClick={()=>setProfileOpen(true)}><UserRound size={18}/></button>}
-              {playerMode && <button className="icon-btn attendance-trigger" aria-label="Open clock-in and clock-out" title={data?.playSession?.state === "EXTRA" ? "Extra play · manage session" : data?.playSession?.state === "ACTIVE" ? "Clocked in · manage session" : "Clock in"} onClick={()=>setAttendanceOpen(true)}><Clock3 size={18}/></button>}
+              {playerMode && data?.playSession?.attendanceRequired!==false && <button className="icon-btn attendance-trigger" aria-label="Open clock-in and clock-out" title={data?.playSession?.state === "EXTRA" ? "Extra play · manage session" : data?.playSession?.state === "ACTIVE" ? "Clocked in · manage session" : "Clock in"} onClick={()=>setAttendanceOpen(true)}><Clock3 size={18}/></button>}
               {role !== "GAMER" && (
                 <span className="server-clock">
                   <span className="status-dot" />

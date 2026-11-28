@@ -45,6 +45,10 @@ const render = (session, open = false) =>
     }),
   );
 
+test("uninterrupted first-part play never opens an attendance modal",()=>{
+  for(const open of [false,true])assert.equal(render({state:"FREE_PLAY",attendanceRequired:false,available:true},open),"");
+});
+
 test("UAT access is clearly identified and does not claim official attendance", () => {
   const html = render(
     { state: "EXTRA", extraSession: { purpose: "UAT" } },

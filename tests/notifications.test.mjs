@@ -25,6 +25,19 @@ const fixture = () => ({
   rescues: [],
   energy: [],
 });
+
+test("level review notifications identify the reviewer and changed score, retain revalidations and respect receipts and privacy",()=>{
+  const data=fixture();data.user.drops=0;data.story={flight:true};
+  const notice={_id:"review-1",userId:"self",cohortId:"alpha",day:2,actorId:"mc",actorName:"Mira",actorRole:"MISSION_COMMANDER",operation:"result",before:{completed:true,stars:3},after:{completed:true,stars:2},reason:"Verified evidence supports two stars.",createdAt:"2026-11-27T12:00:00Z"};
+  data.levelReviewNotices=[notice,{...notice,_id:"review-2",operation:"revalidate",actorRole:"CENTRE_COMMAND",actorName:"Ravi"},{...notice,_id:"other-player",userId:"other"},{...notice,_id:"other-college",cohortId:"beta"}];
+  const result=buildNotifications(data);
+  assert.equal(result.items.length,2);
+  const changed=result.items.find(item=>item.id==="level-review:review-1");
+  assert.match(changed.message,/Mission Commander Mira changed your Level 2 result from 3\/3 stars to 2\/3 stars/);
+  assert.equal(changed.href,"/gamer/week-one-results?level=2");
+  assert.match(result.items.find(item=>item.id==="level-review:review-2").message,/Centre Command Ravi revalidated/);
+  assert.equal(buildNotifications(data,result.items.map(item=>({notificationId:item.id}))).unread,0);
+});
 test("trophy warnings, deductions and reversals are private, readable in-app notices",()=>{
   const data=fixture();data.user.drops=0;
   data.trophyConduct=[{_id:"warning",userId:"self",action:"WARNING",amount:0,reason:"A documented warning",createdAt:"2026-11-24T09:00Z"},{_id:"debit",userId:"self",action:"DEDUCT",amount:-5,reason:"An agreed deadline was missed",createdAt:"2026-11-24T10:00Z"},{_id:"other",userId:"other",action:"DEDUCT",amount:-25,reason:"Private other case"}];
@@ -159,6 +172,11 @@ test(
         outsider = gamers[5];
       await models.User.updateOne({ _id: gamer._id }, { $set: { drops: 3 } });
       const self = await snapshot(gamer);
+      await models.PlayerResultNotice.create({_id:"review-notice",cohortId:"alpha",userId:gamer._id,day:1,version:1,actorId:cc._id,actorName:"Centre Reviewer",actorRole:"CENTRE_COMMAND",operation:"validate",before:{completed:true,stars:3},after:{completed:true,stars:3},reason:"Reviewed the submitted evidence.",createdAt:new Date()});
+      assert.ok((await snapshot(gamer)).notifications.items.some(item=>item.id==="level-review:review-notice"));
+      assert.ok(!(await snapshot(teammate)).notifications.items.some(item=>item.id==="level-review:review-notice"));
+      await markNotificationsRead(gamer,["level-review:review-notice"]);
+      assert.equal((await snapshot(gamer)).notifications.items.find(item=>item.id==="level-review:review-notice").read,true);
       const monitor = self.notifications.items.find((item) =>
         item.id.startsWith("monitoring:"),
       );
@@ -167,7 +185,7 @@ test(
       await markNotificationsRead(gamer, [monitor.id]);
       assert.equal(
         await models.NotificationReceipt.countDocuments({ userId: gamer._id }),
-        1,
+        2,
       );
       assert.equal(
         (await snapshot(gamer)).notifications.items.find(

@@ -12,6 +12,7 @@ import {
   Clock3,
 } from "lucide-react";
 import { Modal } from "./ui";
+import AttendanceShiftEditor from "./AttendanceShiftEditor";
 
 const labels = {
   FULL_DAY: "Full day",
@@ -42,6 +43,7 @@ export default function AttendanceRegister() {
   const [selected, setSelected] = useState(null),
     [status, setStatus] = useState("FULL_DAY"),
     [reason, setReason] = useState("");
+  const [editTimes,setEditTimes]=useState(false),[clockIn,setClockIn]=useState(""),[clockOut,setClockOut]=useState("");
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);
@@ -80,6 +82,7 @@ export default function AttendanceRegister() {
           status,
           reason,
           version: selected.version,
+          ...(editTimes?{clockTimes:{clockIn,clockOut},clockVersion:selected.clockVersion}:{}),
         }),
       });
       const value = await response.json();
@@ -102,6 +105,7 @@ export default function AttendanceRegister() {
           minute: "2-digit",
         })
       : "—";
+  const inputTime=value=>value?new Intl.DateTimeFormat("en-GB",{timeZone:data.timeZone,hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(new Date(value)):"";
   const changeDay = (value) => {
     if (value) {
       setDay(value);
@@ -182,6 +186,7 @@ export default function AttendanceRegister() {
           </div>
         ))}
       </div>
+      <AttendanceShiftEditor key={data.shiftVersion} data={data} onSaved={text=>{setMessage(text);setReload(n=>n+1);}}/>
       <div className="attendance-day-toolbar">
         <div>
           <CalendarDays size={20} />
@@ -278,6 +283,7 @@ export default function AttendanceRegister() {
             </span>
             <span role="cell">
               {time(row.clockOutAt)}
+              {row.officialHours&&<small>Shift: {time(row.officialHours.startAt)}–{time(row.officialHours.endAt)}</small>}
               {(row.extraMinutes > 0 || row.extraActive) && (
                 <small>
                   Extra play: {row.extraMinutes} min
@@ -294,6 +300,7 @@ export default function AttendanceRegister() {
                   onClick={() => {
                     setSelected(row);
                     setStatus("FULL_DAY");
+                    setEditTimes(false);setClockIn(inputTime(row.clockAt));setClockOut(inputTime(row.clockOutAt));
                     setReason("");
                     setError("");
                   }}
@@ -315,8 +322,8 @@ export default function AttendanceRegister() {
         )}
       </div>
       <p className="attendance-policy-note">
-        Attendance corrections keep original clock times, saved work, stars,
-        trophies and XP intact. MC can manage assigned players; CC can manage
+        Clock-time changes retain the original values in correction history.
+        Saved work, stars, trophies and XP are preserved. MC can manage assigned players; CC can manage
         the cohort. Not tracked on this date: {data.counts.NOT_TRACKED}.
       </p>
       <details className="calendar-history">
@@ -333,6 +340,7 @@ export default function AttendanceRegister() {
               <span>
                 {labels[entry.before.status]} → {labels[entry.after.status]}
               </span>
+              {(entry.before.clockAt!==entry.after.clockAt || entry.before.clockOutAt!==entry.after.clockOutAt)&&<span>Clock in: {time(entry.before.clockAt)} → {time(entry.after.clockAt)} · Clock out: {time(entry.before.clockOutAt)} → {time(entry.after.clockOutAt)}</span>}
               <p>{entry.reason}</p>
               <small>
                 {new Date(entry.createdAt).toLocaleString("en-IN", {
@@ -357,7 +365,7 @@ export default function AttendanceRegister() {
           <form className="calendar-editor" onSubmit={save}>
             <p>
               Current result: <strong>{labels[selected.status]}</strong>.
-              Original clock-in and clock-out stay saved.
+              Changes retain the previous result and clock times in history.
             </p>
             <label>
               Attendance result
@@ -383,6 +391,9 @@ export default function AttendanceRegister() {
                   ))}
               </select>
             </label>
+            <label className="attendance-time-toggle"><input type="checkbox" checked={editTimes} disabled={saving || selected.clockActive} onChange={e=>{setEditTimes(e.target.checked);if(e.target.checked)setStatus("DEFAULT");}}/> Correct recorded clock times</label>
+            {selected.clockActive&&<p>The player must clock out before recorded times can be corrected.</p>}
+            {editTimes&&<><p>Times use {data.timeZone} on {data.day}. Recorded breaks are retained. The automatic result uses the corrected times; a manual result takes precedence.</p><label>Corrected clock-in<input type="time" required value={clockIn} disabled={saving} onChange={e=>setClockIn(e.target.value)}/></label><label>Corrected clock-out<input type="time" required min={clockIn} value={clockOut} disabled={saving} onChange={e=>setClockOut(e.target.value)}/></label></>}
             <label>
               Reason for correction
               <textarea

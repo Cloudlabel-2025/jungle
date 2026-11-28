@@ -37,21 +37,22 @@ import {
 } from "lucide-react";
 import { Panel, Badge, HP, Avatar, Modal, Empty, Form, Receipt, Busy } from "./ui";
 import { EncounterGrid } from "./Expedition";
-import JungleGame from "./JungleGame";
+const JungleGame=dynamic(()=>import("./JungleGame"),{loading:()=> <Busy label="Opening the game…"/>});
 import ProjectBoard, { ProjectTaskDetails } from "./Projects";
 import ExpeditionHeading from "./ExpeditionHeading";
 import SupportConsole from "./SupportConsole";
 import { SupportDesk, SupportLibrary } from "./SupportConsole";
-import CampfireScene from "./CampfireScene";
+const CampfireScene=dynamic(()=>import("./CampfireScene"),{loading:()=> <Busy label="Opening camp…"/>});
 import ChallengeManager, {
   ChallengeProgress,
   ChallengeTaskDetails,
 } from "./Challenges";
-import LevelManager from "./LevelManager";
-import MapDesigner from "./MapDesigner";
-import TeamManager from "./TeamManager";
+const LevelManager=dynamic(()=>import("./LevelManager"),{loading:()=> <Busy label="Opening project setup…"/>});
+const MapDesigner=dynamic(()=>import("./MapDesigner"),{loading:()=> <Busy label="Opening map designer…"/>});
+const TeamManager=dynamic(()=>import("./TeamManager"),{loading:()=> <Busy label="Opening team management…"/>});
 import PilotBoardSlot from "./PilotBoardSlot";
 import ProgrammePanel from "./ProgrammePanel";
+import FirstPartLaunch from "./FirstPartLaunch";
 import CommandMissionBoard from "./CommandMissionBoard";
 import PaginatedList from "./PaginatedList";
 import DashboardSectionNav from "./DashboardSectionNav";
@@ -1248,6 +1249,7 @@ function Telemetry({ data, now, act, executive = false, compact = executive, sec
   );
 }
 export function StaffView(props) {
+  if (props.screen === "setup") return <StaffCore {...props} />;
   const isCentre = props.data.user.role === "CENTRE_COMMAND";
   const sectionPrefix = isCentre ? "cc" : "mc";
   const moduleScreen = programmeScreen(props.screen);
@@ -1260,6 +1262,7 @@ export function StaffView(props) {
   if (props.screen === "dashboard" && ["CENTRE_COMMAND", "MISSION_COMMANDER"].includes(props.data.user.role))
     return <div className={`cc-dashboard ${isCentre ? "" : "mc-dashboard"}`}>
       <DashboardSectionNav hasProgramme={Boolean(props.data.weekOneProgram)} hasSupport={Boolean(props.data.support)} sectionPrefix={sectionPrefix} />
+      {isCentre&&props.data.cohort?.currentWeek===1&&<FirstPartLaunch data={props.data} act={props.act}/>}
       <Telemetry {...props} executive={isCentre} compact sectionPrefix={sectionPrefix} />
       {props.data.weekOneProgram && <section id={`${sectionPrefix}-actions`} className="cc-section cc-actions" aria-label="Quick actions"><CommandMissionBoard data={props.data} /></section>}
       <section id={`${sectionPrefix}-programme`} className="cc-section cc-programme" aria-label={isCentre ? "Programme operations" : "Guide operations"}>
@@ -1312,17 +1315,7 @@ function StaffCore({ screen, data, act, now }) {
   if (screen === "coaching") return <Coaching data={data} act={act} />;
   if (screen === "awards") return <Proposals data={data} act={act} />;
   if (screen === "setup")
-    return (
-      <section className="expedition-setup" aria-label="Expedition setup">
-        <Setup data={data} act={act} />
-        <section id="setup-levels" className="setup-section" aria-label="Player level progression"><ProjectBoard data={data} act={act} compact /></section>
-        <section id="setup-map" className="setup-section" aria-label="Player map layout"><MapDesigner data={data} act={act} /></section>
-        <ProgrammePanel user={data.user} mode="setup" title="Weekly sprint setup and permissions"
-          description="Approved packages, owners, calendars, resources and kickoff" />
-        <details className="setup-disclosure"><summary>Practice project workshop</summary><p className="muted">Additional projects have separate tasks and completion records. Use Player map designer to create a mission on the main map.</p><LevelManager data={data} act={act} practiceOnly /></details>
-        <details id="setup-challenges" className="setup-disclosure"><summary>Challenge assignments</summary><ChallengeManager data={data} act={act} /></details>
-      </section>
-    );
+    return <ExpeditionSetupWorkspace data={data} act={act} now={now} />;
   if (screen === "rules-approvals") return <Approvals data={data} act={act} />;
   if (screen === "client-control") return <Chaos data={data} act={act} />;
   if (screen === "reports") return <Reports data={data} act={act} />;
@@ -1651,13 +1644,64 @@ function Proposals({ data, act }) {
     </>
   );
 }
-function Setup({ data, act }) {
+const setupSections = [
+  ["setup-cohort", "Cohort", Settings2],
+  ["setup-teams", "Teams & players", Users],
+  ["setup-levels", "Player levels", Flag],
+  ["setup-map", "Map designer", Target],
+  ["programme-setup", "Weekly sprints", Columns3],
+  ["setup-challenges", "Challenges", Zap],
+  ["setup-support", "Campus support", Heart],
+  ["setup-practice", "Practice projects", BookOpen],
+];
+function ExpeditionSetupWorkspace({data,act,now}) {
+  const [section,setSection]=useState("setup-cohort");
+  const [visited,setVisited]=useState(["setup-cohort"]);
+  const tabs=useRef([]);
+  function activate(id) {
+    setSection(id);
+    setVisited(previous=>previous.includes(id)?previous:[...previous,id]);
+  }
+  useEffect(()=>{
+    function followLink(){
+      const hash=window.location.hash.slice(1);
+      const id=setupSections.some(([key])=>key===hash)?hash:
+        new URLSearchParams(window.location.search).get("programme")==="setup"?"programme-setup":"setup-cohort";
+      activate(id);
+    }
+    followLink();
+    window.addEventListener("hashchange",followLink);
+    window.addEventListener("popstate",followLink);
+    return()=>{window.removeEventListener("hashchange",followLink);window.removeEventListener("popstate",followLink);};
+  },[]);
+  function select(id){
+    activate(id);
+    window.history.replaceState(window.history.state,"",`${window.location.pathname}${window.location.search}#${id}`);
+  }
+  const content={
+    "setup-cohort":()=> <Setup data={data} act={act} />,
+    "setup-teams":()=> <><Setup data={data} act={act} allocations /><TeamManager data={data} act={act} /></>,
+    "setup-levels":()=> <ProjectBoard data={data} act={act} compact showPractice={false} />,
+    "setup-map":()=> <MapDesigner data={data} act={act} />,
+    "programme-setup":()=> <ProgrammePanel user={data.user} mode="setup" defaultOpen title="Weekly sprint setup and permissions" description="Approved packages, owners, calendars, resources and kickoff" />,
+    "setup-challenges":()=> <ChallengeManager data={data} act={act} />,
+    "setup-support":()=> <SupportConsole screen="setup" data={data} act={act} now={now} />,
+    "setup-practice":()=> <section aria-label="Optional practice projects"><p className="muted">Optional practice projects have separate tasks and completion records. They do not change the five player levels or unlock sprint keys.</p><LevelManager data={data} act={act} practiceOnly /></section>,
+  };
+  return <section className="expedition-setup" aria-label="Expedition setup">
+    <header className="setup-page-heading"><div><span className="eyebrow">CENTRE COMMAND / JUNGLE CODING</span><h1>Expedition setup</h1><p>Prepare your cohort and manage the journey your players follow.</p></div><Badge>Week {data.cohort.currentWeek} · Revision {data.cohort.version}</Badge></header>
+    <div className="setup-context"><strong>{data.cohort.name}</strong><span>{data.cohort.college}</span><span>{data.teams.length} teams</span><span>{data.roster.length} players</span></div>
+    <div className="setup-navigation" role="tablist" aria-label="Setup sections">{setupSections.map(([id,label,Icon],index)=><button key={id} ref={element=>{tabs.current[index]=element;}} type="button" role="tab" id={`tab-${id}`} aria-controls={`workspace-${id}`} aria-selected={section===id} tabIndex={section===id?0:-1} onClick={()=>select(id)} onKeyDown={event=>{
+      const next=event.key==="ArrowRight"?(index+1)%setupSections.length:event.key==="ArrowLeft"?(index+setupSections.length-1)%setupSections.length:event.key==="Home"?0:event.key==="End"?setupSections.length-1:null;
+      if(next===null)return;event.preventDefault();select(setupSections[next][0]);tabs.current[next]?.focus();
+    }}><Icon size={16} aria-hidden="true"/>{label}</button>)}</div>
+    {setupSections.map(([id])=><div key={id} id={`workspace-${id}`} role="tabpanel" aria-labelledby={`tab-${id}`} tabIndex={0} hidden={section!==id} className={`setup-section setup-workspace ${id==="setup-cohort"?"setup-overview":""}`}>{visited.includes(id)&&content[id]()}</div>)}
+  </section>;
+}
+function Setup({ data, act, allocations=false }) {
   return (
     <>
-      <header className="setup-page-heading"><div><span className="eyebrow">CENTRE COMMAND / JUNGLE CODING</span><h1>Expedition setup</h1><p>Configure your cohort, prepare teams and shape the same level journey players see.</p></div><Badge>Revision {data.cohort.version}</Badge></header>
-      <nav className="setup-navigation" aria-label="Setup sections">{[["setup-cohort","Cohort settings"],["setup-teams","Teams"],["setup-levels","Player levels"],["setup-map","Map designer"],["programme-setup","Weekly sprints"],["setup-challenges","Challenges"]].map(([id,label]) => <a key={id} href={`#${id}`}>{label}</a>)}</nav>
-      <div id="setup-cohort" className="two-columns setup-section">
-        <Panel
+        {!allocations ? <Panel
           title="Cohort settings"
           kicker="INSTITUTE / SCHEDULE / SCENARIO"
         >
@@ -1697,7 +1741,7 @@ function Setup({ data, act }) {
               <strong>
                 {data.support?.calendar
                   ? `${String(Math.floor(data.support.calendar.startMinute / 60)).padStart(2, "0")}:${String(data.support.calendar.startMinute % 60).padStart(2, "0")}–${String(Math.floor((data.support.calendar.startMinute + 480) / 60)).padStart(2, "0")}:${String(data.support.calendar.startMinute % 60).padStart(2, "0")} ${data.support.calendar.timeZone}`
-                  : "Configure working calendar below"}
+                  : "Set in Campus support"}
               </strong>
             </span>
             <span>
@@ -1707,21 +1751,23 @@ function Setup({ data, act }) {
               TIME AUTHORITY<strong>Server · Asia/Kolkata</strong>
             </span>
           </div>
-        </Panel>
-        <Panel
-          title="Squad allocations"
-          kicker="SQUAD ROSTER · MAXIMUM FIVE MEMBERS PER TEAM"
+        </Panel> : <Panel
+          title="Team allocations"
+          kicker="MOVE A PLAYER / FIVE PLAYERS PER TEAM"
         >
           <Form
+            guided={false}
             fields={[
               {
                 name: "userId",
-                label: "Operative",
+                label: "Player",
+                menu: true,
                 options: playerOptions(data),
               },
               {
                 name: "teamId",
-                label: "Assign to squad",
+                label: "Assign to team",
+                menu: true,
                 options: data.teams.map((t) => ({
                   value: t._id,
                   label: t.name,
@@ -1737,28 +1783,8 @@ function Setup({ data, act }) {
               )
             }
           />
-          {data.teams.map((t) => (
-            <div className="allocation-row" key={t._id}>
-              <span className="squad-mark" style={{ color: t.color }}>
-                {t.code}
-              </span>
-              <span>
-                <strong>{t.name}</strong>
-                <small>
-                  {data.roster
-                    .filter((u) => u.teamId === t._id)
-                    .map((u) => u.name.split(" ")[0])
-                    .join(" · ")}
-                </small>
-              </span>
-              <Badge>
-                {data.roster.filter((u) => u.teamId === t._id).length}
-              </Badge>
-            </div>
-          ))}
-        </Panel>
-      </div>
-      <details id="setup-teams" className="setup-disclosure"><summary>Teams &amp; player accounts <span>{data.teams.length} teams</span></summary><TeamManager data={data} act={act} /></details>
+          <p className="muted fine-print">Move existing players between teams here. Create teams and player accounts in the team directory.</p>
+        </Panel>}
     </>
   );
 }

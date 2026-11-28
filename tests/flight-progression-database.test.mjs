@@ -270,7 +270,8 @@ test(
       );
       assert.equal(
         await models.Attendance.countDocuments({ userId: r._id }),
-        1,
+        0,
+        "first-part entry does not create official attendance",
       );
       const first = await models.DayOneRecord.findOne({ userId: p._id }).lean();
       const completed = (await programSnapshot(p, now)).progression.levels.find(level => level.day === 2);

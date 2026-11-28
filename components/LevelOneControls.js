@@ -154,14 +154,14 @@ export default function LevelOneControls({ data, act, initialUserId = "" }) {
                   ? records[i].levelOne?.result?.completed
                     ? `${records[i].levelOne.result.stars} stars`
                     : "Not complete"
-                  : "Must clock in first"}
+                  : "Must enter Level 1 first"}
               </p>
             ))}
           </div>
         )}
         {missing && (
           <p>
-            All selected members must clock in before you can change their Level
+            All selected members must enter the game before you can change their Level
             1 results.
           </p>
         )}

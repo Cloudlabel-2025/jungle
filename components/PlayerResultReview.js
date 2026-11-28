@@ -3,9 +3,10 @@ import { useState } from "react";
 import { levelReward } from "@/lib/week-one-level-rules.js";
 import { WeekPanel, Evidence, weekTime } from "./WeekOneShared";
 import DayOneReviewEvidence from "./DayOneReviewEvidence";
+import SubmissionHistory from "./SubmissionHistory";
 import GameChoices from "./GameChoices";
-import { LeagueBadge } from "./TrophyLeague";
-import { Avatar } from "./ui";
+import WorkspaceSelect from "./WorkspaceSelect";
+import MissionStars from "./MissionStars";
 import { trophyLeague } from "@/lib/trophy-leagues.js";
 const readable = (value) =>
   Object.fromEntries(
@@ -18,19 +19,18 @@ const readable = (value) =>
   );
 
 export default function PlayerResultReview({ data, act }) {
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState(()=>data.weekOneProgram?.levelTargets?.members?.[0]?._id || "");
   const [day, setDay] = useState(1);
-  const [search, setSearch] = useState("");
   const p = data.weekOneProgram;
   const members = p.levelTargets?.members || [];
   if (!["CENTRE_COMMAND", "MISSION_COMMANDER"].includes(data.user.role))
     return null;
-  const first = data.dayOne?.records.find((r) => r.userId === userId);
+  const first = data.dayOne?.records?.find((r) => r.userId === userId);
   const row =
     day === 1
       ? first?.levelOne
-      : p.levelResults.find((r) => r.userId === userId && r.day === day);
-  const attempts = p.attempts.filter(
+      : p.levelResults?.find((r) => r.userId === userId && r.day === day);
+  const attempts = (p.attempts || []).filter(
     (a) => a.userId === userId && a.day === day,
   );
   const evidenceKey =
@@ -41,55 +41,16 @@ export default function PlayerResultReview({ data, act }) {
           .sort()
           .join("|");
   return (
-    <WeekPanel title="Review a player's result">
-      <p>
-        Choose a player and level. Inspect the submitted work, then validate the
-        current stars or record a correction. Every decision keeps the reviewer,
-        reason and previous result.
-      </p>
+    <WeekPanel title="Automatic level results and staff review" className="staff-result-review">
+      <p className="review-intro">Check the earned stars and submitted answers. Validate the result, or correct the actual stars with a reason.</p>
       {!members.length && (
         <p>
           No players are assigned to your review scope. Ask Centre Command to
           check your team assignments.
         </p>
       )}
-      <div className="crew-dossiers">
-        <label className="crew-search">
-          Find a player
-          <input
-            type="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search your crew"
-          />
-        </label>
-        <div className="crew-dossier-list" aria-label="Choose a player dossier">
-          {members
-            .filter((m) => m.name.toLowerCase().includes(search.toLowerCase()))
-            .map((m) => (
-              <button
-                key={m._id}
-                className={`crew-dossier ${userId === m._id ? "is-selected" : ""}`}
-                onClick={() => setUserId(m._id)}
-                aria-pressed={userId === m._id}
-                aria-label={`Review ${m.name}`}
-              >
-                <Avatar name={m.name} small />
-                <span>
-                  <strong>{m.name}</strong>
-                  <small>
-                    {userId === m._id ? "DOSSIER OPEN" : "OPEN DOSSIER"}
-                  </small>
-                </span>
-                <LeagueBadge trophies={m.trophies} />
-              </button>
-            ))}
-        </div>
-        {members.length > 0 &&
-          !members.some((m) =>
-            m.name.toLowerCase().includes(search.toLowerCase()),
-          ) && <p>No matching crew members.</p>}
-      </div>
+      <div className="result-review-toolbar">
+      <WorkspaceSelect label="Player to review" value={userId} onChange={setUserId} options={members.map(member=>({value:member._id,label:member.name}))}/>
       <GameChoices
         label="Flight level"
         value={day}
@@ -99,6 +60,7 @@ export default function PlayerResultReview({ data, act }) {
           label: `Level ${d}`,
         }))}
       />
+      </div>
       {userId && (
         <Review
           key={`${userId}:${day}:${day === 1 ? first?.version : row?.version}:${evidenceKey}`}
@@ -136,6 +98,9 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
       ? first?.submissions?.length > 0
       : attempts.some((a) => a.data.submittedAt);
   const validation = row?.validation;
+  const automatic = row?.automatic;
+  const earnedStars=automatic?.stars || 0;
+  const actualStars=row?.result?.completed ? row.result.stars : 0;
   const currentValidation =
     validation &&
     (day === 1
@@ -148,37 +113,46 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
     validation.result?.stars === row?.result?.stars &&
     validation.result?.completed === row?.result?.completed;
   return (
-    <>
+    <div className="result-review-workspace">
+      <div className="result-review-evidence">
+      <div className="result-review-heading"><span className="game-kicker">LEVEL {day} · {data.weekOneProgram.levelTargets?.members.find(member=>member._id===userId)?.name}</span>
       <h3>
-        {row?.result?.completed
-          ? `Current result: ${row.result.stars}/3 stars`
-          : "Current result: incomplete"}
+        Evidence and result
       </h3>
+      </div>
+      <section className="result-score-comparison" aria-label="Automatic and current level result">
+        <div>
+        <span className="game-kicker">EARNED STARS</span>
+        <MissionStars stars={earnedStars} size="result"/>
+        <strong>{automatic ? `${automatic.stars || 0}/3 stars · ${automatic.completed?"Complete":"Incomplete"}` : "No automatic result yet"}</strong>
+        <small>Calculated from the submitted work.</small>
+        </div><div><span className="game-kicker">ACTUAL RESULT</span>
+        <MissionStars stars={actualStars} size="result"/>
+        <strong>Actual result: {row?.result?.completed?`${actualStars}/3 stars`:"Incomplete"}</strong><small>{row?.result?.source && row.result.source!=="SYSTEM" ? "Staff correction" : currentValidation?"Validated result":"Awaiting staff validation"}</small></div>
+      </section>
+      <details className="result-review-disclosure"><summary>Scoring explanation and checks</summary><p>{automatic?.reason || "An automatic result appears after the player submits mission evidence."}</p>{automatic?.verificationScope&&<p>{automatic.verificationScope}</p>}{automatic?.checks&&<ul>{Object.entries(automatic.checks).map(([name,value])=><li key={name}>{name.replace(/([A-Z])/g," $1").replace(/^./,letter=>letter.toUpperCase())}: {typeof value==="boolean"?value?"Met":"Not met":String(value)}</li>)}</ul>}</details>
       {validation && (
-        <p>
+        <p className="result-review-validation">
           {currentValidation
             ? "Human review recorded"
             : "Previous human review — work or result has changed"}{" "}
-          · {validation.role} · {validation.actorId} · {weekTime(validation.at)}
+          · {validation.role==="CENTRE_COMMAND"?"CC":"MC"} · {validation.actorName || validation.actorId} · {weekTime(validation.at)}
           <br />
           {validation.reason}
         </p>
       )}
+      <details className="result-review-disclosure" open><summary>Submitted evidence · current attempt</summary><div className="result-review-evidence-content">
       {day === 1 ? (
         first ? (
           <>
             <DayOneReviewEvidence
               record={first}
               canVerify
+              compact
               formatDate={weekTime}
             />
             <h4>Independent claim check</h4>
-            <Evidence
-              value={readable(
-                first.claimCheck ||
-                  first.claimCheckDraft || { status: "No claim check saved" },
-              )}
-            />
+            {first.claimCheck || first.claimCheckDraft?<><p>{first.claimCheck?"Submitted claim check":"Draft only — not yet submitted"}</p><Evidence value={readable(first.claimCheck || first.claimCheckDraft)}/></>:<p>No claim check has been submitted yet.</p>}
           </>
         ) : (
           <p>This player has not started Level 1.</p>
@@ -216,8 +190,11 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
       ) : (
         <p>No mission evidence has been saved for this level.</p>
       )}
+      </div></details>
+      {day!==1&&<SubmissionHistory userId={userId} day={day} revision={`${row?.version}:${attempts.map(attempt=>`${attempt._id}:${attempt.version}`).join("|")}`}/>}
+      </div><aside className="result-review-sidebar">
       <form
-        className="field-form"
+        className="field-form result-review-decision"
         onSubmit={async (e) => {
           e.preventDefault();
           if (busy) return;
@@ -242,15 +219,15 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
                 ),
               },
               operation === "validate"
-                ? "Player result validated."
-                : "Reviewed player result updated.",
+                ? currentValidation?"Result revalidated. Player notified.":"Result validated. Player notified."
+                : "Player result updated. Player notified.",
             );
             if (!response)
               throw Error(
                 "Result was not saved. Review any error, refresh and try again.",
               );
             setMessage(
-              "Review saved. Rewards were reconciled without spending player energy.",
+              "Review saved. The player has been notified. Rewards were reconciled without spending player energy.",
             );
           } catch (error) {
             setMessage(error.message);
@@ -259,6 +236,8 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
           }
         }}
       >
+        <h3>Validate or correct result</h3>
+        <p className="muted">Your name, decision and reason will appear in the player’s notifications.</p>
         <GameChoices
           label="Review decision"
           value={operation}
@@ -267,39 +246,40 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
           options={[
             {
               value: "validate",
-              label: "Validate",
-              description: "Keep the earned stars",
+              label: currentValidation?"Revalidate result":"Validate result",
+              description: "Confirm the saved stars are correct",
             },
             {
               value: "result",
               label: "Correct result",
-              description: "Set the reviewed stars",
+              description: "Set the actual stars and give a reason",
             },
             {
               value: "reopen",
               label: "Return for revision",
-              description: "Revoke completion and rewards",
+              description: "Mark incomplete and request changes",
             },
           ]}
         />
         {operation === "result" && (
-          <GameChoices
-            label="Corrected stars"
+          <div className="result-star-picker"><GameChoices
+            label="Select the actual stars earned"
             value={stars}
             onChange={(value) => setStars(Number(value))}
             disabled={busy}
             options={[1, 2, 3].map((n) => ({
               value: n,
-              label: `${n} ${n === 1 ? "star" : "stars"}`,
+              label: <span className="result-star-option"><MissionStars stars={n}/><span>{n} {n===1?"star":"stars"}</span></span>,
               description: `${levelReward(n, day).trophies} trophies · ${levelReward(n, day).xp} XP`,
             }))}
-          />
+          /><p className="result-star-change">Actual result: {actualStars}/3 → {stars}/3 stars. The original earned stars stay saved.</p></div>
         )}
         <div
           className="result-impact"
           aria-label="Result reward and league impact"
         >
-          <span className="game-kicker">DECISION PREVIEW</span>
+          <span className="game-kicker">{operation==="validate"?"VALIDATION PREVIEW":"RESULT CHANGE PREVIEW"}</span>
+          <MissionStars stars={operation==="validate"?actualStars:operation==="result"?stars:0}/>
           <strong>
             {playerTotal} → {playerTotal + trophyDelta} trophies
           </strong>
@@ -313,7 +293,7 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
           </p>
         </div>
         <label>
-          Evidence review and reason
+          {operation==="result"?"Reason for correction":operation==="reopen"?"Reason for returning the work":"Validation notes"}
           <textarea
             required
             minLength={10}
@@ -321,9 +301,10 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             disabled={busy}
+            placeholder={operation==="result"?"Explain why the actual stars should change…":"Explain what you checked in the submitted work…"}
           />
         </label>
-        <label>
+        <label className="result-review-confirm">
           <input
             type="checkbox"
             checked={reviewed}
@@ -343,7 +324,7 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
             (operation === "validate" && !row?.result?.completed)
           }
         >
-          {busy ? "Saving review…" : "Save reviewed result"}
+          {busy ? "Saving review…" : operation==="validate"?currentValidation?"Revalidate result and notify":"Validate result and notify":operation==="result"?"Save corrected result and notify":"Return for revision and notify"}
         </button>
         {!submitted && <p>Submitted evidence is required for this review.</p>}
         {!canWrite && (
@@ -363,9 +344,10 @@ function Review({ data, act, userId, day, first, row, attempts, playerTotal }) {
       {row?.overrideHistory?.length > 0 && (
         <details>
           <summary>Previous result decisions</summary>
-          <Evidence value={readable({ history: row.overrideHistory })} />
+          <ol>{row.overrideHistory.map((entry,index)=>{const previous=entry.result || entry;return <li key={index}><strong>Previous result: {previous.completed?`${previous.stars}/3 stars`:"Incomplete"}</strong><p>{entry.reason}</p><small>{entry.actorId} · {weekTime(entry.at)}</small></li>;})}</ol>
         </details>
       )}
-    </>
+      </aside>
+    </div>
   );
 }

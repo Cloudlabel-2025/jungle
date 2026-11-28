@@ -30,7 +30,7 @@ export default function AttendancePrompt({ data, act, now, open, close }) {
   const s = data?.playSession;
   const arrivalStep = s?.available ? "clock-in" : "attendance-unavailable", arrivalToken = `${tutorial.account}:${s?.day}:${arrivalStep}`;
   const arrivalKnown = [tutorial.seen, tutorial.dismissed, tutorial.completed].some((ids) => ids.includes(arrivalStep));
-  const arrivalCandidate = Boolean(s && data.user.role === "GAMER" && data.story?.flight && needsClockInTutorial(s) && (open || dismissedEntry !== `${data.user._id}:${s.day}`));
+  const arrivalCandidate = Boolean(s && s.attendanceRequired!==false && data.user.role === "GAMER" && data.story?.flight && needsClockInTutorial(s) && (open || dismissedEntry !== `${data.user._id}:${s.day}`));
   const arrivalActive = arrivalCandidate && (arrivalVisit === arrivalToken || !arrivalKnown);
   useEffect(() => {
     if (arrivalActive && arrivalVisit !== arrivalToken) {
@@ -38,7 +38,7 @@ export default function AttendancePrompt({ data, act, now, open, close }) {
       tutorial.patch({ seen: [arrivalStep] });
     }
   }, [arrivalActive, arrivalToken, arrivalStep, arrivalVisit]);
-  if (!s || data.user.role !== "GAMER") return null;
+  if (!s || s.attendanceRequired===false || data.user.role !== "GAMER") return null;
   const scope = `${data.user._id}:${s.day}`;
   const warningToken = `${scope}:${s.responseDeadline}`;
   const outToken = `${data.user._id}:${s.clockOutAt}`;

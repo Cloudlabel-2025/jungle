@@ -67,6 +67,7 @@ import "./trail-objectives.css";
 import "./player-level-progression.css";
 import "./expedition-setup.css";
 import "./college-lifecycle.css";
+import "./player-password-reset.css";
 import { brand } from "@/lib/brand.js";
 export const metadata = {
   title: brand.title,

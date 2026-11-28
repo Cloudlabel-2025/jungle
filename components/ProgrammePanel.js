@@ -8,14 +8,14 @@ const PilotWorkspace = dynamic(() => import("./PilotWorkspace"), {
   loading: () => <Busy label="Opening programme work…" />,
 });
 
-export default function ProgrammePanel({ user, mode, title, description }) {
+export default function ProgrammePanel({ user, mode, title, description, defaultOpen = false }) {
   const params = useSearchParams();
   const requested = params.get("programme") === mode;
-  const [open, setOpen] = useState(requested);
-  const [visited, setVisited] = useState(requested);
+  const [open, setOpen] = useState(requested || defaultOpen);
+  const [visited, setVisited] = useState(requested || defaultOpen);
   const panel = useRef(null);
   useEffect(() => {
-    setOpen(requested);
+    setOpen(requested || defaultOpen);
     if (!requested) return;
     setVisited(true);
     // The workspace view is loaded dynamically, after Next's initial hash
@@ -25,7 +25,7 @@ export default function ProgrammePanel({ user, mode, title, description }) {
       panel.current?.querySelector("button")?.focus({ preventScroll: true });
     });
     return () => cancelAnimationFrame(frame);
-  }, [requested]);
+  }, [requested, defaultOpen]);
   return (
     <section ref={panel} className="programme-panel" id={`programme-${mode}`}>
       <button

@@ -39,6 +39,13 @@ try {
         await models.User.updateOne({ _id: id }, { $set: { username: id, name: `${college.name} ${id}` } });
         await models.Credential.create({ _id: id, passwordHash, mustChangePassword: false });
       }
+      if(index===0){
+        await models.Cohort.create({_id:"launch",name:"Fresh flight",college:college.name,startDate:"2026-11-27",currentWeek:1});
+        for(const [id,role] of [["launch-cc","CENTRE_COMMAND"],["launch-player","GAMER"]]){
+          await models.User.create({_id:id,name:id,username:id,email:`${id}@http.invalid`,cohortId:"launch",role});
+          await models.Credential.create({_id:id,passwordHash,mustChangePassword:false});
+        }
+      }
       const bytes = Buffer.from(`Private evidence for ${college.name}`), sha256 = createHash("sha256").update(bytes).digest("hex");
       await models.PilotSprint.create({ _id: "same-sprint", cohortId: "alpha", state: "DRAFT", data: { teams: [{ teamId: "team_01", commanderId: "usr_mc01", members: ["usr_g01"] }] } });
       await models.PilotEvidence.create({ _id: "same-file", cohortId: "alpha", sprintId: "same-sprint", teamId: "team_01", userId: "usr_g01", state: "READY",
@@ -73,6 +80,43 @@ try {
   await request("/api/auth/login", { body: { collegeSlug: "unknown-college", identifier: "usr_g01", password }, status: 404 });
   await request("/api/auth/login", { body: { collegeId: "nonexistent-college", collegeSlug: colleges[0].slug, identifier: "usr_g01", password }, status: 404 });
   const sessions = [];
+  const launchSessions={};
+  for(const id of ["launch-cc","launch-player"]){
+    const login=await request("/api/auth/login",{body:{collegeId:colleges[0]._id,identifier:id,password}});
+    launchSessions[id]={college:colleges[0],cookie:login.response.headers.get("set-cookie").split(";")[0]};
+  }
+  await request("/api/week1/program/open-first-part",{...launchSessions["launch-player"],body:{},status:403});
+  assert.equal((await request("/api/week1/program/open-first-part",{...launchSessions["launch-cc"],body:{}})).json().opened,true);
+  assert.equal((await request("/api/week1/program/open-first-part",{...launchSessions["launch-cc"],body:{}})).json().alreadyOpen,true);
+  const flightState=(await request("/api/state",launchSessions["launch-player"])).json();
+  assert.equal(flightState.weekOneProgram.progression.mode,"COMPLETION");
+  assert.equal(flightState.weekOneProgram.progression.levels[0].available,true);
+  assert.equal(flightState.weekOneProgram.progression.levels[1].available,false);
+  assert.deepEqual(flightState.weekOneProgram.rules,[]);
+  assert.equal(flightState.playSession.state,"FREE_PLAY");
+  assert.equal(flightState.playSession.attendanceRequired,false);
+  await request("/api/story/flight-intro",{...launchSessions["launch-player"],body:{}});
+  await request("/api/day1/clock",{...launchSessions["launch-player"],body:{}});
+  await request("/api/day1/genre-offer",{...launchSessions["launch-player"],body:{}});
+  await runWithCollege({college:colleges[0],connection:connections[0],models:createModels(connections[0])},async()=>{
+    await createModels(connections[0]).DayOneRecord.updateOne({cohortId:"launch",userId:"launch-player"},{$push:{"data.submissions":{$each:[{id:"history-first",at:"2026-11-27T10:00:00Z",url:"https://example.invalid/first-chat",transcript:"First saved conversation"},{id:"history-revised",at:"2026-11-27T11:00:00Z",url:"https://example.invalid/revised-chat",transcript:"Revised saved conversation"}]}}});
+  });
+  const completeHistory=await request("/api/week1/submission-history?userId=launch-player&day=1",launchSessions["launch-cc"]);
+  assert.equal(completeHistory.response.headers.get("cache-control"),"private, no-store");
+  assert.equal(completeHistory.json().attempts[0].missions[0].submissions.length,2);
+  await request("/api/week1/submission-history?userId=launch-player&day=1",{...launchSessions["launch-player"],status:403});
+  await request("/api/week1/submission-history?userId=launch-player&day=9",{...launchSessions["launch-cc"],status:400});
+  const reviewState=(await request("/api/state",launchSessions["launch-cc"])).json();
+  const reviewRecord=reviewState.dayOne.records.find(record=>record.userId==="launch-player");
+  const reviewBody={userId:"launch-player",members:["launch-player"],versions:{"launch-player":reviewRecord.version},operation:"result",stars:2,reason:"Verified the saved synthetic submission evidence.",reviewedEvidence:true};
+  await request("/api/day1/level-result",{...launchSessions["launch-cc"],body:reviewBody});
+  const notified=(await request("/api/state",launchSessions["launch-player"])).json().notifications.items.filter(notice=>notice.id.startsWith("level-review:"));
+  assert.equal(notified.length,1);assert.match(notified[0].message,/Centre Command launch-cc changed your Level 1 result from incomplete to 2\/3 stars/);
+  await request("/api/notifications/read",{...launchSessions["launch-player"],body:{ids:[notified[0].id]}});
+  await request("/api/day1/level-result",{...launchSessions["launch-cc"],body:reviewBody,status:409});
+  const readState=(await request("/api/state",launchSessions["launch-player"])).json();
+  assert.equal(readState.notifications.items.find(notice=>notice.id===notified[0].id).read,true);
+  assert.equal(readState.notifications.items.filter(notice=>notice.id.startsWith("level-review:")).length,1,"a stale retry cannot create a second notice");
   for (const college of colleges) for (const id of ["usr_g01", "usr_mc01", "usr_cc01"]) {
     const login = await request("/api/auth/login", { body: { collegeId: college._id, identifier: id, password } });
     const cookie = login.response.headers.get("set-cookie").split(";")[0];
@@ -80,6 +124,7 @@ try {
     const state = (await request("/api/state", { cookie, college })).json();
     assert.equal(state.college.name, college.name);
     assert.equal(state.user.name, `${college.name} ${id}`);
+    if(id==="usr_cc01")await request("/api/week1/submission-history?userId=launch-player&day=1",{cookie,college,status:403});
     const page = await request(`/${id === "usr_g01" ? "gamer" : id === "usr_mc01" ? "commander" : "centre-command"}/dashboard`, { cookie });
     assert.ok(page.text.includes(college.name), "SSR carries college identity");
     const file = await request("/api/pilot/files/same-file", { cookie, college });

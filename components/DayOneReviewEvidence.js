@@ -1,8 +1,10 @@
 import LevelOneResult from "./LevelOneResult";
+import SubmissionHistory from "./SubmissionHistory";
 export default function DayOneReviewEvidence({
   record: r,
   canVerify,
   formatDate,
+  compact=false,
 }) {
   const assignment = r.researchAssignment;
   const mission =
@@ -11,7 +13,7 @@ export default function DayOneReviewEvidence({
   return (
     <section aria-label="Saved Level 1 work" className="receipt">
       <h3>Saved Level 1 work</h3>
-      {r.levelOne && <LevelOneResult level={r.levelOne} />}
+      {r.levelOne && !compact && <LevelOneResult level={r.levelOne} />}
       <p>
         <strong>World:</strong>{" "}
         {assignment?.genreName ||
@@ -99,6 +101,7 @@ export default function DayOneReviewEvidence({
             : "No AI chat has been submitted yet."}
         </p>
       )}
+      <SubmissionHistory userId={r.userId} day={1} revision={r.version}/>
     </section>
   );
 }
